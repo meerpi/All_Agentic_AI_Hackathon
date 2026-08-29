@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskmaster AI — Autonomous Agent Control Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0a0d14;
+            --bg-card: rgba(18, 24, 38, 0.75);
+            --bg-card-hover: rgba(26, 35, 56, 0.85);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --accent-gemini: linear-gradient(135deg, #7928CA 0%, #4338CA 50%, #00DFD8 100%);
+            --accent-glow: rgba(121, 40, 202, 0.35);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(121, 40, 202, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(0, 223, 216, 0.12) 0%, transparent 40%);
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: rgba(10, 13, 20, 0.8);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: var(--accent-gemini);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px var(--accent-glow);
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .logo-title h1 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(90deg, #ffffff, #d1d5db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-title span {
+            font-size: 0.75rem;
+            color: #93c5fd;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .status-badges {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 0.35rem 0.85rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--success);
+            box-shadow: 0 0 10px var(--success);
+        }
+
+        /* Layout Grid */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 1.5rem;
+            flex: 1;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: #f3f4f6;
+        }
+
+        .card-title i {
+            color: #818cf8;
+        }
+
+        /* Form Controls */
+        label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+            display: block;
+        }
+
+        textarea, input, select {
+            width: 100%;
+            background: rgba(10, 13, 20, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.85rem;
+            color: white;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        textarea:focus, input:focus, select:focus {
+            border-color: #818cf8;
+            box-shadow: 0 0 12px rgba(129, 140, 248, 0.25);
+        }
+
+        .template-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .pill {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 0.4rem 0.85rem;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #cbd5e1;
+        }
+
+        .pill:hover {
+            background: rgba(129, 140, 248, 0.15);
+            border-color: #818cf8;
+            color: white;
+        }
+
+        .btn-launch {
+            background: var(--accent-gemini);
+            border: none;
+            border-radius: 10px;
+            padding: 0.9rem;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            box-shadow: 0 4px 20px var(--accent-glow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-launch:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(121, 40, 202, 0.5);
+        }
+
+        .btn-launch:active {
+            transform: translateY(0);
+        }
+
+        /* Workflow Steps Display */
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            max-height: 450px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .step-card {
+            background: rgba(10, 13, 20, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.2s ease;
+        }
+
+        .step-card.completed {
+            border-left: 4px solid var(--success);
+        }
+
+        .step-card.in_progress {
+            border-left: 4px solid var(--warning);
+            animation: pulse-border 1.5s infinite;
+        }
+
+        @keyframes pulse-border {
+            0% { border-color: rgba(245, 158, 11, 0.4); }
+            50% { border-color: rgba(245, 158, 11, 1); }
+            100% { border-color: rgba(245, 158, 11, 0.4); }
+        }
+
+        .step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .step-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-badge {
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            font-size: 0.72rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .step-reasoning {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Telemetry & Log Console */
+        .terminal-box {
+            background: #06080d;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: #a7f3d0;
+            max-height: 250px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .log-line {
+            display: flex;
+            gap: 0.6rem;
+            line-height: 1.5;
+        }
+
+        .log-time {
+            color: #64748b;
+        }
+
+        .log-event {
+            color: #38bdf8;
+            font-weight: 600;
+        }
+
+        /* Deliverable Markdown Viewer */
+        .artifact-box {
+            background: rgba(10, 13, 20, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.25rem;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .tool-card-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #38bdf8;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .tool-card-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+
+        footer a {
+            color: #818cf8;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo-icon">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <div class="logo-title">
+                <h1>Taskmaster AI Engine</h1>
+                <span>All Things Agentic Hackathon 2026</span>
+            </div>
+        </div>
+        <div class="status-badges">
+            <div class="badge">
+                <div class="badge-dot"></div>
+                Gemini 3.5 Flash Active
+            </div>
+            <div class="badge">
+                <i class="fa-solid fa-server" style="color: #60a5fa;"></i>
+                Cloud Run Container Ready
+            </div>
+            <a href="/docs" target="_blank" class="badge" style="text-decoration: none; color: white;">
+                <i class="fa-solid fa-code"></i>
+                Swagger OpenAPI Docs
+            </a>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <main class="main-container">
+        
+        <!-- Left Panel: Input & Control -->
+        <section style="display: flex; flex-direction: column; gap: 1.5rem;">
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fa-solid fa-bolt"></i>
+                        Launch Autonomous Workflow Goal
+                    </h2>
+                </div>
+
+                <div>
+                    <label>Select Sample Scenario Template:</label>
+                    <div class="template-pills">
+                        <div class="pill" onclick="setGoal('Audit service cluster error logs, save incident record in central DB, dispatch remediation webhook, and generate executive report.')">
+                            🚨 Incident Remediation Chore
+                        </div>
+                        <div class="pill" onclick="setGoal('Process messy customer intake form, extract key metrics, insert record into CRM storage, and compile onboarding briefing.')">
+                            💼 Customer Lead Intake Chore
+                        </div>
+                        <div class="pill" onclick="setGoal('Run security compliance scan, validate zero-trust credentials, log telemetry traces, and alert team on Slack.')">
+                            🛡️ Security & Compliance Chore
+                        </div>
+                        <div class="pill" onclick="setGoal('Query legacy database for inactive accounts, cross-reference with billing API, export CSV of accounts to deactivate, and email report to billing admin.')">
+                            💰 Revenue Leakage Audit
+                        </div>
+                        <div class="pill" onclick="setGoal('Scrape top 10 articles on cloud infrastructure, extract key trends and performance metrics, compile into a structured JSON dataset, and save to data warehouse.')">
+                            📊 Market Trend Analysis
+                        </div>
+                        <div class="pill" onclick="setGoal('Monitor CPU spike alerts across production nodes, isolate the root cause process, restart the affected service container, and update the DevOps issue tracker.')">
+                            🖥️ Infrastructure Auto-Healing
+                        </div>
+                        <div class="pill" onclick="setGoal('Fetch raw user feedback tickets, categorize by sentiment, escalate critical bugs to engineering Slack channel, and log positive reviews in marketing DB.')">
+                            💬 Feedback Triaging
+                        </div>
+                        <div class="pill" onclick="setGoal('Audit third-party dependencies in repository, verify against known CVE vulnerabilities, automatically generate patch pull requests, and deploy status update.')">
+                            🔒 Dependency Sec-Ops
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="goalInput">Taskmaster Goal Instructions:</label>
+                    <textarea id="goalInput" rows="4" placeholder="Describe a complex, multi-step operational goal for the agent to execute autonomously..."></textarea>
+                </div>
+
+                <button class="btn-launch" onclick="triggerAgentRun()">
+                    <i class="fa-solid fa-play"></i>
+                    Execute Autonomous Taskmaster
+                </button>
+            </div>
+
+            <!-- Registered Tools Catalog -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fa-solid fa-toolbox"></i>
+                        Agent Tool Suite (5 Active Actions)
+                    </h3>
+                </div>
+                <div class="tools-grid" id="toolsGrid">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Right Panel: Live Execution & Traces -->
+        <section style="display: flex; flex-direction: column; gap: 1.5rem;">
+            
+            <!-- Execution Steps Progress -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                        Autonomous Execution Plan & Steps
+                    </h3>
+                    <span id="workflowStatusBadge" class="badge" style="display: none;">STATUS</span>
+                </div>
+                
+                <div class="step-list" id="stepList">
+                    <div style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.9rem;">
+                        <i class="fa-solid fa-network-wired" style="font-size: 2rem; margin-bottom: 0.5rem; color: #818cf8; display: block;"></i>
+                        Select a template or type a goal to launch the Taskmaster ReAct loop.
+                    </div>
+                </div>
+            </div>
+
+            <!-- OpenTelemetry Trace Logs -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fa-solid fa-terminal"></i>
+                        OpenTelemetry Reasoning Traces
+                    </h3>
+                </div>
+                <div class="terminal-box" id="terminalBox">
+                    <div class="log-line">
+                        <span class="log-time">[SYSTEM]</span>
+                        <span>Agent Orchestrator initialized. Ready for goal parsing...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Executive Report Deliverable -->
+            <div class="card" id="deliverableCard" style="display: none;">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fa-solid fa-file-contract"></i>
+                        Executive Report Deliverable Artifact
+                    </h3>
+                </div>
+                <div class="artifact-box" id="artifactBox"></div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        Taskmaster Autonomous Agent Engine &bull; Person 1 (AI/Agent Lead) Deliverable &bull; Powered by Gemini 3.5 & Google Cloud Run
+    </footer>
+
+    <script>
+        // Load Registered Tools on Page Load
+        async function loadTools() {
+            try {
+                const res = await fetch('/api/agent/tools');
+                const data = await res.json();
+                const container = document.getElementById('toolsGrid');
+                container.innerHTML = '';
+                data.tools.forEach(tool => {
+                    container.innerHTML += `
+                        <div class="tool-card">
+                            <div class="tool-card-name">${tool.name}</div>
+                            <div class="tool-card-desc">${tool.description}</div>
+                        </div>
+                    `;
+                });
+            } catch (err) {
+                console.error("Failed to load tools:", err);
+            }
+        }
+
+        function setGoal(text) {
+            document.getElementById('goalInput').value = text;
+        }
+
+        async function triggerAgentRun() {
+            const goal = document.getElementById('goalInput').value.trim();
+            if (!goal) {
+                alert("Please enter a task goal for the agent.");
+                return;
+            }
+
+            const stepList = document.getElementById('stepList');
+            const terminal = document.getElementById('terminalBox');
+            const deliverableCard = document.getElementById('deliverableCard');
+            const statusBadge = document.getElementById('workflowStatusBadge');
+
+            stepList.innerHTML = `<div style="text-align: center; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: #818cf8;"></i><br><br>Generating execution plan with Gemini 3.5...</div>`;
+            terminal.innerHTML = `<div class="log-line"><span class="log-time">[${new Date().toLocaleTimeString()}]</span> <span class="log-event">GOAL_RECEIVED</span> <span>${goal}</span></div>`;
+            deliverableCard.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/agent/run', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ goal: goal })
+                });
+
+                const workflow = await response.json();
+                renderWorkflow(workflow);
+                fetchTraces(workflow.workflow_id);
+
+            } catch (err) {
+                stepList.innerHTML = `<div style="color: var(--danger); text-align: center;">Error running agent: ${err.message}</div>`;
+            }
+        }
+
+        function renderWorkflow(wf) {
+            const stepList = document.getElementById('stepList');
+            const statusBadge = document.getElementById('workflowStatusBadge');
+            const deliverableCard = document.getElementById('deliverableCard');
+            const artifactBox = document.getElementById('artifactBox');
+
+            statusBadge.style.display = 'inline-flex';
+            statusBadge.innerText = wf.status;
+            statusBadge.style.backgroundColor = wf.status === 'COMPLETED' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(245, 158, 11, 0.2)';
+            statusBadge.style.color = wf.status === 'COMPLETED' ? '#34d399' : '#fbbf24';
+
+            stepList.innerHTML = '';
+            wf.steps.forEach(step => {
+                stepList.innerHTML += `
+                    <div class="step-card ${step.status.toLowerCase()}">
+                        <div class="step-header">
+                            <div class="step-title">
+                                <span>Step ${step.step_number}: ${step.description}</span>
+                            </div>
+                            <span class="tool-badge"><i class="fa-solid fa-wrench"></i> ${step.tool_name}</span>
+                        </div>
+                        <div class="step-reasoning">
+                            <strong>Reasoning:</strong> ${step.reasoning}
+                        </div>
+                        ${step.execution_time_ms ? `<div style="font-size: 0.75rem; color: #a7f3d0; margin-top: 0.2rem;"><i class="fa-solid fa-clock"></i> Latency: ${step.execution_time_ms}ms</div>` : ''}
+                    </div>
+                `;
+            });
+
+            if (wf.summary) {
+                deliverableCard.style.display = 'flex';
+                artifactBox.textContent = wf.summary;
+            }
+        }
+
+        async function fetchTraces(workflowId) {
+            try {
+                const res = await fetch(`/api/agent/traces/${workflowId}`);
+                const data = await res.json();
+                const terminal = document.getElementById('terminalBox');
+                terminal.innerHTML = '';
+
+                data.traces.forEach(t => {
+                    const time = new Date(t.timestamp).toLocaleTimeString();
+                    terminal.innerHTML += `
+                        <div class="log-line">
+                            <span class="log-time">[${time}]</span>
+                            <span class="log-event">${t.event_type}</span>
+                            <span>${JSON.stringify(t.details)}</span>
+                        </div>
+                    `;
+                });
+            } catch (err) {
+                console.error("Failed to fetch traces:", err);
+            }
+        }
+
+        // Initialize on load
+        loadTools();
+        // Set initial default goal
+        setGoal('Audit service cluster error logs, save incident record in central DB, dispatch remediation webhook, and generate executive report.');
+    </script>
+</body>
+</html>

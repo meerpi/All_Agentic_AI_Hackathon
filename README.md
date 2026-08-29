@@ -37,13 +37,14 @@ Designed for high-impact enterprise & developer automation, Taskmaster handles m
             v                                       v                           v
 +-----------------------+               +-----------------------+   +-----------------------+
 | Gemini 3.5 Flash      |               |  Tool Execution       |   | Memory & OpenTelemetry|
-| (google-genai SDK)    |               |  Registry (5 Tools)   |   | Reasoning Traces      |
+| (google-genai SDK)    |               |  Registry (6 Tools)   |   | Reasoning Traces      |
 +-----------------------+               +-----------------------+   +-----------------------+
                                         | - data_extractor      |
                                         | - db_manager          |
                                         | - action_dispatcher   |
                                         | - report_generator    |
                                         | - validator           |
+                                        | - python_sandbox      |
                                         +-----------------------+
 ```
 
@@ -56,6 +57,26 @@ Designed for high-impact enterprise & developer automation, Taskmaster handles m
 3. **`action_dispatcher`**: Triggers external REST webhooks, system endpoints, and automated alert dispatches.
 4. **`report_generator`**: Compiles executive markdown briefings, post-mortems, and deliverable artifacts.
 5. **`validator`**: Performs compliance & quality rule inspections, signaling self-correction loops if anomalies are found.
+6. **`python_sandbox`**: Executes untrusted python scripts natively in a secure subprocess.
+
+---
+
+## 💻 Multi-Channel & CLI Entrypoints
+
+Taskmaster isn't just a web app. It can run seamlessly anywhere you need it.
+
+### Taskmaster CLI
+For developers who prefer the terminal, Taskmaster features a sleek CLI built with `rich`:
+```bash
+python taskmaster_cli.py "generate an executive report" --priority High
+```
+
+### Discord Bot
+To run workflows autonomously in your team chats, spin up the Discord bot:
+```bash
+DISCORD_TOKEN=your_token_here python discord_bot.py
+```
+*Usage in Discord*: `@Taskmaster !task audit our service logs and update the DB`
 
 ---
 

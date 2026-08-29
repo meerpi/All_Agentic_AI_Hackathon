@@ -98,15 +98,24 @@ class GeminiClient:
                     },
                     {
                         "step_number": 4,
+                        "description": "Execute secure data transformation script in Python Sandbox",
+                        "tool_name": "python_sandbox",
+                        "tool_args": {
+                            "code": "print('Transforming data securely...'); result={'transformed': True, 'records_processed': 100}; print(result)"
+                        },
+                        "reasoning": "Use isolated sandbox environment to process untrusted data."
+                    },
+                    {
+                        "step_number": 5,
                         "description": "Inspect and validate execution outputs against compliance criteria",
                         "tool_name": "validator",
                         "tool_args": {
-                            "criteria": ["no_data_loss", "service_restored", "alert_acknowledged"]
+                            "criteria": ["no_errors", "service_restored"]
                         },
                         "reasoning": "Verify step results to ensure zero compliance violations."
                     },
                     {
-                        "step_number": 5,
+                        "step_number": 6,
                         "description": "Generate executive briefing artifact and task post-mortem report",
                         "tool_name": "report_generator",
                         "tool_args": {

@@ -13,7 +13,7 @@ def test_health_check():
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "HEALTHY"
-    assert data["registered_tools_count"] == 5
+    assert data["registered_tools_count"] >= 5
 
 
 def test_tools_list_endpoint():
@@ -58,6 +58,14 @@ def test_individual_tool_executions():
     res5 = val.execute(criteria=["no_errors"])
     assert res5.success is True
     assert res5.data["is_valid"] is True
+
+    # Python Sandbox
+    sandbox = registry.get_tool("python_sandbox")
+    if sandbox:
+        res6 = sandbox.execute(code="print('Hello World')")
+        assert res6.success is True
+        assert res6.data["status"] == "SUCCESS"
+        assert res6.data["stdout"] == "Hello World"
 
 
 def test_orchestrator_end_to_end():

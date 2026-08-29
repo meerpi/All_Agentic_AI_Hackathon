@@ -19,10 +19,18 @@ class BaseTool(ABC):
         try:
             result_data = self.run(**kwargs)
             duration = (time.time() - start_time) * 1000
+            
+            success = True
+            error_message = None
+            if isinstance(result_data, dict) and result_data.get("status") == "FAILED":
+                success = False
+                error_message = result_data.get("error", "Unknown tool error")
+            
             return ToolCallResult(
                 tool_name=self.name,
-                success=True,
+                success=success,
                 data=result_data,
+                error_message=error_message,
                 execution_time_ms=round(duration, 2)
             )
         except Exception as e:

@@ -57,7 +57,7 @@ Designed for high-impact enterprise & developer automation, Taskmaster handles m
 3. **`action_dispatcher`**: Triggers external REST webhooks, system endpoints, and automated alert dispatches.
 4. **`report_generator`**: Compiles executive markdown briefings, post-mortems, and deliverable artifacts.
 5. **`validator`**: Performs compliance & quality rule inspections, signaling self-correction loops if anomalies are found.
-6. **`python_sandbox`**: Executes untrusted python scripts natively in a secure subprocess.
+6. **`python_sandbox`**: Executes untrusted python scripts natively in a subprocess (isolated by timeout, sandboxed from host secrets - not a full execution sandbox).
 
 ---
 

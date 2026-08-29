@@ -29,6 +29,14 @@ class ValidatorTool(BaseTool):
                 # If the rule requires a specific key
                 elif rule_lower == "has_status" and "status" not in data_str:
                     violations.append(f"Rule '{rule}' failed: Missing status in data")
+                elif rule_lower == "no_pii_leak" and any(pii in data_str for pii in ["ssn", "password", "credit_card"]):
+                    violations.append(f"Rule '{rule}' failed: Potential PII detected in data")
+                elif rule_lower == "status_ok" and "error" in data_str:
+                    violations.append(f"Rule '{rule}' failed: Status indicates an error")
+                elif rule_lower == "no_data_loss" and data_to_validate.get("deleted_count", 0) > 0:
+                    violations.append(f"Rule '{rule}' failed: Data loss detected in payload")
+                elif rule_lower == "schema_valid" and not isinstance(data_to_validate, dict):
+                    violations.append(f"Rule '{rule}' failed: Data is not a valid dictionary schema")
                 else:
                     passed_rules.append(rule)
             else:

@@ -6,7 +6,7 @@ from agent.tools.base import BaseTool
 
 class DockerSandboxTool(BaseTool):
     name = "python_sandbox"
-    description = "Safely executes untrusted Python code in an isolated subprocess (Cloud Run compatible)."
+    description = "Executes untrusted Python code in a subprocess (isolated by timeout, sandboxed from host secrets - not a full execution sandbox)."
 
     def run(self, code: str, timeout_seconds: int = 15, **kwargs: Any) -> Dict[str, Any]:
         """Runs the provided python code in a temporary subprocess."""
@@ -20,8 +20,9 @@ class DockerSandboxTool(BaseTool):
             cmd = ["python", temp_path]
             
             # Note: For true hardening on Linux, we would wrap this in `prlimit` or `firejail`. 
-            # In Windows/cross-platform, we rely on timeout.
-            result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_seconds)
+            # In Windows/cross-platform, we rely on timeout and stripping the environment.
+            safe_env = {"PATH": os.environ.get("PATH", "")}
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_seconds, env=safe_env)
             
             if result.returncode == 0:
                 return {

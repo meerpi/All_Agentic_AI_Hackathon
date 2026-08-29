@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  taskmaster-agent:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-mock_key}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.5-flash}
+      - MOCK_GEMINI=${MOCK_GEMINI:-true}
+      - LOG_LEVEL=INFO
+      - PORT=8000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3

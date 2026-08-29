@@ -147,8 +147,9 @@ class TaskmasterOrchestrator:
                     step.error = tool_result.error_message
                     self._add_trace(workflow_id, "STEP_FAILED", step_number=step.step_number, details={"error": step.error})
 
-        # Synthesize Final Report
-        workflow.status = WorkflowStatus.COMPLETED
+        # Check if any step failed
+        any_failed = any(step.status == StepStatus.FAILED for step in workflow.steps)
+        workflow.status = WorkflowStatus.FAILED if any_failed else WorkflowStatus.COMPLETED
         workflow.updated_at = datetime.utcnow()
 
         summary_prompt = FINAL_SUMMARY_PROMPT.format(

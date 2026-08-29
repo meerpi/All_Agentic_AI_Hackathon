@@ -480,7 +480,12 @@
                 </div>
 
                 <div>
-                    <label for="goalInput">Taskmaster Goal Instructions:</label>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <label for="goalInput" style="margin-bottom: 0;">Taskmaster Goal Instructions:</label>
+                        <button class="btn btn-secondary" onclick="startVoiceRecognition()" id="micButton" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">
+                            <i class="fa-solid fa-microphone"></i> Voice Command
+                        </button>
+                    </div>
                     <textarea id="goalInput" rows="4" placeholder="Describe a complex, multi-step operational goal for the agent to execute autonomously..."></textarea>
                 </div>
 
@@ -563,6 +568,44 @@
     </footer>
 
     <script>
+        // Voice Command feature using Web Speech API
+        function startVoiceRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("Voice recognition is not supported in this browser. Try Chrome or Edge.");
+                return;
+            }
+            
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+            
+            const micBtn = document.getElementById('micButton');
+            micBtn.innerHTML = '<i class="fa-solid fa-microphone fa-beat" style="color: #ef4444;"></i> Listening...';
+            
+            recognition.start();
+            
+            recognition.onresult = function(event) {
+                const speechResult = event.results[0][0].transcript;
+                document.getElementById('goalInput').value = speechResult;
+                micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i> Voice Command';
+                
+                // Automatically trigger run when speech is recognized
+                setTimeout(triggerAgentRun, 500);
+            };
+            
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error:', event.error);
+                micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i> Voice Command';
+                alert('Voice recognition error: ' + event.error);
+            };
+            
+            recognition.onend = function() {
+                micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i> Voice Command';
+            };
+        }
+
         // Load Registered Tools on Page Load
         async function loadTools() {
             try {

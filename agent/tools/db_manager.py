@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional
 from agent.tools.base import BaseTool
 
 # Local SQLite store to simulate Cloud SQL / Firestore persistent memory bank
-DB_PATH = ":memory:"
+DB_PATH = "taskmaster.db"
 
 
 class DBManagerTool(BaseTool):

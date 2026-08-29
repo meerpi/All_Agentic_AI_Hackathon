@@ -29,7 +29,7 @@ Designed for high-impact enterprise & developer automation, Taskmaster handles m
                                               v
                                   +-----------------------+
                                   | Taskmaster Engine     |
-                                  | (ReAct Planner/Loop)  |
+                                  | (Plan-then-Execute)   |
                                   +-----+-----------+-----+
                                         |           |
             +---------------------------+           +---------------------------+
@@ -86,7 +86,7 @@ cp .env.example .env
 Edit `.env`:
 ```ini
 GEMINI_API_KEY=your_gemini_api_key_here
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.5-flash
 MOCK_GEMINI=false  # Set to true for mock testing without API key
 PORT=8000
 HOST=0.0.0.0

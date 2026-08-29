@@ -5,9 +5,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     GEMINI_API_KEY: str = "mock_key"
-    GEMINI_MODEL: str = "gemini-2.5-flash"
-    MOCK_GEMINI: bool = True
-    AGENT_MAX_ITERATIONS: int = 10
+    GEMINI_MODEL: str = "gemini-3.5-flash"
+    MOCK_GEMINI: bool = False
     LOG_LEVEL: str = "INFO"
     HOST: str = "0.0.0.0"
     PORT: int = 8000

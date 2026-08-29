@@ -1,10 +1,9 @@
+import pkgutil
+import importlib
+import inspect
+import agent.tools
 from typing import Dict, List, Optional, Type
 from agent.tools.base import BaseTool
-from agent.tools.data_extractor import DataExtractorTool
-from agent.tools.db_manager import DBManagerTool
-from agent.tools.action_dispatcher import ActionDispatcherTool
-from agent.tools.report_generator import ReportGeneratorTool
-from agent.tools.validator import ValidatorTool
 
 
 class ToolRegistry:
@@ -13,15 +12,18 @@ class ToolRegistry:
         self._register_default_tools()
 
     def _register_default_tools(self):
-        defaults = [
-            DataExtractorTool(),
-            DBManagerTool(),
-            ActionDispatcherTool(),
-            ReportGeneratorTool(),
-            ValidatorTool()
-        ]
-        for tool in defaults:
-            self.register(tool)
+        for _, module_name, _ in pkgutil.iter_modules(agent.tools.__path__):
+            if module_name in ["base", "registry"]:
+                continue
+            module = importlib.import_module(f"agent.tools.{module_name}")
+            for name, obj in inspect.getmembers(module):
+                if inspect.isclass(obj) and issubclass(obj, BaseTool) and obj is not BaseTool:
+                    # Prevent abstract classes or base classes from being registered
+                    if not inspect.isabstract(obj):
+                        try:
+                            self.register(obj())
+                        except Exception as e:
+                            print(f"Failed to load tool {name}: {e}")
 
     def register(self, tool: BaseTool):
         self._tools[tool.name] = tool

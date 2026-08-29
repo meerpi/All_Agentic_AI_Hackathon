@@ -21,8 +21,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy source code
 COPY . .
 
-# Expose port (Cloud Run defaults to PORT 8000 or $PORT)
-EXPOSE 8000
+# Expose port (Cloud Run defaults to PORT 8080 or $PORT)
+ENV PORT=8080
+EXPOSE $PORT
 
-# Run FastAPI app with Uvicorn worker
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run FastAPI app with Uvicorn worker bound to $PORT
+CMD uvicorn app:app --host 0.0.0.0 --port $PORT

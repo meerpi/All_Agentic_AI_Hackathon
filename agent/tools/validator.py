@@ -37,6 +37,10 @@ class ValidatorTool(BaseTool):
                     violations.append(f"Rule '{rule}' failed: Data loss detected in payload")
                 elif rule_lower == "schema_valid" and not isinstance(data_to_validate, dict):
                     violations.append(f"Rule '{rule}' failed: Data is not a valid dictionary schema")
+                elif rule_lower == "service_restored" and data_to_validate.get("service_status") != "operational":
+                    violations.append(f"Rule '{rule}' failed: Service is not fully operational")
+                elif rule_lower == "alert_acknowledged" and not data_to_validate.get("acknowledged", False):
+                    violations.append(f"Rule '{rule}' failed: Alert was not acknowledged")
                 else:
                     passed_rules.append(rule)
             else:

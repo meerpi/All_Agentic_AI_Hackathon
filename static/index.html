@@ -441,6 +441,30 @@
         <!-- Left Panel: Input & Control -->
         <section style="display: flex; flex-direction: column; gap: 1.5rem;">
             
+            <!-- Autonomous Event Watcher & Ingestion Hub -->
+            <div class="card" style="border: 1px solid rgba(129, 140, 248, 0.35); background: linear-gradient(135deg, rgba(30, 27, 75, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 class="card-title" style="color: #a5b4fc;">
+                        <i class="fa-solid fa-satellite-dish fa-spin" style="--fa-animation-duration: 4s; color: #38bdf8;"></i>
+                        Event-Driven Autonomous Watcher
+                    </h2>
+                    <span id="watcherBadge" class="status-badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 999px;">
+                        <i class="fa-solid fa-circle-dot"></i> Watcher: ACTIVE
+                    </span>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                    Continuously listens for incoming Gmail client inquiries or webhook events, and autonomously routes tasks across Google Calendar, Docs, Sheets, and Gmail.
+                </p>
+                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                    <button class="btn btn-secondary" onclick="simulateInquiry()" style="flex: 1; background: var(--accent-gemini); color: white; border: none; font-weight: 600; box-shadow: 0 0 15px var(--accent-glow);">
+                        <i class="fa-solid fa-bolt"></i> ⚡ Simulate Client Inquiry Event
+                    </button>
+                    <button class="btn btn-secondary" id="watcherToggleBtn" onclick="toggleWatcher()" style="padding: 0.6rem 1rem;">
+                        <i class="fa-solid fa-power-off"></i> Toggle Poller
+                    </button>
+                </div>
+            </div>
+
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">
@@ -452,6 +476,21 @@
                 <div>
                     <label>Select Sample Scenario Template:</label>
                     <div class="template-pills">
+                        <div class="pill" style="border-color: rgba(129, 140, 248, 0.5); background: rgba(99, 102, 241, 0.15); font-weight: 600;" onclick="setGoal('Coordinate new freelance client inquiry from Sarah Jenkins (Lumina Health): schedule 45-min discovery call on Google Calendar, write tailored SOW proposal in Google Docs, log lead to Google Sheets CRM, and draft client response in Gmail.')">
+                            🌟 💼 Freelance Pipeline Coordinator (Inquiry ➔ Calendar ➔ Docs ➔ Sheets ➔ Gmail)
+                        </div>
+                        <div class="pill" style="border-color: rgba(56, 189, 248, 0.5); background: rgba(14, 165, 233, 0.15); font-weight: 600;" onclick="setGoal('Act as an Automated Product Manager: parse Sprint Planning transcript, extract decisions and action items, create PROD Jira engineering tasks, write Executive Meeting Minutes in Google Docs, sync Sprint Backlog to Google Sheets, and post an executive Block Kit announcement to Slack.')">
+                            🌟 📊 Automated Product Manager (Transcript ➔ Jira ➔ Google Docs ➔ Sheets ➔ Slack)
+                        </div>
+                        <div class="pill" style="border-color: rgba(239, 68, 68, 0.5); background: rgba(239, 68, 68, 0.15); font-weight: 600;" onclick="setGoal('Search for Lex Fridman Yann LeCun podcast on YouTube and play it with ad auto-skip.')">
+                            🌐 🎬 Autonomous YouTube DJ (Search ➔ Play ➔ Ad Auto-Skip ➔ Verify)
+                        </div>
+                        <div class="pill" style="border-color: rgba(16, 185, 129, 0.5); background: rgba(16, 185, 129, 0.15); font-weight: 600;" onclick="setGoal('Search for Coldplay on Spotify, play the top track, and create a high-priority Focus Playlist.')">
+                            🌐 🎵 Autonomous Spotify Controller (Web Player ➔ Search ➔ MPRIS Fast-Path)
+                        </div>
+                        <div class="pill" style="border-color: rgba(168, 85, 247, 0.5); background: rgba(168, 85, 247, 0.15); font-weight: 600;" onclick="setGoal('Navigate to news.ycombinator.com, extract top 3 trending headlines via ARIA snapshot, and compile briefing document in Google Docs.')">
+                            🌐 💻 Autonomous Web Scraper (Playwright ➔ ARIA Parser ➔ Docs ➔ Slack)
+                        </div>
                         <div class="pill" onclick="setGoal('Audit service cluster error logs, save incident record in central DB, dispatch remediation webhook, and generate executive report.')">
                             🚨 Incident Remediation Chore
                         </div>
@@ -463,18 +502,6 @@
                         </div>
                         <div class="pill" onclick="setGoal('Query legacy database for inactive accounts, cross-reference with billing API, export CSV of accounts to deactivate, and email report to billing admin.')">
                             💰 Revenue Leakage Audit
-                        </div>
-                        <div class="pill" onclick="setGoal('Scrape top 10 articles on cloud infrastructure, extract key trends and performance metrics, compile into a structured JSON dataset, and save to data warehouse.')">
-                            📊 Market Trend Analysis
-                        </div>
-                        <div class="pill" onclick="setGoal('Monitor CPU spike alerts across production nodes, isolate the root cause process, restart the affected service container, and update the DevOps issue tracker.')">
-                            🖥️ Infrastructure Auto-Healing
-                        </div>
-                        <div class="pill" onclick="setGoal('Fetch raw user feedback tickets, categorize by sentiment, escalate critical bugs to engineering Slack channel, and log positive reviews in marketing DB.')">
-                            💬 Feedback Triaging
-                        </div>
-                        <div class="pill" onclick="setGoal('Audit third-party dependencies in repository, verify against known CVE vulnerabilities, automatically generate patch pull requests, and deploy status update.')">
-                            🔒 Dependency Sec-Ops
                         </div>
                     </div>
                 </div>
@@ -489,10 +516,47 @@
                     <textarea id="goalInput" rows="4" placeholder="Describe a complex, multi-step operational goal for the agent to execute autonomously..."></textarea>
                 </div>
 
-                <button class="btn-launch" onclick="triggerAgentRun()">
-                    <i class="fa-solid fa-play"></i>
-                    Execute Autonomous Taskmaster
-                </button>
+                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                    <button class="btn-launch" onclick="triggerMultiAgentCouncil()" style="flex: 2; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #06b6d4 100%);">
+                        <i class="fa-solid fa-people-group"></i>
+                        Dispatch Multi-Agent Council (5 Specialized Agents)
+                    </button>
+                    <button class="btn btn-secondary" onclick="triggerAgentRun()" style="flex: 1; padding: 0.8rem;">
+                        <i class="fa-solid fa-bolt"></i> Single Agent
+                    </button>
+                </div>
+            </div>
+
+            <!-- Multi-Agent Council Roster -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fa-solid fa-users-gear"></i>
+                        Multi-Agent Council (5 Specialized Sub-Agents)
+                    </h3>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+                    <div style="background: rgba(15, 23, 42, 0.6); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(129, 140, 248, 0.2);">
+                        <div style="font-weight: 600; color: #38bdf8; font-size: 0.82rem;"><i class="fa-solid fa-brain"></i> Intelligence Specialist</div>
+                        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Entity resolution & action item decomposition</div>
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.6); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(129, 140, 248, 0.2);">
+                        <div style="font-weight: 600; color: #a5b4fc; font-size: 0.82rem;"><i class="fa-solid fa-code"></i> Tech Product Owner</div>
+                        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Fibonacci sizing & Jira Cloud ticket provisioning</div>
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.6); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(129, 140, 248, 0.2);">
+                        <div style="font-weight: 600; color: #34d399; font-size: 0.82rem;"><i class="fa-solid fa-file-lines"></i> Executive Doc Lead</div>
+                        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Google Docs Minutes & Slack Block Kit broadcasts</div>
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.6); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(129, 140, 248, 0.2);">
+                        <div style="font-weight: 600; color: #fbbf24; font-size: 0.82rem;"><i class="fa-solid fa-calendar-check"></i> Operations Coordinator</div>
+                        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Google Sheets Backlog & Calendar scheduling</div>
+                    </div>
+                    <div style="background: rgba(15, 23, 42, 0.6); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(129, 140, 248, 0.2);">
+                        <div style="font-weight: 600; color: #f43f5e; font-size: 0.82rem;"><i class="fa-solid fa-shield-halved"></i> Compliance Auditor</div>
+                        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Reflexion loop & cross-platform consistency audit</div>
+                    </div>
+                </div>
             </div>
 
             <!-- Registered Tools Catalog -->
@@ -500,7 +564,7 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fa-solid fa-toolbox"></i>
-                        Agent Tool Suite (5 Active Actions)
+                        Agent Tool Suite (13 Active Integrations)
                     </h3>
                 </div>
                 <div class="tools-grid" id="toolsGrid">
@@ -513,12 +577,30 @@
         <!-- Right Panel: Live Execution & Traces -->
         <section style="display: flex; flex-direction: column; gap: 1.5rem;">
             
+            <!-- Multi-Agent Council Live Dialogue -->
+            <div class="card" id="councilDialogueCard" style="border: 1px solid rgba(129, 140, 248, 0.35); background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 27, 75, 0.5) 100%);">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 class="card-title" style="color: #a5b4fc;">
+                        <i class="fa-solid fa-comments"></i>
+                        🏛️ Multi-Agent Council Inter-Agent Dialogue
+                    </h3>
+                    <span id="councilStatusBadge" class="status-badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 999px; display: none;">
+                        COUNCIL_ACTIVE
+                    </span>
+                </div>
+                <div id="councilDialogueStream" style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 380px; overflow-y: auto; padding: 0.5rem;">
+                    <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 1rem;">
+                        Click "Dispatch Multi-Agent Council" to watch the 5 specialized sub-agents collaborate in real time.
+                    </div>
+                </div>
+            </div>
+
             <!-- Execution Steps Progress -->
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fa-solid fa-bars-staggered"></i>
-                        Autonomous Execution Plan & Steps
+                        Council Execution Plan & Deliverables
                     </h3>
                     <span id="workflowStatusBadge" class="badge" style="display: none;">STATUS</span>
                 </div>
@@ -544,6 +626,35 @@
                         <span class="log-time">[SYSTEM]</span>
                         <span>Agent Orchestrator initialized. Ready for goal parsing...</span>
                     </div>
+                </div>
+            </div>
+
+            <!-- Live Autonomous Browser & Computer Control Viewport -->
+            <div class="card" id="browserViewportCard" style="border: 1px solid rgba(0, 223, 216, 0.35); background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(6, 78, 59, 0.25) 100%);">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 class="card-title" style="color: #00dfd8; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fa-solid fa-desktop"></i>
+                        🌐 Live Browser & Computer Control Viewport
+                    </h3>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <button class="btn btn-secondary" onclick="refreshBrowserViewport()" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">
+                            <i class="fa-solid fa-arrows-rotate"></i> Refresh View
+                        </button>
+                        <button class="btn" onclick="emergencyKillBrowser()" style="padding: 0.25rem 0.6rem; font-size: 0.75rem; background: #ef4444; color: white; border: none; font-weight: 700; border-radius: 6px; cursor: pointer;">
+                            <i class="fa-solid fa-hand"></i> EMERGENCY STOP
+                        </button>
+                    </div>
+                </div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.75rem; display: flex; justify-content: space-between;">
+                    <span id="browserUrlText">URL: <i>No active browser session</i></span>
+                    <span id="browserActiveStatus" style="color: #64748b;"><i class="fa-solid fa-circle"></i> IDLE</span>
+                </div>
+                <div id="browserViewportContainer" style="background: #020617; border-radius: 8px; border: 1px solid var(--border-color); min-height: 180px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+                    <div id="browserEmptyPlaceholder" style="color: var(--text-muted); font-size: 0.85rem; text-align: center; padding: 1.5rem;">
+                        <i class="fa-solid fa-window-maximize" style="font-size: 2rem; color: #334155; margin-bottom: 0.5rem; display: block;"></i>
+                        Browser viewport feed will appear here when agent executes web/media steps.
+                    </div>
+                    <img id="browserLiveImage" style="width: 100%; height: auto; display: none; border-radius: 8px;" alt="Live Browser Viewport" />
                 </div>
             </div>
 
@@ -630,6 +741,227 @@
             document.getElementById('goalInput').value = text;
         }
 
+        // Watcher controls
+        async function checkWatcherStatus() {
+            try {
+                const res = await fetch('/api/pipeline/watcher');
+                const data = await res.json();
+                const badge = document.getElementById('watcherBadge');
+                if (data.is_running) {
+                    badge.innerHTML = '<i class="fa-solid fa-circle-dot" style="color:#10b981;"></i> Watcher: ACTIVE';
+                    badge.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+                    badge.style.color = '#34d399';
+                } else {
+                    badge.innerHTML = '<i class="fa-solid fa-circle-pause" style="color:#f59e0b;"></i> Watcher: PAUSED';
+                    badge.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+                    badge.style.color = '#fbbf24';
+                }
+            } catch (e) {
+                console.log("Watcher status check:", e);
+            }
+        }
+
+        async function toggleWatcher() {
+            try {
+                const statusRes = await fetch('/api/pipeline/watcher');
+                const status = await statusRes.json();
+                const endpoint = status.is_running ? '/api/pipeline/watcher/stop' : '/api/pipeline/watcher/start';
+                await fetch(endpoint, { method: 'POST' });
+                await checkWatcherStatus();
+            } catch (err) {
+                alert("Error toggling watcher: " + err.message);
+            }
+        }
+
+        async function simulateInquiry() {
+            const stepList = document.getElementById('stepList');
+            const terminal = document.getElementById('terminalBox');
+            const deliverableCard = document.getElementById('deliverableCard');
+            const statusBadge = document.getElementById('workflowStatusBadge');
+
+            stepList.innerHTML = `<div style="text-align: center; padding: 2rem;"><i class="fa-solid fa-satellite-dish fa-spin" style="font-size: 2.2rem; color: #38bdf8;"></i><br><br><strong>Inquiry Ingestion Event Detected!</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">Autonomous Routing across Google Calendar, Docs, Sheets, and Gmail...</span></div>`;
+            terminal.innerHTML = `<div class="log-line"><span class="log-time">[${new Date().toLocaleTimeString()}]</span> <span class="log-event">INQUIRY_INGESTED</span> <span>Sarah Jenkins (Lumina Health) — $12,500 Patient Analytics Dashboard</span></div>`;
+            deliverableCard.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/pipeline/simulate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                });
+                const resData = await response.json();
+                const workflow = resData.workflow;
+                renderWorkflow(workflow);
+                fetchTraces(workflow.workflow_id);
+            } catch (err) {
+                stepList.innerHTML = `<div style="color: var(--danger); text-align: center;">Error simulating inquiry: ${err.message}</div>`;
+            }
+        }
+
+        async function triggerMultiAgentCouncil() {
+            const goal = document.getElementById('goalInput').value.trim();
+            if (!goal) {
+                alert("Please enter a task goal for the council.");
+                return;
+            }
+
+            const stream = document.getElementById('councilDialogueStream');
+            const statusBadge = document.getElementById('councilStatusBadge');
+            const stepList = document.getElementById('stepList');
+            const deliverableCard = document.getElementById('deliverableCard');
+            const terminal = document.getElementById('terminalBox');
+
+            statusBadge.style.display = 'inline-flex';
+            statusBadge.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> COUNCIL_DELIBERATING';
+            statusBadge.style.background = 'rgba(129, 140, 248, 0.2)';
+            statusBadge.style.color = '#a5b4fc';
+
+            stream.innerHTML = `
+                <div style="text-align: center; padding: 1.5rem; color: #a5b4fc;">
+                    <i class="fa-solid fa-users-viewfinder fa-beat" style="font-size: 2rem; margin-bottom: 0.5rem; color: #38bdf8;"></i>
+                    <br><strong>Meta-Orchestrator Convening Council...</strong>
+                    <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.3rem;">Delegating across Intelligence, Engineering, Executive Doc, Operations, and Critic Agents</div>
+                </div>
+            `;
+            stepList.innerHTML = `<div style="text-align: center; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: #818cf8;"></i><br><br>Executing Multi-Agent Council Pipeline...</div>`;
+            deliverableCard.style.display = 'none';
+
+            terminal.innerHTML = `<div class="log-line"><span class="log-time">[${new Date().toLocaleTimeString()}]</span> <span class="log-event">COUNCIL_DISPATCHED</span> <span>${goal}</span></div>`;
+
+            try {
+                const response = await fetch('/api/multi-agent/run', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        goal: goal,
+                        context: {
+                            transcript: goal,
+                            meeting_title: "Sprint Review & Security Review"
+                        }
+                    })
+                });
+
+                const result = await response.json();
+                renderCouncilResult(result);
+
+            } catch (err) {
+                stream.innerHTML = `<div style="color: var(--danger); text-align: center;">Error running council: ${err.message}</div>`;
+                stepList.innerHTML = `<div style="color: var(--danger); text-align: center;">Error: ${err.message}</div>`;
+            }
+        }
+
+        function renderCouncilResult(result) {
+            const stream = document.getElementById('councilDialogueStream');
+            const statusBadge = document.getElementById('councilStatusBadge');
+            const stepList = document.getElementById('stepList');
+            const deliverableCard = document.getElementById('deliverableCard');
+            const artifactBox = document.getElementById('artifactBox');
+
+            statusBadge.innerHTML = '<i class="fa-solid fa-check-double"></i> COUNCIL_CONSENSUS_REACHED';
+            statusBadge.style.background = 'rgba(16, 185, 129, 0.2)';
+            statusBadge.style.color = '#34d399';
+
+            // 1. Render Council Dialogue Stream
+            stream.innerHTML = '';
+            const roleIcons = {
+                'Meta-Orchestrator': 'fa-crown',
+                'Intelligence & Intake Specialist': 'fa-brain',
+                'Technical Product Owner & Jira Lead': 'fa-code',
+                'Executive Communications & Documentation Lead': 'fa-file-lines',
+                'Logistics & Workflow Coordinator': 'fa-calendar-check',
+                'Quality & Compliance Auditor': 'fa-shield-halved'
+            };
+            const roleColors = {
+                'Meta-Orchestrator': '#c084fc',
+                'Intelligence & Intake Specialist': '#38bdf8',
+                'Technical Product Owner & Jira Lead': '#818cf8',
+                'Executive Communications & Documentation Lead': '#34d399',
+                'Logistics & Workflow Coordinator': '#fbbf24',
+                'Quality & Compliance Auditor': '#f43f5e'
+            };
+
+            result.council_dialogue.forEach(d => {
+                const icon = roleIcons[d.sender_role] || 'fa-user';
+                const color = roleColors[d.sender_role] || '#94a3b8';
+                const time = new Date(d.timestamp).toLocaleTimeString();
+                
+                let artifactsHtml = '';
+                if (d.artifacts_attached && d.artifacts_attached.length > 0) {
+                    artifactsHtml = `<div style="margin-top:0.3rem; display:flex; gap:0.4rem; flex-wrap:wrap;">` +
+                        d.artifacts_attached.map(a => `<span style="background:rgba(255,255,255,0.08); padding:0.15rem 0.45rem; border-radius:4px; font-size:0.72rem; color:#e2e8f0;">📦 ${a.type || 'artifact'}</span>`).join('') +
+                        `</div>`;
+                }
+
+                stream.innerHTML += `
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(129, 140, 248, 0.2); border-left: 3px solid ${color}; padding: 0.65rem 0.85rem; border-radius: 6px; font-size: 0.82rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+                            <span style="font-weight: 600; color: ${color};"><i class="fa-solid ${icon}"></i> ${d.sender} <span style="font-weight: 400; color: var(--text-muted); font-size: 0.75rem;">➔ ${d.recipient}</span></span>
+                            <span style="font-size: 0.7rem; color: var(--text-muted);">${time}</span>
+                        </div>
+                        <div style="color: #cbd5e1; line-height: 1.35;">${d.message}</div>
+                        ${artifactsHtml}
+                    </div>
+                `;
+            });
+
+            // 2. Render Sub-Agent Plan & Artifacts in stepList
+            stepList.innerHTML = '';
+            result.subagent_responses.forEach((resp, idx) => {
+                let artifactBadges = '';
+                
+                if (resp.insights && resp.insights.issue_keys) {
+                    const keysHtml = resp.insights.issue_keys.map(k => `<a href="https://taskmasterjira.atlassian.net/browse/${k}" target="_blank" style="background:rgba(99,102,241,0.25); color:#a5b4fc; border:1px solid rgba(99,102,241,0.4); padding:0.15rem 0.5rem; border-radius:4px; font-family:monospace; font-size:0.78rem; text-decoration:none;">${k}</a>`).join(' ');
+                    artifactBadges += `
+                        <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: #c7d2fe;">
+                            <i class="fa-solid fa-list-check" style="color: #818cf8;"></i> <strong>Live Jira Cloud Tickets:</strong> ${keysHtml}
+                        </div>
+                    `;
+                }
+
+                if (resp.insights && resp.insights.document_url) {
+                    artifactBadges += `
+                        <div style="margin-top: 0.5rem;">
+                            <a href="${resp.insights.document_url}" target="_blank" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.8rem; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 8px; color: #38bdf8; text-decoration: none; font-size: 0.82rem; font-weight: 600;">
+                                <i class="fa-solid fa-file-lines"></i> Open Google Doc Minutes
+                            </a>
+                        </div>
+                    `;
+                }
+
+                if (resp.insights && resp.insights.spreadsheet_url) {
+                    artifactBadges += `
+                        <div style="margin-top: 0.5rem;">
+                            <a href="${resp.insights.spreadsheet_url}" target="_blank" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.8rem; background: rgba(52, 211, 153, 0.15); border: 1px solid rgba(52, 211, 153, 0.4); border-radius: 8px; color: #34d399; text-decoration: none; font-size: 0.82rem; font-weight: 600;">
+                                <i class="fa-solid fa-table"></i> Open Google Sheets Sprint Backlog
+                            </a>
+                        </div>
+                    `;
+                }
+
+                stepList.innerHTML += `
+                    <div class="step-card completed">
+                        <div class="step-header">
+                            <div class="step-title">
+                                <span>Agent ${idx + 1}: ${resp.agent_name}</span>
+                            </div>
+                            <span class="tool-badge"><i class="fa-solid fa-user-gear"></i> ${resp.role}</span>
+                        </div>
+                        <div class="step-reasoning">
+                            <strong>Output / Decision:</strong> ${resp.reasoning}
+                        </div>
+                        ${artifactBadges}
+                        <div style="font-size: 0.75rem; color: #a7f3d0; margin-top: 0.4rem;"><i class="fa-solid fa-clock"></i> Execution: ${resp.execution_time_ms}ms</div>
+                    </div>
+                `;
+            });
+
+            // 3. Render Executive Summary
+            if (result.executive_summary) {
+                deliverableCard.style.display = 'flex';
+                artifactBox.textContent = result.executive_summary;
+            }
+        }
+
         async function triggerAgentRun() {
             const goal = document.getElementById('goalInput').value.trim();
             if (!goal) {
@@ -642,7 +974,7 @@
             const deliverableCard = document.getElementById('deliverableCard');
             const statusBadge = document.getElementById('workflowStatusBadge');
 
-            stepList.innerHTML = `<div style="text-align: center; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: #818cf8;"></i><br><br>Generating execution plan with Gemini 3.5...</div>`;
+            stepList.innerHTML = `<div style="text-align: center; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: #818cf8;"></i><br><br>Generating autonomous execution plan with Gemini...</div>`;
             terminal.innerHTML = `<div class="log-line"><span class="log-time">[${new Date().toLocaleTimeString()}]</span> <span class="log-event">GOAL_RECEIVED</span> <span>${goal}</span></div>`;
             deliverableCard.style.display = 'none';
 
@@ -674,19 +1006,138 @@
             statusBadge.style.color = wf.status === 'COMPLETED' ? '#34d399' : '#fbbf24';
 
             stepList.innerHTML = '';
+
+            // --- DAG Canvas ---
+            const dagContainer = document.createElement('div');
+            dagContainer.style.cssText = 'margin-bottom:1.5rem;overflow-x:auto;';
+            const steps = wf.steps || [];
+
+            // Compute parallel levels (BFS layering by depends_on)
+            const levels = [];
+            const stepByNum = {};
+            steps.forEach(s => { stepByNum[s.step_number] = s; });
+            const assigned = new Set();
+            // Level 0: steps with no dependencies
+            let currentLevel = steps.filter(s => !s.depends_on || s.depends_on.length === 0).map(s => s.step_number);
+            while (currentLevel.length > 0) {
+                levels.push(currentLevel);
+                currentLevel.forEach(n => assigned.add(n));
+                const nextLevel = [];
+                steps.forEach(s => {
+                    if (!assigned.has(s.step_number) && s.depends_on && s.depends_on.every(d => assigned.has(d))) {
+                        nextLevel.push(s.step_number);
+                    }
+                });
+                currentLevel = nextLevel;
+            }
+            // Catch any unassigned steps
+            steps.forEach(s => { if (!assigned.has(s.step_number)) { if (levels.length === 0) levels.push([]); levels[levels.length - 1].push(s.step_number); }});
+
+            const nodeW = 160, nodeH = 50, padX = 40, padY = 70, topPad = 30;
+            const maxPerLevel = Math.max(...levels.map(l => l.length), 1);
+            const svgW = Math.max(maxPerLevel * (nodeW + padX) + padX, 400);
+            const svgH = levels.length * (nodeH + padY) + topPad + 20;
+
+            // Compute node positions
+            const nodePos = {};
+            levels.forEach((level, li) => {
+                const totalW = level.length * nodeW + (level.length - 1) * padX;
+                const startX = (svgW - totalW) / 2;
+                level.forEach((sn, ni) => {
+                    nodePos[sn] = {
+                        x: startX + ni * (nodeW + padX),
+                        y: topPad + li * (nodeH + padY),
+                    };
+                });
+            });
+
+            const statusColors = {
+                completed: '#10b981', failed: '#ef4444', in_progress: '#f59e0b',
+                pending: '#6b7280', blocked: '#64748b', waiting_approval: '#8b5cf6',
+            };
+
+            let svgContent = '';
+            // Draw edges
+            steps.forEach(s => {
+                if (!s.depends_on) return;
+                const to = nodePos[s.step_number];
+                if (!to) return;
+                s.depends_on.forEach(dep => {
+                    const from = nodePos[dep];
+                    if (!from) return;
+                    const x1 = from.x + nodeW / 2, y1 = from.y + nodeH;
+                    const x2 = to.x + nodeW / 2, y2 = to.y;
+                    const midY = (y1 + y2) / 2;
+                    svgContent += `<path d="M${x1},${y1} C${x1},${midY} ${x2},${midY} ${x2},${y2}" fill="none" stroke="rgba(148,163,184,0.5)" stroke-width="2" marker-end="url(#arrowhead)"/>`;
+                });
+            });
+            // Draw nodes
+            steps.forEach(s => {
+                const pos = nodePos[s.step_number];
+                if (!pos) return;
+                const color = statusColors[(s.status || 'pending').toLowerCase()] || '#6b7280';
+                svgContent += `<rect x="${pos.x}" y="${pos.y}" width="${nodeW}" height="${nodeH}" rx="8" fill="rgba(30,41,59,0.9)" stroke="${color}" stroke-width="2"/>`;
+                svgContent += `<text x="${pos.x + nodeW/2}" y="${pos.y + 20}" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">Step ${s.step_number}</text>`;
+                svgContent += `<text x="${pos.x + nodeW/2}" y="${pos.y + 37}" text-anchor="middle" fill="${color}" font-size="10">${s.tool_name}</text>`;
+            });
+
+            const svg = `<svg width="${svgW}" height="${svgH}" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto;">
+                <defs><marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="rgba(148,163,184,0.7)"/></marker></defs>
+                ${svgContent}
+            </svg>`;
+            dagContainer.innerHTML = `<div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.5rem;font-weight:600;"><i class="fa-solid fa-diagram-project"></i> DAG Execution Graph</div>${svg}`;
+            stepList.appendChild(dagContainer);
+
+            // --- Step detail cards (below the DAG) ---
             wf.steps.forEach(step => {
+                let linkHtml = '';
+                const res = step.result || {};
+                const url = res.url || res.link;
+                if (url && typeof url === 'string' && url.startsWith('http')) {
+                    let btnLabel = 'Open Deliverable';
+                    let icon = 'fa-arrow-up-right-from-square';
+                    if (url.includes('docs.google.com/document')) {
+                        btnLabel = 'Open Google Doc';
+                        icon = 'fa-file-lines';
+                    } else if (url.includes('docs.google.com/spreadsheets')) {
+                        btnLabel = 'Open Google Sheet';
+                        icon = 'fa-table';
+                    } else if (url.includes('calendar.event') || url.includes('calendar.google.com')) {
+                        btnLabel = 'Open Google Calendar Event';
+                        icon = 'fa-calendar-check';
+                    }
+                    linkHtml = `
+                        <div style="margin-top: 0.6rem;">
+                            <a href="${url}" target="_blank" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.8rem; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 8px; color: #38bdf8; text-decoration: none; font-size: 0.82rem; font-weight: 600;">
+                                <i class="fa-solid ${icon}"></i> ${btnLabel}
+                            </a>
+                        </div>
+                    `;
+                }
+
+                if (res.issue_keys && Array.isArray(res.issue_keys) && res.issue_keys.length > 0) {
+                    const keysHtml = res.issue_keys.map(k => `<span style="background:rgba(99,102,241,0.25); color:#a5b4fc; border:1px solid rgba(99,102,241,0.4); padding:0.15rem 0.5rem; border-radius:4px; font-family:monospace; font-size:0.78rem;">${k}</span>`).join(' ');
+                    linkHtml += `
+                        <div style="margin-top: 0.6rem; display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: #c7d2fe;">
+                            <i class="fa-solid fa-list-check" style="color: #818cf8;"></i> <strong>Created Jira Tasks:</strong> ${keysHtml}
+                        </div>
+                    `;
+                }
+
                 stepList.innerHTML += `
                     <div class="step-card ${step.status.toLowerCase()}">
                         <div class="step-header">
                             <div class="step-title">
                                 <span>Step ${step.step_number}: ${step.description}</span>
+                                ${step.depends_on && step.depends_on.length ? `<span style="font-size:0.7rem;color:#94a3b8;margin-left:0.5rem;">depends on: ${step.depends_on.join(', ')}</span>` : ''}
                             </div>
                             <span class="tool-badge"><i class="fa-solid fa-wrench"></i> ${step.tool_name}</span>
                         </div>
                         <div class="step-reasoning">
                             <strong>Reasoning:</strong> ${step.reasoning}
                         </div>
-                        ${step.execution_time_ms ? `<div style="font-size: 0.75rem; color: #a7f3d0; margin-top: 0.2rem;"><i class="fa-solid fa-clock"></i> Latency: ${step.execution_time_ms}ms</div>` : ''}
+                        ${linkHtml}
+                        ${step.execution_time_ms ? `<div style="font-size: 0.75rem; color: #a7f3d0; margin-top: 0.4rem;"><i class="fa-solid fa-clock"></i> Latency: ${step.execution_time_ms}ms</div>` : ''}
                     </div>
                 `;
             });
@@ -719,10 +1170,59 @@
             }
         }
 
+        // Browser Viewport & Emergency Stop Controls
+        async function refreshBrowserViewport() {
+            try {
+                const statusRes = await fetch('/api/browser/status');
+                const statusData = await statusRes.json();
+                
+                const urlEl = document.getElementById('browserUrlText');
+                const statusEl = document.getElementById('browserActiveStatus');
+                const imgEl = document.getElementById('browserLiveImage');
+                const placeholder = document.getElementById('browserEmptyPlaceholder');
+
+                if (statusData.active) {
+                    urlEl.innerHTML = `URL: <strong>${statusData.current_url || 'about:blank'}</strong>`;
+                    statusEl.innerHTML = `<i class="fa-solid fa-circle fa-beat" style="color: #10b981;"></i> ACTIVE (${statusData.page_count} tab)`;
+                    
+                    const shotRes = await fetch('/api/browser/screenshot?annotated=true');
+                    if (shotRes.ok) {
+                        const shotData = await shotRes.json();
+                        if (shotData.image_base64) {
+                            imgEl.src = 'data:image/jpeg;base64,' + shotData.image_base64;
+                            imgEl.style.display = 'block';
+                            placeholder.style.display = 'none';
+                        }
+                    }
+                } else {
+                    urlEl.innerHTML = `URL: <i>No active browser session</i>`;
+                    statusEl.innerHTML = `<i class="fa-solid fa-circle" style="color: #64748b;"></i> IDLE`;
+                    imgEl.style.display = 'none';
+                    placeholder.style.display = 'block';
+                }
+            } catch (err) {
+                console.error("Failed to refresh browser viewport:", err);
+            }
+        }
+
+        async function emergencyKillBrowser() {
+            if (!confirm("🚨 Activate Emergency Kill Switch? This will immediately terminate all active browser and desktop automation sessions.")) {
+                return;
+            }
+            try {
+                const res = await fetch('/api/browser/kill', { method: 'POST' });
+                const data = await res.json();
+                alert("🛑 " + (data.message || "Browser automation terminated."));
+                refreshBrowserViewport();
+            } catch (err) {
+                alert("Error triggering emergency stop: " + err);
+            }
+        }
+
         // Initialize on load
         loadTools();
-        // Set initial default goal
-        setGoal('Audit service cluster error logs, save incident record in central DB, dispatch remediation webhook, and generate executive report.');
+        checkWatcherStatus();
+        setGoal('Coordinate new freelance client inquiry from Sarah Jenkins (Lumina Health): schedule 45-min discovery call on Google Calendar, write tailored SOW proposal in Google Docs, log lead to Google Sheets CRM, and draft client response in Gmail.');
     </script>
 </body>
 </html>

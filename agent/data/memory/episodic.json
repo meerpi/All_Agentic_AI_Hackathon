@@ -1,0 +1,433 @@
+[
+  {
+    "timestamp": "2026-08-29T17:47:40.143743+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:48:57.715813+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "f2325754-e88a-459f-8404-701dc6add478",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "db_manager",
+        "google_docs",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:48:57.726560+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:49:35.449544+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "9622f6b5-9ff8-41ea-a359-812b3d2a00c7",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "db_manager",
+        "google_docs",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:49:35.455991+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:50:47.710717+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "741d4502-22d8-49bf-a859-5513412fc3ad",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "report_generator",
+        "google_docs",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:50:47.721567+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:51:00.785147+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "7375977d-a006-462a-9893-008a9803d32b",
+    "details": {
+      "goal": "Audit cluster logs, save records, and alert team",
+      "tools_used": [
+        "data_extractor",
+        "validator",
+        "db_manager",
+        "report_generator",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:51:16.380707+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "b1bc4652-8967-4cff-86bf-396d79523921",
+    "details": {
+      "goal": "Audit cluster logs, save records, and alert team",
+      "tools_used": [
+        "action_dispatcher",
+        "data_extractor",
+        "validator",
+        "db_manager",
+        "report_generator",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:52:06.738480+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "01b78bd5-92f0-4a38-b125-ea9f877daad0",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "validator",
+        "db_manager",
+        "report_generator",
+        "google_docs",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:52:06.747899+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:52:34.157540+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "b425a4d5-06d0-44bc-953c-97676896410e",
+    "details": {
+      "goal": "Sync team standup notes to Google Docs",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "google_docs",
+        "google_docs",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:55:02.968813+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "a37c5dd5-54ab-45a6-b6d1-dc3305f61e1e",
+    "details": {
+      "goal": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets",
+      "tools_used": [
+        "data_extractor",
+        "jira",
+        "google_sheets",
+        "google_sheets",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:55:16.410086+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "dbd9c63b-45a0-4dec-afa7-7a0879c0134c",
+    "details": {
+      "goal": "Extract server metrics, persist to DB, and validate data health",
+      "tools_used": [
+        "data_extractor",
+        "db_manager",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:55:25.721912+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "f41d7ec4-dceb-41e2-bae0-004c7e222d33",
+    "details": {
+      "goal": "Autonomous sprint sync via A2A open protocol",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "jira",
+        "report_generator",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:56:12.845125+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "662abc0a-dd5d-4767-8c12-e382fcc765ee",
+    "details": {
+      "goal": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets",
+      "tools_used": [
+        "data_extractor",
+        "jira",
+        "google_sheets",
+        "google_sheets",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:56:31.252240+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "a0d9c198-96d0-435f-82bb-add18828d87c",
+    "details": {
+      "goal": "Extract server metrics, persist to DB, and validate data health",
+      "tools_used": [
+        "data_extractor",
+        "db_manager",
+        "validator",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:56:49.319734+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "936f8e7f-dbac-43f0-a0c5-5636e18b8340",
+    "details": {
+      "goal": "Autonomous sprint sync via A2A open protocol",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "jira",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:57:17.094936+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "97bf0799-c8c8-4194-a7ba-59229e6a3d20",
+    "details": {
+      "goal": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets",
+      "tools_used": [
+        "data_extractor",
+        "jira",
+        "google_sheets",
+        "google_sheets"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:58:54.077876+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "f56efda4-b776-4aee-b100-01bcd9afa8c1",
+    "details": {
+      "goal": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets",
+      "tools_used": [
+        "data_extractor",
+        "jira",
+        "google_sheets",
+        "google_sheets",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:59:10.032171+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "5109b1e4-a42e-4844-9e08-963d1427b351",
+    "details": {
+      "goal": "Extract server metrics, persist to DB, and validate data health",
+      "tools_used": [
+        "data_extractor",
+        "db_manager",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T17:59:32.938291+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "f37b391a-24e6-410e-baaa-f0038bf8e294",
+    "details": {
+      "goal": "Autonomous sprint sync via A2A open protocol",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "jira",
+        "slack",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T18:00:16.479549+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "5622b168-91f3-4212-bf35-01a07c5909cc",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "db_manager",
+        "report_generator",
+        "google_docs",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T18:00:16.493478+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  },
+  {
+    "timestamp": "2026-08-29T18:09:53.856875+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "72166524-0fdd-4742-bb89-a687115898c0",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "db_manager",
+        "report_generator",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T18:09:53.872995+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  },
+  {
+    "timestamp": "2026-08-29T18:45:23.580252+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "d4057248-7fc6-4807-bd1b-3471e5bc93df",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "google_docs",
+        "google_sheets",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T18:45:23.674820+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  },
+  {
+    "timestamp": "2026-08-29T19:05:47.915363+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "cac9e5e3-5d6f-4bb7-bba6-915171259f66",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "google_docs",
+        "google_docs",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T19:05:49.554389+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  },
+  {
+    "timestamp": "2026-08-29T19:13:56.611130+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "0ee7e014-4db3-48f0-911d-4d9841d3212a",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "google_docs",
+        "google_docs",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-29T19:13:57.911403+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  },
+  {
+    "timestamp": "2026-08-30T04:32:59.586350+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "5b3df5af-cb71-47ac-84bc-10f5934c2a2d",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "db_manager",
+        "google_docs",
+        "google_docs",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T04:33:00.808358+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  }
+]

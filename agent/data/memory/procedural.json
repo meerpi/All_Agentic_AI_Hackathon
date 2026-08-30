@@ -1,0 +1,1379 @@
+[
+  {
+    "timestamp": "2026-08-29T17:51:53.982332+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T17:51:53.983443+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "input_text",
+      "schema"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T17:51:53.984068+00:00",
+    "type": "SUCCESS",
+    "tool_name": "validator",
+    "tool_args_keys": [
+      "data",
+      "rules"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T17:51:53.984709+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [
+      "operation",
+      "collection",
+      "record"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T17:51:53.985388+00:00",
+    "type": "SUCCESS",
+    "tool_name": "report_generator",
+    "tool_args_keys": [
+      "title",
+      "data",
+      "format"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T17:51:56.797515+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "action",
+      "title",
+      "content"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T17:51:56.799119+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [
+      "action",
+      "channel",
+      "message"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:06.738732+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:06.738854+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:06.738979+00:00",
+    "type": "SUCCESS",
+    "tool_name": "validator",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:06.739109+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:06.739236+00:00",
+    "type": "SUCCESS",
+    "tool_name": "report_generator",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:06.739359+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:06.739487+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:25.379264+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "Sync team standup notes to Google Docs"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:25.380924+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "raw_text",
+      "target_schema"
+    ],
+    "goal_context": "Sync team standup notes to Google Docs"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:27.127091+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "action",
+      "title"
+    ],
+    "goal_context": "Sync team standup notes to Google Docs"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:29.039655+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "action",
+      "document_id",
+      "content"
+    ],
+    "goal_context": "Sync team standup notes to Google Docs"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:29.041537+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [
+      "action",
+      "channel",
+      "message"
+    ],
+    "goal_context": "Sync team standup notes to Google Docs"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:34.157895+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "Sync team standup notes to Google Docs"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:34.158146+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "Sync team standup notes to Google Docs"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:34.158759+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "Sync team standup notes to Google Docs"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:34.159010+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "Sync team standup notes to Google Docs"
+  },
+  {
+    "timestamp": "2026-08-29T17:52:34.159279+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [],
+    "goal_context": "Sync team standup notes to Google Docs"
+  },
+  {
+    "timestamp": "2026-08-29T17:54:50.654157+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "text",
+      "schema"
+    ],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:54:50.655242+00:00",
+    "type": "FAILURE",
+    "tool_name": "jira",
+    "tool_args_keys": [
+      "action",
+      "project",
+      "tasks"
+    ],
+    "error": "'str' object has no attribute 'get'",
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:54:52.008195+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [
+      "action",
+      "title"
+    ],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:54:57.348903+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [
+      "action",
+      "spreadsheet_id",
+      "sheet_name",
+      "rows"
+    ],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:54:57.350779+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [
+      "action",
+      "channel",
+      "message"
+    ],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:55:11.648142+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "source",
+      "extract_fields"
+    ],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:55:11.649223+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [
+      "operation",
+      "collection",
+      "records"
+    ],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:55:11.650641+00:00",
+    "type": "SUCCESS",
+    "tool_name": "validator",
+    "tool_args_keys": [
+      "target_data",
+      "rules"
+    ],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:55:16.410643+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:55:16.411052+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:55:16.411443+00:00",
+    "type": "SUCCESS",
+    "tool_name": "validator",
+    "tool_args_keys": [],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:55:20.106407+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:55:20.108090+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "text",
+      "schema"
+    ],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:55:20.109333+00:00",
+    "type": "FAILURE",
+    "tool_name": "jira",
+    "tool_args_keys": [
+      "action",
+      "project_key",
+      "tasks"
+    ],
+    "error": "'str' object has no attribute 'get'",
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:55:20.110394+00:00",
+    "type": "SUCCESS",
+    "tool_name": "report_generator",
+    "tool_args_keys": [
+      "title",
+      "data",
+      "format"
+    ],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:55:20.111527+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [
+      "action",
+      "channel",
+      "message"
+    ],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:55:59.911643+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "text",
+      "schema"
+    ],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:55:59.912759+00:00",
+    "type": "FAILURE",
+    "tool_name": "jira",
+    "tool_args_keys": [
+      "action",
+      "project",
+      "tasks"
+    ],
+    "error": "'str' object has no attribute 'get'",
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:56:01.583998+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [
+      "action",
+      "title",
+      "initial_data"
+    ],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:56:07.442478+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [
+      "action",
+      "spreadsheet_id",
+      "rows"
+    ],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:56:07.443984+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [
+      "action",
+      "channel",
+      "message"
+    ],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:56:26.222698+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "source",
+      "format",
+      "extraction_rules"
+    ],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:56:26.223815+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [
+      "operation",
+      "collection",
+      "data"
+    ],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:56:26.224929+00:00",
+    "type": "SUCCESS",
+    "tool_name": "validator",
+    "tool_args_keys": [
+      "validation_target",
+      "rules"
+    ],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:56:26.226487+00:00",
+    "type": "SUCCESS",
+    "tool_name": "report_generator",
+    "tool_args_keys": [
+      "title",
+      "format",
+      "content"
+    ],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:56:31.252835+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:56:31.253489+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:56:31.254072+00:00",
+    "type": "SUCCESS",
+    "tool_name": "validator",
+    "tool_args_keys": [],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:56:31.254722+00:00",
+    "type": "SUCCESS",
+    "tool_name": "report_generator",
+    "tool_args_keys": [],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:56:35.493425+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:56:35.495637+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "raw_text",
+      "schema_type"
+    ],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:56:35.497569+00:00",
+    "type": "FAILURE",
+    "tool_name": "jira",
+    "tool_args_keys": [
+      "action",
+      "project_key",
+      "tasks"
+    ],
+    "error": "'str' object has no attribute 'get'",
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:56:35.499310+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [
+      "action",
+      "channel",
+      "title",
+      "summary"
+    ],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:57:03.086722+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "text",
+      "schema_type",
+      "fields"
+    ],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:57:03.087954+00:00",
+    "type": "FAILURE",
+    "tool_name": "jira",
+    "tool_args_keys": [
+      "action",
+      "project",
+      "tasks"
+    ],
+    "error": "'str' object has no attribute 'get'",
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:57:05.036384+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [
+      "action",
+      "title"
+    ],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:57:10.958736+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [
+      "action",
+      "spreadsheet_id",
+      "sheet_name",
+      "rows"
+    ],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:58:43.832392+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "text",
+      "schema"
+    ],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:58:43.865335+00:00",
+    "type": "SUCCESS",
+    "tool_name": "jira",
+    "tool_args_keys": [
+      "project",
+      "issues"
+    ],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:58:45.610554+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [
+      "action",
+      "title",
+      "sheets"
+    ],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:58:46.892790+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [
+      "action",
+      "spreadsheet_id",
+      "range",
+      "rows"
+    ],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:58:46.894608+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [
+      "action",
+      "channel",
+      "message"
+    ],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:58:54.078447+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:58:54.079221+00:00",
+    "type": "SUCCESS",
+    "tool_name": "jira",
+    "tool_args_keys": [],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:58:54.079883+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:58:54.080422+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:58:54.080925+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [],
+    "goal_context": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets"
+  },
+  {
+    "timestamp": "2026-08-29T17:59:03.668945+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "source",
+      "format",
+      "fields"
+    ],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:59:03.670325+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [
+      "operation",
+      "collection",
+      "data"
+    ],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:59:03.671618+00:00",
+    "type": "SUCCESS",
+    "tool_name": "validator",
+    "tool_args_keys": [
+      "target_data",
+      "rules"
+    ],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:59:10.032773+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:59:10.033387+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:59:10.067908+00:00",
+    "type": "SUCCESS",
+    "tool_name": "validator",
+    "tool_args_keys": [],
+    "goal_context": "Extract server metrics, persist to DB, and validate data health"
+  },
+  {
+    "timestamp": "2026-08-29T17:59:20.573699+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:59:20.576024+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "payload",
+      "extraction_schema"
+    ],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:59:20.578772+00:00",
+    "type": "SUCCESS",
+    "tool_name": "jira",
+    "tool_args_keys": [
+      "action",
+      "project_key",
+      "tasks"
+    ],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:59:20.580265+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [
+      "action",
+      "channel",
+      "summary"
+    ],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:59:20.581693+00:00",
+    "type": "SUCCESS",
+    "tool_name": "validator",
+    "tool_args_keys": [
+      "target_data",
+      "validation_rules"
+    ],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:59:32.938653+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:59:32.939243+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:59:32.939817+00:00",
+    "type": "SUCCESS",
+    "tool_name": "jira",
+    "tool_args_keys": [],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:59:32.940388+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T17:59:32.940957+00:00",
+    "type": "SUCCESS",
+    "tool_name": "validator",
+    "tool_args_keys": [],
+    "goal_context": "Autonomous sprint sync via A2A open protocol"
+  },
+  {
+    "timestamp": "2026-08-29T18:00:00.023923+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:00:00.026448+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "source_data",
+      "extraction_schema"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:00:00.061585+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [
+      "action",
+      "collection",
+      "data"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:00:00.062778+00:00",
+    "type": "SUCCESS",
+    "tool_name": "report_generator",
+    "tool_args_keys": [
+      "title",
+      "summary_data",
+      "format"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:00:10.702659+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "action",
+      "title",
+      "content"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:00:10.704367+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [
+      "action",
+      "channel",
+      "message"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:00:16.480047+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:00:16.480724+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:00:16.481845+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:00:16.482531+00:00",
+    "type": "SUCCESS",
+    "tool_name": "report_generator",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:00:16.483186+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:00:16.483838+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:09:47.593497+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:09:47.595380+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "payload",
+      "format",
+      "schema"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:09:47.596921+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [
+      "operation",
+      "table",
+      "record"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:09:47.598114+00:00",
+    "type": "SUCCESS",
+    "tool_name": "report_generator",
+    "tool_args_keys": [
+      "title",
+      "summary_type",
+      "data"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:09:47.599329+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [
+      "action",
+      "channel",
+      "message"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:09:53.857509+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:09:53.858416+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:09:53.859203+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:09:53.859911+00:00",
+    "type": "SUCCESS",
+    "tool_name": "report_generator",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:09:53.861302+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:45:11.149781+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:45:11.151305+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "text",
+      "target_schema"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:45:13.837810+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "action",
+      "title",
+      "content"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:45:17.502281+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [
+      "action",
+      "spreadsheet_id",
+      "rows"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:45:17.504004+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [
+      "action",
+      "channel",
+      "message"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:45:23.580750+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:45:23.581604+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:45:23.582714+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:45:23.583509+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T18:45:23.584259+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:05:39.331964+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:05:39.333717+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "text",
+      "schema_type"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:05:40.566888+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "action",
+      "title"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:05:41.923534+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "action",
+      "document_id",
+      "content"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:05:41.925839+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [
+      "action",
+      "channel",
+      "message"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:05:47.915880+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:05:47.916698+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:05:47.917514+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:05:47.918344+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:05:47.919143+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:13:46.799884+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:13:46.801703+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "text",
+      "schema"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:13:48.206738+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "action",
+      "title"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:13:50.557087+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "action",
+      "document_id",
+      "content"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:13:50.559072+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [
+      "action",
+      "channel",
+      "message"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:13:56.611692+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:13:56.612647+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:13:56.613821+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:13:56.614839+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-29T19:13:56.615757+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-30T04:32:48.334909+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-30T04:32:48.337191+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "data",
+      "schema_type"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-30T04:32:48.373686+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [
+      "operation",
+      "collection",
+      "record"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-30T04:32:50.796851+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "action",
+      "title"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-30T04:32:53.273384+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "action",
+      "document_id",
+      "content"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-30T04:32:53.275462+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [
+      "action",
+      "channel",
+      "message"
+    ],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-30T04:32:59.587004+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-30T04:32:59.587968+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-30T04:32:59.589080+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-30T04:32:59.590240+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-30T04:32:59.591245+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  },
+  {
+    "timestamp": "2026-08-30T04:32:59.592240+00:00",
+    "type": "SUCCESS",
+    "tool_name": "slack",
+    "tool_args_keys": [],
+    "goal_context": "Process customer lead intake form and generate executive summary"
+  }
+]

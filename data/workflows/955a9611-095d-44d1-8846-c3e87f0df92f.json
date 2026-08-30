@@ -1,0 +1,239 @@
+{
+  "workflow_id": "955a9611-095d-44d1-8846-c3e87f0df92f",
+  "goal": "End-to-End Autonomous Incident Response & Post-Mortem Action Plan for Critical Distributed Database Outage",
+  "steps": [
+    {
+      "step_number": 1,
+      "step_id": "ae4cf9a0-bc87-4e16-a6c7-e30d41a475e4",
+      "description": "Create a comprehensive Google Doc for the Incident Post-Mortem of INC-8892 detailing the root cause, timeline, impact, and corrective measures.",
+      "tool_name": "google_docs",
+      "tool_args": {
+        "action": "create_document",
+        "title": "Incident Post-Mortem: INC-8892 - Distributed PostgreSQL Telemetry Cluster Outage",
+        "content": "# INC-8892 Post-Mortem: Distributed PostgreSQL Telemetry Cluster (Prod US-East)\n\n## Incident Summary\n- **Severity:** SEV-1 (CRITICAL)\n- **Impact:** Replication lag exceeded 450s during peak traffic, triggering automatic failover that caused a temporary split-brain partition and corrupted telemetry sequence IDs.\n- **Affected Service:** Distributed PostgreSQL Telemetry Cluster (Prod US-East)\n\n## Root Cause Analysis\n1. Peak traffic spike saturated network I/O and replication pipelines.\n2. Replication lag crossed safety thresholds, initiating automated failover.\n3. Split-brain partition occurred due to lack of consensus raft leader election.\n4. Concurrent writes led to conflicting telemetry sequence IDs.\n\n## Preventive Action Plan\n- Implement Patroni consensus raft leader election with etcd.\n- Add sequence ID replay deduplication layer in Redis.\n- Configure Datadog synthetic canary alerts for replication lag > 30s."
+      },
+      "reasoning": "Establishes the central artifact and source of truth for the incident investigation and post-mortem report.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 2,
+      "step_id": "baea4ede-617a-46d8-9123-70ecf2938f19",
+      "description": "Create a tracking Google Sheet to log action items, assignees, priorities, and story points for the post-mortem remediation work.",
+      "tool_name": "google_sheets",
+      "tool_args": {
+        "action": "create_spreadsheet",
+        "title": "INC-8892 Remediation Action Tracker",
+        "rows": [
+          [
+            "Task Summary",
+            "Assignee",
+            "Priority",
+            "Story Points",
+            "Description",
+            "Status"
+          ],
+          [
+            "DB Ops: Implement Patroni consensus raft leader election with etcd to prevent split-brain",
+            "Alex Mercer",
+            "Highest",
+            8,
+            "Deploy Patroni distributed consensus across 5 PostgreSQL nodes to eliminate split-brain failover risks.",
+            "Open"
+          ],
+          [
+            "Telemetry API: Add sequence ID replay deduplication layer in Redis",
+            "Priya Sharma",
+            "High",
+            5,
+            "Implement Redis sliding window deduplication to reject duplicate telemetry packets during failover recovery.",
+            "Open"
+          ],
+          [
+            "SRE: Configure Datadog synthetic canary alerts for replication lag > 30s",
+            "Marcus Vance",
+            "High",
+            3,
+            "Add multi-region synthetic lag monitoring and automatic circuit-breaking.",
+            "Open"
+          ]
+        ]
+      },
+      "reasoning": "Provides operational visibility and tracking for engineering leads to monitor remediation progress.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 3,
+      "step_id": "32a37b88-8938-4147-af27-1e0e951dbc39",
+      "description": "Bulk create Jira tasks corresponding to the remediation action items for INC-8892.",
+      "tool_name": "jira",
+      "tool_args": {
+        "action": "create_tasks_bulk",
+        "project_key": "INC",
+        "tasks": [
+          {
+            "summary": "DB Ops: Implement Patroni consensus raft leader election with etcd to prevent split-brain",
+            "assignee": "Alex Mercer",
+            "priority": "Highest",
+            "story_points": 8,
+            "description": "Deploy Patroni distributed consensus across 5 PostgreSQL nodes to eliminate split-brain failover risks."
+          },
+          {
+            "summary": "Telemetry API: Add sequence ID replay deduplication layer in Redis",
+            "assignee": "Priya Sharma",
+            "priority": "High",
+            "story_points": 5,
+            "description": "Implement Redis sliding window deduplication to reject duplicate telemetry packets during failover recovery."
+          },
+          {
+            "summary": "SRE: Configure Datadog synthetic canary alerts for replication lag > 30s",
+            "assignee": "Marcus Vance",
+            "priority": "High",
+            "story_points": 3,
+            "description": "Add multi-region synthetic lag monitoring and automatic circuit-breaking."
+          }
+        ]
+      },
+      "reasoning": "Integrates remediation items directly into the engineering team's standard sprint workflow and issue tracker.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 4,
+      "step_id": "bf57296f-abaf-42d4-ba96-21acc369953e",
+      "description": "Schedule an emergency post-mortem review and remediation sync meeting on Google Calendar.",
+      "tool_name": "google_calendar",
+      "tool_args": {
+        "action": "create_event",
+        "summary": "INC-8892 Post-Mortem & Remediation Architecture Review",
+        "description": "Review SEV-1 database outage root cause analysis, inspect post-mortem document ($step_1.document_id), and align on Patroni/Redis mitigation plan.",
+        "start_time": "2026-09-02T15:00:00Z",
+        "end_time": "2026-09-02T16:00:00Z",
+        "attendees": [
+          "alex.mercer@company.com",
+          "priya.sharma@company.com",
+          "marcus.vance@company.com",
+          "sre-leads@company.com"
+        ]
+      },
+      "reasoning": "Aligns key stakeholders and engineers to review findings and prioritize implementation of fixes.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 5,
+      "step_id": "8b3e3845-a581-4943-b15f-4a85e86c2b82",
+      "description": "Post an executive summary alert and artifact links to the engineering incidents Slack channel.",
+      "tool_name": "slack",
+      "tool_args": {
+        "action": "post_message",
+        "channel": "#incidents-critical",
+        "message": ":rotating_light: *INC-8892 Post-Mortem & Action Plan Generated* :rotating_light:\n\n**Severity:** SEV-1 (CRITICAL)\n**Affected Service:** Distributed PostgreSQL Telemetry Cluster (Prod US-East)\n**Summary:** Replication lag triggered automatic failover resulting in split-brain and sequence ID corruption.\n\n\ud83d\udcc4 *Post-Mortem Doc:* $step_1.document_id\n\ud83d\udcca *Action Tracker:* $step_2.spreadsheet_id\n\ud83d\udcc5 *Review Meeting:* Scheduled for Sept 2, 2026 @ 15:00 UTC"
+      },
+      "reasoning": "Notifies the broader engineering organization instantly with direct links to the post-mortem artifacts and tracking tools.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 6,
+      "step_id": "1af53a4e-d0d8-43b6-8db1-29c04f7af1d8",
+      "description": "Persist the incident resolution state and generated artifact references into central database storage.",
+      "tool_name": "db_manager",
+      "tool_args": {
+        "action": "update_cells",
+        "table": "incident_registry",
+        "record_id": "INC-8892",
+        "data": {
+          "status": "Post-Mortem Completed",
+          "post_mortem_doc_id": "$step_1.document_id",
+          "action_tracker_id": "$step_2.spreadsheet_id",
+          "jira_integration": "Completed"
+        }
+      },
+      "reasoning": "Ensures auditability and permanent internal record keeping of the incident lifecycle state.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    }
+  ],
+  "status": "CREATED",
+  "current_step_index": 0,
+  "final_artifact": null,
+  "summary": null,
+  "created_at": "2026-08-29T18:18:17.144906",
+  "updated_at": "2026-08-29T18:18:17.144911",
+  "tags": [],
+  "context_id": null,
+  "token_usage": {
+    "total_prompt_tokens": 1699,
+    "total_completion_tokens": 1721,
+    "total_tokens": 3420,
+    "total_estimated_cost_usd": 0.001287,
+    "calls": [
+      {
+        "prompt_tokens": 1699,
+        "completion_tokens": 1721,
+        "total_tokens": 3420,
+        "model_used": "gemini-3.5-flash-lite",
+        "estimated_cost_usd": 0.001287
+      }
+    ]
+  },
+  "checkpoint_data": null,
+  "paused_at_step": null,
+  "eval_scores": null
+}

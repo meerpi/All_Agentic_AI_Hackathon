@@ -1,0 +1,132 @@
+{
+  "workflow_id": "e22511ac-636b-4cb7-ab0f-a3da5de14184",
+  "goal": "Extract server metrics, persist to DB, and validate data health",
+  "steps": [
+    {
+      "step_number": 1,
+      "step_id": "b8d052a8-05a1-4455-9399-e38818e14bb5",
+      "description": "Extract raw server metrics from the monitoring endpoint or logs",
+      "tool_name": "data_extractor",
+      "tool_args": {
+        "source": "server_monitoring_endpoint",
+        "extract_fields": [
+          "cpu_utilization",
+          "memory_usage",
+          "disk_io",
+          "network_traffic",
+          "timestamp"
+        ]
+      },
+      "reasoning": "Harvesting unstructured or raw server telemetry is the necessary first step before persistence and analysis.",
+      "status": "COMPLETED",
+      "result": {
+        "source_type": "text_payload",
+        "processed_records_count": 42,
+        "extracted_fields": {
+          "status": "extracted_status_value",
+          "metric": "extracted_metric_value",
+          "timestamp": "extracted_timestamp_value",
+          "severity": "CRITICAL"
+        },
+        "raw_snippet": "No raw input provided"
+      },
+      "error": null,
+      "execution_time_ms": 0.14495849609375,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 2,
+      "step_id": "44b0c0ff-8ec5-4c03-8ed1-fefa9cc561f3",
+      "description": "Persist extracted server metrics records to the database",
+      "tool_name": "db_manager",
+      "tool_args": {
+        "operation": "insert",
+        "collection": "forked_metrics_test",
+        "records": "$step_1.extracted_data"
+      },
+      "reasoning": "Storing the harvested metrics ensures durable historical tracking and availability for health analysis.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 3,
+      "step_id": "15c40923-4ee2-4cd5-8a22-5816d0885730",
+      "description": "Validate the data health and integrity of the persisted server metrics",
+      "tool_name": "validator",
+      "tool_args": {
+        "target_data": "$step_2.inserted_records",
+        "rules": [
+          {
+            "field": "cpu_utilization",
+            "operator": "less_than",
+            "threshold": 95.0
+          },
+          {
+            "field": "memory_usage",
+            "operator": "less_than",
+            "threshold": 90.0
+          },
+          {
+            "field": "timestamp",
+            "operator": "not_null"
+          }
+        ]
+      },
+      "reasoning": "Running data validation checks for anomalies or abnormal spikes to guarantee system reliability and trigger self-correction if required.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    }
+  ],
+  "status": "CREATED",
+  "current_step_index": 0,
+  "final_artifact": null,
+  "summary": null,
+  "created_at": "2026-08-29T17:55:11.646784",
+  "updated_at": "2026-08-29T17:55:11.647362Z",
+  "tags": [
+    "fork:dbd9c6"
+  ],
+  "context_id": "fork_of_dbd9c63b",
+  "token_usage": {
+    "total_prompt_tokens": 1428,
+    "total_completion_tokens": 422,
+    "total_tokens": 1850,
+    "total_estimated_cost_usd": 0.000467,
+    "calls": [
+      {
+        "prompt_tokens": 1428,
+        "completion_tokens": 422,
+        "total_tokens": 1850,
+        "model_used": "gemini-3.5-flash-lite",
+        "estimated_cost_usd": 0.000467
+      }
+    ]
+  },
+  "checkpoint_data": null,
+  "paused_at_step": null,
+  "eval_scores": null
+}

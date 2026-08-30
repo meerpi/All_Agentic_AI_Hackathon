@@ -1,0 +1,159 @@
+{
+  "workflow_id": "b425a4d5-06d0-44bc-953c-97676896410e",
+  "step_number": 2,
+  "timestamp": "2026-08-29T17:52:25.380170+00:00",
+  "state": {
+    "workflow_id": "b425a4d5-06d0-44bc-953c-97676896410e",
+    "goal": "Sync team standup notes to Google Docs",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "408d6de2-4dd3-4092-8792-19bc0f618490",
+        "description": "Search Gmail for recent team standup notes or emails containing the standup updates.",
+        "tool_name": "gmail",
+        "tool_args": {
+          "action": "search_emails",
+          "query": "subject:\"Standup Notes\" OR subject:\"Team Standup\""
+        },
+        "reasoning": "We need to fetch the latest raw standup notes from the team's email communications before syncing them.",
+        "status": "COMPLETED",
+        "result": {
+          "action": "search_emails",
+          "query": "subject:\"Standup Notes\" OR subject:\"Team Standup\"",
+          "count": 0,
+          "emails": []
+        },
+        "error": null,
+        "execution_time_ms": 1772.8278636932373,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "54a14a32-f78b-453b-a779-6aa257a38fc2",
+        "description": "Extract and parse the raw text content from the retrieved standup email into structured sections.",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "raw_text": "$step_1.email_content",
+          "target_schema": {
+            "date": "string",
+            "attendees": "list",
+            "updates": "list",
+            "blockers": "list"
+          }
+        },
+        "reasoning": "Structuring the text allows us to format the standup notes cleanly into a Google Doc.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "e0ca0f40-6af8-4fd6-bc4a-1899d4ef5618",
+        "description": "Create a new Google Doc for the team standup notes with a professional title.",
+        "tool_name": "google_docs",
+        "tool_args": {
+          "action": "create_document",
+          "title": "Team Standup Notes - 2026-08-29"
+        },
+        "reasoning": "We need a destination document ID to append the formatted team standup notes.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 4,
+        "step_id": "16bbc5c1-4d0e-4fcf-b67a-ee289fa93117",
+        "description": "Append the structured standup updates, blockers, and attendee list into the newly created Google Doc.",
+        "tool_name": "google_docs",
+        "tool_args": {
+          "action": "append_content",
+          "document_id": "$step_3.document_id",
+          "content": "# Standup Notes\n\n## Attendees\n$step_2.attendees\n\n## Updates\n$step_2.updates\n\n## Blockers\n$step_2.blockers"
+        },
+        "reasoning": "Populates the document with rich, formatted content generated from the parsed team standup data.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 5,
+        "step_id": "8dc46372-8939-4931-98c5-19d5f9697c7f",
+        "description": "Post a notification to the Slack engineering channel sharing the link to the newly synced Google Doc.",
+        "tool_name": "slack",
+        "tool_args": {
+          "action": "post_message",
+          "channel": "#engineering-standup",
+          "message": "The team standup notes have been successfully synced to Google Docs: $step_3.url"
+        },
+        "reasoning": "Informs the team that the standup notes are now live and accessible in Google Docs.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-29T17:52:23.604634",
+    "updated_at": "2026-08-29T17:52:23.605350Z",
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 1409,
+      "total_completion_tokens": 697,
+      "total_tokens": 2106,
+      "total_estimated_cost_usd": 0.00063,
+      "calls": [
+        {
+          "prompt_tokens": 1409,
+          "completion_tokens": 697,
+          "total_tokens": 2106,
+          "model_used": "gemini-3.5-flash-lite",
+          "estimated_cost_usd": 0.00063
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

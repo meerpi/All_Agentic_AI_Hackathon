@@ -1,0 +1,6 @@
+2026/08/30-00:36:35.202 ea43f Reusing MANIFEST /home/meerpi/curr_project/aihack/All_Agentic_AI_Hackathon/data/browser_profile/Default/IndexedDB/https_www.youtube.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/08/30-00:36:35.202 ea43f Recovering log #18
+2026/08/30-00:36:35.212 ea43f Reusing old log /home/meerpi/curr_project/aihack/All_Agentic_AI_Hackathon/data/browser_profile/Default/IndexedDB/https_www.youtube.com_0.indexeddb.leveldb/000018.log 
+2026/08/30-00:36:35.733 ea443 Level-0 table #23: started
+2026/08/30-00:36:35.744 ea443 Level-0 table #23: 1379042 bytes OK
+2026/08/30-00:36:35.793 ea443 Delete type=0 #18

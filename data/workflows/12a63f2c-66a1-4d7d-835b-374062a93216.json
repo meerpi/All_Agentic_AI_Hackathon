@@ -1,0 +1,249 @@
+{
+  "workflow_id": "12a63f2c-66a1-4d7d-835b-374062a93216",
+  "goal": "Process customer lead intake form and generate executive summary",
+  "steps": [
+    {
+      "step_number": 1,
+      "step_id": "633474f5-b949-47aa-81ca-5ad3a55fa280",
+      "description": "Retrieve the raw customer lead intake form data from the database",
+      "tool_name": "db_manager",
+      "tool_args": {
+        "action": "query_records",
+        "collection": "lead_intake",
+        "query_params": {
+          "status": "new",
+          "source": "web_form"
+        },
+        "limit": 1
+      },
+      "reasoning": "Retrieves the latest unprocessed lead intake form payload from the persistent database to initiate the workflow.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 2,
+      "step_id": "213bbab3-63c3-44d4-8f3f-60ecf41a5a12",
+      "description": "Extract structured entities from the raw lead intake form data",
+      "tool_name": "data_extractor",
+      "tool_args": {
+        "raw_data": "$step_1.records[0].payload",
+        "extraction_schema": {
+          "customer_name": "string",
+          "company_name": "string",
+          "email": "string",
+          "phone": "string",
+          "budget": "string",
+          "project_description": "string",
+          "timeline": "string"
+        }
+      },
+      "reasoning": "Parses the unstructured or semi-structured raw form payload into clean, structured JSON fields for downstream processing.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 3,
+      "step_id": "5ee05d2d-4073-4421-a833-2692e9045084",
+      "description": "Log the structured lead details into the Master Lead Tracking Google Sheet",
+      "tool_name": "google_sheets",
+      "tool_args": {
+        "action": "append_rows",
+        "spreadsheet_id": "18_vX29_lead_tracker_spreadsheet_id",
+        "sheet_name": "Leads",
+        "rows": [
+          [
+            "$step_2.customer_name",
+            "$step_2.company_name",
+            "$step_2.email",
+            "$step_2.phone",
+            "$step_2.budget",
+            "$step_2.project_description",
+            "$step_2.timeline",
+            "Pending Review"
+          ]
+        ]
+      },
+      "reasoning": "Maintains a centralized, structured record of all incoming leads in Google Sheets for sales team visibility.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 4,
+      "step_id": "0388773b-17b9-408e-a1c3-8b2e42074dc5",
+      "description": "Generate a comprehensive executive summary report",
+      "tool_name": "report_generator",
+      "tool_args": {
+        "title": "Executive Summary: Lead Intake - $step_2.company_name",
+        "sections": {
+          "Overview": "A high-priority lead has been received from $step_2.customer_name representing $step_2.company_name.",
+          "Project Details": "The prospect is interested in: $step_2.project_description. The estimated timeline is $step_2.timeline.",
+          "Financials & Priority": "Budget: $step_2.budget. Priority Level: HIGH.",
+          "Recommended Next Steps": "1. Schedule discovery call.\n2. Draft initial project proposal.\n3. Assign account executive."
+        }
+      },
+      "reasoning": "Compiles the extracted lead data into a professional, structured markdown report format.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 5,
+      "step_id": "f6d8ee97-7c2e-4cca-a611-d5cb8c2117fb",
+      "description": "Create a Google Doc containing the executive summary for internal sharing",
+      "tool_name": "google_docs",
+      "tool_args": {
+        "action": "create_document",
+        "title": "Executive Summary - $step_2.company_name",
+        "content": "$step_4.report_content"
+      },
+      "reasoning": "Generates a persistent, shareable document asset containing the executive summary for stakeholders.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 6,
+      "step_id": "03689397-5c62-4a02-8ffd-10845a126769",
+      "description": "Post a notification and executive summary link to the sales Slack channel",
+      "tool_name": "slack",
+      "tool_args": {
+        "action": "post_message",
+        "channel": "#sales-alerts",
+        "text": "\ud83d\udea8 *New High-Priority Lead Received!*\n\n*Company:* $step_2.company_name\n*Contact:* $step_2.customer_name\n*Budget:* $step_2.budget\n\nAn executive summary has been generated and is available here: $step_5.document_url"
+      },
+      "reasoning": "Alerts the sales team in real-time with key details and a direct link to the generated Google Doc.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 7,
+      "step_id": "71be3343-e139-4a08-961e-18cd52362806",
+      "description": "Send an automated, personalized confirmation email to the lead",
+      "tool_name": "gmail",
+      "tool_args": {
+        "action": "send_email",
+        "recipient": "$step_2.email",
+        "subject": "Thank you for contacting us - $step_2.company_name",
+        "body": "Hi $step_2.customer_name,\n\nThank you for reaching out to us. We have received your inquiry regarding '$step_2.project_description' and our team is currently reviewing your requirements.\n\nAn account executive will contact you within 24 business hours to discuss next steps.\n\nBest regards,\nBusiness Development Team"
+      },
+      "reasoning": "Ensures immediate, professional engagement with the prospect, confirming receipt of their inquiry.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 8,
+      "step_id": "507fd4f5-9e34-4319-a766-3fa3f352170d",
+      "description": "Update the lead status in the database to processed",
+      "tool_name": "db_manager",
+      "tool_args": {
+        "action": "update_record",
+        "collection": "lead_intake",
+        "record_id": "$step_1.records[0].id",
+        "update_data": {
+          "status": "processed",
+          "google_doc_url": "$step_5.document_url",
+          "processed_at": "CURRENT_TIMESTAMP"
+        }
+      },
+      "reasoning": "Closes the loop by updating the database record status to prevent duplicate processing and link the generated asset.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    }
+  ],
+  "status": "EXECUTING",
+  "current_step_index": 0,
+  "final_artifact": null,
+  "summary": null,
+  "created_at": "2026-08-29T17:47:40.130907",
+  "updated_at": "2026-08-29T17:47:40.131527Z",
+  "tags": [],
+  "context_id": null,
+  "token_usage": {
+    "total_prompt_tokens": 1189,
+    "total_completion_tokens": 1443,
+    "total_tokens": 2632,
+    "total_estimated_cost_usd": 0.001044,
+    "calls": [
+      {
+        "prompt_tokens": 1189,
+        "completion_tokens": 1443,
+        "total_tokens": 2632,
+        "model_used": "gemini-3.5-flash",
+        "estimated_cost_usd": 0.001044
+      }
+    ]
+  },
+  "checkpoint_data": null,
+  "paused_at_step": null,
+  "eval_scores": null
+}

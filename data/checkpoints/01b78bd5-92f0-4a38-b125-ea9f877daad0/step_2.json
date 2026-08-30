@@ -1,0 +1,211 @@
+{
+  "workflow_id": "01b78bd5-92f0-4a38-b125-ea9f877daad0",
+  "step_number": 2,
+  "timestamp": "2026-08-29T17:51:53.982759+00:00",
+  "state": {
+    "workflow_id": "01b78bd5-92f0-4a38-b125-ea9f877daad0",
+    "goal": "Process customer lead intake form and generate executive summary",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "e3305089-2845-4d41-8bd8-050d162e0d71",
+        "description": "Search inbox for the recent customer lead intake form submission email.",
+        "tool_name": "gmail",
+        "tool_args": {
+          "action": "search_emails",
+          "query": "subject:('Customer Lead Intake' OR 'Lead Form') newer_than:1d"
+        },
+        "reasoning": "We need to locate the raw customer lead intake form data which was submitted via the web form and delivered to the inbox.",
+        "status": "COMPLETED",
+        "result": {
+          "action": "search_emails",
+          "query": "subject:('Customer Lead Intake' OR 'Lead Form') newer_than:1d",
+          "count": 0,
+          "emails": []
+        },
+        "error": null,
+        "execution_time_ms": 1693.2761669158936,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "09cfe7ab-aa9b-4753-bd85-290cd508b0bb",
+        "description": "Extract the lead details and submission payload from the email content found in step 1.",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "input_text": "$step_1.email_body",
+          "schema": {
+            "company_name": "string",
+            "contact_name": "string",
+            "email": "string",
+            "project_scope": "string",
+            "budget": "string",
+            "timeline": "string"
+          }
+        },
+        "reasoning": "Parsing the unstructured email body into structured JSON entities enables reliable downstream processing and reporting.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "6f97a12f-7883-4df9-b4fb-689d767c7be8",
+        "description": "Validate the extracted customer lead data to ensure completeness and compliance.",
+        "tool_name": "validator",
+        "tool_args": {
+          "data": "$step_2.extracted_data",
+          "rules": [
+            "company_name is required",
+            "contact_name is required",
+            "email contains '@'"
+          ]
+        },
+        "reasoning": "Applying validation ensures we catch missing or malformed lead information before creating formal documentation.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 4,
+        "step_id": "8d69b819-bc13-4caa-8bdf-18bce5df5304",
+        "description": "Persist the validated lead record into the central database for tracking.",
+        "tool_name": "db_manager",
+        "tool_args": {
+          "operation": "insert",
+          "collection": "leads",
+          "record": "$step_2.extracted_data"
+        },
+        "reasoning": "Storing the lead details in Firestore ensures persistence and availability for future sales workflows.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 5,
+        "step_id": "33242bf8-d746-446c-8a06-daeaa2c0370e",
+        "description": "Generate a professional executive summary report for the new customer lead.",
+        "tool_name": "report_generator",
+        "tool_args": {
+          "title": "Executive Summary: New Customer Lead Intake",
+          "data": "$step_2.extracted_data",
+          "format": "markdown"
+        },
+        "reasoning": "Compiling an executive summary provides leadership and the sales team with a clear overview of the prospect's profile.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 6,
+        "step_id": "91e7647b-5d3d-49e2-8df7-ca75dba3d92a",
+        "description": "Create a new Google Doc containing the generated executive summary report.",
+        "tool_name": "google_docs",
+        "tool_args": {
+          "action": "create_document",
+          "title": "Lead Executive Summary - $step_2.extracted_data.company_name",
+          "content": "$step_5.report_content"
+        },
+        "reasoning": "Generating a persistent Google Doc allows team members to collaborate and review the lead details easily.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 7,
+        "step_id": "7b1550ca-a834-41e6-b72c-584434980624",
+        "description": "Post the executive summary and document link to the internal Slack sales channel.",
+        "tool_name": "slack",
+        "tool_args": {
+          "action": "post_message",
+          "channel": "#sales-leads",
+          "message": "New High-Priority Lead Processed!\nCompany: $step_2.extracted_data.company_name\nContact: $step_2.extracted_data.contact_name\nReport Document: $step_6.url"
+        },
+        "reasoning": "Notifying the team on Slack ensures rapid response time for incoming high-priority leads.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-29T17:51:52.287552",
+    "updated_at": "2026-08-29T17:51:52.288214Z",
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 1423,
+      "total_completion_tokens": 941,
+      "total_tokens": 2364,
+      "total_estimated_cost_usd": 0.000778,
+      "calls": [
+        {
+          "prompt_tokens": 1423,
+          "completion_tokens": 941,
+          "total_tokens": 2364,
+          "model_used": "gemini-3.5-flash-lite",
+          "estimated_cost_usd": 0.000778
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

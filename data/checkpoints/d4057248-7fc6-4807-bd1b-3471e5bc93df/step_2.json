@@ -1,0 +1,171 @@
+{
+  "workflow_id": "d4057248-7fc6-4807-bd1b-3471e5bc93df",
+  "step_number": 2,
+  "timestamp": "2026-08-29T18:45:11.150837+00:00",
+  "state": {
+    "workflow_id": "d4057248-7fc6-4807-bd1b-3471e5bc93df",
+    "goal": "Process customer lead intake form and generate executive summary",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "69f381ac-fb51-497a-9089-8153b2a8668b",
+        "description": "Search inbox for new customer lead intake form submissions",
+        "tool_name": "gmail",
+        "tool_args": {
+          "action": "search_emails",
+          "query": "subject:\"Lead Intake Form\" OR subject:\"New Customer Submission\" is:unread"
+        },
+        "reasoning": "We need to retrieve the latest customer lead intake form submission to process its contents.",
+        "status": "COMPLETED",
+        "result": {
+          "action": "search_emails",
+          "query": "subject:\"Lead Intake Form\" OR subject:\"New Customer Submission\" is:unread",
+          "count": 0,
+          "emails": []
+        },
+        "error": null,
+        "execution_time_ms": 1856.654405593872,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "9aad6bdf-ffff-4feb-900e-7edce68bd85b",
+        "description": "Extract structured data from the customer lead email body",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "text": "$step_1.email_body",
+          "target_schema": {
+            "company_name": "string",
+            "contact_name": "string",
+            "email": "string",
+            "project_scope": "string",
+            "budget": "string",
+            "timeline": "string"
+          }
+        },
+        "reasoning": "Parsing the unstructured lead submission email into clean, structured JSON fields for downstream processing.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "b6f66d91-ef2d-4b9f-8277-9683e2e91550",
+        "description": "Generate an executive summary document for the new lead",
+        "tool_name": "google_docs",
+        "tool_args": {
+          "action": "create_document",
+          "title": "Executive Summary: Lead Intake - $step_2.company_name",
+          "content": "# Executive Lead Summary\n\n**Company:** $step_2.company_name\n**Contact:** $step_2.contact_name ($step_2.email)\n\n## Project Overview\n$step_2.project_scope\n\n## Commercial Parameters\n- **Budget:** $step_2.budget\n- **Timeline:** $step_2.timeline\n\n## Recommended Next Steps\n1. Schedule introductory discovery call.\n2. Assign technical account manager.\n3. Prepare tailored proposal."
+        },
+        "reasoning": "Creating a professional Google Doc summarizing the lead's details and recommended actions for executive review.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 4,
+        "step_id": "c5789c7d-ae30-4c68-bac7-68c3637d0706",
+        "description": "Log the new lead and executive summary link to the internal CRM tracking sheet",
+        "tool_name": "google_sheets",
+        "tool_args": {
+          "action": "append_rows",
+          "spreadsheet_id": "1LeadTrackingMasterSheetIDPlaceholder",
+          "rows": [
+            [
+              "$step_2.company_name",
+              "$step_2.contact_name",
+              "$step_2.email",
+              "$step_2.budget",
+              "$step_2.timeline",
+              "$step_3.document_url"
+            ]
+          ]
+        },
+        "reasoning": "Persisting the lead details and documentation link in the master tracking spreadsheet for sales pipeline visibility.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 5,
+        "step_id": "92bc6d38-f885-4cee-a9fd-455d1699bb52",
+        "description": "Post the executive summary notification to the sales leadership Slack channel",
+        "tool_name": "slack",
+        "tool_args": {
+          "action": "post_message",
+          "channel": "#sales-leads",
+          "message": "\ud83d\udea8 *New High-Priority Lead Processed*\n*Company:* $step_2.company_name\n*Contact:* $step_2.contact_name\n*Budget:* $step_2.budget\n*Executive Summary Doc:* $step_3.document_url"
+        },
+        "reasoning": "Alerting the sales team via Slack to ensure immediate follow-up on high-priority inbound leads.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-29T18:45:09.289982",
+    "updated_at": "2026-08-29T18:45:09.291214Z",
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 1830,
+      "total_completion_tokens": 870,
+      "total_tokens": 2700,
+      "total_estimated_cost_usd": 0.000797,
+      "calls": [
+        {
+          "prompt_tokens": 1830,
+          "completion_tokens": 870,
+          "total_tokens": 2700,
+          "model_used": "gemini-3.5-flash-lite",
+          "estimated_cost_usd": 0.000797
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

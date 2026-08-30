@@ -285,6 +285,57 @@ class YouTubeAPIClient:
 
         return self._fallback_web_search(query=query, max_results=max_results)
 
+    def get_transcript(self, video_id: str, language: str = "en") -> Dict[str, Any]:
+        """
+        Fetch the transcript/captions for a YouTube video using youtube-transcript-api.
+        Returns structured transcript with timestamps.
+        """
+        # Strip URL prefix if full URL was passed
+        if "youtube.com/watch" in video_id:
+            import urllib.parse
+            parsed = urllib.parse.urlparse(video_id)
+            qs = urllib.parse.parse_qs(parsed.query)
+            video_id = qs.get("v", [video_id])[0]
+        elif "youtu.be/" in video_id:
+            video_id = video_id.split("youtu.be/")[-1].split("?")[0]
+
+        try:
+            from youtube_transcript_api import YouTubeTranscriptApi
+            api = YouTubeTranscriptApi()
+            transcript = api.fetch(video_id)
+
+            entries = []
+            full_text_parts = []
+            for snippet in transcript.snippets:
+                entry = {
+                    "start": round(snippet.start, 2),
+                    "duration": round(snippet.duration, 2),
+                    "text": snippet.text,
+                }
+                entries.append(entry)
+                full_text_parts.append(snippet.text)
+
+            return {
+                "status": "SUCCESS",
+                "video_id": video_id,
+                "language": language,
+                "snippet_count": len(entries),
+                "transcript": entries[:500],  # Cap at 500 entries to avoid token overflow
+                "full_text": " ".join(full_text_parts)[:8000],  # Cap full text
+            }
+        except ImportError:
+            return {
+                "status": "FAILED",
+                "error": "youtube-transcript-api package is not installed. Run: pip install youtube-transcript-api",
+            }
+        except Exception as e:
+            return {
+                "status": "FAILED",
+                "error": f"Failed to fetch transcript for video '{video_id}': {str(e)}",
+                "video_id": video_id,
+            }
+
 
 # Singleton client instance
 youtube_api_client = YouTubeAPIClient()
+

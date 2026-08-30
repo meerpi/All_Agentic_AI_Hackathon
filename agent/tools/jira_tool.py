@@ -285,13 +285,21 @@ class JiraTool(BaseTool):
         if jira_url and jira_email and jira_token:
             try:
                 auth_str = base64.b64encode(f"{jira_email}:{jira_token}".encode("utf-8")).decode("utf-8")
-                api_endpoint = f"{jira_url.rstrip('/')}/rest/api/3/search?jql=project={project_key}&maxResults=50"
+                api_endpoint = f"{jira_url.rstrip('/')}/rest/api/3/search/jql"
+                search_payload = {
+                    "jql": f"project={project_key}",
+                    "maxResults": 50,
+                    "fields": ["summary", "status", "priority", "assignee"]
+                }
                 req = urllib.request.Request(
                     api_endpoint,
+                    data=json.dumps(search_payload).encode("utf-8"),
                     headers={
                         "Authorization": f"Basic {auth_str}",
-                        "Accept": "application/json"
-                    }
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    method="POST"
                 )
                 with urllib.request.urlopen(req, timeout=10) as response:
                     data = json.loads(response.read().decode("utf-8"))

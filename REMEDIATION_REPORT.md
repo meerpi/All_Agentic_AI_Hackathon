@@ -104,9 +104,32 @@ This PowerShell script generates fake commit history to pad the repo. Left untou
 ### 3. PII Redaction Expansion
 Current `mask_pii` covers emails, phones, SSNs, and credit cards. API keys (e.g., `AIzaSy...`) are NOT covered. This is a scope expansion decision.
 
-## Commit Log (25 commits)
+## Live Test Findings Remediation (Branch `fix/live-test-findings`)
+
+Following the adversarial live test suite execution recorded in `LIVE_TEST_REPORT.md`, all live test failure findings have been remediated, verified live against real services, and committed:
+
+| Report Finding | Component / Bug | Root Cause | Live Verification Result | Commit |
+|---|---|---|---|---|
+| **A.1 / B.4** | `agent/orchestrator.py` | Dynamic arg resolution failed on non-1:1 list indexing and string-embedded template references (`"https://$step_1.url/"`) | ✅ **VERIFIED LIVE** — Task A.1 re-run completed 100% across Gmail, Data Extractor, Docs, Jira Cloud, and Slack | `171adad` |
+| **E.9** | `agent/orchestrator.py` | HITL approval gate re-evaluated approval requirement on resumed step, spinning in infinite pause loop | ✅ **VERIFIED LIVE** — Task E.9 paused at Step 1, resume via `POST /api/agent/approve/{id}` executed real Gmail send with message ID `1a051977b5f93354` | `171adad` |
+| **D.8** | `agent/orchestrator.py`, `agent/prompts.py` | Self-correction substituted unrelated `gmail:search_emails` on definitive 404 Google Doc error | ✅ **VERIFIED LIVE** — Task D.8 preserved real Google API 404 error and reported FAILED status without cross-tool hallucination | `171adad` |
+| **A.2** | `agent/tools/google_sheets_tool.py` | Unresolved `spreadsheet_id` placeholder silently created a second orphan spreadsheet | ✅ **VERIFIED LIVE** — `_append_rows` and `_read_sheet` now raise explicit `ValueError` naming the unresolved reference | `9de31e3` |
+| **D.8** | `agent/tools/jira_tool.py` | Invalid `project_key` (`NONEXIST`) was silently overridden with `.env` default `KAN` | ✅ **VERIFIED LIVE** — Invalid project key correctly surfaces Jira API HTTP 400 error naming the missing project | `79015fb` |
+| **B.5** | `agent/tools/media_controller.py`, `agent/browser/spotify_driver.py` | Tool description omitted action names causing hallucinated action generation; generic error on unauth session | ✅ **VERIFIED LIVE** — Tool schema aligned; unauthenticated Spotify session raises explicit `RuntimeError` | `b834176` |
+| **B.6** | `agent/tools/os_desktop_tool.py`, `agent/browser/desktop_driver.py` | `launch_application` not routed in `run()`; fell back to fake simulated hotkeys | ✅ **VERIFIED LIVE** — `launch_application` routes to real process launcher; simulated success removed | `7b86329` |
+| **B.4** | `agent/tools/browser_controller.py`, `agent/browser/youtube_driver.py` | Ad-skip locator timed out when no ad was present on video | ✅ **VERIFIED LIVE** — Checked element presence and visibility; treats "no ad" as expected success | `1af77dc` |
+| **I.13** | `discord_bot.py`, `agent/telegram_trigger.py` | Bot entry points swallowed HITL approval requirements into generic "internal error" | ✅ **VERIFIED LIVE** — Bot handlers now surface explicit safety and approval policy notices | `50f6188` |
+
+## Final Commit Log (31 commits)
 
 ```
+50f6188 fix(bot): surface explicit HITL approval and safety guardrail notices to users [closes report finding I.13]
+1af77dc fix(browser): make ad/skip button clicks optional and non-blocking when no ad is present [closes report finding B.4]
+7b86329 fix(desktop): route launch_application to real process launcher and eliminate simulated success [closes report finding B.6]
+b834176 fix(media): align media_controller actions schema and surface explicit unauthenticated Spotify session errors [closes report finding B.5]
+79015fb fix(jira): raise clear error on invalid project_key instead of overriding with default [closes report finding D.8]
+9de31e3 fix(sheets): raise clear error on unresolved spreadsheet_id instead of creating orphan sheets [closes report finding A.2]
+171adad fix(orchestrator): fix dynamic arg resolution, HITL resume loop, and self-correction boundary [closes report findings A.1, B.4, D.8, E.9]
 f5ea68d test(remediation): add 18 failure-path tests [closes Phase5]
 0b9f5b0 chore(tests): move root-level test files into tests/
 5319acc fix(aria_parser): prompt injection screening on browser observations [closes Phase3]

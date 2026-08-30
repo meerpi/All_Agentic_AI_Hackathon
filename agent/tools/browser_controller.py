@@ -314,5 +314,16 @@ class BrowserControllerTool(BaseTool):
                 "url": page.url,
             }
 
+        elif act in ("close", "close_browser", "quit", "exit", "close_page"):
+            try:
+                await page.close()
+            except Exception:
+                pass
+            return {
+                "status": "SUCCESS",
+                "action": "close_browser",
+                "message": "Browser page closed successfully.",
+            }
+
         else:
             raise ValueError(f"Unknown browser action: '{action}'.")

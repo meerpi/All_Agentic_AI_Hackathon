@@ -31,8 +31,28 @@ class MediaControllerTool(BaseTool):
         self.spotify = SpotifyDriver()
         self.youtube_api = youtube_api_client
 
-    def run(self, action: str, **kwargs: Any) -> Dict[str, Any]:
+    def run(self, action: str = "", **kwargs: Any) -> Dict[str, Any]:
         """Synchronous entrypoint called by Taskmaster DAG orchestrator."""
+        # Auto-detect action from kwargs if not explicitly provided
+        if not action:
+            action = kwargs.pop("action", "")
+        if not action:
+            # Infer action from the parameters provided
+            if kwargs.get("video_id") or kwargs.get("video_url"):
+                if kwargs.get("duration_seconds") or kwargs.get("duration") or kwargs.get("play_duration_seconds"):
+                    action = "youtube_play"
+                else:
+                    action = "youtube_transcript"
+            elif kwargs.get("query") or kwargs.get("search_query"):
+                action = "youtube_api_search"
+            elif kwargs.get("url"):
+                action = "youtube_play"
+            else:
+                raise ValueError(
+                    "media_controller requires an 'action' parameter or enough context to infer one. "
+                    "Supported: youtube_api_search, youtube_transcript, youtube_play, youtube_control, "
+                    "spotify_play, spotify_create_playlist, spotify_control"
+                )
         act = action.lower().strip()
 
         # ── Official YouTube Data API v3 Fast-Path (No browser overhead) ──

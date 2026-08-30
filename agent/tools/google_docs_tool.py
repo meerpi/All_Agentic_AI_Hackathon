@@ -39,8 +39,22 @@ class GoogleDocsTool(BaseTool):
         style: Optional[str] = None,
         **kwargs: Any,
     ) -> Dict[str, Any]:
-        action = action.lower() if action else "create_document"
-        body_content = content or text or ""
+        body_content = (
+            content
+            if content is not None
+            else text
+            if text is not None
+            else kwargs.get("body")
+            if kwargs.get("body") is not None
+            else kwargs.get("markdown_content")
+            if kwargs.get("markdown_content") is not None
+            else kwargs.get("data")
+            if kwargs.get("data") is not None
+            else ""
+        )
+        if isinstance(body_content, (dict, list)):
+            import json
+            body_content = json.dumps(body_content, indent=2)
         # Auto-infer intent if action was omitted or defaulted
         if document_id and body_content and action == "create_document":
             action = "append_content"

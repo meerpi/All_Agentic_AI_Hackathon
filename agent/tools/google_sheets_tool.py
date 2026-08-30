@@ -36,27 +36,34 @@ class GoogleSheetsTool(BaseTool):
         sheet_name: str = "Sheet1",
         range_notation: Optional[str] = None,
         title: Optional[str] = None,
-        rows: Optional[List[List[Any]]] = None,
-        values: Optional[List[List[Any]]] = None,
+        rows: Optional[Any] = None,
+        values: Optional[Any] = None,
+        headers: Optional[List[str]] = None,
         **kwargs: Any,
     ) -> Dict[str, Any]:
+        raw_rows = rows if rows is not None else values if values is not None else kwargs.get("data")
+        raw_headers = headers or kwargs.get("headers")
+
         action = action.lower() if action else "read_sheet"
         # Auto-infer intent if action was omitted or defaulted
-        if (rows or values) and spreadsheet_id and action == "read_sheet":
+        if raw_rows and spreadsheet_id and action == "read_sheet":
             action = "append_rows"
-        elif title and not spreadsheet_id and action == "read_sheet":
+        elif title and not spreadsheet_id and action in ("read_sheet", "create_spreadsheet"):
             action = "create_spreadsheet"
 
         try:
             if action == "create_spreadsheet":
-                headers = kwargs.get("headers")
-                return self._create_spreadsheet(title or "Taskmaster Data", headers=headers)
+                return self._create_spreadsheet(
+                    title=title or "Taskmaster Data",
+                    rows=raw_rows,
+                    headers=raw_headers,
+                )
             elif action == "read_sheet":
                 return self._read_sheet(spreadsheet_id or "", range_notation or f"{sheet_name}!A:Z")
             elif action == "append_rows":
-                return self._append_rows(spreadsheet_id or "", range_notation or f"{sheet_name}!A:A", rows or values or [])
+                return self._append_rows(spreadsheet_id or "", range_notation or f"{sheet_name}!A:A", raw_rows or [])
             elif action == "update_cells":
-                return self._update_cells(spreadsheet_id or "", range_notation or f"{sheet_name}!A1", values or [])
+                return self._update_cells(spreadsheet_id or "", range_notation or f"{sheet_name}!A1", raw_rows or [])
             else:
                 return {"error": f"Unknown action '{action}'. Supported: create_spreadsheet, read_sheet, append_rows, update_cells"}
         except Exception as e:
@@ -68,10 +75,48 @@ class GoogleSheetsTool(BaseTool):
                 "spreadsheet_id": spreadsheet_id
             }
 
+    # ---------- Helper methods ----------
+
+    def _normalize_rows(self, raw_rows: Any, headers: Optional[List[str]] = None) -> List[List[Any]]:
+        """Ensure rows is strictly a 2D list of primitive values for Google Sheets API."""
+        normalized: List[List[Any]] = []
+
+        if raw_rows:
+            if isinstance(raw_rows, str):
+                normalized = [[raw_rows]]
+            elif isinstance(raw_rows, dict):
+                normalized = [[str(k), str(v)] for k, v in raw_rows.items()]
+            elif isinstance(raw_rows, list):
+                if raw_rows:
+                    if isinstance(raw_rows[0], dict):
+                        extracted_headers = list(raw_rows[0].keys())
+                        data_rows = [[str(d.get(h, "")) for h in extracted_headers] for d in raw_rows]
+                        normalized = [extracted_headers] + data_rows
+                    elif isinstance(raw_rows[0], (list, tuple)):
+                        normalized = [[str(cell) for cell in r] for r in raw_rows]
+                    else:
+                        # 1D list of items -> single row
+                        normalized = [[str(item) for item in raw_rows]]
+            else:
+                normalized = [[str(raw_rows)]]
+
+        if headers:
+            # Prepend headers if not already the first row of normalized
+            header_row = [str(h) for h in headers]
+            if not normalized or normalized[0] != header_row:
+                normalized = [header_row] + normalized
+
+        return normalized
+
     # ---------- Private action implementations ----------
 
-    def _create_spreadsheet(self, title: str, headers: Optional[List[str]] = None) -> Dict[str, Any]:
-        """Create a new Google Sheet and optionally populate initial header row."""
+    def _create_spreadsheet(
+        self,
+        title: str,
+        rows: Optional[Any] = None,
+        headers: Optional[List[str]] = None
+    ) -> Dict[str, Any]:
+        """Create a new Google Sheet and immediately populate with initial rows/headers."""
         service = self._get_service()
         spreadsheet_body = {
             "properties": {"title": title},
@@ -81,23 +126,30 @@ class GoogleSheetsTool(BaseTool):
         spreadsheet_id = result["spreadsheetId"]
         url = f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/edit"
 
-        if headers:
+        all_rows = self._normalize_rows(rows, headers=headers)
+        rows_written = 0
+
+        if all_rows:
             try:
-                service.spreadsheets().values().update(
+                write_result = service.spreadsheets().values().update(
                     spreadsheetId=spreadsheet_id,
                     range="Sheet1!A1",
                     valueInputOption="USER_ENTERED",
-                    body={"values": [headers]}
+                    body={"values": all_rows}
                 ).execute()
+                rows_written = write_result.get("updatedRows", len(all_rows))
+                logger.info(f"Successfully populated Google Sheet '{title}' with {rows_written} rows at {url}")
             except Exception as e:
-                logger.warning(f"Failed to write header row to new sheet: {e}")
+                logger.error(f"Failed to write initial rows to new sheet: {e}")
 
         return {
             "action": "create_spreadsheet",
             "spreadsheet_id": spreadsheet_id,
             "title": title,
             "url": url,
-            "status": "CREATED",
+            "rows_written": rows_written,
+            "total_rows": len(all_rows),
+            "status": "SUCCESS",
         }
 
     def _read_sheet(self, spreadsheet_id: str, range_notation: str) -> Dict[str, Any]:
@@ -117,34 +169,8 @@ class GoogleSheetsTool(BaseTool):
             "range": range_notation,
             "row_count": len(rows),
             "data": rows,
+            "status": "SUCCESS",
         }
-
-    def _normalize_rows(self, raw_rows: Any) -> List[List[Any]]:
-        """Ensure rows is strictly a 2D list of primitive values for Google Sheets API."""
-        if not raw_rows:
-            return []
-
-        if isinstance(raw_rows, str):
-            return [[raw_rows]]
-
-        if isinstance(raw_rows, dict):
-            return [[str(k), str(v)] for k, v in raw_rows.items()]
-
-        if isinstance(raw_rows, list):
-            if not raw_rows:
-                return []
-            if isinstance(raw_rows[0], dict):
-                # List of dicts -> extract values
-                headers = list(raw_rows[0].keys())
-                data_rows = [[str(d.get(h, "")) for h in headers] for d in raw_rows]
-                return [headers] + data_rows
-            elif isinstance(raw_rows[0], (list, tuple)):
-                return [[str(cell) for cell in r] for r in raw_rows]
-            else:
-                # 1D list of items -> single row
-                return [[str(item) for item in raw_rows]]
-
-        return [[str(raw_rows)]]
 
     def _append_rows(self, spreadsheet_id: str, range_notation: str, rows: Any) -> Dict[str, Any]:
         """Append rows of data to the bottom of a Google Sheet."""
@@ -183,15 +209,17 @@ class GoogleSheetsTool(BaseTool):
             "status": "SUCCESS",
         }
 
-    def _update_cells(self, spreadsheet_id: str, range_notation: str, values: List[List[Any]]) -> Dict[str, Any]:
+    def _update_cells(self, spreadsheet_id: str, range_notation: str, values: Any) -> Dict[str, Any]:
         """Update specific cells in a Google Sheet."""
         if not spreadsheet_id or spreadsheet_id.startswith("$") or len(spreadsheet_id) < 15:
             raise ValueError(f"Unresolved or invalid spreadsheet_id: '{spreadsheet_id}'. A valid Google Spreadsheet ID is required to update cells.")
-        if not values:
-            raise ValueError("values (list of lists) is required for update_cells action.")
+
+        normalized_rows = self._normalize_rows(values)
+        if not normalized_rows:
+            raise ValueError("values (list of lists or structured rows) is required for update_cells action.")
 
         service = self._get_service()
-        body = {"values": values}
+        body = {"values": normalized_rows}
         result = service.spreadsheets().values().update(
             spreadsheetId=spreadsheet_id,
             range=range_notation,

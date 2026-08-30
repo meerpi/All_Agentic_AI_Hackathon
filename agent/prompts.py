@@ -90,9 +90,9 @@ Error Message:
 Available Tools:
 {tools_description}
 
-Analyze what went wrong, adapt the execution strategy, and provide either:
-1. Revised tool arguments to retry the step safely with the same tool.
-2. An alternative tool choice and revised arguments to achieve the step objective.
+Analyze what went wrong, adapt the execution strategy, and provide:
+1. Revised tool arguments to retry the step safely with the SAME tool '{tool_name}'.
+2. If the tool failed due to a definitive missing resource (e.g. 404, invalid ID, file does not exist), DO NOT substitute a completely different tool or action (e.g. do not switch from reading a document to searching emails). Instead, correct the arguments if possible, or report the failure honestly.
 
 Return a JSON object:
 {{

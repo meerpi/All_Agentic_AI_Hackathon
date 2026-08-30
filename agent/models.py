@@ -105,6 +105,7 @@ class PlanStep(BaseModel):
 
     # Risk classification for HITL gating
     risk_level: RiskLevel = Field(default=RiskLevel.LOW)
+    is_approved: bool = Field(default=False, description="Whether this step was approved via human-in-the-loop gate")
 
     # Token tracking per step
     token_usage: Optional[TokenUsage] = None

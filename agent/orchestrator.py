@@ -14,6 +14,7 @@ Integrates:
 
 import json
 import logging
+import re
 import time
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Set
@@ -212,7 +213,7 @@ class TaskmasterOrchestrator:
 
         step_map = {s.step_number: s for s in workflow.steps}
         completed_step_nums: Set[int] = {s.step_number for s in workflow.steps if s.status == StepStatus.COMPLETED}
-        accumulated_results = [s.result for s in workflow.steps if s.result]
+        step_results: Dict[int, Any] = {s.step_number: s.result for s in workflow.steps if s.result is not None}
 
         for group in parallel_groups:
             # Filter to steps that still need execution
@@ -237,8 +238,8 @@ class TaskmasterOrchestrator:
                     persistence.save_checkpoint(workflow_id, step_num, workflow.model_dump(mode="json"))
                     self._add_trace(workflow_id, "CHECKPOINT_SAVED", step_number=step_num)
 
-                    # HITL gate — uses the workflow's configured approval mode
-                    if requires_approval(step.tool_name, approval_mode=workflow.require_approval):
+                    # HITL gate — uses the workflow's configured approval mode (exempt if already approved)
+                    if not getattr(step, "is_approved", False) and requires_approval(step.tool_name, approval_mode=workflow.require_approval):
                         step.status = StepStatus.WAITING_APPROVAL
                         workflow.status = WorkflowStatus.AWAITING_APPROVAL
                         workflow.paused_at_step = step_num
@@ -255,7 +256,7 @@ class TaskmasterOrchestrator:
                         step.error = f"Blocked by execution guardrail: {'; '.join(exec_check.violations)}"
                         continue
 
-                    futures[pool.submit(self._execute_single_step, step, workflow, accumulated_results)] = step_num
+                    futures[pool.submit(self._execute_single_step, step, workflow, step_results)] = step_num
 
                 for future in concurrent.futures.as_completed(futures):
                     step_num = futures[future]
@@ -264,14 +265,15 @@ class TaskmasterOrchestrator:
                         result_data = future.result()
                         if step.status == StepStatus.COMPLETED:
                             completed_step_nums.add(step_num)
-                            if step.result:
-                                accumulated_results.append(step.result)
+                            if step.result is not None:
+                                step_results[step_num] = step.result
                     except Exception as e:
                         step.status = StepStatus.FAILED
                         step.error = str(e)
                         self._add_trace(workflow_id, "STEP_EXCEPTION", step_number=step_num, details={"error": str(e)})
 
         # Final summary synthesis
+        accumulated_results = [s.result for s in workflow.steps if s.result is not None]
         failed_count = sum(1 for s in workflow.steps if s.status == StepStatus.FAILED)
         workflow.status = WorkflowStatus.COMPLETED if failed_count == 0 else WorkflowStatus.FAILED
         workflow.summary = self._synthesize_final_summary(workflow, accumulated_results)
@@ -343,39 +345,56 @@ class TaskmasterOrchestrator:
         if workflow.paused_at_step:
             step = next((s for s in workflow.steps if s.step_number == workflow.paused_at_step), None)
             if step and step.status == StepStatus.WAITING_APPROVAL:
+                step.is_approved = True
                 step.status = StepStatus.PENDING
+                self._add_trace(workflow_id, "HITL_APPROVED", step_number=step.step_number, details={"tool": step.tool_name})
+            workflow.paused_at_step = None
         return self.execute_workflow(workflow_id)
 
-    def _resolve_dynamic_args(self, args: Dict[str, Any], accumulated_results: List[Dict]) -> Dict[str, Any]:
-        """Resolves references like $step_1.url or $step_2.id."""
+    STEP_REF_PATTERN = re.compile(r'\$(?:\{step_(\d+)(?:\.([a-zA-Z0-9_]+))?\}|step_(\d+)(?:\.([a-zA-Z0-9_]+))?)')
+
+    def _resolve_dynamic_args(self, args: Dict[str, Any], step_results: Dict[int, Any]) -> Dict[str, Any]:
+        """Resolves references like $step_1.url or $step_2.id both as standalone values and embedded in strings."""
         import copy
         resolved = copy.deepcopy(args)
 
-        def lookup_val(key_path: str):
-            parts = key_path.split(".")
-            step_part = parts[0]
-            field_part = parts[1] if len(parts) > 1 else None
-
-            step_idx = 0
-            if step_part.startswith("$step_"):
-                try:
-                    step_idx = int(step_part.replace("$step_", "")) - 1
-                except ValueError:
-                    return None
-
-            if 0 <= step_idx < len(accumulated_results):
-                res = accumulated_results[step_idx]
-                if field_part and isinstance(res, dict):
-                    return res.get(field_part, str(res))
-                return str(res)
-            return None
+        def lookup_val(step_num_str: str, field: Optional[str]):
+            try:
+                step_num = int(step_num_str)
+            except (ValueError, TypeError):
+                return None
+            res = step_results.get(step_num)
+            if res is None:
+                return None
+            if field:
+                if isinstance(res, dict):
+                    return res.get(field)
+                return getattr(res, field, None)
+            return res
 
         def recurse_resolve(obj):
             if isinstance(obj, str):
-                if obj.startswith("$step_"):
-                    val = lookup_val(obj)
+                # 1. Check for exact full match (preserves complex types like dicts/lists)
+                full_m = self.STEP_REF_PATTERN.fullmatch(obj)
+                if full_m:
+                    s_num = full_m.group(1) or full_m.group(3)
+                    field = full_m.group(2) or full_m.group(4)
+                    val = lookup_val(s_num, field)
                     return val if val is not None else obj
-                return obj
+
+                # 2. Check for embedded references inside string (e.g. "https://$step_1.url/")
+                def replace_match(match):
+                    s_num = match.group(1) or match.group(3)
+                    field = match.group(2) or match.group(4)
+                    val = lookup_val(s_num, field)
+                    if val is not None:
+                        if isinstance(val, (dict, list)):
+                            return json.dumps(val)
+                        return str(val)
+                    return match.group(0)
+
+                return self.STEP_REF_PATTERN.sub(replace_match, obj)
+
             elif isinstance(obj, dict):
                 return {k: recurse_resolve(v) for k, v in obj.items()}
             elif isinstance(obj, list):
@@ -388,10 +407,10 @@ class TaskmasterOrchestrator:
     RETRYABLE_ERRORS = (TimeoutError, ConnectionError, OSError)
     MAX_RETRIES = 3
 
-    def _execute_single_step(self, step: PlanStep, workflow: WorkflowPlan, accumulated_results: List[Dict]) -> None:
+    def _execute_single_step(self, step: PlanStep, workflow: WorkflowPlan, step_results: Dict[int, Any]) -> None:
         """Execute a single step with retry/backoff for transient errors."""
         workflow_id = workflow.workflow_id
-        resolved_args = self._resolve_dynamic_args(step.tool_args, accumulated_results)
+        resolved_args = self._resolve_dynamic_args(step.tool_args, step_results)
 
         step.status = StepStatus.IN_PROGRESS
         self._add_trace(workflow_id, "STEP_STARTED", step_number=step.step_number,
@@ -460,6 +479,10 @@ class TaskmasterOrchestrator:
 
     def _self_correct_step(self, step: PlanStep, args: Dict, error: str, workflow: WorkflowPlan) -> Optional[ToolCallResult]:
         """Enhanced self-correction with alternative tool suggestion and retry."""
+        # Definitive not-found / invalid resource error detection
+        not_found_keywords = ["404", "not found", "does not exist", "invalid or missing", "not_found", "unresolved reference"]
+        is_resource_not_found = any(kw in str(error).lower() for kw in not_found_keywords)
+
         tools_desc = self.registry.get_tools_description_prompt()
         prompt = SELF_CORRECTION_PROMPT.format(
             step_number=step.step_number,
@@ -477,6 +500,14 @@ class TaskmasterOrchestrator:
 
             suggested_tool = correction_res.get("suggested_tool", step.tool_name)
             corrected_args = correction_res.get("corrected_tool_args", args)
+
+            # If resource is definitively not found, do not permit tool substitution
+            if is_resource_not_found and suggested_tool != step.tool_name:
+                logger.warning(
+                    f"Self-correction rejected tool substitution from '{step.tool_name}' to '{suggested_tool}' "
+                    f"on definitive resource-not-found error: {error}"
+                )
+                return None
 
             target_tool = self.registry.get_tool(suggested_tool)
             if target_tool:

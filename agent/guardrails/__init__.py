@@ -171,7 +171,7 @@ TOOL_VALIDATION_RULES = {
             "spotify_play": ["query"],
         },
         "action_alternative_fields": {
-            "youtube_play": [["query"], ["url"]],
+            "youtube_play": [["query"], ["url"], ["video_id"], ["video_url"], ["search_query"]],
         },
     },
     "os_desktop_tool": {
@@ -224,7 +224,7 @@ def check_execution_rails(tool_name: str, tool_args: Dict[str, Any]) -> Executio
 
     # Infer media_controller action from args when LLM omits it
     if not action and tool_name == "media_controller":
-        if any(k in tool_args for k in ("query", "url", "video_url", "search_query")):
+        if any(k in tool_args for k in ("query", "url", "video_url", "video_id", "search_query")):
             action = "youtube_play"
             tool_args["action"] = action
         elif any(k in tool_args for k in ("track", "artist", "album")):

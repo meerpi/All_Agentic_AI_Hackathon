@@ -170,37 +170,98 @@ class YouTubeAPIClient:
             logger.error(f"Failed to fetch Liked Videos (LL): {e}")
             return []
 
+    def _fallback_web_search(self, query: str, max_results: int = 5) -> List[Dict[str, Any]]:
+        """Fallback web parser extracting live YouTube search results when Data API is disabled/unconfigured."""
+        import json
+        import re
+        import urllib.parse
+        import urllib.request
+
+        try:
+            encoded_query = urllib.parse.quote_plus(query)
+            url = f"https://www.youtube.com/results?search_query={encoded_query}"
+            req = urllib.request.Request(
+                url,
+                headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
+            )
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                html = resp.read().decode("utf-8", errors="replace")
+
+            match = re.search(r"ytInitialData\s*=\s*({.+?});</script>", html)
+            if not match:
+                return []
+
+            data = json.loads(match.group(1))
+            contents = (
+                data.get("contents", {})
+                .get("twoColumnSearchResultsRenderer", {})
+                .get("primaryContents", {})
+                .get("sectionListRenderer", {})
+                .get("contents", [])
+            )
+
+            results = []
+            for section in contents:
+                items = section.get("itemSectionRenderer", {}).get("contents", [])
+                for item in items:
+                    v = item.get("videoRenderer")
+                    if v and v.get("videoId"):
+                        vid = v.get("videoId")
+                        title_runs = v.get("title", {}).get("runs", [])
+                        title = title_runs[0].get("text", "") if title_runs else "YouTube Video"
+                        owner_runs = v.get("ownerText", {}).get("runs", [])
+                        channel = owner_runs[0].get("text", "YouTube Channel") if owner_runs else ""
+                        results.append({
+                            "title": title,
+                            "channel": channel,
+                            "video_id": vid,
+                            "url": f"https://www.youtube.com/watch?v={vid}",
+                            "description": f"Video by {channel}"
+                        })
+                        if len(results) >= max_results:
+                            return results
+            return results
+        except Exception as e:
+            logger.error(f"Fallback YouTube web search error for '{query}': {e}")
+            return []
+
     def search_tracks(self, query: str, max_results: int = 5) -> List[Dict[str, Any]]:
         """
         Searches YouTube video catalogue for tracks/videos matching the query.
+        Falls back to web parser if GCP YouTube Data API v3 is disabled in project.
         """
-        service = self._get_service()
-        if not service:
-            raise RuntimeError("YouTube Data API service unavailable.")
-
+        service = None
         try:
-            resp = service.search().list(
-                q=query,
-                part="snippet",
-                type="video",
-                maxResults=max_results,
-            ).execute()
-
-            results = []
-            for it in resp.get("items", []):
-                vid = it.get("id", {}).get("videoId")
-                snippet = it.get("snippet", {})
-                results.append({
-                    "title": snippet.get("title"),
-                    "channel": snippet.get("channelTitle"),
-                    "video_id": vid,
-                    "url": f"https://www.youtube.com/watch?v={vid}",
-                    "description": snippet.get("description"),
-                })
-            return results
+            service = self._get_service()
         except Exception as e:
-            logger.error(f"YouTube search error for '{query}': {e}")
-            return []
+            logger.warning(f"YouTube Data API service unavailable ({e}), using web search fallback.")
+
+        if service:
+            try:
+                resp = service.search().list(
+                    q=query,
+                    part="snippet",
+                    type="video",
+                    maxResults=max_results,
+                ).execute()
+
+                results = []
+                for it in resp.get("items", []):
+                    vid = it.get("id", {}).get("videoId")
+                    snippet = it.get("snippet", {})
+                    results.append({
+                        "title": snippet.get("title"),
+                        "channel": snippet.get("channelTitle"),
+                        "video_id": vid,
+                        "url": f"https://www.youtube.com/watch?v={vid}",
+                        "description": snippet.get("description"),
+                    })
+                if results:
+                    return results
+            except Exception as e:
+                logger.warning(f"YouTube Data API search returned error: {e}. Falling back to web search parser...")
+
+        return self._fallback_web_search(query=query, max_results=max_results)
 
 
 # Singleton client instance

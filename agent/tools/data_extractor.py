@@ -1,14 +1,21 @@
 import csv
 import io
 import json
+import logging
 import re
 from typing import Any, Dict, List, Optional
 from agent.tools.base import BaseTool
 
+logger = logging.getLogger("taskmaster.tools.data_extractor")
+
 
 class DataExtractorTool(BaseTool):
     name = "data_extractor"
-    description = "Parses raw unstructured text, server logs, CSV, or payload data into structured JSON entities."
+    description = (
+        "Extracts structured data from unstructured text, HTML, ARIA snapshots, logs, CSV, or any raw content. "
+        "Supports natural language extraction queries (e.g. 'Extract the top 5 headlines as a list'). "
+        "Pass 'extraction_query' to describe what to extract."
+    )
 
     def run(
         self,
@@ -40,10 +47,8 @@ class DataExtractorTool(BaseTool):
         fields = fields_to_extract or kwargs.get("schema") or ["status", "metric", "timestamp", "severity"]
         if isinstance(fields, dict):
             fields = list(fields.keys())
-        
-        extracted_fields: Dict[str, Any] = {}
-        records: List[Dict[str, Any]] = []
-        processed_count = 0
+
+        extraction_query = kwargs.get("extraction_query") or kwargs.get("query") or kwargs.get("prompt") or ""
 
         if not content.strip():
             return {
@@ -55,6 +60,69 @@ class DataExtractorTool(BaseTool):
                 "records": [],
                 "raw_snippet": "No raw input provided"
             }
+
+        # ── LLM-powered extraction when a natural language query is provided ──
+        if extraction_query and len(content) > 20:
+            return self._llm_extract(content, extraction_query, source_type)
+
+        # ── Fallback: structural parsing (JSON / CSV / regex) ──
+        return self._structural_extract(content, fields, source_type)
+
+    def _llm_extract(self, content: str, query: str, source_type: str) -> Dict[str, Any]:
+        """Use LLM to extract structured data based on a natural language query."""
+        try:
+            from agent.llm_client import llm_client
+
+            # Truncate content to avoid token overflow
+            truncated = content[:6000] if len(content) > 6000 else content
+
+            prompt = (
+                "You are a precise data extraction assistant. Extract the requested information from the provided content.\n\n"
+                f"EXTRACTION REQUEST: {query}\n\n"
+                f"SOURCE CONTENT:\n{truncated}\n\n"
+                "INSTRUCTIONS:\n"
+                "- Extract ONLY what is requested, nothing extra\n"
+                "- Return a valid JSON object with these keys:\n"
+                '  - "items": a list of the extracted items (strings or objects)\n'
+                '  - "count": the number of items extracted\n'
+                '  - "summary": a one-line summary of what was extracted\n'
+                '- If you cannot find the requested information, return {"items": [], "count": 0, "summary": "No matching data found"}\n'
+                "- Do NOT add commentary outside the JSON\n\n"
+                "Return ONLY the JSON object:"
+            )
+
+            result = llm_client.generate_json(prompt, role="research")
+
+            if isinstance(result, dict):
+                items = result.get("items", [])
+                return {
+                    "status": "SUCCESS" if items else "FAILED",
+                    "source_type": source_type,
+                    "extraction_query": query,
+                    "processed_records_count": len(items),
+                    "extracted_data": items,
+                    "records": items if isinstance(items, list) else [items],
+                    "summary": result.get("summary", ""),
+                    "raw_snippet": (content[:200] + "...") if len(content) > 200 else content,
+                }
+            else:
+                return {
+                    "status": "FAILED",
+                    "error": f"LLM returned unexpected type: {type(result).__name__}",
+                    "source_type": source_type,
+                    "processed_records_count": 0,
+                    "records": [],
+                }
+
+        except Exception as e:
+            logger.warning(f"LLM extraction failed, falling back to structural: {e}")
+            return self._structural_extract(content, ["status", "metric", "timestamp", "severity"], source_type)
+
+    def _structural_extract(self, content: str, fields: List[str], source_type: str) -> Dict[str, Any]:
+        """Structural extraction using JSON/CSV/regex parsing."""
+        extracted_fields: Dict[str, Any] = {}
+        records: List[Dict[str, Any]] = []
+        processed_count = 0
 
         # 1. Try parsing as JSON
         try:
@@ -80,7 +148,7 @@ class DataExtractorTool(BaseTool):
             # 2. Try parsing as CSV / TSV
             lines = [l.strip() for l in content.strip().splitlines() if l.strip()]
             processed_count = len(lines)
-            
+
             if len(lines) > 1 and ("," in lines[0] or "\t" in lines[0]):
                 delimiter = "\t" if "\t" in lines[0] else ","
                 try:
@@ -100,13 +168,11 @@ class DataExtractorTool(BaseTool):
             # 3. Fallback to regex key-value and log extraction
             if not extracted_fields:
                 for f in fields:
-                    # Look for "field: value" or "field = value" or "field=value"
                     kv_match = re.search(rf"(?i)\b{re.escape(f)}\s*[:=]\s*([^\r\n,;]+)", content)
                     if kv_match:
                         val = kv_match.group(1).strip().strip('"\'')
                         extracted_fields[f] = val
                     else:
-                        # Log-specific patterns
                         if f.lower() in ("severity", "level", "status"):
                             lvl_match = re.search(r"\b(CRITICAL|FATAL|ERROR|WARN(?:ING)?|INFO|DEBUG|TRACE|PASSED|FAILED|SUCCESS)\b", content, re.IGNORECASE)
                             extracted_fields[f] = lvl_match.group(1).upper() if lvl_match else None

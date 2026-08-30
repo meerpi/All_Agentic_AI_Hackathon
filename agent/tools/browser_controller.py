@@ -34,6 +34,10 @@ class BrowserControllerTool(BaseTool):
 
     def run(self, action: str = "aria_snapshot", **kwargs: Any) -> Dict[str, Any]:
         """Synchronous entrypoint called by Taskmaster DAG orchestrator."""
+        # Auto-detect navigate intent: if url is provided but action wasn't explicitly set to navigate
+        url = kwargs.get("url") or kwargs.get("target_url")
+        if url and action in ("aria_snapshot", "observe"):
+            action = "navigate"
         return self.manager.run_sync(self._run_async(action, **kwargs))
 
     async def _run_async(self, action: str, **kwargs: Any) -> Dict[str, Any]:

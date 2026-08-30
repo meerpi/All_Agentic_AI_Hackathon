@@ -172,6 +172,7 @@ TOOL_VALIDATION_RULES = {
         },
         "action_alternative_fields": {
             "youtube_play": [["query"], ["url"], ["video_id"], ["video_url"], ["search_query"]],
+            "youtube_transcript": [["video_id"], ["url"], ["video_url"]],
         },
     },
     "os_desktop_tool": {

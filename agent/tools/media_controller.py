@@ -21,7 +21,7 @@ class MediaControllerTool(BaseTool):
     name = "media_controller"
     description = (
         "Autonomous Media & Music Controller for YouTube & Spotify. "
-        "Actions: create_youtube_playlist, youtube_api_search, get_liked_music, youtube_play, youtube_control, youtube_status, "
+        "Actions: create_youtube_playlist, youtube_api_search, youtube_transcript, get_liked_music, youtube_play, youtube_control, youtube_status, "
         "spotify_play, spotify_create_playlist, spotify_control."
     )
 
@@ -58,6 +58,13 @@ class MediaControllerTool(BaseTool):
             limit = int(kwargs.get("limit", 5))
             results = self.youtube_api.search_tracks(query=query, max_results=limit)
             return {"status": "SUCCESS", "query": query, "results": results}
+
+        elif act in ("youtube_transcript", "get_transcript", "fetch_transcript"):
+            video_id = kwargs.get("video_id") or kwargs.get("url") or kwargs.get("video_url")
+            if not video_id:
+                raise ValueError("youtube_transcript action requires 'video_id' or 'url' parameter.")
+            language = kwargs.get("language", "en")
+            return self.youtube_api.get_transcript(video_id=video_id, language=language)
 
         # ── Browser-based Playback Actions (Headless or Headed) ────────
         duration = kwargs.get("duration_seconds") or kwargs.get("duration") or kwargs.get("play_duration_seconds")

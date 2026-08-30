@@ -121,3 +121,10 @@ def test_media_controller_tool_playlist_and_liked_actions():
         res = tool.execute(action="get_liked_music", limit=10)
         assert res.success is True
         assert res.data["count"] == 1
+
+    # Test youtube_transcript routing
+    with patch.object(tool.youtube_api, "get_transcript", return_value={"status": "SUCCESS", "video_id": "vid1", "full_text": "Sample transcript text"}):
+        res = tool.execute(action="youtube_transcript", video_id="vid1")
+        assert res.success is True
+        assert res.data["video_id"] == "vid1"
+        assert "transcript" in res.data["full_text"]

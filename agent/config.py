@@ -8,6 +8,10 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: str = "mock_key"
     GEMINI_BACKUP_API_KEY: str = ""
 
+    # OpenAI API Keys
+    OPENAI_API_KEY: str = ""
+    OPENAI_MODEL: str = "gpt-4o"
+
     # Multi-Role Model Configuration (Industry Standard)
     GEMINI_MODEL: str = "gemini-3.5-flash"          # Default / Main
     MAIN_MODEL: str = "gemini-3.5-flash"            # Complex DAG planning & synthesis

@@ -96,8 +96,8 @@ class GoogleSheetsTool(BaseTool):
 
     def _read_sheet(self, spreadsheet_id: str, range_notation: str) -> Dict[str, Any]:
         """Read data from a Google Sheet range."""
-        if not spreadsheet_id:
-            return {"error": "spreadsheet_id is required for read_sheet action"}
+        if not spreadsheet_id or spreadsheet_id.startswith("$") or len(spreadsheet_id) < 15:
+            raise ValueError(f"Unresolved or invalid spreadsheet_id: '{spreadsheet_id}'. A valid Google Spreadsheet ID is required to read sheet.")
 
         service = self._get_service()
         result = service.spreadsheets().values().get(
@@ -116,7 +116,7 @@ class GoogleSheetsTool(BaseTool):
     def _normalize_rows(self, raw_rows: Any) -> List[List[Any]]:
         """Ensure rows is strictly a 2D list of primitive values for Google Sheets API."""
         if not raw_rows:
-            raise ValueError("Empty input for rows is not allowed.")
+            return []
 
         if isinstance(raw_rows, str):
             return [[raw_rows]]
@@ -126,7 +126,7 @@ class GoogleSheetsTool(BaseTool):
 
         if isinstance(raw_rows, list):
             if not raw_rows:
-                return [["No data"]]
+                return []
             if isinstance(raw_rows[0], dict):
                 # List of dicts -> extract values
                 headers = list(raw_rows[0].keys())
@@ -145,9 +145,18 @@ class GoogleSheetsTool(BaseTool):
         service = self._get_service()
         normalized_rows = self._normalize_rows(rows)
 
-        is_placeholder = not spreadsheet_id or spreadsheet_id.startswith("$") or "spreadsheet_id" in spreadsheet_id or len(spreadsheet_id) < 15
-        if is_placeholder:
-            raise ValueError("A valid spreadsheet_id is required to append rows.")
+        if not spreadsheet_id or spreadsheet_id.startswith("$") or len(spreadsheet_id) < 15:
+            raise ValueError(f"Unresolved or invalid spreadsheet_id: '{spreadsheet_id}'. A valid Google Spreadsheet ID is required to append rows.")
+
+        if not normalized_rows:
+            return {
+                "action": "append_rows",
+                "spreadsheet_id": spreadsheet_id,
+                "url": f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/edit",
+                "rows_appended": 0,
+                "status": "SUCCESS",
+                "note": "No rows provided to append."
+            }
 
         body = {"values": normalized_rows}
         result = service.spreadsheets().values().append(
@@ -163,17 +172,17 @@ class GoogleSheetsTool(BaseTool):
             "action": "append_rows",
             "spreadsheet_id": spreadsheet_id,
             "url": f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/edit",
-            "rows_appended": updates.get("updatedRows", len(rows)),
+            "rows_appended": updates.get("updatedRows", len(normalized_rows)),
             "updated_range": updates.get("updatedRange", ""),
             "status": "SUCCESS",
         }
 
     def _update_cells(self, spreadsheet_id: str, range_notation: str, values: List[List[Any]]) -> Dict[str, Any]:
         """Update specific cells in a Google Sheet."""
-        if not spreadsheet_id:
-            return {"error": "spreadsheet_id is required for update_cells action"}
+        if not spreadsheet_id or spreadsheet_id.startswith("$") or len(spreadsheet_id) < 15:
+            raise ValueError(f"Unresolved or invalid spreadsheet_id: '{spreadsheet_id}'. A valid Google Spreadsheet ID is required to update cells.")
         if not values:
-            return {"error": "values (list of lists) is required for update_cells action"}
+            raise ValueError("values (list of lists) is required for update_cells action.")
 
         service = self._get_service()
         body = {"values": values}

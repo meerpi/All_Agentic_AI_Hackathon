@@ -165,13 +165,13 @@ TOOL_VALIDATION_RULES = {
         ],
     },
     "media_controller": {
-        "action_required_any": {
-            "youtube_play": ["query", "url", "video_url", "video_id", "title", "search_query"],
-            "play_youtube": ["query", "url", "video_url", "video_id", "title", "search_query"],
-            "spotify_play": ["query", "track", "artist", "album", "url"],
-            "play_spotify": ["query", "track", "artist", "album", "url"],
-            "youtube_api_search": ["query", "search_query"],
-            "search_youtube_api": ["query", "search_query"],
+        "action_required_fields": {
+            "youtube_play": [],
+            "youtube_search": [],
+            "spotify_play": ["query"],
+        },
+        "action_alternative_fields": {
+            "youtube_play": [["query"], ["url"]],
         },
     },
     "os_desktop_tool": {
@@ -218,20 +218,34 @@ def check_execution_rails(tool_name: str, tool_args: Dict[str, Any]) -> Executio
     if tool_name == "google_docs" and "text" in tool_args and "content" not in tool_args:
         tool_args["content"] = tool_args["text"]
 
-    # Check action-specific required fields (all required)
-    if not action and ("subject" in tool_args or "body" in tool_args or "to" in tool_args):
+    # Check action-specific required fields
+    if not action and (("subject" in tool_args or "body" in tool_args or "to" in tool_args) and tool_name == "gmail"):
         action = "send_email"
+
+    # Infer media_controller action from args when LLM omits it
+    if not action and tool_name == "media_controller":
+        if any(k in tool_args for k in ("query", "url", "video_url", "search_query")):
+            action = "youtube_play"
+            tool_args["action"] = action
+        elif any(k in tool_args for k in ("track", "artist", "album")):
+            action = "spotify_play"
+            tool_args["action"] = action
 
     action_reqs = rules.get("action_required_fields", {}).get(action, [])
     for field in action_reqs:
         if field not in tool_args or not tool_args[field]:
             violations.append(f"Missing required field '{field}' for tool '{tool_name}' (action: {action})")
 
-    # Check action-specific required fields (any required)
-    action_reqs_any = rules.get("action_required_any", {}).get(action, [])
-    if action_reqs_any:
-        if not any(f in tool_args and tool_args[f] for f in action_reqs_any):
-            violations.append(f"Missing required parameter for tool '{tool_name}' (action: {action}). Expected at least one of: {', '.join(action_reqs_any)}")
+    # Check action_alternative_fields — at least one alternative group must be satisfied
+    alt_field_groups = rules.get("action_alternative_fields", {}).get(action)
+    if alt_field_groups:
+        has_any = any(
+            all(f in tool_args and tool_args[f] for f in group)
+            for group in alt_field_groups
+        )
+        if not has_any:
+            options = " or ".join(str(g) for g in alt_field_groups)
+            violations.append(f"Tool '{tool_name}' action '{action}' requires at least one of: {options}")
 
     # Run field-level validators
     for field, validator in rules.get("field_validators", {}).items():

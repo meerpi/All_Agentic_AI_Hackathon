@@ -282,8 +282,11 @@ class TaskmasterOrchestrator:
                         self._add_trace(workflow_id, "HITL_PAUSE", step_number=step_num, details={"tool": step.tool_name})
                         return workflow
 
+                    # Resolve dynamic references BEFORE guardrail check
+                    pre_resolved_args = self._resolve_dynamic_args(step.tool_args, step_results)
+
                     # Execution guardrail — block on violation instead of continuing
-                    exec_check = check_execution_rails(step.tool_name, step.tool_args)
+                    exec_check = check_execution_rails(step.tool_name, pre_resolved_args)
                     if not exec_check.passed:
                         logger.warning(f"Execution rail violation for step {step_num}: {exec_check.violations}")
                         self._add_trace(workflow_id, "GUARDRAIL_BLOCK", step_number=step_num, details={"violations": exec_check.violations})

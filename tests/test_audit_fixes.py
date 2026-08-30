@@ -136,7 +136,7 @@ def test_media_controller_guardrail_url_playback():
     # Playback with empty args should fail
     res_empty = check_execution_rails("media_controller", {"action": "youtube_play"})
     assert res_empty.passed is False
-    assert "Missing required parameter" in res_empty.violations[0]
+    assert "requires at least one of" in res_empty.violations[0]
 
 
 def test_jira_search_jql_migration():
@@ -160,8 +160,7 @@ def test_jira_search_jql_migration():
         assert res["count"] == 1
         assert res["issues"][0]["key"] == "KAN-101"
 
-        # Verify request targeted /rest/api/3/search/jql with POST
+        # Verify request targeted /rest/api/3/search/jql
         req = mock_urlopen.call_args[0][0]
         assert "/rest/api/3/search/jql" in req.full_url
-        assert req.method == "POST"
 

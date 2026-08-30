@@ -124,15 +124,19 @@ class GeminiClient:
         target_model = self._resolve_model_for_role(role)
         candidate_models_gemini = [
             target_model,
+            settings.GEMINI_MODEL,
+            settings.GEMINI_RESEARCH_MODEL,
+            settings.GEMINI_FALLBACK_MODEL,
+            "gemini-2.5-flash",
+            "gemini-2.0-flash",
+            "gemini-2.0-flash-lite",
+            "gemini-1.5-flash",
+            "gemini-1.5-pro",
             "gemini-3.5-flash",
             "gemini-3.5-flash-lite",
             "gemini-3.1-flash-lite",
-            "gemini-3.1-flash-lite-preview",
             "gemini-3-flash-preview",
             "gemini-flash-lite-latest",
-            "gemma-4-31b-it",
-            "gemini-3.6-flash",
-            "gemini-3.7-flash"
         ]
         
         candidate_models_openai = [

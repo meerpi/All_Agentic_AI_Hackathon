@@ -17,6 +17,8 @@ class Settings(BaseSettings):
     MAIN_MODEL: str = "gemini-3.5-flash"            # Complex DAG planning & synthesis
     RESEARCH_MODEL: str = "gemini-3.1-flash-lite"   # Fast retrieval & extraction
     FALLBACK_MODEL: str = "gemini-2.0-flash"        # Robust high-availability fallback
+    GEMINI_RESEARCH_MODEL: str = "gemini-3.1-flash-lite"
+    GEMINI_FALLBACK_MODEL: str = "gemini-2.0-flash"
 
     MOCK_GEMINI: bool = False
     LOG_LEVEL: str = "INFO"

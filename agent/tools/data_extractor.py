@@ -71,7 +71,8 @@ class DataExtractorTool(BaseTool):
     def _llm_extract(self, content: str, query: str, source_type: str) -> Dict[str, Any]:
         """Use LLM to extract structured data based on a natural language query."""
         try:
-            from agent.llm_client import llm_client
+            from agent.llm_client import GeminiClient
+            _llm = GeminiClient()
 
             # Truncate content to avoid token overflow
             truncated = content[:6000] if len(content) > 6000 else content
@@ -91,7 +92,7 @@ class DataExtractorTool(BaseTool):
                 "Return ONLY the JSON object:"
             )
 
-            result = llm_client.generate_json(prompt, role="research")
+            result = _llm.generate_json(prompt, role="research")
 
             if isinstance(result, dict):
                 items = result.get("items", [])

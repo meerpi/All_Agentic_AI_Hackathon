@@ -129,7 +129,21 @@ class ARIAParser:
 
         compact_elements_text = "\n".join(indexed_lines) if indexed_lines else "No interactable elements found."
 
-        # 4. Wrap with untrusted page observation boundary
+        # 4. Screen for prompt injection in page content before sending to LLM
+        from agent.guardrails import screen_page_content_injection
+        page_text = compact_elements_text + "\n" + aria_yaml[:1500]
+        has_injection, detected_patterns = screen_page_content_injection(page_text)
+        if has_injection:
+            logger.warning(f"Prompt injection detected in page content from {page.url}: {detected_patterns}")
+            # Strip the detected injection patterns from the content
+            import re
+            for pattern_str in detected_patterns:
+                page_text = re.sub(pattern_str, "[INJECTION_STRIPPED]", page_text, flags=re.IGNORECASE)
+            # Recompute the parts from sanitized text
+            parts = page_text.split("\n", 1)
+            compact_elements_text = parts[0] if parts else compact_elements_text
+
+        # 5. Wrap with untrusted page observation boundary
         prompt_observation = (
             "<untrusted_page_observation>\n"
             "### Page URL: " + page.url + "\n"

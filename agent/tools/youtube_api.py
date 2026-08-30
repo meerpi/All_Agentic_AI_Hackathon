@@ -182,44 +182,66 @@ class YouTubeAPIClient:
             url = f"https://www.youtube.com/results?search_query={encoded_query}"
             req = urllib.request.Request(
                 url,
-                headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
+                headers={
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                    "Accept-Language": "en-US,en;q=0.9",
+                }
             )
-            with urllib.request.urlopen(req, timeout=10) as resp:
+            with urllib.request.urlopen(req, timeout=15) as resp:
                 html = resp.read().decode("utf-8", errors="replace")
 
-            match = re.search(r"ytInitialData\s*=\s*({.+?});</script>", html)
-            if not match:
-                return []
-
-            data = json.loads(match.group(1))
-            contents = (
-                data.get("contents", {})
-                .get("twoColumnSearchResultsRenderer", {})
-                .get("primaryContents", {})
-                .get("sectionListRenderer", {})
-                .get("contents", [])
-            )
-
             results = []
-            for section in contents:
-                items = section.get("itemSectionRenderer", {}).get("contents", [])
-                for item in items:
-                    v = item.get("videoRenderer")
-                    if v and v.get("videoId"):
-                        vid = v.get("videoId")
-                        title_runs = v.get("title", {}).get("runs", [])
-                        title = title_runs[0].get("text", "") if title_runs else "YouTube Video"
-                        owner_runs = v.get("ownerText", {}).get("runs", [])
-                        channel = owner_runs[0].get("text", "YouTube Channel") if owner_runs else ""
+            # 1. Try ytInitialData JSON extraction
+            match = re.search(r"ytInitialData\s*=\s*({.+?});</script>", html)
+            if match:
+                try:
+                    data = json.loads(match.group(1))
+                    contents = (
+                        data.get("contents", {})
+                        .get("twoColumnSearchResultsRenderer", {})
+                        .get("primaryContents", {})
+                        .get("sectionListRenderer", {})
+                        .get("contents", [])
+                    )
+                    for section in contents:
+                        items = section.get("itemSectionRenderer", {}).get("contents", [])
+                        for item in items:
+                            v = item.get("videoRenderer")
+                            if v and v.get("videoId"):
+                                vid = v.get("videoId")
+                                title_runs = v.get("title", {}).get("runs", [])
+                                title = title_runs[0].get("text", "") if title_runs else "YouTube Video"
+                                owner_runs = v.get("ownerText", {}).get("runs", [])
+                                channel = owner_runs[0].get("text", "YouTube Channel") if owner_runs else ""
+                                results.append({
+                                    "title": title,
+                                    "channel": channel,
+                                    "video_id": vid,
+                                    "url": f"https://www.youtube.com/watch?v={vid}",
+                                    "description": f"Video by {channel}"
+                                })
+                                if len(results) >= max_results:
+                                    return results
+                except Exception as ex:
+                    logger.debug(f"JSON parse in fallback search: {ex}")
+
+            # 2. Fast regex fallback on HTML
+            if not results:
+                vid_matches = re.findall(r'"videoId":"([a-zA-Z0-9_-]{11})"', html)
+                seen_ids = set()
+                for vid in vid_matches:
+                    if vid not in seen_ids and len(vid) == 11:
+                        seen_ids.add(vid)
                         results.append({
-                            "title": title,
-                            "channel": channel,
+                            "title": f"{query} - Video",
+                            "channel": "YouTube",
                             "video_id": vid,
                             "url": f"https://www.youtube.com/watch?v={vid}",
-                            "description": f"Video by {channel}"
+                            "description": query,
                         })
                         if len(results) >= max_results:
-                            return results
+                            break
+
             return results
         except Exception as e:
             logger.error(f"Fallback YouTube web search error for '{query}': {e}")

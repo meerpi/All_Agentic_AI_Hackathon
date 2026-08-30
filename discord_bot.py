@@ -24,9 +24,17 @@ async def handle_task(ctx, *, goal: str):
     await ctx.send(f"🤖 **Taskmaster received goal:** {goal}\n_Planning workflow..._")
     
     try:
+        from agent.guardrails.shared import apply_bot_guardrails
+        
+        # 1. Input guardrails
+        apply_bot_guardrails(user_message=goal)
+
         # Run planning
         goal_input = TaskGoal(goal=goal, context={"channel": "discord", "user": str(ctx.author)})
         workflow = orchestrator.create_plan(goal_input)
+        
+        # 2. HITL guardrails
+        apply_bot_guardrails(workflow_plan=workflow)
         
         await ctx.send(f"📋 **Plan Created** (ID: {workflow.workflow_id}) with {len(workflow.steps)} steps.\n_Executing..._")
         
@@ -36,12 +44,18 @@ async def handle_task(ctx, *, goal: str):
         final_workflow = await loop.run_in_executor(None, orchestrator.execute_workflow, workflow.workflow_id)
         
         if final_workflow.status == WorkflowStatus.COMPLETED:
-            await ctx.send(f"✅ **Workflow Completed Successfully!**\n\n**Summary:**\n{final_workflow.summary}")
+            response = f"✅ **Workflow Completed Successfully!**\n\n**Summary:**\n{final_workflow.summary}"
         else:
-            await ctx.send(f"❌ **Workflow Failed!** Check traces for details.")
+            response = f"❌ **Workflow Failed!** Check traces for details."
+            
+        # 3. Output guardrails
+        masked_response = apply_bot_guardrails(output=response)
+        await ctx.send(masked_response)
             
     except Exception as e:
-        await ctx.send(f"⚠️ **Error:** {str(e)}")
+        import logging
+        logging.getLogger("discord_bot").error(f"Error handling task: {e}", exc_info=True)
+        await ctx.send(f"⚠️ **Error:** An internal error occurred while processing your request.")
 
 if __name__ == "__main__":
     if DISCORD_TOKEN and DISCORD_TOKEN != "mock_discord_token_for_hackathon":

@@ -128,7 +128,7 @@ def handle_mcp_call(tool_name: str, arguments: Dict[str, Any]) -> Dict[str, Any]
     elif tool_name == "get_jira_issues":
         from agent.tools.jira_tool import JiraTool
         jt = JiraTool()
-        res = jt.execute({"action": "search", "limit": arguments.get("limit", 10)})
+        res = jt.execute(action="list_issues", project_key=arguments.get("project_key"))
         return res.data if res.success else {"error": res.error_message}
 
     raise ValueError(f"Unknown MCP tool: {tool_name}")

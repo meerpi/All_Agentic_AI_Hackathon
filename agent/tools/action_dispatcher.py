@@ -16,10 +16,10 @@ class ActionDispatcherTool(BaseTool):
         headers: Optional[Dict[str, str]] = None,
         **kwargs: Any
     ) -> Dict[str, Any]:
-        final_url = target_url or url or kwargs.get("webhook_url") or "https://httpbin.org/post"
+        final_url = target_url or url or kwargs.get("webhook_url") or ""
         data_payload = payload or kwargs.get("data") or {"event": "TASKMASTER_ACTION_TRIGGERED", "status": "OK"}
         
-        if final_url.startswith("http://") or final_url.startswith("https://"):
+        if final_url and (final_url.startswith("http://") or final_url.startswith("https://")):
             try:
                 with httpx.Client(timeout=10.0) as client:
                     if method.upper() == "POST":

@@ -155,11 +155,16 @@ class MultiAgentCouncilOrchestrator:
         responses.append(critic_resp)
         all_artifacts.extend(critic_resp.artifacts_created)
 
+        audit_verdict = critic_resp.insights.get('verdict', 'PASSED')
+        audit_score = critic_resp.insights.get('audit_score', 100)
+        violations = critic_resp.insights.get('violations', [])
+        audit_detail = "All deliverables certified consistent across Jira Cloud and Google Workspace." if not violations else f"Detected {len(violations)} violations: {'; '.join(violations)}"
+
         record_dialogue(
             sender=self.critic_agent.name,
             role=self.critic_agent.role.value,
             recipient="Meta-Orchestrator",
-            message=f"Audit Verdict: {critic_resp.insights.get('verdict', 'PASSED')} (Score: {critic_resp.insights.get('audit_score', 100)}/100, Violations: {len(critic_resp.insights.get('violations', []))}). All deliverables certified consistent across Jira Cloud and Google Workspace.",
+            message=f"Audit Verdict: {audit_verdict} (Score: {audit_score}/100, Violations: {len(violations)}). {audit_detail}",
             artifacts=critic_resp.artifacts_created
         )
 
@@ -205,3 +210,7 @@ The **Taskmaster Hierarchical Multi-Agent Council** executed the assigned goal a
         """A2A protocol dispatch entrypoint."""
         result = self.execute_council(goal=brief, context=context)
         return result.model_dump(mode="json")
+
+
+# Alias for backward compatibility
+CouncilOrchestrator = MultiAgentCouncilOrchestrator

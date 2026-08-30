@@ -313,7 +313,13 @@ class JiraTool(BaseTool):
                         "issues": issues_list
                     }
             except Exception as e:
-                logger.warning(f"Failed to fetch issues from Jira Cloud API: {e}")
+                logger.error(f"Jira Cloud API list_issues failed for project '{project_key}': {e}")
+                return {
+                    "action": "list_issues",
+                    "status": "FAILED",
+                    "project": project_key,
+                    "error": f"Jira Cloud API Error: {str(e)}"
+                }
 
         issues = self._load_issues()
         filtered = [i for i in issues if i.get("project") == project_key]
@@ -321,7 +327,8 @@ class JiraTool(BaseTool):
             "action": "list_issues",
             "project": project_key,
             "count": len(filtered),
-            "issues": filtered
+            "issues": filtered,
+            "mode": "AUTONOMOUS_JIRA_BOARD"
         }
 
     def _get_issue(self, issue_key: str) -> Dict[str, Any]:
@@ -358,12 +365,18 @@ class JiraTool(BaseTool):
                     }
                     return {"action": "get_issue", "issue": issue_detail, "status": "FOUND"}
             except Exception as e:
-                logger.warning(f"Failed to fetch issue '{issue_key}' from Jira Cloud API: {e}")
+                logger.error(f"Jira Cloud API get_issue failed for '{issue_key}': {e}")
+                return {
+                    "action": "get_issue",
+                    "status": "FAILED",
+                    "issue_key": issue_key,
+                    "error": f"Jira Cloud API Error: {str(e)}"
+                }
 
         issues = self._load_issues()
         for i in issues:
             if i.get("key") == issue_key:
-                return {"action": "get_issue", "issue": i, "status": "FOUND"}
+                return {"action": "get_issue", "issue": i, "status": "FOUND", "mode": "AUTONOMOUS_JIRA_BOARD"}
         return {"action": "get_issue", "issue_key": issue_key, "status": "NOT_FOUND"}
 
     def _transition_issue(self, issue_key: str, transition: str) -> Dict[str, Any]:

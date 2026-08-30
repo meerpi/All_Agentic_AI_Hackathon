@@ -16,8 +16,15 @@ def main():
     lines = []
     lines.append("# Audit Log: Last 50 Emails Received from Google\n\n")
     lines.append(f"**Total Records:** {len(emails)} emails\n")
-    lines.append(f"**Audit Execution Time:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}\n")
-    lines.append(f"**Account Audited:** `anima.mahanty1967@gmail.com`\n\n")
+    account_email = "Authenticated User"
+    try:
+        service = gmail._get_service()
+        profile = service.users().getProfile(userId="me").execute()
+        account_email = profile.get("emailAddress", "Authenticated User")
+    except Exception:
+        pass
+
+    lines.append(f"**Account Audited:** `{account_email}`\n\n")
     lines.append("---\n\n")
 
     for i, e in enumerate(emails, 1):

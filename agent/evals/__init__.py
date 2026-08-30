@@ -146,9 +146,8 @@ class TrajectoryEvaluator:
         )
 
     def _deterministic_eval(self, workflow_plan, steps_data: List[Dict], tools_used: List[str]) -> TrajectoryEvaluationReport:
-        """Deterministic fallback rubric based on execution facts."""
-        completed_steps = [s for s in workflow_plan.steps if s.status.value == "COMPLETED"]
-        failed_steps = [s for s in workflow_plan.steps if s.status.value == "FAILED"]
+        completed_steps = [s for s in workflow_plan.steps if getattr(s.status, "value", str(s.status)) == "COMPLETED"]
+        failed_steps = [s for s in workflow_plan.steps if getattr(s.status, "value", str(s.status)) == "FAILED"]
         total = len(workflow_plan.steps) or 1
 
         adherence_score = (len(completed_steps) / total) * 100.0

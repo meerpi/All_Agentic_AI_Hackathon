@@ -114,25 +114,33 @@ class GoogleCalendarTool(BaseTool):
         }
 
     def _parse_iso(self, time_str: Optional[str]) -> str:
-        """Helper to parse clean ISO 8601 strings with timezone."""
+        """Helper to parse clean ISO 8601 strings with timezone, supporting common relative keywords."""
         if not time_str:
             raise ValueError("Time string is missing.")
         
-        # Clean up string
-        time_str = time_str.strip()
+        time_str_clean = time_str.strip()
+        time_str_lower = time_str_clean.lower()
+        now = datetime.now(timezone.utc)
+
+        # Handle relative/descriptive keywords
+        if time_str_lower in ("next_available", "next available", "next_slot", "tomorrow"):
+            return (now + timedelta(days=1)).replace(hour=10, minute=0, second=0, microsecond=0).isoformat()
+        elif time_str_lower in ("now", "today", "asap"):
+            return (now + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0).isoformat()
+        elif time_str_lower in ("next_week", "next week"):
+            return (now + timedelta(days=7)).replace(hour=10, minute=0, second=0, microsecond=0).isoformat()
+
         try:
-            # Check if it parses with fromisoformat
-            dt = datetime.fromisoformat(time_str.replace("Z", "+00:00"))
+            dt = datetime.fromisoformat(time_str_clean.replace("Z", "+00:00"))
             if dt.tzinfo is None:
                 dt = dt.replace(tzinfo=timezone.utc)
             return dt.isoformat()
         except Exception:
-            # Fallback for simple date 'YYYY-MM-DD'
             try:
-                dt = datetime.strptime(time_str[:10], "%Y-%m-%d").replace(hour=14, minute=0, tzinfo=timezone.utc)
+                dt = datetime.strptime(time_str_clean[:10], "%Y-%m-%d").replace(hour=14, minute=0, tzinfo=timezone.utc)
                 return dt.isoformat()
             except Exception as e:
-                raise ValueError(f"Unparseable date format: {time_str}. Expected ISO 8601.") from e
+                raise ValueError(f"Unparseable date format: '{time_str}'. Expected ISO 8601 (e.g. '2026-09-01T10:00:00Z') or relative keyword.") from e
 
     def _create_event(
         self,

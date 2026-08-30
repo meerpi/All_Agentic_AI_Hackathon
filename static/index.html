@@ -910,10 +910,10 @@
                 let artifactBadges = '';
                 
                 if (resp.insights && resp.insights.issue_keys) {
-                    const keysHtml = resp.insights.issue_keys.map(k => `<a href="https://taskmasterjira.atlassian.net/browse/${k}" target="_blank" style="background:rgba(99,102,241,0.25); color:#a5b4fc; border:1px solid rgba(99,102,241,0.4); padding:0.15rem 0.5rem; border-radius:4px; font-family:monospace; font-size:0.78rem; text-decoration:none;">${k}</a>`).join(' ');
+                    const keysHtml = resp.insights.issue_keys.map(k => `<span style="background:rgba(99,102,241,0.25); color:#a5b4fc; border:1px solid rgba(99,102,241,0.4); padding:0.15rem 0.5rem; border-radius:4px; font-family:monospace; font-size:0.78rem;">${k}</span>`).join(' ');
                     artifactBadges += `
                         <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: #c7d2fe;">
-                            <i class="fa-solid fa-list-check" style="color: #818cf8;"></i> <strong>Live Jira Cloud Tickets:</strong> ${keysHtml}
+                            <i class="fa-solid fa-list-check" style="color: #818cf8;"></i> <strong>Jira Tickets:</strong> ${keysHtml}
                         </div>
                     `;
                 }

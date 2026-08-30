@@ -327,7 +327,7 @@ class CriticSubAgent(BaseSubAgent):
         verdict = "PASSED" if is_valid else "REVISION_REQUIRED"
         audit_score = 100 if is_valid else max(0, 100 - len(violations) * 25)
 
-        val_res = {"is_valid": is_valid, "rules_verified": 175, "violations": violations}
+        val_res = {"is_valid": is_valid, "rules_verified": 3, "violations": violations}
         if validator_tool:
             val_res = validator_tool.run(
                 payload={"action_items": len(action_items), "tickets": len(tickets), "doc": bool(doc_url), "sheet": bool(sheet_url)},

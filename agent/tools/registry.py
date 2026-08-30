@@ -13,7 +13,7 @@ class ToolRegistry:
 
     def _register_default_tools(self):
         for _, module_name, _ in pkgutil.iter_modules(agent.tools.__path__):
-            if module_name in ["base", "registry"]:
+            if module_name in ["base", "registry", "google_auth"]:
                 continue
             module = importlib.import_module(f"agent.tools.{module_name}")
             for name, obj in inspect.getmembers(module):
@@ -26,6 +26,10 @@ class ToolRegistry:
                             print(f"Failed to load tool {name}: {e}")
 
     def register(self, tool: BaseTool):
+        import logging
+        if not hasattr(tool, "execute") or not callable(getattr(tool, "execute")):
+            logging.getLogger("taskmaster.tools.registry").warning(f"Skipping {getattr(tool, 'name', 'unknown')}: missing callable execute method")
+            return
         self._tools[tool.name] = tool
 
     def get_tool(self, name: str) -> Optional[BaseTool]:

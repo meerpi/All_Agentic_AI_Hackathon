@@ -52,10 +52,14 @@ async def handle_task(ctx, *, goal: str):
         masked_response = apply_bot_guardrails(output=response)
         await ctx.send(masked_response)
             
+    except ValueError as e:
+        import logging
+        logging.getLogger("discord_bot").warning(f"Validation/Guardrail rejection: {e}")
+        await ctx.send(f"⚠️ **Policy Notice:** {str(e)}")
     except Exception as e:
         import logging
         logging.getLogger("discord_bot").error(f"Error handling task: {e}", exc_info=True)
-        await ctx.send(f"⚠️ **Error:** An internal error occurred while processing your request.")
+        await ctx.send(f"⚠️ **Error:** {str(e)}")
 
 if __name__ == "__main__":
     if DISCORD_TOKEN and DISCORD_TOKEN != "mock_discord_token_for_hackathon":

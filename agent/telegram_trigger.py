@@ -152,10 +152,16 @@ async def handle_task_message(update: Update, context: ContextTypes.DEFAULT_TYPE
             masked_error = apply_bot_guardrails(output=error_text)
             await update.message.reply_text(masked_error, parse_mode="Markdown")
 
+    except ValueError as e:
+        logger.warning(f"Validation/Guardrail rejection: {e}")
+        await update.message.reply_text(
+            f"⚠️ *Policy Notice:* {str(e)}",
+            parse_mode="Markdown",
+        )
     except Exception as e:
         logger.error(f"Error processing Telegram task: {e}", exc_info=True)
         await update.message.reply_text(
-            f"⚠️ *Error:* An internal error occurred while processing your request.",
+            f"⚠️ *Error:* {str(e)}",
             parse_mode="Markdown",
         )
 

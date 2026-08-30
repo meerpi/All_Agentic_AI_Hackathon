@@ -18,8 +18,8 @@ logger = logging.getLogger("taskmaster.tools.desktop")
 class OSDesktopControllerTool(BaseTool):
     name = "os_desktop_tool"
     description = (
-        "Autonomous OS Desktop Controller (Tier 2). Controls native desktop applications, screen captures, "
-        "mouse clicks at specific screen coordinates, keyboard typing, and OS system hotkeys."
+        "Autonomous OS Desktop Controller (Tier 2). "
+        "Actions: launch_application, capture_screen, mouse_click, type_text, hotkey."
     )
 
     def __init__(self):
@@ -28,7 +28,23 @@ class OSDesktopControllerTool(BaseTool):
     def run(self, action: str = "capture_screen", **kwargs: Any) -> Dict[str, Any]:
         act = action.lower().strip()
 
-        if act in ("capture_screen", "screenshot", "screen_capture"):
+        if act in ("launch_application", "launch_app", "open_application", "open_app", "launch", "open"):
+            binary_name = (
+                kwargs.get("binary_name")
+                or kwargs.get("app_name")
+                or kwargs.get("application")
+                or kwargs.get("app")
+                or kwargs.get("name")
+                or kwargs.get("command")
+            )
+            if not binary_name:
+                raise ValueError("Action 'launch_application' requires parameter 'binary_name' or 'app_name'.")
+            args = kwargs.get("args") or []
+            if isinstance(args, str):
+                args = [args]
+            return self.driver.launch_application(binary_name=binary_name, args=args)
+
+        elif act in ("capture_screen", "screenshot", "screen_capture"):
             monitor_index = int(kwargs.get("monitor_index", 1))
             return self.driver.capture_screen(monitor_index=monitor_index)
 
@@ -51,5 +67,5 @@ class OSDesktopControllerTool(BaseTool):
 
         else:
             raise ValueError(
-                f"Unknown OS desktop action: '{action}'. Supported: ['capture_screen', 'mouse_click', 'type_text', 'hotkey']"
+                f"Unknown OS desktop action: '{action}'. Supported: ['launch_application', 'capture_screen', 'mouse_click', 'type_text', 'hotkey']"
             )

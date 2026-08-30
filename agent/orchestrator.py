@@ -390,14 +390,45 @@ class TaskmasterOrchestrator:
             workflow.paused_at_step = None
         return self.execute_workflow(workflow_id)
 
-    STEP_REF_PATTERN = re.compile(r'\$(?:\{step_(\d+)(?:\.([a-zA-Z0-9_]+))?\}|step_(\d+)(?:\.([a-zA-Z0-9_]+))?)')
+    # Matches $step_N, $step_N.field, $step_N.field[0].subfield, ${step_N.field[0].subfield}
+    STEP_REF_PATTERN = re.compile(
+        r'\$(?:\{step_(\d+)((?:\.[a-zA-Z0-9_]+|\[\d+\])*)\}|step_(\d+)((?:\.[a-zA-Z0-9_]+|\[\d+\])*))'
+    )
 
     def _resolve_dynamic_args(self, args: Dict[str, Any], step_results: Dict[int, Any]) -> Dict[str, Any]:
-        """Resolves references like $step_1.url or $step_2.id both as standalone values and embedded in strings."""
+        """Resolves references like $step_1.results[0].url with full nested path support."""
         import copy
         resolved = copy.deepcopy(args)
 
-        def lookup_val(step_num_str: str, field: Optional[str]):
+        def _walk_path(obj, path_str: str):
+            """Walk a dot/bracket path like .results[0].video_id on obj."""
+            if not path_str:
+                return obj
+            # Tokenize: split ".results[0].video_id" into ["results", 0, "video_id"]
+            tokens = []
+            for part in re.findall(r'\.([a-zA-Z0-9_]+)|\[(\d+)\]', path_str):
+                if part[0]:  # dict key
+                    tokens.append(part[0])
+                elif part[1]:  # list index
+                    tokens.append(int(part[1]))
+
+            current = obj
+            for token in tokens:
+                if current is None:
+                    return None
+                if isinstance(token, int):
+                    if isinstance(current, (list, tuple)) and 0 <= token < len(current):
+                        current = current[token]
+                    else:
+                        return None
+                else:
+                    if isinstance(current, dict):
+                        current = current.get(token)
+                    else:
+                        current = getattr(current, token, None)
+            return current
+
+        def lookup_val(step_num_str: str, path_str: str):
             try:
                 step_num = int(step_num_str)
             except (ValueError, TypeError):
@@ -405,11 +436,7 @@ class TaskmasterOrchestrator:
             res = step_results.get(step_num)
             if res is None:
                 return None
-            if field:
-                if isinstance(res, dict):
-                    return res.get(field)
-                return getattr(res, field, None)
-            return res
+            return _walk_path(res, path_str)
 
         def recurse_resolve(obj):
             if isinstance(obj, str):
@@ -417,15 +444,15 @@ class TaskmasterOrchestrator:
                 full_m = self.STEP_REF_PATTERN.fullmatch(obj)
                 if full_m:
                     s_num = full_m.group(1) or full_m.group(3)
-                    field = full_m.group(2) or full_m.group(4)
-                    val = lookup_val(s_num, field)
+                    path = full_m.group(2) or full_m.group(4) or ""
+                    val = lookup_val(s_num, path)
                     return val if val is not None else obj
 
                 # 2. Check for embedded references inside string (e.g. "https://$step_1.url/")
                 def replace_match(match):
                     s_num = match.group(1) or match.group(3)
-                    field = match.group(2) or match.group(4)
-                    val = lookup_val(s_num, field)
+                    path = match.group(2) or match.group(4) or ""
+                    val = lookup_val(s_num, path)
                     if val is not None:
                         if isinstance(val, (dict, list)):
                             return json.dumps(val)

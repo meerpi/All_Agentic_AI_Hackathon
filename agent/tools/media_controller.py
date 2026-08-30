@@ -70,6 +70,9 @@ class MediaControllerTool(BaseTool):
         # ── YouTube Playback Operations ────────────────────────────────
         if act in ("youtube_play", "youtube_search", "play_youtube", "search_youtube"):
             url = kwargs.get("url") or kwargs.get("video_url")
+            # Support video_id directly — construct YouTube URL from it
+            if not url and kwargs.get("video_id"):
+                url = f"https://www.youtube.com/watch?v={kwargs['video_id']}"
             seek_seconds = kwargs.get("seek_seconds") or kwargs.get("seek") or kwargs.get("t")
             duration = kwargs.get("duration_seconds") or kwargs.get("duration") or kwargs.get("play_duration_seconds")
             auto_close = bool(kwargs.get("auto_close", False) or kwargs.get("close_after", False))
@@ -77,7 +80,7 @@ class MediaControllerTool(BaseTool):
                 return await self.youtube.play_video(url=url, seek_seconds=seek_seconds)
             query = kwargs.get("query") or kwargs.get("search_query") or kwargs.get("title")
             if not query:
-                raise ValueError("YouTube action requires parameter 'query' or 'url'.")
+                raise ValueError("YouTube action requires parameter 'query', 'url', or 'video_id'.")
             return await self.youtube.search_and_play(
                 query=query,
                 duration_seconds=int(duration) if duration else None,

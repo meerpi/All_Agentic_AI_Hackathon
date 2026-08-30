@@ -27,7 +27,6 @@ TOOL_RISK_REGISTRY: Dict[str, str] = {
     "jira": "HIGH",
     "github": "HIGH",
     "slack": "HIGH",
-    "telegram": "MEDIUM",
     "action_dispatcher": "HIGH",
     # LOW risk — read-only or local
     "data_extractor": "LOW",

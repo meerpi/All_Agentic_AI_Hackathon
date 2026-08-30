@@ -25,9 +25,6 @@ class Settings(BaseSettings):
     HOST: str = "0.0.0.0"
     PORT: int = 8000
 
-    # Telegram Bot Integration
-    TELEGRAM_BOT_TOKEN: str = ""
-    TELEGRAM_CHAT_ID: str = ""
 
     # Jira Integration
     JIRA_BASE_URL: str = "https://taskmasterjira.atlassian.net"

@@ -192,23 +192,44 @@ class TestCalendarToolErrors:
 # ── Validator Tests ───────────────────────────────────────────
 
 class TestValidatorTool:
-    def test_no_pii_rule(self):
+    def test_no_pii_rule_and_aliases(self):
         from agent.tools.validator import ValidatorTool
         tool = ValidatorTool()
-        result = tool.run(criteria=["no_pii"], data_to_validate={"text": "SSN is 123-45-6789"})
-        assert not result["is_valid"]
-        assert any("PII" in v for v in result["violations"])
+        # Test with criteria and data_to_validate
+        result1 = tool.run(criteria=["no_pii"], data_to_validate={"text": "SSN is 123-45-6789"})
+        assert not result1["is_valid"]
+        assert any("PII" in v for v in result1["violations"])
 
-    def test_schema_valid_rule(self):
+        # Test with rule alias 'no_pii_leak' and payload alias 'data'
+        result2 = tool.run(rules=["no_pii_leak"], data={"email": "alice@company.internal", "credit_card": "4532-1234-5678-9012"})
+        assert not result2["is_valid"]
+        assert any("PII" in v for v in result2["violations"])
+
+    def test_schema_valid_rule_and_aliases(self):
         from agent.tools.validator import ValidatorTool
         tool = ValidatorTool()
-        result = tool.run(criteria=["schema_valid"], data_to_validate={"name": "test"},
+        result = tool.run(rules=["schema_valid"], payload={"name": "test"},
                          required_fields=["name", "email"])
         assert not result["is_valid"]
         assert any("Missing" in v for v in result["violations"])
 
-    def test_passing_validation(self):
+    def test_status_ok_and_error_detection(self):
         from agent.tools.validator import ValidatorTool
         tool = ValidatorTool()
-        result = tool.run(criteria=["no_errors"], data_to_validate={"status": "ok"})
-        assert result["is_valid"]
+        # Passing status
+        res_ok = tool.run(rules=["status_ok"], data={"status": "SUCCESS", "records": [1, 2, 3]})
+        assert res_ok["is_valid"] is True
+        assert res_ok["recommendation"] == "PROCEED"
+
+        # Failing status
+        res_fail = tool.run(rules=["status_ok"], data={"status": "FAILED", "error": "Connection timeout"})
+        assert res_fail["is_valid"] is False
+        assert res_fail["recommendation"] == "RETRY_WITH_CORRECTION"
+        assert any("failed" in v.lower() for v in res_fail["violations"])
+
+    def test_strict_mode_empty_payload(self):
+        from agent.tools.validator import ValidatorTool
+        tool = ValidatorTool()
+        res = tool.run(rules=["schema_valid"], data_to_validate=None, strict_mode=True)
+        assert res["is_valid"] is False
+        assert res["recommendation"] == "RETRY_WITH_CORRECTION"

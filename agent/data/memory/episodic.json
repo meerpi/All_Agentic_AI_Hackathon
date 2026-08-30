@@ -1440,5 +1440,178 @@
         "jira"
       ]
     }
+  },
+  {
+    "timestamp": "2026-08-30T12:47:55.955084+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "1454b2c7-9e25-4da2-ad46-8a1e0dbf16e0",
+    "details": {
+      "goal": "Audit monthly infrastructure costs: calculate optimization savings in Python Sandbox, create a Google Sheet titled 'Q3 Cloud Infrastructure Cost Audit' with columns Service, Monthly_USD, Optimization_",
+      "tools_used": [
+        "python_sandbox",
+        "google_sheets",
+        "google_sheets",
+        "google_docs",
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T12:51:31.854057+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "27414cbb-c5dc-4f92-ae44-dac494eb26fe",
+    "details": {
+      "goal": "Coordinate technical sprint handoff: Check Google Calendar for available slots this week, schedule a 30-min meeting titled 'Sprint 43 Engineering Review', create a Jira task titled 'Auth Service: Impl",
+      "tools_used": [
+        "google_calendar",
+        "google_calendar",
+        "jira",
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T12:55:07.891959+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "19c10637-cd2c-4420-8f89-966329eacd76",
+    "details": {
+      "goal": "Perform live web intelligence: Navigate to news.ycombinator.com, extract the top 5 trending tech discussions with point scores, and create a Google Doc titled 'Daily Tech Intelligence Brief' containin",
+      "tools_used": [
+        "browser_controller",
+        "browser_controller",
+        "python_sandbox",
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T13:06:26.258478+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "2565531a-d204-452c-bc1f-c91d0216e65d",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "google_docs",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T13:06:51.176985+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "30368de2-281e-427a-96c9-1f763ab5cb7c",
+    "details": {
+      "goal": "Act as an Automated Product Manager.\n1. Analyze the meeting transcript, extracting attendees, key decisions, and action items with assignees, story points, and priorities.\n2. Create the corresponding ",
+      "tools_used": [
+        "data_extractor",
+        "jira",
+        "google_docs",
+        "google_sheets",
+        "slack",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T13:06:52.932372+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  },
+  {
+    "timestamp": "2026-08-30T13:08:08.174938+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "cc19114e-5e1d-4505-81a1-37347135abc6",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "gmail",
+        "gmail",
+        "data_extractor",
+        "google_docs",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T13:08:09.136887+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  },
+  {
+    "timestamp": "2026-08-30T13:08:09.169499+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "5a3c6e90-3804-46f9-bf73-46206f0de01c",
+    "details": {
+      "goal": "test blocked",
+      "tools_used": [
+        "data_extractor",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T13:08:15.306982+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "56d9ca91-ed7e-4134-807b-19cf4775c940",
+    "details": {
+      "goal": "test guardrail",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T13:09:27.310077+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "e0fb9cdb-c871-44fc-9f73-e91c69e46bad",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "google_docs",
+        "google_docs",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T13:09:28.216532+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  },
+  {
+    "timestamp": "2026-08-30T13:09:28.237481+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "07181575-c311-4d5c-a227-c2d1421ae046",
+    "details": {
+      "goal": "test blocked",
+      "tools_used": [
+        "data_extractor",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T13:09:34.867168+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "62bbeacc-96a8-474e-b7fe-fee6ca7bae10",
+    "details": {
+      "goal": "test guardrail",
+      "tools_used": [
+        "gmail"
+      ]
+    }
   }
 ]

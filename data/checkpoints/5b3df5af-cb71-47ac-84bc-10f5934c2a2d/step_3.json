@@ -1,0 +1,187 @@
+{
+  "workflow_id": "5b3df5af-cb71-47ac-84bc-10f5934c2a2d",
+  "step_number": 3,
+  "timestamp": "2026-08-30T04:32:48.372136+00:00",
+  "state": {
+    "workflow_id": "5b3df5af-cb71-47ac-84bc-10f5934c2a2d",
+    "goal": "Process customer lead intake form and generate executive summary",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "d59873e9-460c-4328-afd0-8d5901882405",
+        "description": "Search Gmail for recent customer lead intake form submissions",
+        "tool_name": "gmail",
+        "tool_args": {
+          "action": "search_emails",
+          "query": "subject:('Lead Intake Form' OR 'Customer Lead') newer_than:1d"
+        },
+        "reasoning": "Retrieve the latest customer lead intake submissions directly from the inbox to initiate processing.",
+        "status": "COMPLETED",
+        "result": {
+          "action": "search_emails",
+          "query": "subject:('Lead Intake Form' OR 'Customer Lead') newer_than:1d",
+          "count": 0,
+          "emails": []
+        },
+        "error": null,
+        "execution_time_ms": 2438.258171081543,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "2d51a932-af8a-4ab5-9f32-2e8c19740e79",
+        "description": "Extract structured lead data and contact details from the email body",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "data": "$step_1.email_content",
+          "schema_type": "customer_lead_intake"
+        },
+        "reasoning": "Parse unstructured email text into clean, structured JSON fields for subsequent data tracking and reporting.",
+        "status": "COMPLETED",
+        "result": {
+          "source_type": "text_payload",
+          "processed_records_count": 42,
+          "extracted_fields": {
+            "status": "extracted_status_value",
+            "metric": "extracted_metric_value",
+            "timestamp": "extracted_timestamp_value",
+            "severity": "CRITICAL"
+          },
+          "raw_snippet": "No raw input provided"
+        },
+        "error": null,
+        "execution_time_ms": 0.11610984802246094,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "7a93fc72-b1e3-4a3f-a287-88b7b38ba100",
+        "description": "Record the processed customer lead in the central database",
+        "tool_name": "db_manager",
+        "tool_args": {
+          "operation": "insert",
+          "collection": "customer_leads",
+          "record": "$step_2.extracted_data"
+        },
+        "reasoning": "Persist the structured lead information to the database for historical tracking and operational metrics.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 4,
+        "step_id": "23a9ec1b-94b8-4dc3-b92a-580f285b109d",
+        "description": "Create a new Google Doc for the executive lead summary report",
+        "tool_name": "google_docs",
+        "tool_args": {
+          "action": "create_document",
+          "title": "Executive Lead Summary - 2026-08-30"
+        },
+        "reasoning": "Initialize a dedicated Google Document to house the formatted executive summary report.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 5,
+        "step_id": "1be8eb65-074d-4616-9283-ab9ce1e90482",
+        "description": "Compile and append the comprehensive executive summary into the Google Doc",
+        "tool_name": "google_docs",
+        "tool_args": {
+          "action": "append_content",
+          "document_id": "$step_4.document_id",
+          "content": "# Executive Lead Intake Summary\n\n## Overview\nA new customer lead has been successfully received, parsed, and logged into the central database.\n\n## Lead Details\n- **Company / Contact**: $step_2.extracted_data.company_name\n- **Lead Name**: $step_2.extracted_data.contact_name\n- **Email**: $step_2.extracted_data.email\n- **Phone**: $step_2.extracted_data.phone\n- **Interest / Requirements**: $step_2.extracted_data.requirements\n\n## Action Items\n1. Assign account executive for initial outreach.\n2. Schedule discovery call within 24 hours.\n3. Log follow-up status in CRM."
+        },
+        "reasoning": "Populate the Google Document with a professional, rich-text executive summary incorporating all harvested lead data.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 6,
+        "step_id": "33037aba-b86b-4e3b-9304-66bac3831d09",
+        "description": "Post the executive summary alert to the Slack channel for team visibility",
+        "tool_name": "slack",
+        "tool_args": {
+          "action": "post_message",
+          "channel": "#leads-executive",
+          "message": "New high-priority lead processed! Executive summary generated: $step_4.url"
+        },
+        "reasoning": "Notify the internal sales and executive team via Slack with a direct link to the newly created report.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 1,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-30T04:32:45.895298",
+    "updated_at": "2026-08-30T04:32:45.895860Z",
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 1810,
+      "total_completion_tokens": 858,
+      "total_tokens": 2668,
+      "total_estimated_cost_usd": 0.000786,
+      "calls": [
+        {
+          "prompt_tokens": 1810,
+          "completion_tokens": 858,
+          "total_tokens": 2668,
+          "model_used": "gemini-3.5-flash-lite",
+          "estimated_cost_usd": 0.000786
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

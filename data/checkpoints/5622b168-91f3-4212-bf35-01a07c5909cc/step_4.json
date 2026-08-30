@@ -1,0 +1,192 @@
+{
+  "workflow_id": "5622b168-91f3-4212-bf35-01a07c5909cc",
+  "step_number": 4,
+  "timestamp": "2026-08-29T18:00:00.062344+00:00",
+  "state": {
+    "workflow_id": "5622b168-91f3-4212-bf35-01a07c5909cc",
+    "goal": "Process customer lead intake form and generate executive summary",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "f71ccc89-851e-4bea-8072-cdb547354e49",
+        "description": "Search inbox for incoming customer lead intake form submissions",
+        "tool_name": "gmail",
+        "tool_args": {
+          "action": "search_emails",
+          "query": "subject:\"Customer Lead Intake\" OR subject:\"New Lead Form\""
+        },
+        "reasoning": "Retrieve the raw customer lead intake form from the email inbox to begin the processing workflow.",
+        "status": "COMPLETED",
+        "result": {
+          "action": "search_emails",
+          "query": "subject:\"Customer Lead Intake\" OR subject:\"New Lead Form\"",
+          "count": 0,
+          "emails": []
+        },
+        "error": null,
+        "execution_time_ms": 2196.22802734375,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "8e55e9c7-72c9-4978-907a-9732515b28a1",
+        "description": "Extract structured customer and lead details from the email message",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "source_data": "$step_1.email_content",
+          "extraction_schema": "customer_name, company, email, phone, project_scope, budget, timeline"
+        },
+        "reasoning": "Parse unstructured email body text into a clean structured JSON format for downstream processing and reporting.",
+        "status": "COMPLETED",
+        "result": {
+          "source_type": "text_payload",
+          "processed_records_count": 42,
+          "extracted_fields": {
+            "status": "extracted_status_value",
+            "metric": "extracted_metric_value",
+            "timestamp": "extracted_timestamp_value",
+            "severity": "CRITICAL"
+          },
+          "raw_snippet": "No raw input provided"
+        },
+        "error": null,
+        "execution_time_ms": 0.13017654418945312,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "e607c842-f7da-449a-bc5f-2add9d9b0a84",
+        "description": "Persist the extracted lead data into the central database for tracking",
+        "tool_name": "db_manager",
+        "tool_args": {
+          "action": "insert_record",
+          "collection": "customer_leads",
+          "data": "$step_2.extracted_data"
+        },
+        "reasoning": "Store the lead record securely in the database to maintain persistent history and enable sales pipeline tracking.",
+        "status": "COMPLETED",
+        "result": {
+          "action": "insert_record",
+          "status": "COMPLETED",
+          "details": "Default mock operation executed"
+        },
+        "error": null,
+        "execution_time_ms": 0.09894371032714844,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 4,
+        "step_id": "ef09d14e-0c59-4143-9a17-32611ca33ebc",
+        "description": "Generate an executive summary report for the new high-priority lead",
+        "tool_name": "report_generator",
+        "tool_args": {
+          "title": "Executive Lead Summary - $step_2.extracted_data.company",
+          "summary_data": "$step_2.extracted_data",
+          "format": "markdown"
+        },
+        "reasoning": "Synthesize the extracted lead attributes into a polished executive markdown report for management review.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 5,
+        "step_id": "f243ef23-2064-4150-8113-8ca8954d3adc",
+        "description": "Create a Google Docs document containing the executive summary",
+        "tool_name": "google_docs",
+        "tool_args": {
+          "action": "create_document",
+          "title": "Lead Summary: $step_2.extracted_data.company",
+          "content": "$step_4.report_content"
+        },
+        "reasoning": "Publish the generated executive summary into a shareable Google Doc for the sales and executive teams.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 6,
+        "step_id": "49b1aa87-aead-495c-86a2-d325eeb6bc3c",
+        "description": "Post executive lead summary alert to the designated Slack channel",
+        "tool_name": "slack",
+        "tool_args": {
+          "action": "post_message",
+          "channel": "#leads-executive",
+          "message": "New High-Priority Lead Intake Processed: *$step_2.extracted_data.company* (Contact: $step_2.extracted_data.customer_name). Executive summary doc created: $step_5.url"
+        },
+        "reasoning": "Notify the internal sales and management team instantly via Slack with direct links to the executive summary document.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 2,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-29T17:59:57.826033",
+    "updated_at": "2026-08-29T17:59:57.826834Z",
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 1456,
+      "total_completion_tokens": 764,
+      "total_tokens": 2220,
+      "total_estimated_cost_usd": 0.000677,
+      "calls": [
+        {
+          "prompt_tokens": 1456,
+          "completion_tokens": 764,
+          "total_tokens": 2220,
+          "model_used": "gemini-3.5-flash-lite",
+          "estimated_cost_usd": 0.000677
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

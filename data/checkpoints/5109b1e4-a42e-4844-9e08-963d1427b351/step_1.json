@@ -1,0 +1,115 @@
+{
+  "workflow_id": "5109b1e4-a42e-4844-9e08-963d1427b351",
+  "step_number": 1,
+  "timestamp": "2026-08-29T17:59:03.668272+00:00",
+  "state": {
+    "workflow_id": "5109b1e4-a42e-4844-9e08-963d1427b351",
+    "goal": "Extract server metrics, persist to DB, and validate data health",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "c48097d0-231d-4b48-b126-3a5018f4917f",
+        "description": "Extract real-time server metrics (CPU, memory, disk usage, network I/O) from system logs or monitoring endpoint.",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "source": "server_monitoring_endpoint",
+          "format": "json",
+          "fields": [
+            "cpu_usage",
+            "memory_usage",
+            "disk_usage",
+            "network_io",
+            "timestamp"
+          ]
+        },
+        "reasoning": "We need to parse raw monitoring payloads or log streams into structured metric objects before persisting.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "62ebcf66-fd77-4320-9972-119e0fda8dbe",
+        "description": "Persist the extracted server metrics into the central database for historical tracking and analysis.",
+        "tool_name": "db_manager",
+        "tool_args": {
+          "operation": "insert",
+          "collection": "server_metrics",
+          "data": "$step_1.extracted_data"
+        },
+        "reasoning": "Storing metrics in the database ensures persistence, allowing downstream systems and health checks to query historical performance.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "27ff7b33-cb04-42a4-912c-a0652b1524e2",
+        "description": "Validate the data health and integrity of the newly inserted server metrics against standard operational thresholds.",
+        "tool_name": "validator",
+        "tool_args": {
+          "target_data": "$step_1.extracted_data",
+          "rules": {
+            "max_cpu_percent": 90.0,
+            "max_memory_percent": 85.0,
+            "max_disk_percent": 95.0
+          }
+        },
+        "reasoning": "Validation ensures no anomalies or resource spikes are missed, enabling self-correction or alerting if thresholds are breached.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-29T17:59:03.664179",
+    "updated_at": "2026-08-29T17:59:03.664697Z",
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 1435,
+      "total_completion_tokens": 431,
+      "total_tokens": 1866,
+      "total_estimated_cost_usd": 0.000474,
+      "calls": [
+        {
+          "prompt_tokens": 1435,
+          "completion_tokens": 431,
+          "total_tokens": 1866,
+          "model_used": "gemini-3.5-flash-lite",
+          "estimated_cost_usd": 0.000474
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

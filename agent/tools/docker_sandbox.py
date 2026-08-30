@@ -1,4 +1,5 @@
 import subprocess
+import sys
 import tempfile
 import os
 from typing import Any, Dict
@@ -16,8 +17,8 @@ class DockerSandboxTool(BaseTool):
             temp_path = tf.name
 
         try:
-            # Execute natively with python (since Docker isn't available on Cloud Run)
-            cmd = ["python", temp_path]
+            # Execute natively with active Python runtime
+            cmd = [sys.executable, temp_path]
             
             # Note: For true hardening on Linux, we would wrap this in `prlimit` or `firejail`. 
             # In Windows/cross-platform, we rely on timeout and stripping the environment.

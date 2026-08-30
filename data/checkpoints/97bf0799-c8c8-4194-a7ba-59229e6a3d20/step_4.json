@@ -1,0 +1,149 @@
+{
+  "workflow_id": "97bf0799-c8c8-4194-a7ba-59229e6a3d20",
+  "step_number": 4,
+  "timestamp": "2026-08-29T17:57:05.037579+00:00",
+  "state": {
+    "workflow_id": "97bf0799-c8c8-4194-a7ba-59229e6a3d20",
+    "goal": "Read engineering sprint sync transcript, extract deliverables, create Jira backlog items, and update Sheets",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "4cf7f2c2-0d6c-409e-b3c1-df6010e90319",
+        "description": "Extract structured deliverables, tasks, and assignees from the engineering sprint sync transcript",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "text": "Alex (Lead): We must build OAuth2. Maya: Session store. Chen: Postgres schema.",
+          "schema_type": "deliverables_list",
+          "fields": [
+            "assignee",
+            "task",
+            "priority"
+          ]
+        },
+        "reasoning": "We need to parse the unstructured transcript to identify specific engineering deliverables and their assignees before creating Jira tickets.",
+        "status": "COMPLETED",
+        "result": {
+          "source_type": "text_payload",
+          "processed_records_count": 42,
+          "extracted_fields": {
+            "status": "extracted_status_value",
+            "metric": "extracted_metric_value",
+            "timestamp": "extracted_timestamp_value",
+            "severity": "CRITICAL"
+          },
+          "raw_snippet": "No raw input provided"
+        },
+        "error": null,
+        "execution_time_ms": 0.1685619354248047,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "0fefe697-2ea6-48c6-a654-bb090101bbce",
+        "description": "Create bulk Jira backlog issues based on the extracted deliverables from the transcript",
+        "tool_name": "jira",
+        "tool_args": {
+          "action": "create_tasks_bulk",
+          "project": "ENG",
+          "tasks": "$step_1.extracted_entities"
+        },
+        "reasoning": "Using the structured deliverables extracted in step 1, we bulk create corresponding engineering backlog items in Jira.",
+        "status": "FAILED",
+        "result": null,
+        "error": "'step_number'",
+        "execution_time_ms": 0.15044212341308594,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "55a4060c-6947-4c96-b69d-65230867d982",
+        "description": "Create a new Google Sheet to track the sprint sync deliverables and Jira mapping",
+        "tool_name": "google_sheets",
+        "tool_args": {
+          "action": "create_spreadsheet",
+          "title": "Sprint Sync Deliverables & Jira Backlog Tracker"
+        },
+        "reasoning": "A centralized Google Sheet is required to maintain visibility and track the progress of the newly created backlog items.",
+        "status": "COMPLETED",
+        "result": {
+          "action": "create_spreadsheet",
+          "spreadsheet_id": "1_uNrZrXV4ymUPo7fIw-uwy4JDdOaB9T8ULGMSuK5fKg",
+          "title": "Sprint Sync Deliverables & Jira Backlog Tracker",
+          "url": "https://docs.google.com/spreadsheets/d/1_uNrZrXV4ymUPo7fIw-uwy4JDdOaB9T8ULGMSuK5fKg/edit",
+          "status": "CREATED"
+        },
+        "error": null,
+        "execution_time_ms": 1947.0973014831543,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 4,
+        "step_id": "88389a8b-d0ef-410f-86ac-8edab1ac34b0",
+        "description": "Append the created Jira issue details and deliverables as rows into the Google Sheets tracker",
+        "tool_name": "google_sheets",
+        "tool_args": {
+          "action": "append_rows",
+          "spreadsheet_id": "$step_3.spreadsheet_id",
+          "sheet_name": "Sheet1",
+          "rows": "$step_2.created_issues"
+        },
+        "reasoning": "Populating the Google Sheet with the newly generated Jira issue keys and task descriptions ensures team alignment and auditability.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 2,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-29T17:57:03.084975",
+    "updated_at": "2026-08-29T17:57:03.085662Z",
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 1481,
+      "total_completion_tokens": 527,
+      "total_tokens": 2008,
+      "total_estimated_cost_usd": 0.000538,
+      "calls": [
+        {
+          "prompt_tokens": 1481,
+          "completion_tokens": 527,
+          "total_tokens": 2008,
+          "model_used": "gemini-3.5-flash-lite",
+          "estimated_cost_usd": 0.000538
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

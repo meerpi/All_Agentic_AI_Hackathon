@@ -1,0 +1,156 @@
+{
+  "workflow_id": "72166524-0fdd-4742-bb89-a687115898c0",
+  "step_number": 2,
+  "timestamp": "2026-08-29T18:09:47.594827+00:00",
+  "state": {
+    "workflow_id": "72166524-0fdd-4742-bb89-a687115898c0",
+    "goal": "Process customer lead intake form and generate executive summary",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "6e044da1-bff8-437a-9266-9c1568b40d20",
+        "description": "Search and retrieve recent customer lead intake form submissions from email source",
+        "tool_name": "gmail",
+        "tool_args": {
+          "action": "search_emails",
+          "query": "subject:\"Customer Lead Intake Form\" source:web_form"
+        },
+        "reasoning": "To capture the raw customer lead intake form data submitted via the web form for high-priority processing.",
+        "status": "COMPLETED",
+        "result": {
+          "action": "search_emails",
+          "query": "subject:\"Customer Lead Intake Form\" source:web_form",
+          "count": 0,
+          "emails": []
+        },
+        "error": null,
+        "execution_time_ms": 820.9977149963379,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "6960f852-651d-4ebb-82e2-b62d7ae71d3c",
+        "description": "Parse raw unstructured lead submission data into structured JSON entities",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "payload": "$step_1.email_content",
+          "format": "json",
+          "schema": "lead_intake_schema"
+        },
+        "reasoning": "Extracts structured attributes such as company name, contact person, requirements, budget, and contact info from the raw email payload.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "ca52d60b-11f9-4b3b-a9e3-eb357eb6ebec",
+        "description": "Persist structured lead data into database records and update agent state",
+        "tool_name": "db_manager",
+        "tool_args": {
+          "operation": "insert",
+          "table": "customer_leads",
+          "record": "$step_2.extracted_data"
+        },
+        "reasoning": "Ensures lead information is safely logged and tracked in persistent storage for downstream workflows.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 4,
+        "step_id": "105948b2-3794-453d-9676-a0b60cad4f0a",
+        "description": "Generate comprehensive executive summary report based on parsed lead details",
+        "tool_name": "report_generator",
+        "tool_args": {
+          "title": "High Priority Customer Lead Executive Summary",
+          "summary_type": "executive_brief",
+          "data": "$step_2.extracted_data"
+        },
+        "reasoning": "Synthesizes the lead data into a clean, professional markdown executive summary for management review.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 5,
+        "step_id": "4992d205-7db7-4501-9016-08b5ae0a13bf",
+        "description": "Post the executive summary and lead details to the management Slack channel",
+        "tool_name": "slack",
+        "tool_args": {
+          "action": "post_message",
+          "channel": "#executive-leads",
+          "message": "New High-Priority Lead Intake Processed:\n\n$step_4.report_content"
+        },
+        "reasoning": "Notifies the leadership team immediately via Slack regarding the new high-priority lead intake.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-29T18:09:46.771208",
+    "updated_at": "2026-08-29T18:09:46.771765Z",
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 1444,
+      "total_completion_tokens": 608,
+      "total_tokens": 2052,
+      "total_estimated_cost_usd": 0.000581,
+      "calls": [
+        {
+          "prompt_tokens": 1444,
+          "completion_tokens": 608,
+          "total_tokens": 2052,
+          "model_used": "gemini-3.5-flash-lite",
+          "estimated_cost_usd": 0.000581
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

@@ -1,0 +1,199 @@
+{
+  "workflow_id": "521b3f17-62ff-42a0-9552-24720dc9f46f",
+  "goal": "End-to-End Autonomous Incident Response & Post-Mortem Action Plan for Critical Distributed Database Outage",
+  "steps": [
+    {
+      "step_number": 1,
+      "step_id": "8fced091-a8d1-4f90-bed9-6aef250922c1",
+      "description": "Create a comprehensive Google Doc for the Incident Post-Mortem and Outage Analysis",
+      "tool_name": "google_docs",
+      "tool_args": {
+        "title": "Incident Post-Mortem Report: INC-8892 - SEV-1 Distributed PostgreSQL Telemetry Cluster Outage",
+        "content": "# Incident Post-Mortem: INC-8892 (SEV-1)\n\n## Overview\n- **Affected Service**: Distributed PostgreSQL Telemetry Cluster (Prod US-East)\n- **Severity**: SEV-1 (CRITICAL)\n- **Summary**: Replication lag exceeded 450s during peak traffic, triggering automatic failover that caused a temporary split-brain partition and corrupted telemetry sequence IDs.\n\n## Timeline & Root Cause Analysis\n1. Peak traffic surge triggered high write amplification.\n2. Replication lag crossed 450s threshold.\n3. Automated failover initiated while network jitter was high, resulting in split-brain state.\n4. Sequence IDs diverged across nodes, leading to telemetry ingestion errors.\n\n## Corrective Actions & Prevention\n- Implement Patroni consensus raft leader election.\n- Add Redis-based sequence ID replay deduplication layer.\n- Configure advanced Datadog synthetic canary alerts for lag > 30s."
+      },
+      "reasoning": "Establishes a centralized official Google Doc containing the root-cause analysis, timeline, and permanent remediation strategy for stakeholder visibility.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 2,
+      "step_id": "3e62c23d-6116-46e8-8b6e-1faa41615d01",
+      "description": "Create a Google Sheet to track the post-mortem action items, assignees, priorities, and story points",
+      "tool_name": "google_sheets",
+      "tool_args": {
+        "title": "INC-8892 Action Items Tracking Matrix",
+        "rows": [
+          [
+            "Action Item ID",
+            "Summary",
+            "Assignee",
+            "Priority",
+            "Story Points",
+            "Description",
+            "Status"
+          ],
+          [
+            "ACT-01",
+            "DB Ops: Implement Patroni consensus raft leader election with etcd to prevent split-brain",
+            "Alex Mercer",
+            "Highest",
+            "8",
+            "Deploy Patroni distributed consensus across 5 PostgreSQL nodes to eliminate split-brain failover risks.",
+            "Open"
+          ],
+          [
+            "ACT-02",
+            "Telemetry API: Add sequence ID replay deduplication layer in Redis",
+            "Priya Sharma",
+            "High",
+            "5",
+            "Implement Redis sliding window deduplication to reject duplicate telemetry packets during failover recovery.",
+            "Open"
+          ],
+          [
+            "ACT-03",
+            "SRE: Configure Datadog synthetic canary alerts for replication lag > 30s",
+            "Marcus Vance",
+            "High",
+            "3",
+            "Add multi-region synthetic lag monitoring and automatic circuit-breaking.",
+            "Open"
+          ]
+        ]
+      },
+      "reasoning": "Provides a clear operational spreadsheet matrix for tracking engineering tasks arising from the incident.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 3,
+      "step_id": "eaf60751-c911-4358-b67a-b872126f42f0",
+      "description": "Bulk create Jira tickets for all action items identified in the post-mortem",
+      "tool_name": "jira",
+      "tool_args": {
+        "project": "INC",
+        "tasks": [
+          {
+            "summary": "DB Ops: Implement Patroni consensus raft leader election with etcd to prevent split-brain",
+            "description": "Deploy Patroni distributed consensus across 5 PostgreSQL nodes to eliminate split-brain failover risks.",
+            "assignee": "Alex Mercer",
+            "priority": "Highest"
+          },
+          {
+            "summary": "Telemetry API: Add sequence ID replay deduplication layer in Redis",
+            "description": "Implement Redis sliding window deduplication to reject duplicate telemetry packets during failover recovery.",
+            "assignee": "Priya Sharma",
+            "priority": "High"
+          },
+          {
+            "summary": "SRE: Configure Datadog synthetic canary alerts for replication lag > 30s",
+            "description": "Add multi-region synthetic lag monitoring and automatic circuit-breaking.",
+            "assignee": "Marcus Vance",
+            "priority": "High"
+          }
+        ]
+      },
+      "reasoning": "Automatically provisions tracking issues in Jira assigned to the respective owners to ensure accountability and integration with the engineering sprint workflow.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 4,
+      "step_id": "11b67249-e25a-4542-b239-8be8926f54b0",
+      "description": "Post the incident post-mortem executive summary and tracking links to the engineering incident response Slack channel",
+      "tool_name": "slack",
+      "tool_args": {
+        "channel": "#incident-response-prod",
+        "message": "\ud83d\udea8 *SEV-1 Incident Post-Mortem Published: INC-8892* \ud83d\udea8\n\n*Service*: Distributed PostgreSQL Telemetry Cluster (Prod US-East)\n*Summary*: Replication lag > 450s led to automated split-brain during failover and sequence ID corruption.\n\n\ud83d\udcc4 *Post-Mortem Doc*: $step_1.document_id\n\ud83d\udcca *Action Tracker Spreadsheet*: $step_2.spreadsheet_id\n\nAll engineering remediation tasks have been bulk-created in Jira. Please review your assigned items with Alex, Priya, and Marcus."
+      },
+      "reasoning": "Notifies the engineering team instantly via Slack with all relevant documentation artifacts and tracker links.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 5,
+      "step_id": "a7185bed-8d55-4513-b4f9-277ce7a32aa7",
+      "description": "Send an email summary of the post-mortem report and action plan to engineering leadership and stakeholders",
+      "tool_name": "gmail",
+      "tool_args": {
+        "to": "eng-leadership@company.com",
+        "subject": "[INC-8892 POST-MORTEM] SEV-1 Distributed PostgreSQL Telemetry Cluster Outage",
+        "body": "Dear Engineering Leadership,\n\nAn automated post-mortem has been compiled and executed for incident INC-8892 (SEV-1).\n\nIncident Summary:\n- Affected Service: Distributed PostgreSQL Telemetry Cluster (Prod US-East)\n- Root Cause: Replication lag spike past 450s during peak traffic triggering split-brain partition upon automated failover.\n\nArtifacts Generated:\n- Post-Mortem Document ID: $step_1.document_id\n- Action Item Spreadsheet ID: $step_2.spreadsheet_id\n\nJira tasks have been created and assigned to Alex Mercer, Priya Sharma, and Marcus Vance. Tracking is active.\n\nBest regards,\nTaskmaster Autonomous Agent Engine"
+      },
+      "reasoning": "Ensures executive leadership receives official email notification with all links and high-level findings.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    }
+  ],
+  "status": "CREATED",
+  "current_step_index": 0,
+  "final_artifact": null,
+  "summary": null,
+  "created_at": "2026-08-29T18:18:47.550587",
+  "updated_at": "2026-08-29T18:18:47.550589",
+  "tags": [],
+  "context_id": null,
+  "token_usage": {
+    "total_prompt_tokens": 1699,
+    "total_completion_tokens": 1507,
+    "total_tokens": 3206,
+    "total_estimated_cost_usd": 0.001159,
+    "calls": [
+      {
+        "prompt_tokens": 1699,
+        "completion_tokens": 1507,
+        "total_tokens": 3206,
+        "model_used": "gemini-3.5-flash-lite",
+        "estimated_cost_usd": 0.001159
+      }
+    ]
+  },
+  "checkpoint_data": null,
+  "paused_at_step": null,
+  "eval_scores": null
+}

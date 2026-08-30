@@ -1,11 +1,35 @@
+# Secrets and API Keys (NEVER commit .env or credentials)
 .env
+.env.local
+*.key
+*.pem
+credentials.json
+client_secret_*.json
+token.json
+
+# Python & virtual environments
 __pycache__/
 *.pyc
-*.log
+*.pyo
+*.pyd
+.Python
 venv/
 .venv/
 env/
+.pytest_cache/
+
+# IDE
 .idea/
 .vscode/
 
+# Database & Runtime Data
 *.db
+*.sqlite3
+data/checkpoints/
+data/workflows/
+data/browser_profile/
+data/youtube_screenshots/
+data/audit_logs/
+data/audit_logs.jsonl
+agent/data/
+*.log

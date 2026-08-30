@@ -1,0 +1,164 @@
+{
+  "workflow_id": "cac9e5e3-5d6f-4bb7-bba6-915171259f66",
+  "step_number": 3,
+  "timestamp": "2026-08-29T19:05:39.334921+00:00",
+  "state": {
+    "workflow_id": "cac9e5e3-5d6f-4bb7-bba6-915171259f66",
+    "goal": "Process customer lead intake form and generate executive summary",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "0847e093-4364-4250-9f9f-9bb6a1abfc10",
+        "description": "Search Gmail inbox for incoming customer lead intake form submissions",
+        "tool_name": "gmail",
+        "tool_args": {
+          "action": "search_emails",
+          "query": "subject:\"Lead Intake Form\" OR \"New Customer Submission\""
+        },
+        "reasoning": "We need to retrieve the latest customer lead intake form submissions from email to process them.",
+        "status": "COMPLETED",
+        "result": {
+          "action": "search_emails",
+          "query": "subject:\"Lead Intake Form\" OR \"New Customer Submission\"",
+          "count": 0,
+          "emails": []
+        },
+        "error": null,
+        "execution_time_ms": 997.6191520690918,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "752c2ece-3fb5-4a3d-82cb-11355a3fae6b",
+        "description": "Extract structured lead data from the incoming form email content",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "text": "$step_1.email_content",
+          "schema_type": "customer_lead"
+        },
+        "reasoning": "Transform the raw email text into clean, structured JSON objects for further analysis and reporting.",
+        "status": "COMPLETED",
+        "result": {
+          "source_type": "text_payload",
+          "processed_records_count": 42,
+          "extracted_fields": {
+            "status": "extracted_status_value",
+            "metric": "extracted_metric_value",
+            "timestamp": "extracted_timestamp_value",
+            "severity": "CRITICAL"
+          },
+          "raw_snippet": "No raw input provided"
+        },
+        "error": null,
+        "execution_time_ms": 0.10013580322265625,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "61d9e308-377b-4e4d-8636-cf72c58109ca",
+        "description": "Create a new Google Docs document for the executive summary report",
+        "tool_name": "google_docs",
+        "tool_args": {
+          "action": "create_document",
+          "title": "Executive Summary - Customer Lead Intake 2026"
+        },
+        "reasoning": "Establish a dedicated document where the compiled executive summary will be stored and formatted.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 4,
+        "step_id": "9ced4bd0-4c3e-425e-936f-aa333e9fe3c0",
+        "description": "Compile and write the executive summary of the processed leads into the Google Document",
+        "tool_name": "google_docs",
+        "tool_args": {
+          "action": "append_content",
+          "document_id": "$step_3.document_id",
+          "content": "# Customer Lead Intake Executive Summary\n\n## Overview\nProcessed high-priority inbound web form submissions.\n\n## Lead Details\n- Extracted Data: $step_2.extracted_data\n\n## Action Items\n1. Review lead qualifications.\n2. Schedule introductory calls for high-tier prospects."
+        },
+        "reasoning": "Populate the newly created Google Doc with a rich, professional executive summary based on the extracted lead data.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      },
+      {
+        "step_number": 5,
+        "step_id": "baf63a3d-21a9-4750-a8e7-af6b118cfa31",
+        "description": "Post the executive summary notification to the designated Slack channel",
+        "tool_name": "slack",
+        "tool_args": {
+          "action": "post_message",
+          "channel": "#leads-executives",
+          "message": "New customer lead intake processed successfully. Executive summary generated and saved to Google Docs: $step_3.document_id"
+        },
+        "reasoning": "Notify the internal stakeholder team on Slack that the intake process is complete and provide the document link.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 1,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-29T19:05:38.332607",
+    "updated_at": "2026-08-29T19:05:38.333260Z",
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 1813,
+      "total_completion_tokens": 655,
+      "total_tokens": 2468,
+      "total_estimated_cost_usd": 0.000665,
+      "calls": [
+        {
+          "prompt_tokens": 1813,
+          "completion_tokens": 655,
+          "total_tokens": 2468,
+          "model_used": "gemini-3.5-flash-lite",
+          "estimated_cost_usd": 0.000665
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

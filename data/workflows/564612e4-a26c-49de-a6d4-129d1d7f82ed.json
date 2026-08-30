@@ -1,0 +1,130 @@
+{
+  "workflow_id": "564612e4-a26c-49de-a6d4-129d1d7f82ed",
+  "goal": "Extract server metrics, persist to DB, and validate data health",
+  "steps": [
+    {
+      "step_number": 1,
+      "step_id": "4b7844e5-271d-4400-aea1-bd2eac2a9f26",
+      "description": "Extract raw server metrics from external monitoring endpoint",
+      "tool_name": "action_dispatcher",
+      "tool_args": {
+        "url": "https://api.internal-monitoring.net/v1/metrics/current",
+        "method": "GET",
+        "headers": {
+          "Authorization": "Bearer system_internal_token"
+        }
+      },
+      "reasoning": "We need to fetch the raw JSON metrics from the server monitoring system to begin the ingestion workflow.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 2,
+      "step_id": "31afb329-8a27-4079-9928-30705f85273f",
+      "description": "Parse and structure raw server metrics data",
+      "tool_name": "data_extractor",
+      "tool_args": {
+        "raw_data": "$step_1.response_body",
+        "schema_target": "server_metrics_v1",
+        "parsing_rules": "Extract CPU utilization, memory usage, disk I/O, network throughput, and timestamp into clean JSON entities."
+      },
+      "reasoning": "The raw monitoring output needs to be normalized and structured into a consistent schema before database persistence.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 3,
+      "step_id": "5d46db17-f81e-4a24-a814-41543016f844",
+      "description": "Persist structured server metrics to Firestore database",
+      "tool_name": "db_manager",
+      "tool_args": {
+        "action": "insert",
+        "collection": "server_metrics",
+        "records": "$step_2.structured_entities"
+      },
+      "reasoning": "Storing the parsed metrics in the persistent database ensures historical tracking and availability for downstream analysis.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    },
+    {
+      "step_number": 4,
+      "step_id": "95c0e044-c8b8-4093-9573-92255398cae0",
+      "description": "Validate data health and check for anomalies in extracted metrics",
+      "tool_name": "validator",
+      "tool_args": {
+        "target_data": "$step_2.structured_entities",
+        "validation_rules": {
+          "cpu_usage_max": 95.0,
+          "memory_usage_max": 90.0,
+          "disk_io_anomaly_threshold": 5000,
+          "require_fresh_timestamp": true
+        }
+      },
+      "reasoning": "Running automated validation ensures that metrics are within healthy operating parameters and flags any anomalies for self-correction or alerts.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "token_usage": null
+    }
+  ],
+  "status": "EXECUTING",
+  "current_step_index": 0,
+  "final_artifact": null,
+  "summary": null,
+  "created_at": "2026-08-29T17:55:14.263698",
+  "updated_at": "2026-08-29T17:55:14.264162Z",
+  "tags": [],
+  "context_id": null,
+  "token_usage": {
+    "total_prompt_tokens": 1436,
+    "total_completion_tokens": 561,
+    "total_tokens": 1997,
+    "total_estimated_cost_usd": 0.000552,
+    "calls": [
+      {
+        "prompt_tokens": 1436,
+        "completion_tokens": 561,
+        "total_tokens": 1997,
+        "model_used": "gemini-3.5-flash-lite",
+        "estimated_cost_usd": 0.000552
+      }
+    ]
+  },
+  "checkpoint_data": null,
+  "paused_at_step": null,
+  "eval_scores": null
+}

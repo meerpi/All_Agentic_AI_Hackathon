@@ -211,7 +211,7 @@ class JiraTool(BaseTool):
             "components": components,
             "status": "TO DO",
             "created_at": created_at,
-            "url": f"https://jira.internal/{project_key}/browse/{generated_key}"
+            "url": f"{os.getenv('JIRA_URL', 'local://autonomous-board').rstrip('/')}/browse/{generated_key}"
         }
 
         issues.append(issue_obj)

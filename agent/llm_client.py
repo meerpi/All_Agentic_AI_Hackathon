@@ -277,7 +277,11 @@ class GeminiClient:
         return f"Autonomous task reasoning output for: {prompt[:100]}"
 
     def _generate_mock_response(self, prompt: str) -> Dict[str, Any]:
-        """Provides realistic mock plan generation tailored to user goals."""
+        """
+        Offline mock plan generator — ONLY used when MOCK_GEMINI=true or all API keys are exhausted.
+        Returns structurally valid sample plans so the orchestrator can test DAG execution offline.
+        All data (emails, names, amounts) is fictional sample content clearly marked as mock.
+        """
         prompt_lower = prompt.lower()
 
         # Freelance / Client Pipeline planning

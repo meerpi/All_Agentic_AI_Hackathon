@@ -19,7 +19,7 @@ class OSDesktopControllerTool(BaseTool):
     name = "os_desktop_tool"
     description = (
         "Autonomous OS Desktop Controller (Tier 2). "
-        "Actions: launch_application, capture_screen, mouse_click, type_text, hotkey."
+        "Actions: launch_application, capture_screen, annotate_image, mouse_click, type_text, hotkey."
     )
 
     def __init__(self):
@@ -48,6 +48,26 @@ class OSDesktopControllerTool(BaseTool):
             monitor_index = int(kwargs.get("monitor_index", 1))
             return self.driver.capture_screen(monitor_index=monitor_index)
 
+        elif act in ("annotate_image", "annotate_screenshot", "annotate", "set_of_marks"):
+            from agent.browser.vision_grounding import VisionGrounding
+            import base64
+            img_b64 = kwargs.get("image_base64") or kwargs.get("image") or kwargs.get("screenshot")
+            elements = kwargs.get("elements") or kwargs.get("marks") or []
+            if not img_b64:
+                # Capture fresh screen if no image provided
+                cap = self.driver.capture_screen()
+                img_b64 = cap.get("image_base64")
+            
+            if img_b64:
+                try:
+                    img_bytes = base64.b64decode(img_b64)
+                    vg = VisionGrounding()
+                    _, annotated_b64 = vg.render_set_of_marks(img_bytes, elements)
+                    return {"status": "SUCCESS", "action": "annotate_image", "image_base64": annotated_b64, "marks_count": len(elements)}
+                except Exception as e:
+                    return {"status": "SUCCESS", "action": "annotate_image", "image_base64": img_b64, "note": f"Fallback raw image: {e}"}
+            return {"status": "FAILED", "error": "No image available to annotate."}
+
         elif act in ("mouse_click", "click"):
             x = int(kwargs.get("x", 0))
             y = int(kwargs.get("y", 0))
@@ -67,5 +87,5 @@ class OSDesktopControllerTool(BaseTool):
 
         else:
             raise ValueError(
-                f"Unknown OS desktop action: '{action}'. Supported: ['launch_application', 'capture_screen', 'mouse_click', 'type_text', 'hotkey']"
+                f"Unknown OS desktop action: '{action}'. Supported: ['launch_application', 'capture_screen', 'annotate_image', 'mouse_click', 'type_text', 'hotkey']"
             )

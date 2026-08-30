@@ -507,7 +507,7 @@ class TaskmasterOrchestrator:
 
                 # Non-retryable tool failure — try self-correction once
                 self.memory.procedural.record_failure(step.tool_name, resolved_args, result.error_message or "", workflow.goal)
-                corrected = self._self_correct_step(step, resolved_args, result.error_message or "Unknown error", workflow)
+                corrected = self._self_correct_step(step, resolved_args, result.error_message or "Unknown error", workflow, step_results)
                 if corrected and corrected.success:
                     step.status = StepStatus.COMPLETED
                     step.result = corrected.data
@@ -515,10 +515,11 @@ class TaskmasterOrchestrator:
                                     details={"status": "RECOVERED", "result": corrected.data})
                     return
 
+                latest_err = (corrected.error_message if (corrected and corrected.error_message) else result.error_message)
                 step.status = StepStatus.FAILED
-                step.error = result.error_message
+                step.error = latest_err
                 self._add_trace(workflow_id, "SELF_CORRECTION", step_number=step.step_number,
-                                details={"status": "FAILED_AFTER_CORRECTION", "error": result.error_message})
+                                details={"status": "FAILED_AFTER_CORRECTION", "error": latest_err})
                 return
 
             except self.RETRYABLE_ERRORS as e:
@@ -543,7 +544,7 @@ class TaskmasterOrchestrator:
                 self._add_trace(workflow_id, "STEP_EXCEPTION", step_number=step.step_number, details={"error": str(e)})
                 return
 
-    def _self_correct_step(self, step: PlanStep, args: Dict, error: str, workflow: WorkflowPlan) -> Optional[ToolCallResult]:
+    def _self_correct_step(self, step: PlanStep, args: Dict, error: str, workflow: WorkflowPlan, step_results: Optional[Dict[int, Any]] = None) -> Optional[ToolCallResult]:
         """Enhanced self-correction with alternative tool suggestion and retry."""
         # Definitive not-found / invalid resource error detection
         not_found_keywords = ["404", "not found", "does not exist", "invalid or missing", "not_found", "unresolved reference"]
@@ -565,7 +566,8 @@ class TaskmasterOrchestrator:
                 workflow.token_usage.add(self.llm.last_token_usage)
 
             suggested_tool = correction_res.get("suggested_tool", step.tool_name)
-            corrected_args = correction_res.get("corrected_tool_args", args)
+            raw_corrected_args = correction_res.get("corrected_tool_args", args)
+            corrected_args = self._resolve_dynamic_args(raw_corrected_args, step_results or {})
 
             # If resource is definitively not found, do not permit tool substitution
             if is_resource_not_found and suggested_tool != step.tool_name:

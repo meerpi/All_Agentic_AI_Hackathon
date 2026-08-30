@@ -21,8 +21,8 @@ class MediaControllerTool(BaseTool):
     name = "media_controller"
     description = (
         "Autonomous Media & Music Controller for YouTube & Spotify. "
-        "Supports official YouTube Data API v3 playlist management, liked music retrieval & catalog search, "
-        "Spotify Web API playlists, and autonomous browser/MPRIS playback transport controls."
+        "Actions: create_youtube_playlist, youtube_api_search, get_liked_music, youtube_play, youtube_control, youtube_status, "
+        "spotify_play, spotify_create_playlist, spotify_control."
     )
 
     def __init__(self):

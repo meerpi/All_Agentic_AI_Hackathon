@@ -84,9 +84,16 @@ class SpotifyDriver:
         """Creates a new playlist in Spotify Web Player."""
         page: Page = await self.manager.get_page(headed=True)
         
-        # Click Create Playlist button
+        # Click Create Playlist button with active session check
         create_btn = page.locator('button[data-testid="create-playlist-button"], button[aria-label="Create playlist"]').first
-        await create_btn.click(timeout=8000)
+        try:
+            await create_btn.click(timeout=8000)
+        except Exception:
+            login_btn = page.locator('button[data-testid="login-button"], a[href*="login"]')
+            if await login_btn.count() > 0 or "login" in page.url:
+                raise RuntimeError("No active Spotify session detected. Please log in to Spotify via 'python -m agent.browser.login_helper' or browser.")
+            raise RuntimeError("No active Spotify session detected or Create Playlist button not accessible. Please authenticate Spotify.")
+
         await asyncio.sleep(1.5)
 
         try:

@@ -62,8 +62,10 @@ class BrowserSessionManager:
         Thread-safe synchronous bridge for executing async Playwright methods.
         Can be called safely from any sync thread or FastAPI worker.
         """
+        # Auto-recover from emergency kill — allow new sessions after a kill
         if self._is_killed:
-            raise RuntimeError("Browser session was terminated by Emergency Kill Switch.")
+            logger.info("Resetting kill switch flag — starting fresh browser session.")
+            self._is_killed = False
             
         loop = self._ensure_background_loop()
         future = asyncio.run_coroutine_threadsafe(coro, loop)
@@ -92,12 +94,14 @@ class BrowserSessionManager:
                 
                 # Anti-detection & media-codec launch arguments
                 args = [
+                    "--ozone-platform-hint=auto",
                     "--disable-blink-features=AutomationControlled",
                     "--no-sandbox",
                     "--disable-dev-shm-usage",
                     "--disable-infobars",
                     "--no-first-run",
                     "--no-default-browser-check",
+                    "--autoplay-policy=no-user-gesture-required",
                 ]
 
                 logger.info(f"Launching persistent browser context at: {self.profile_dir} (headless={is_headless})")

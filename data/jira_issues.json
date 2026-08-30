@@ -166,5 +166,47 @@
     "status": "TO DO",
     "created_at": "2026-08-29T18:02:00.258193+00:00",
     "url": "https://jira.internal/KAN/browse/KAN-112"
+  },
+  {
+    "key": "KAN-113",
+    "project": "KAN",
+    "summary": "Add Redis caching and optimize BigQuery billing summary queries",
+    "description": "Address billing API latency spikes under peak load by adding Redis caching and optimizing BigQuery billing summary queries to achieve sub-200ms latency.",
+    "issue_type": "Task",
+    "priority": "Critical",
+    "assignee": "Priya Patel",
+    "story_points": 8,
+    "components": [],
+    "status": "TO DO",
+    "created_at": "2026-08-30T06:09:19.692860+00:00",
+    "url": "https://jira.internal/KAN/browse/KAN-113"
+  },
+  {
+    "key": "KAN-114",
+    "project": "KAN",
+    "summary": "Optimize Firestore database indexes",
+    "description": "Optimize Firestore database indexes for inter-agent message querying.",
+    "issue_type": "Task",
+    "priority": "Critical",
+    "assignee": "Priya Patel",
+    "story_points": 8,
+    "components": [],
+    "status": "TO DO",
+    "created_at": "2026-08-30T06:09:33.431391+00:00",
+    "url": "https://jira.internal/KAN/browse/KAN-114"
+  },
+  {
+    "key": "KAN-115",
+    "project": "KAN",
+    "summary": "Draft comprehensive high-availability architecture RFC",
+    "description": "Create the formal Request for Comments (RFC) document detailing multi-region traffic routing, failover mechanisms, RPO, and RTO targets for the payment processing service.",
+    "issue_type": "Task",
+    "priority": "Critical",
+    "assignee": "Lead Infrastructure Architect",
+    "story_points": 8,
+    "components": [],
+    "status": "TO DO",
+    "created_at": "2026-08-30T06:48:47.858841+00:00",
+    "url": "https://jira.internal/KAN/browse/KAN-115"
   }
 ]

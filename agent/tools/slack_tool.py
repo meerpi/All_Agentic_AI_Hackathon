@@ -123,6 +123,17 @@ class SlackTool(BaseTool):
                     }
                 )
                 with urllib.request.urlopen(req, timeout=10) as response:
+                    resp_body = response.read().decode("utf-8")
+                    resp_data = json.loads(resp_body)
+                    if not resp_data.get("ok", False):
+                        slack_error = resp_data.get("error", "unknown_error")
+                        logger.error(f"Slack API returned ok=false: {slack_error}")
+                        return {
+                            "action": "post_message",
+                            "channel": channel,
+                            "status": "FAILED",
+                            "error": f"Slack API error: {slack_error}"
+                        }
                     return {
                         "action": "post_message",
                         "channel": channel,
@@ -220,6 +231,18 @@ class SlackTool(BaseTool):
                     }
                 )
                 with urllib.request.urlopen(req, timeout=10) as response:
+                    resp_body = response.read().decode("utf-8")
+                    resp_data = json.loads(resp_body)
+                    if not resp_data.get("ok", False):
+                        slack_error = resp_data.get("error", "unknown_error")
+                        logger.error(f"Slack API returned ok=false for post_summary: {slack_error}")
+                        return {
+                            "action": "post_summary",
+                            "channel": channel,
+                            "title": title,
+                            "status": "FAILED",
+                            "error": f"Slack API error: {slack_error}"
+                        }
                     return {
                         "action": "post_summary",
                         "channel": channel,

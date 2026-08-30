@@ -46,7 +46,7 @@ from agent.prompts import (
     TASKMASTER_SYSTEM_PROMPT,
 )
 from agent.security import audit_logger, requires_approval
-from agent.task_graph import TaskDAG
+from agent.task_graph import CyclicDependencyError, MissingDependencyError, TaskDAG
 from agent.tools.registry import registry
 
 logger = logging.getLogger("taskmaster.orchestrator")
@@ -219,8 +219,33 @@ class TaskmasterOrchestrator:
         persistence.save_workflow(workflow_id, workflow.model_dump(mode="json"))
 
         # Build DAG and get parallel execution groups
-        dag = TaskDAG(workflow.steps)
-        parallel_groups = dag.get_parallel_groups()
+        try:
+            dag = TaskDAG(workflow.steps)
+            parallel_groups = dag.get_parallel_groups()
+        except CyclicDependencyError as e:
+            logger.error(f"Cyclic dependency in workflow {workflow_id}: {e}")
+            workflow.status = WorkflowStatus.FAILED
+            workflow.summary = f"Workflow failed: Cyclic dependency detected — {e}"
+            workflow.updated_at = datetime.now(timezone.utc)
+            self._add_trace(workflow_id, "DAG_CYCLE_ERROR", details={"error": str(e)})
+            persistence.save_workflow(workflow_id, workflow.model_dump(mode="json"))
+            return workflow
+        except MissingDependencyError as e:
+            logger.error(f"Missing dependency in workflow {workflow_id}: {e}")
+            workflow.status = WorkflowStatus.FAILED
+            workflow.summary = f"Workflow failed: Missing dependency — {e}"
+            workflow.updated_at = datetime.now(timezone.utc)
+            self._add_trace(workflow_id, "DAG_MISSING_DEP_ERROR", details={"error": str(e)})
+            persistence.save_workflow(workflow_id, workflow.model_dump(mode="json"))
+            return workflow
+        except Exception as e:
+            logger.error(f"Unexpected error building DAG for workflow {workflow_id}: {e}")
+            workflow.status = WorkflowStatus.FAILED
+            workflow.summary = f"Workflow failed during DAG construction: {e}"
+            workflow.updated_at = datetime.now(timezone.utc)
+            self._add_trace(workflow_id, "DAG_BUILD_ERROR", details={"error": str(e)})
+            persistence.save_workflow(workflow_id, workflow.model_dump(mode="json"))
+            return workflow
         logger.info(f"Parallel execution groups for {workflow_id}: {parallel_groups}")
 
         step_map = {s.step_number: s for s in workflow.steps}
@@ -286,7 +311,8 @@ class TaskmasterOrchestrator:
 
         # Final summary synthesis
         accumulated_results = [s.result for s in workflow.steps if s.result is not None]
-        failed_count = sum(1 for s in workflow.steps if s.status == StepStatus.FAILED)
+        # Count both FAILED and BLOCKED steps — blocked steps indicate unfulfilled dependencies
+        failed_count = sum(1 for s in workflow.steps if s.status in (StepStatus.FAILED, StepStatus.BLOCKED))
         workflow.status = WorkflowStatus.COMPLETED if failed_count == 0 else WorkflowStatus.FAILED
         workflow.summary = self._synthesize_final_summary(workflow, accumulated_results)
         workflow.final_artifact = {"results": accumulated_results, "step_count": len(workflow.steps)}

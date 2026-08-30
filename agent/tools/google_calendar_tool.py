@@ -42,7 +42,10 @@ class GoogleCalendarTool(BaseTool):
         location: Optional[str] = None,
         **kwargs: Any,
     ) -> Dict[str, Any]:
-        action = action.lower()
+        action = action.lower() if action else "list_events"
+        # Auto-infer create_event if summary/start_time provided without list flags
+        if (summary or start_time) and action == "list_events" and not kwargs.get("time_range"):
+            action = "create_event"
 
         try:
             if action == "list_events":
@@ -123,8 +126,13 @@ class GoogleCalendarTool(BaseTool):
             if dt.tzinfo is None:
                 dt = dt.replace(tzinfo=timezone.utc)
             return dt.isoformat()
-        except Exception as e:
-            raise ValueError(f"Unparseable date format: {time_str}. Expected ISO 8601.") from e
+        except Exception:
+            # Fallback for simple date 'YYYY-MM-DD'
+            try:
+                dt = datetime.strptime(time_str[:10], "%Y-%m-%d").replace(hour=14, minute=0, tzinfo=timezone.utc)
+                return dt.isoformat()
+            except Exception as e:
+                raise ValueError(f"Unparseable date format: {time_str}. Expected ISO 8601.") from e
 
     def _create_event(
         self,
@@ -137,11 +145,20 @@ class GoogleCalendarTool(BaseTool):
         """Create a new calendar event."""
         service = self._get_service()
 
-        if not start_time or not end_time:
-            raise ValueError("Explicit start_time and end_time are required for creating an event.")
+        if not start_time:
+            # Default to tomorrow at 10:00 AM UTC
+            now = datetime.now(timezone.utc)
+            tomorrow = (now + timedelta(days=1)).replace(hour=10, minute=0, second=0, microsecond=0)
+            start_time = tomorrow.isoformat()
 
         clean_start = self._parse_iso(start_time)
-        clean_end = self._parse_iso(end_time)
+
+        if not end_time:
+            # Default to 45 minutes after start
+            dt_start = datetime.fromisoformat(clean_start)
+            clean_end = (dt_start + timedelta(minutes=45)).isoformat()
+        else:
+            clean_end = self._parse_iso(end_time)
 
         event_body = {
             "summary": summary,

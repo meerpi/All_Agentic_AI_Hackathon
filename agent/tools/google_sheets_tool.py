@@ -40,11 +40,17 @@ class GoogleSheetsTool(BaseTool):
         values: Optional[List[List[Any]]] = None,
         **kwargs: Any,
     ) -> Dict[str, Any]:
-        action = action.lower()
+        action = action.lower() if action else "read_sheet"
+        # Auto-infer intent if action was omitted or defaulted
+        if (rows or values) and spreadsheet_id and action == "read_sheet":
+            action = "append_rows"
+        elif title and not spreadsheet_id and action == "read_sheet":
+            action = "create_spreadsheet"
 
         try:
             if action == "create_spreadsheet":
-                return self._create_spreadsheet(title or "Taskmaster Data")
+                headers = kwargs.get("headers")
+                return self._create_spreadsheet(title or "Taskmaster Data", headers=headers)
             elif action == "read_sheet":
                 return self._read_sheet(spreadsheet_id or "", range_notation or f"{sheet_name}!A:Z")
             elif action == "append_rows":

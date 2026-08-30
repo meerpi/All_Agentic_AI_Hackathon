@@ -67,6 +67,13 @@ def get_google_credentials():
             creds = Credentials.from_authorized_user_file(TOKEN_PATH, SCOPES)
             if creds and creds.expired and creds.refresh_token:
                 creds.refresh(Request())
+                # Persist refreshed token so we don't need to re-auth on next cold start
+                try:
+                    with open(TOKEN_PATH, "w") as token_file:
+                        token_file.write(creds.to_json())
+                    logger.info(f"Persisted refreshed OAuth token to {TOKEN_PATH}")
+                except Exception as write_err:
+                    logger.warning(f"Failed to persist refreshed token to {TOKEN_PATH}: {write_err}")
             if creds and creds.valid:
                 return creds
         except Exception as e:

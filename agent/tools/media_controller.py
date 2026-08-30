@@ -60,7 +60,9 @@ class MediaControllerTool(BaseTool):
             return {"status": "SUCCESS", "query": query, "results": results}
 
         # ── Browser-based Playback Actions (Headless or Headed) ────────
-        return self.manager.run_sync(self._run_async(action, **kwargs))
+        duration = kwargs.get("duration_seconds") or kwargs.get("duration") or kwargs.get("play_duration_seconds")
+        timeout = (float(duration) + 45.0) if duration else None
+        return self.manager.run_sync(self._run_async(action, **kwargs), timeout=timeout)
 
     async def _run_async(self, action: str, **kwargs: Any) -> Dict[str, Any]:
         act = action.lower().strip()
@@ -69,12 +71,18 @@ class MediaControllerTool(BaseTool):
         if act in ("youtube_play", "youtube_search", "play_youtube", "search_youtube"):
             url = kwargs.get("url") or kwargs.get("video_url")
             seek_seconds = kwargs.get("seek_seconds") or kwargs.get("seek") or kwargs.get("t")
+            duration = kwargs.get("duration_seconds") or kwargs.get("duration") or kwargs.get("play_duration_seconds")
+            auto_close = bool(kwargs.get("auto_close", False) or kwargs.get("close_after", False))
             if url:
                 return await self.youtube.play_video(url=url, seek_seconds=seek_seconds)
             query = kwargs.get("query") or kwargs.get("search_query") or kwargs.get("title")
             if not query:
                 raise ValueError("YouTube action requires parameter 'query' or 'url'.")
-            return await self.youtube.search_and_play(query=query)
+            return await self.youtube.search_and_play(
+                query=query,
+                duration_seconds=int(duration) if duration else None,
+                auto_close=auto_close
+            )
 
         elif act in ("youtube_control", "youtube_transport"):
             cmd = kwargs.get("command") or kwargs.get("playback_command") or "play_pause"

@@ -24,8 +24,21 @@ class A2AServer:
         self.orchestrator = orchestrator
         self.council = council
 
-    def handle_jsonrpc(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process incoming JSON-RPC 2.0 request."""
+    def handle_jsonrpc(self, request_data) -> Any:
+        """Process incoming JSON-RPC 2.0 request or batch of requests."""
+        # JSON-RPC 2.0 batch: request_data is a list of request objects
+        if isinstance(request_data, list):
+            if len(request_data) == 0:
+                return self._error_response(None, -32600, "Invalid Request: batch is empty")
+            return [self._handle_single_jsonrpc(req) for req in request_data]
+        # Single request
+        return self._handle_single_jsonrpc(request_data)
+
+    def _handle_single_jsonrpc(self, request_data) -> Dict[str, Any]:
+        """Process a single JSON-RPC 2.0 request object."""
+        if not isinstance(request_data, dict):
+            return self._error_response(None, -32600, "Invalid Request: each request must be a JSON object")
+
         req_id = request_data.get("id")
         method = request_data.get("method")
         params = request_data.get("params", {})

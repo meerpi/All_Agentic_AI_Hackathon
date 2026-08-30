@@ -70,7 +70,12 @@ class JiraTool(BaseTool):
         **kwargs: Any,
     ) -> Dict[str, Any]:
         action = action.lower()
-        active_project_key = project_key or os.getenv("JIRA_PROJECT_KEY") or "KAN"
+        env_project = os.getenv("JIRA_PROJECT_KEY") or "KAN"
+        # If project_key is missing or generic default placeholder, use env_project
+        if not project_key or project_key.upper() in ("ENG", "PROD", "DEFAULT", "PROJECT", "DEMO"):
+            active_project_key = env_project
+        else:
+            active_project_key = project_key.upper()
 
         if action == "create_issue":
             return self._create_issue(
@@ -115,56 +120,83 @@ class JiraTool(BaseTool):
         jira_email = os.getenv("JIRA_EMAIL")
         jira_token = os.getenv("JIRA_API_TOKEN")
 
-        # 1. Try Live Jira Cloud REST API if credentials exist
+        # Map non-standard priorities to Jira Cloud standard priorities
+        priority_map = {
+            "critical": "Highest",
+            "blocker": "Highest",
+            "urgent": "Highest",
+            "highest": "Highest",
+            "high": "High",
+            "medium": "Medium",
+            "normal": "Medium",
+            "low": "Low",
+            "minor": "Low",
+            "lowest": "Lowest",
+            "trivial": "Lowest",
+        }
+        clean_priority = priority_map.get(str(priority).lower().strip(), "Medium")
+
+        # 1. Live Atlassian Jira Cloud REST API
         if jira_url and jira_email and jira_token:
-            auth_str = base64.b64encode(f"{jira_email}:{jira_token}".encode("utf-8")).decode("utf-8")
             api_endpoint = f"{jira_url.rstrip('/')}/rest/api/3/issue"
-            payload = {
-                "fields": {
-                    "project": {"key": project_key},
-                    "summary": summary,
-                    "description": {
-                        "type": "doc",
-                        "version": 1,
-                        "content": [{"type": "paragraph", "content": [{"type": "text", "text": description}]}]
-                    },
-                    "issuetype": {"name": issue_type},
-                    "priority": {"name": priority}
-                }
-            }
-            req = urllib.request.Request(
-                api_endpoint,
-                data=json.dumps(payload).encode("utf-8"),
-                headers={
-                    "Authorization": f"Basic {auth_str}",
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                }
-            )
-            try:
-                with urllib.request.urlopen(req, timeout=10) as response:
-                    res_data = json.loads(response.read().decode("utf-8"))
-                    created_key = res_data.get("key", f"{project_key}-101")
-                    return {
-                        "action": "create_issue",
-                        "issue_key": created_key,
-                        "url": f"{jira_url.rstrip('/')}/browse/{created_key}",
+            auth_str = base64.b64encode(f"{jira_email}:{jira_token}".encode("utf-8")).decode("utf-8")
+
+            # Try primary project_key, with fallback to env project key if invalid
+            target_keys = [project_key]
+            env_key = os.getenv("JIRA_PROJECT_KEY", "KAN")
+            if project_key != env_key:
+                target_keys.append(env_key)
+
+            last_err = None
+            for pkey in target_keys:
+                payload = {
+                    "fields": {
+                        "project": {"key": pkey},
                         "summary": summary,
-                        "assignee": assignee,
-                        "status": "CREATED_IN_JIRA_CLOUD"
+                        "description": {
+                            "type": "doc",
+                            "version": 1,
+                            "content": [{"type": "paragraph", "content": [{"type": "text", "text": description}]}]
+                        },
+                        "issuetype": {"name": issue_type},
+                        "priority": {"name": clean_priority}
                     }
-            except urllib.error.HTTPError as e:
-                err_body = e.read().decode("utf-8", errors="replace")
+                }
+                req = urllib.request.Request(
+                    api_endpoint,
+                    data=json.dumps(payload).encode("utf-8"),
+                    headers={
+                        "Authorization": f"Basic {auth_str}",
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    }
+                )
                 try:
-                    err_json = json.loads(err_body)
-                    msg = err_json.get("errorMessages") or err_json.get("errors") or err_body
-                except Exception:
-                    msg = err_body
-                logger.error(f"Jira Cloud API error (HTTP {e.code}): {msg}")
-                raise ValueError(f"Jira API Error ({e.code}) for project '{project_key}': {msg}")
-            except Exception as e:
-                logger.error(f"Jira Cloud API connection error: {e}")
-                raise
+                    with urllib.request.urlopen(req, timeout=10) as response:
+                        res_data = json.loads(response.read().decode("utf-8"))
+                        created_key = res_data.get("key", f"{pkey}-101")
+                        return {
+                            "action": "create_issue",
+                            "issue_key": created_key,
+                            "url": f"{jira_url.rstrip('/')}/browse/{created_key}",
+                            "summary": summary,
+                            "assignee": assignee,
+                            "status": "CREATED_IN_JIRA_CLOUD"
+                        }
+                except urllib.error.HTTPError as e:
+                    err_body = e.read().decode("utf-8", errors="replace")
+                    try:
+                        err_json = json.loads(err_body)
+                        msg = err_json.get("errorMessages") or err_json.get("errors") or err_body
+                    except Exception:
+                        msg = err_body
+                    last_err = f"Jira API Error ({e.code}) for project '{pkey}': {msg}"
+                    logger.warning(f"Jira Cloud API attempt failed for '{pkey}': {last_err}")
+                except Exception as e:
+                    last_err = f"Jira Cloud API connection error: {e}"
+                    logger.error(last_err)
+
+            raise ValueError(last_err or f"Failed to create Jira issue in project {project_key}")
 
         # 2. Zero-Cost Autonomous Issue Board (only when no cloud credentials configured)
         issues = self._load_issues()
@@ -250,7 +282,44 @@ class JiraTool(BaseTool):
         }
 
     def _list_issues(self, project_key: str) -> Dict[str, Any]:
-        """List all issues in project."""
+        """List all issues in project (live Jira Cloud or local store)."""
+        jira_url = os.getenv("JIRA_URL")
+        jira_email = os.getenv("JIRA_EMAIL")
+        jira_token = os.getenv("JIRA_API_TOKEN")
+
+        if jira_url and jira_email and jira_token:
+            try:
+                auth_str = base64.b64encode(f"{jira_email}:{jira_token}".encode("utf-8")).decode("utf-8")
+                api_endpoint = f"{jira_url.rstrip('/')}/rest/api/3/search?jql=project={project_key}&maxResults=50"
+                req = urllib.request.Request(
+                    api_endpoint,
+                    headers={
+                        "Authorization": f"Basic {auth_str}",
+                        "Accept": "application/json"
+                    }
+                )
+                with urllib.request.urlopen(req, timeout=10) as response:
+                    data = json.loads(response.read().decode("utf-8"))
+                    issues_list = []
+                    for item in data.get("issues", []):
+                        fields = item.get("fields", {})
+                        issues_list.append({
+                            "key": item.get("key"),
+                            "summary": fields.get("summary"),
+                            "status": fields.get("status", {}).get("name"),
+                            "priority": fields.get("priority", {}).get("name"),
+                            "assignee": fields.get("assignee", {}).get("displayName") if fields.get("assignee") else "Unassigned",
+                            "url": f"{jira_url.rstrip('/')}/browse/{item.get('key')}"
+                        })
+                    return {
+                        "action": "list_issues",
+                        "project": project_key,
+                        "count": len(issues_list),
+                        "issues": issues_list
+                    }
+            except Exception as e:
+                logger.warning(f"Failed to fetch issues from Jira Cloud API: {e}")
+
         issues = self._load_issues()
         filtered = [i for i in issues if i.get("project") == project_key]
         return {
@@ -261,7 +330,41 @@ class JiraTool(BaseTool):
         }
 
     def _get_issue(self, issue_key: str) -> Dict[str, Any]:
-        """Get single issue details."""
+        """Get single issue details from live Jira Cloud or local store."""
+        if not issue_key:
+            return {"action": "get_issue", "status": "FAILED", "error": "issue_key is required"}
+
+        jira_url = os.getenv("JIRA_URL")
+        jira_email = os.getenv("JIRA_EMAIL")
+        jira_token = os.getenv("JIRA_API_TOKEN")
+
+        if jira_url and jira_email and jira_token:
+            try:
+                auth_str = base64.b64encode(f"{jira_email}:{jira_token}".encode("utf-8")).decode("utf-8")
+                api_endpoint = f"{jira_url.rstrip('/')}/rest/api/3/issue/{issue_key}"
+                req = urllib.request.Request(
+                    api_endpoint,
+                    headers={
+                        "Authorization": f"Basic {auth_str}",
+                        "Accept": "application/json"
+                    }
+                )
+                with urllib.request.urlopen(req, timeout=10) as response:
+                    data = json.loads(response.read().decode("utf-8"))
+                    fields = data.get("fields", {})
+                    issue_detail = {
+                        "key": data.get("key"),
+                        "summary": fields.get("summary"),
+                        "status": fields.get("status", {}).get("name"),
+                        "priority": fields.get("priority", {}).get("name"),
+                        "assignee": fields.get("assignee", {}).get("displayName") if fields.get("assignee") else "Unassigned",
+                        "created": fields.get("created"),
+                        "url": f"{jira_url.rstrip('/')}/browse/{data.get('key')}"
+                    }
+                    return {"action": "get_issue", "issue": issue_detail, "status": "FOUND"}
+            except Exception as e:
+                logger.warning(f"Failed to fetch issue '{issue_key}' from Jira Cloud API: {e}")
+
         issues = self._load_issues()
         for i in issues:
             if i.get("key") == issue_key:

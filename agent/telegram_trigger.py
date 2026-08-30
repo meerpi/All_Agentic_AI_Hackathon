@@ -87,7 +87,7 @@ async def handle_task_message(update: Update, context: ContextTypes.DEFAULT_TYPE
     )
 
     try:
-        from agent.guardrails.shared import apply_bot_guardrails
+        from agent.guardrails.shared import apply_bot_guardrails, get_approval_required_tools
         
         # 1. Input guardrails
         apply_bot_guardrails(user_message=user_message)
@@ -105,7 +105,7 @@ async def handle_task_message(update: Update, context: ContextTypes.DEFAULT_TYPE
         # Step 2: Plan the workflow
         workflow = orchestrator.create_plan(goal_input)
         
-        # 2. HITL guardrails
+        # 2. HITL guardrails — sets require_approval=True if high-risk tools detected
         apply_bot_guardrails(workflow_plan=workflow)
         
         step_list = "\n".join([f"  {s.step_number}. {s.description} (`{s.tool_name}`)" for s in workflow.steps])
@@ -121,7 +121,20 @@ async def handle_task_message(update: Update, context: ContextTypes.DEFAULT_TYPE
         )
 
         # Step 4: Send results back
-        if final_workflow.status == WorkflowStatus.COMPLETED:
+        if final_workflow.status == WorkflowStatus.AWAITING_APPROVAL:
+            # Workflow paused for HITL approval — notify user with details
+            paused_step = final_workflow.paused_at_step
+            approval_tools = get_approval_required_tools(final_workflow)
+            approval_text = (
+                f"⏸️ *Workflow Paused for Approval*\n\n"
+                f"*Workflow ID:* `{final_workflow.workflow_id}`\n"
+                f"*Paused at Step:* {paused_step}\n"
+                f"*Tools requiring approval:* {', '.join(approval_tools)}\n\n"
+                f"Approve via the web dashboard:\n"
+                f"`POST /api/agent/approve/{final_workflow.workflow_id}`"
+            )
+            await update.message.reply_text(approval_text, parse_mode="Markdown")
+        elif final_workflow.status == WorkflowStatus.COMPLETED:
             # Build a result summary
             result_text = f"✅ *Workflow Completed Successfully!*\n\n"
 

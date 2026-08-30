@@ -15,7 +15,7 @@ from agent.evals import TrajectoryEvaluator
 from agent.inbox_watcher import watcher
 from agent.llm_client import GeminiClient
 from agent.memory import MemoryManager
-from agent.models import ComplexityReport, ExecutionTrace, TaskGoal, WorkflowPlan
+from agent.models import ComplexityReport, ExecutionTrace, StepStatus, TaskGoal, WorkflowPlan, WorkflowStatus
 from agent.multi_agent import MultiAgentCouncilOrchestrator
 from agent.orchestrator import TaskmasterOrchestrator
 from agent.persistence import persistence
@@ -62,10 +62,23 @@ prd_parser = PRDParser(GeminiClient())
 
 @app.get("/", include_in_schema=False)
 def read_root():
+    hub_path = os.path.join(static_dir, "hub.html")
+    if os.path.exists(hub_path):
+        return FileResponse(hub_path)
     index_path = os.path.join(static_dir, "index.html")
     if os.path.exists(index_path):
         return FileResponse(index_path)
     return {"message": "Taskmaster API Server is Running. Visit /docs for OpenAPI specifications."}
+
+
+@app.get("/hub", include_in_schema=False)
+def hub_page():
+    return FileResponse(os.path.join(static_dir, "hub.html"))
+
+
+@app.get("/old", include_in_schema=False)
+def old_ui():
+    return FileResponse(os.path.join(static_dir, "index.html"))
 
 
 @app.get("/api/health", summary="Google Cloud Run Health Check Endpoint")

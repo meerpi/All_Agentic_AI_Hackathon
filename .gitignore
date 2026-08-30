@@ -1,16 +1,34 @@
+# Secrets and API Keys (NEVER commit .env or credentials)
 .env
-__pycache__/
-*.pyc
-*.log
-venv/
-.venv/
-env/
-.idea/
-.vscode/
-
-*.db
-
-# Google OAuth credentials (NEVER commit these)
+.env.local
+*.key
+*.pem
 credentials.json
 client_secret_*.json
 token.json
+
+# Python & virtual environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+env/
+.pytest_cache/
+
+# IDE
+.idea/
+.vscode/
+
+# Database & Runtime Data
+*.db
+*.sqlite3
+data/checkpoints/
+data/workflows/
+data/browser_profile/
+data/youtube_screenshots/
+data/audit_logs/
+data/audit_logs.jsonl
+*.log

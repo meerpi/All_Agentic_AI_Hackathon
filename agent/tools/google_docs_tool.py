@@ -39,8 +39,13 @@ class GoogleDocsTool(BaseTool):
         style: Optional[str] = None,
         **kwargs: Any,
     ) -> Dict[str, Any]:
-        action = action.lower()
+        action = action.lower() if action else "create_document"
         body_content = content or text or ""
+        # Auto-infer intent if action was omitted or defaulted
+        if document_id and body_content and action == "create_document":
+            action = "append_content"
+        elif document_id and not body_content and action == "create_document":
+            action = "read_document"
 
         try:
             if action == "create_document":

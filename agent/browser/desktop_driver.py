@@ -75,7 +75,11 @@ class OSDesktopDriver:
     def click(self, x: int, y: int, clicks: int = 1, button: str = "left") -> Dict[str, Any]:
         """Simulates hardware mouse click at specified screen pixel coordinates."""
         if not PYAUTOGUI_AVAILABLE or not self.has_display:
-            raise RuntimeError("PyAutoGUI or active graphical display server is not available to execute mouse click.")
+            return {
+                "status": "FAILED",
+                "action": "mouse_click",
+                "error": "PyAutoGUI or active graphical display server is not available to execute mouse click.",
+            }
 
         try:
             pyautogui.click(x=x, y=y, clicks=clicks, button=button)
@@ -92,7 +96,11 @@ class OSDesktopDriver:
     def type_text(self, text: str, interval: float = 0.05) -> Dict[str, Any]:
         """Simulates keyboard text entry."""
         if not PYAUTOGUI_AVAILABLE or not self.has_display:
-            raise RuntimeError("PyAutoGUI or active graphical display server is not available to execute keyboard typing.")
+            return {
+                "status": "FAILED",
+                "action": "type_text",
+                "error": "PyAutoGUI or active graphical display server is not available to execute keyboard typing.",
+            }
 
         try:
             pyautogui.write(text, interval=interval)
@@ -103,7 +111,11 @@ class OSDesktopDriver:
     def press_hotkey(self, keys: List[str]) -> Dict[str, Any]:
         """Simulates simultaneous key combination (e.g. ['ctrl', 'alt', 't'])."""
         if not PYAUTOGUI_AVAILABLE or not self.has_display:
-            raise RuntimeError("PyAutoGUI or active graphical display server is not available to execute hotkeys.")
+            return {
+                "status": "FAILED",
+                "action": "hotkey",
+                "error": "PyAutoGUI or active graphical display server is not available to execute hotkeys.",
+            }
 
         try:
             pyautogui.hotkey(*keys)

@@ -72,10 +72,16 @@ class YouTubeDriver:
             "playback_state": state,
         }
 
-    async def search_and_play(self, query: str, auto_skip_ads: bool = True) -> Dict[str, Any]:
+    async def search_and_play(
+        self,
+        query: str,
+        auto_skip_ads: bool = True,
+        duration_seconds: Optional[int] = None,
+        auto_close: bool = False
+    ) -> Dict[str, Any]:
         """
         Navigates to YouTube search results, clicks top video result, handles consent dialogs,
-        and verifies playback state.
+        un-mutes and plays, actively auto-skips ads for the specified duration, and optionally closes the session.
         """
         page: Page = await self.manager.get_page(headed=True)
         encoded_query = urllib.parse.quote_plus(query)
@@ -118,17 +124,67 @@ class YouTubeDriver:
             await locator.click(timeout=5000)
 
         # 4. Wait for player to load and verify playback
-        await asyncio.sleep(2.0)
-        if auto_skip_ads:
-            await self.skip_ad(page)
+        await asyncio.sleep(2.5)
+        await self._dismiss_consent_dialogs(page)
 
-        state = await self.get_playback_state(page)
+        # Ensure video is playing and unmuted
+        await page.evaluate(
+            """() => {
+                const video = document.querySelector('video');
+                if (video) {
+                    video.muted = false;
+                    video.play().catch(() => {});
+                }
+            }"""
+        )
+
+        ads_skipped_count = 0
+        if auto_skip_ads:
+            if await self.skip_ad(page):
+                ads_skipped_count += 1
+
+        # 5. If duration_seconds is provided, actively monitor playback and skip ads
+        if duration_seconds and duration_seconds > 0:
+            import time
+            start_t = time.time()
+            last_log = 0
+            logger.info(f"Monitoring YouTube playback for {duration_seconds} seconds with active ad-skipping...")
+
+            while (time.time() - start_t) < duration_seconds:
+                elapsed = int(time.time() - start_t)
+                if auto_skip_ads and await self.skip_ad(page):
+                    ads_skipped_count += 1
+
+                # Keep video playing
+                await page.evaluate("document.querySelector('video')?.play()?.catch(() => {})")
+
+                if elapsed - last_log >= 15:
+                    last_log = elapsed
+                    cur_state = await self.get_playback_state(page)
+                    logger.info(
+                        f"⏱️ [T+{elapsed:3d}s/{duration_seconds}s] Video Time: {cur_state.get('currentTime', 0)}s "
+                        f"| Status: {'PLAYING' if cur_state.get('playing') else 'PAUSED/AD'} | Ads Skipped: {ads_skipped_count}"
+                    )
+
+                await asyncio.sleep(1.5)
+
+            logger.info(f"✓ Reached requested playback duration of {duration_seconds} seconds.")
+
+            if auto_close:
+                logger.info("Pausing video and closing browser session...")
+                await page.evaluate("document.querySelector('video')?.pause()")
+                await asyncio.sleep(1.0)
+                await self.manager.close_session()
+
+        state = await self.get_playback_state(page) if not auto_close else {"status": "SESSION_CLOSED"}
         return {
             "status": "SUCCESS",
             "action": "youtube_search_and_play",
             "query": query,
             "video_title": state.get("title", video_info.get("title", "YouTube Video")),
-            "video_url": page.url,
+            "video_url": page.url if not auto_close else video_info.get("href"),
+            "ads_skipped_count": ads_skipped_count,
+            "duration_played_seconds": duration_seconds,
             "playback_state": state,
         }
 

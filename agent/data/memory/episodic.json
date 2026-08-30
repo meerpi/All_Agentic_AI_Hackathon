@@ -429,5 +429,1016 @@
     "details": {
       "action": "sync"
     }
+  },
+  {
+    "timestamp": "2026-08-30T06:07:50.540323+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "5c24bb08-6f6c-47b9-a3b3-4be2990793dc",
+    "details": {
+      "goal": "test guardrail",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:10:02.473483+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "e94f555b-7d54-4419-9837-376149aa01cd",
+    "details": {
+      "goal": "Coordinate new freelance client inquiry from 'Sarah Jenkins <sarah.jenkins@lumina-health.io>'.\nSubject: 'Inquiry: NextGen Patient Portal & Analytics Dashboard'\nMessage: Hi Anima,\n\nWe came across your ",
+      "tools_used": [
+        "google_calendar",
+        "google_calendar",
+        "google_docs",
+        "google_sheets",
+        "gmail",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:10:02.537581+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "26e6e63c-ee03-4235-be47-0759b057488f",
+    "details": {
+      "goal": "test guardrail",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:35:49.080007+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "1534caf3-33e6-4d2e-9830-793ccb14c6b6",
+    "details": {
+      "goal": "Look through my last week of email for anything that looks like an action item, put them in a new Google Doc as a checklist, then create a Jira ticket for each one and post a summary to Slack.",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "google_docs",
+        "google_docs",
+        "jira",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:36:31.843224+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "b75d9722-41c9-4c1c-b2b7-f0294a7546a6",
+    "details": {
+      "goal": "Check my calendar for the next 3 days, and if there's a scheduling conflict anywhere, flag it and propose a fix in a new Sheet.",
+      "tools_used": [
+        "google_calendar",
+        "data_extractor",
+        "google_sheets",
+        "google_sheets"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:37:10.029325+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "5611d1a3-f5a7-46f5-b117-902c4578f97d",
+    "details": {
+      "goal": "Find a video on YouTube about machine learning transformers, play it, skip past any ads, and pause it after two minutes.",
+      "tools_used": [
+        "media_controller",
+        "browser_controller",
+        "browser_controller",
+        "action_dispatcher",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:37:26.693207+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "e048b9f8-0c44-49fd-a605-cf3cf6f2e72c",
+    "details": {
+      "goal": "Create a Jira ticket for adding dark mode to the dashboard, with priority High and story points 8, then confirm it was created by listing all open issues.",
+      "tools_used": [
+        "jira",
+        "jira"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:37:54.239024+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "abe29b35-e442-4f8f-881b-5a67f90f21f5",
+    "details": {
+      "goal": "Read my latest 5 emails and write a one-paragraph summary of each into a new Google Doc titled Email Digest.",
+      "tools_used": [
+        "gmail",
+        "google_docs",
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:38:14.259232+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "8385c555-6de2-401b-b7c4-3c887deae0b9",
+    "details": {
+      "goal": "List my next 10 calendar events and create a Google Sheet with columns Date, Time, Event Name, Duration.",
+      "tools_used": [
+        "google_calendar",
+        "google_sheets",
+        "google_sheets"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:38:39.128460+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "89569415-e57d-47bd-9a01-67e3888a8d30",
+    "details": {
+      "goal": "Open Prism Launcher",
+      "tools_used": [
+        "os_desktop_tool"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:39:21.867079+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "549f3a6c-394d-4a87-b890-3d3f5b9c2c6c",
+    "details": {
+      "goal": "Read the Google Doc at document ID xyzFAKE123notreal456 and summarize it, then create a Jira ticket in project NONEXIST with the summary.",
+      "tools_used": [
+        "google_docs",
+        "data_extractor",
+        "jira"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:44:37.324506+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "b8009d25-7ef6-403c-8706-ab248c287e8b",
+    "details": {
+      "goal": "We need to build a dashboard that pulls sales data from a spreadsheet, generates weekly reports as Google Docs, creates Jira tickets for any flagged anomalies, and sends a digest email to the team lea",
+      "tools_used": [
+        "google_sheets",
+        "validator",
+        "google_docs",
+        "jira",
+        "slack",
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:44:58.561626+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "9bc27121-51b5-4333-b4ea-7210afeea721",
+    "details": {
+      "goal": "Create a Jira ticket for fixing the login page CSS with priority High.",
+      "tools_used": [
+        "jira"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:45:02.430124+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "508e5f8f-24bf-4222-b649-a42f47bb6b00",
+    "details": {
+      "goal": "List my next 5 calendar events and create a Google Doc summarizing them.",
+      "tools_used": [
+        "google_calendar",
+        "google_docs",
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:45:02.521935+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "9ba62429-e7b5-4b08-9031-206e4176538d",
+    "details": {
+      "goal": "Search my email for messages from LinkedIn in the last week.",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:45:38.462043+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "e4726fe6-3e23-4306-a5b9-56c219ebf95d",
+    "details": {
+      "goal": "Read my last 10 emails, extract any action items or deadlines mentioned, create a Google Doc called Weekly Action Plan with all of them formatted as a checklist, then create a Google Sheet called Acti",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "google_docs",
+        "google_sheets",
+        "jira",
+        "google_calendar",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:46:16.537864+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "aa78aedc-9be4-4afb-a700-c911b0d156cd",
+    "details": {
+      "goal": "Make a Spotify playlist that matches the mood of a rainy afternoon reading poetry, and start playing it.",
+      "tools_used": [
+        "media_controller",
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T06:49:14.633149+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "bb81effa-db18-4a4c-833e-97cd4779b730",
+    "details": {
+      "goal": "Coordinate new freelance client inquiry from 'Dr. Alice Smith <alice@medtech.org>'.\nSubject: 'Inquiry on Healthcare AI'\nMessage: Budget 0k for clinical notes summarizer\nAutonomous Objectives:\n1. Check",
+      "tools_used": [
+        "google_calendar",
+        "google_calendar",
+        "google_docs",
+        "google_sheets",
+        "gmail",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:06:32.030193+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "4b542f99-22fd-43a3-baef-dcc20301aa24",
+    "details": {
+      "goal": "Send an email to test@example.com with body hi",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:33:41.246856+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "154bb38c-af78-44b4-a643-058b209497c4",
+    "details": {
+      "goal": "Look through my last week of email for anything that looks like an action item, put them in a new Google Doc as a checklist, then create a Jira ticket for each one and post a summary to Slack.",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "google_docs",
+        "jira",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:34:48.150886+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "b60ce15b-656b-4e67-8a73-efd5ed68753c",
+    "details": {
+      "goal": "Send an email to aritra.mahanty12@gmail.com with the subject Verified Live HITL and body HITL approval gate successfully verified.",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:35:32.079495+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "f4057a74-97ef-4754-b18f-269a8edd3fce",
+    "details": {
+      "goal": "Read the Google Doc at document ID xyzFAKE123notreal456 and summarize it, then create a Jira ticket in project NONEXIST with the summary.",
+      "tools_used": [
+        "google_docs",
+        "jira"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:36:03.112768+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "76634163-2c47-441a-a961-de41f1b3761d",
+    "details": {
+      "goal": "test guardrail",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:38:48.973130+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "5050ffa3-3694-4f9f-98e5-d0c09cdbd7c3",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "report_generator",
+        "google_docs",
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:39:05.618690+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "54a7faba-c481-4347-b0c0-13c5c6c3ef8b",
+    "details": {
+      "goal": "Act as an Automated Product Manager.\n1. Analyze the meeting transcript, extracting attendees, key decisions, and action items with assignees, story points, and priorities.\n2. Create the corresponding ",
+      "tools_used": [
+        "data_extractor",
+        "jira",
+        "google_docs",
+        "google_sheets",
+        "slack",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:39:06.671203+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:39:54.055943+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "274cdbce-7f6d-4be0-b676-96dff548c0e7",
+    "details": {
+      "goal": "Coordinate new freelance client inquiry from 'Sarah Jenkins <sarah.jenkins@lumina-health.io>'.\nSubject: 'Inquiry: NextGen Patient Portal & Analytics Dashboard'\nMessage: Hi Anima,\n\nWe came across your ",
+      "tools_used": [
+        "google_calendar",
+        "google_calendar",
+        "google_docs",
+        "google_sheets",
+        "gmail",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:39:54.092473+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "e4ae12d0-83b4-4645-b6ef-054e0c2040a5",
+    "details": {
+      "goal": "test guardrail",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:42:11.340234+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "f509ca46-f2ca-4d66-adb8-82532a72edb7",
+    "details": {
+      "goal": "Coordinate new freelance client inquiry from 'Sarah Jenkins <sarah.jenkins@lumina-health.io>'.\nSubject: 'Inquiry: NextGen Patient Portal & Analytics Dashboard'\nMessage: Hi Anima,\n\nWe came across your ",
+      "tools_used": [
+        "google_calendar",
+        "google_docs",
+        "google_calendar",
+        "google_sheets",
+        "gmail",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:42:11.361053+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "b323ea1e-5eec-4398-9f7d-ae293d8766a0",
+    "details": {
+      "goal": "test guardrail",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:43:12.657913+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "e9d859dd-7139-4252-a431-bc3c8c0d6458",
+    "details": {
+      "goal": "Look through my last week of email for anything that looks like an action item, put them in a new Google Doc as a checklist, then create a Jira ticket for each one and post a summary to Slack.",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "google_docs",
+        "jira",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:43:29.501455+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "c3f41696-34b3-4b8a-b1b1-6f51cbc348e6",
+    "details": {
+      "goal": "Check my calendar for the next 3 days, and if there is a scheduling conflict anywhere, flag it and propose a fix in a new Sheet.",
+      "tools_used": [
+        "google_calendar",
+        "python_sandbox",
+        "google_sheets",
+        "google_sheets"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:44:01.007020+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "90500591-fde1-43f6-8a3a-ef9baff01951",
+    "details": {
+      "goal": "Open the Python 3 terminal tool on this machine to verify desktop process spawning.",
+      "tools_used": [
+        "os_desktop_tool",
+        "os_desktop_tool"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:45:14.573928+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "efba97af-d775-4cce-80fd-0474a74a44a9",
+    "details": {
+      "goal": "Look through my last week of email for anything that looks like an action item, put them in a new Google Doc as a checklist, then create a Jira ticket for each one and post a summary to Slack.",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "google_docs",
+        "jira",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:45:42.084893+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "b0f2aff6-b0af-4687-b84f-89e70931d9f3",
+    "details": {
+      "goal": "Check my calendar for the next 3 days, and if there is a scheduling conflict anywhere, flag it and propose a fix in a new Sheet.",
+      "tools_used": [
+        "google_calendar",
+        "python_sandbox",
+        "google_sheets",
+        "google_sheets"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:45:58.590036+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "7749481b-0431-45ca-b324-61500c35d0ed",
+    "details": {
+      "goal": "Open the Python 3 binary on this machine using launch_application to verify desktop process spawning.",
+      "tools_used": [
+        "os_desktop_tool",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:46:24.724782+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "c6a731e7-bfdc-4046-9b38-f53cd2aa1cca",
+    "details": {
+      "goal": "Send an email to aritra.mahanty12@gmail.com with subject Live Demonstration HITL and body Verification step passed cleanly.",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T07:47:00.020253+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "e5b4dacc-3d52-4c85-8044-a8f54b33989c",
+    "details": {
+      "goal": "Need to launch beta: create an executive brief in Docs, spin up Jira tickets for backend index tuning and frontend WebSocket sync, and log task status to Sheets.",
+      "tools_used": [
+        "google_docs",
+        "jira",
+        "google_sheets"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T08:41:05.029825+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "2809acd8-3442-4134-913e-d3b15f699269",
+    "details": {
+      "goal": "Send an email to aritra.mahanty12@gmail.com with subject Live Demonstration HITL Proof and body HITL approval gate successfully verified against Gmail API.",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T08:41:31.052497+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "c40df1ea-a898-4122-8ef5-1f2b9f9e36bb",
+    "details": {
+      "goal": "Look through my last week of email for anything that looks like an action item, put them in a new Google Doc as a checklist, then create a Jira ticket for each one and post a summary to Slack.",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "google_docs",
+        "jira",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T08:41:50.267913+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "b572bcf8-01bc-4d34-a0f4-cfc966f6ea63",
+    "details": {
+      "goal": "Check my calendar for the next 3 days, and if there is a scheduling conflict anywhere, flag it and propose a fix in a new Sheet.",
+      "tools_used": [
+        "google_calendar",
+        "python_sandbox",
+        "google_sheets"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T08:42:34.945545+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "7049108f-e5c7-4e6b-a0c0-e0b4f5b722e0",
+    "details": {
+      "goal": "Read the Google Doc at document ID xyzFAKE123notreal456 and summarize it, then create a Jira ticket in project NONEXIST with the summary.",
+      "tools_used": [
+        "google_docs",
+        "python_sandbox",
+        "jira"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T09:35:12.645271+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "1e156dae-f66c-4eca-ad55-2ccfc58cc848",
+    "details": {
+      "goal": "Coordinate new freelance client inquiry from 'Sarah Jenkins <sarah.jenkins@lumina-health.io>'.\nSubject: 'Inquiry: NextGen Patient Portal & Analytics Dashboard'\nMessage: Hi Anima,\n\nWe came across your ",
+      "tools_used": [
+        "google_calendar",
+        "google_calendar",
+        "google_docs",
+        "google_sheets",
+        "gmail",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T09:35:12.666544+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "a42aa290-1b14-49ed-91be-bc6798e88b1d",
+    "details": {
+      "goal": "test guardrail",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T09:57:58.202388+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "4288438d-0f62-449e-acad-812f7c2f98e8",
+    "details": {
+      "goal": "Coordinate new freelance client inquiry from 'Sarah Jenkins <sarah.jenkins@lumina-health.io>'.\nSubject: 'Inquiry: NextGen Patient Portal & Analytics Dashboard'\nMessage: Hi Anima,\n\nWe came across your ",
+      "tools_used": [
+        "google_calendar",
+        "google_docs",
+        "google_sheets",
+        "gmail",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T09:57:58.213066+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "5939be66-fdf2-4810-8cb7-ea1557c32c54",
+    "details": {
+      "goal": "test guardrail",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T10:27:42.339451+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "009ec082-7e8f-49c1-b01e-9e4eb7103d6b",
+    "details": {
+      "goal": "test blocked",
+      "tools_used": [
+        "data_extractor",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T10:28:35.937392+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "041786b0-9ce1-4d40-8fce-00d6a26316e3",
+    "details": {
+      "goal": "test blocked",
+      "tools_used": [
+        "data_extractor",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T10:29:40.328385+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "3a377e97-2812-44a7-969a-19d90220ffd1",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "google_docs",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T10:30:05.471843+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "c5f13fad-882f-4c0f-bc13-144c3fccb9e6",
+    "details": {
+      "goal": "Act as an Automated Product Manager.\n1. Analyze the meeting transcript, extracting attendees, key decisions, and action items with assignees, story points, and priorities.\n2. Create the corresponding ",
+      "tools_used": [
+        "data_extractor",
+        "jira",
+        "google_docs",
+        "google_sheets",
+        "slack",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T10:36:27.414469+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "b39e4744-8bf8-4024-ae7e-73cd949cd237",
+    "details": {
+      "goal": "Consolidate infrastructure & customer telemetry into validated executive metrics",
+      "tools_used": [
+        "data_extractor",
+        "data_extractor",
+        "validator",
+        "db_manager",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T10:37:07.551380+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "0da3357c-cca0-4446-a438-996b0f1c0850",
+    "details": {
+      "goal": "Consolidate infrastructure & customer telemetry into validated executive metrics",
+      "tools_used": [
+        "data_extractor",
+        "data_extractor",
+        "validator",
+        "db_manager",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T10:37:52.874857+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "73cdda32-7355-41a5-afd7-4079fa26ff33",
+    "details": {
+      "goal": "Consolidate infrastructure & customer telemetry into validated executive metrics",
+      "tools_used": [
+        "data_extractor",
+        "data_extractor",
+        "validator",
+        "db_manager",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T10:38:50.553122+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "b0674cb9-352c-42f3-8ce7-5a548edc2040",
+    "details": {
+      "goal": "Consolidate infrastructure & customer telemetry into validated executive metrics",
+      "tools_used": [
+        "data_extractor",
+        "data_extractor",
+        "validator",
+        "db_manager",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T10:39:04.019736+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "bee7925c-f66b-419e-b9f4-8d44b41bb21a",
+    "details": {
+      "goal": "Extract data and provision high-risk Jira Cloud maintenance task with approval",
+      "tools_used": [
+        "data_extractor",
+        "jira",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T10:39:22.490535+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "5b2d8096-bc88-48b5-a1a9-ed45f440b398",
+    "details": {
+      "goal": "Audit production security posture and generate compliance report",
+      "tools_used": [
+        "db_manager",
+        "data_extractor",
+        "google_docs",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T10:40:06.506283+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "95692f52-5a34-48b3-93aa-4d0584ca95a4",
+    "details": {
+      "goal": "Consolidate infrastructure & customer telemetry into validated executive metrics",
+      "tools_used": [
+        "data_extractor",
+        "data_extractor",
+        "validator",
+        "db_manager",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T10:40:15.022741+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "c2fe3ba3-8bb0-4d28-8120-3a0f220122c3",
+    "details": {
+      "goal": "Extract data and provision high-risk Jira Cloud maintenance task with approval",
+      "tools_used": [
+        "data_extractor",
+        "jira",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T10:40:48.220381+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "60d94375-f0fa-45f9-a716-2462621b2796",
+    "details": {
+      "goal": "Audit production security posture and generate compliance report",
+      "tools_used": [
+        "db_manager",
+        "python_sandbox",
+        "google_docs",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T10:58:59.233829+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "5dc1be06-ab15-43f4-ac13-5c78f8ebf0f0",
+    "details": {
+      "goal": "Extract key metrics from server logs and generate an executive health summary",
+      "tools_used": [
+        "db_manager",
+        "data_extractor",
+        "report_generator",
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T11:19:09.946619+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "58d24b89-58d2-41ad-afa7-df43b94ba980",
+    "details": {
+      "goal": "in https://www.youtube.com/watch?v=wZaYyNAXHK4 find who is the video about and when is his mentor mentioned for the first time in the video the time stamp",
+      "tools_used": [
+        "browser_controller",
+        "browser_controller",
+        "python_sandbox"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T11:23:06.260953+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "fd10c7fd-5556-462a-9c6b-88864ac4c3a3",
+    "details": {
+      "goal": "Read my latest 3 Gmail emails, summarize who they are from and what they are about, then create a Google Doc titled Daily Email Briefing with the summary",
+      "tools_used": [
+        "gmail",
+        "python_sandbox",
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T11:23:46.063751+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "3ca684d8-df3b-431e-b6dc-09702958d5be",
+    "details": {
+      "goal": "Navigate to news.ycombinator.com, extract the top 5 trending headlines with their links and point scores, and compile the results",
+      "tools_used": [
+        "browser_controller",
+        "browser_controller",
+        "data_extractor",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T11:25:33.339564+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "23874d42-ecc5-4bdd-a5d0-ce4adffb7024",
+    "details": {
+      "goal": "Navigate to news.ycombinator.com, extract the top 5 trending headlines with their links and point scores, and compile the results",
+      "tools_used": [
+        "browser_controller",
+        "browser_controller",
+        "data_extractor",
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T11:26:58.300940+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "1a9cd1e8-473f-43a9-907e-6f299ee2f904",
+    "details": {
+      "goal": "Navigate to news.ycombinator.com, extract the top 5 trending headlines with their links and point scores, and compile the results",
+      "tools_used": [
+        "browser_controller",
+        "browser_controller",
+        "data_extractor",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T11:28:49.582858+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "e413e152-ef86-4547-8b9a-d29cbe2b0ad6",
+    "details": {
+      "goal": "Navigate to news.ycombinator.com, extract the top 5 trending headlines with their links and point scores, and compile the results",
+      "tools_used": [
+        "browser_controller",
+        "browser_controller",
+        "data_extractor",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T11:29:20.958962+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "dcf6269e-3960-4acc-a113-fda5cf698ae2",
+    "details": {
+      "goal": "Read my latest 3 Gmail emails and summarize who they are from and what they are about",
+      "tools_used": [
+        "gmail",
+        "python_sandbox"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T11:31:03.504862+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "a6741634-3694-4ef6-8137-158152fb32d4",
+    "details": {
+      "goal": "Create a new Google Doc titled \"Quarterly AI Architecture Review\" with sections for Executive Summary, System Bottlenecks, and 2026 Roadmap Goals",
+      "tools_used": [
+        "google_docs",
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T11:31:08.981903+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "3f034a31-8840-47a2-b3bb-466dfb071d68",
+    "details": {
+      "goal": "Navigate to news.ycombinator.com, extract the top 5 trending headlines with their links and point scores, and compile the results",
+      "tools_used": [
+        "browser_controller",
+        "browser_controller",
+        "data_extractor",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T11:31:40.989858+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "ed9a222e-0c14-4f51-bf3a-cbc6139dd9aa",
+    "details": {
+      "goal": "Create a Google Sheet titled \"Q3 Cloud Infrastructure Expenses\" with columns Date, Service, Cost_USD, Owner, and append 3 rows of data for AWS EC2, GCP BigQuery, and Cloudflare CDN",
+      "tools_used": [
+        "google_sheets",
+        "google_sheets"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T11:32:35.328249+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "6950e793-e8be-413d-af4e-0356fa9aa4f1",
+    "details": {
+      "goal": "Check my Google Calendar for availability this week, and schedule a 45-min meeting titled \"Architecture Sync with Lead Tech\" for tomorrow",
+      "tools_used": [
+        "google_calendar",
+        "google_calendar"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T11:33:00.877510+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "d571febf-1d03-4818-8b75-963ded9d0e51",
+    "details": {
+      "goal": "Create a Jira engineering task titled \"Auth Microservice: Implement OAuth2 Token Refresh Rotation\" with 5 story points, High priority, assigned to Alex Chen, and then fetch the created issue details",
+      "tools_used": [
+        "jira",
+        "jira"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T11:33:53.920071+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "03945e12-0f7d-4925-bc79-d9d17ed05c44",
+    "details": {
+      "goal": "Create a Jira engineering task titled \"Auth Microservice: Implement OAuth2 Token Refresh Rotation\" with 5 story points, High priority, assigned to Alex Chen, and then fetch the created issue details",
+      "tools_used": [
+        "jira",
+        "jira"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T11:34:28.244276+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "e215aac8-4c36-4717-8f63-0ea04c28e1eb",
+    "details": {
+      "goal": "Create a Jira engineering task titled \"Auth Microservice: Implement OAuth2 Token Refresh Rotation\" with 5 story points, High priority, assigned to Alex Chen, and then fetch the created issue details",
+      "tools_used": [
+        "jira",
+        "jira"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T11:35:19.286134+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "499e7b94-8d3b-4224-acca-3618296d5731",
+    "details": {
+      "goal": "Coordinate a new client project kickoff: check Google Calendar events, create a Google Doc titled \"Client Kickoff Scope\", create a Google Sheet titled \"Project Milestone Budget\" with columns Milestone",
+      "tools_used": [
+        "google_calendar",
+        "google_docs",
+        "google_sheets",
+        "jira"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-30T11:36:16.216257+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "a2430e55-0fc0-43e3-b5ed-fb666d0dccc4",
+    "details": {
+      "goal": "Coordinate a new client project kickoff: check Google Calendar events, create a Google Doc titled 'Client Kickoff Scope', create a Google Sheet titled 'Project Milestone Budget' with columns Milestone",
+      "tools_used": [
+        "google_calendar",
+        "google_docs",
+        "google_sheets",
+        "jira"
+      ]
+    }
   }
 ]

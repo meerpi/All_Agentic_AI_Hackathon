@@ -62,18 +62,13 @@ class GmailTool(BaseTool):
             else:
                 return {"error": f"Unknown action '{action}'. Supported: read_inbox, read_email, send_email, search_emails, create_draft, read_thread"}
         except HttpError as e:
-            from agent.models import ToolCallResult
             logger.error(f"Gmail API operation '{action}' failed: {e}")
-            return ToolCallResult(
-                tool_name=self.name,
-                success=False,
-                data={
-                    "action": action,
-                    "target_recipient": to
-                },
-                error_message=f"Gmail API Error ({action}): {str(e)}",
-                execution_time_ms=0.0
-            )
+            return {
+                "status": "FAILED",
+                "error": f"Gmail API Error ({action}): {str(e)}",
+                "action": action,
+                "target_recipient": to
+            }
 
     # ---------- Private action implementations ----------
 

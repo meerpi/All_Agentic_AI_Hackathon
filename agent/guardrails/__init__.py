@@ -100,7 +100,7 @@ def check_output_rails(output: str, mask_pii: bool = True) -> Tuple[str, List[st
             sanitized = do_mask(sanitized)
 
     # Check for leaked system prompt fragments
-    system_markers = ["### OPERATIONAL RULES:", "You are the **Taskmaster", "TASKMASTER_SYSTEM_PROMPT"]
+    system_markers = ["<identity>", "<behavioral_rules>", "Taskmaster Autonomous Agent Engine", "TASKMASTER_SYSTEM_PROMPT"]
     for marker in system_markers:
         if marker in sanitized:
             warnings.append("System prompt leak detected — redacting")

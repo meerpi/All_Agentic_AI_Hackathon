@@ -43,7 +43,6 @@ from agent.prompts import (
     FINAL_SUMMARY_PROMPT,
     PLANNING_PROMPT_TEMPLATE,
     SELF_CORRECTION_PROMPT,
-    TASKMASTER_SYSTEM_PROMPT,
 )
 from agent.security import audit_logger, requires_approval
 from agent.task_graph import CyclicDependencyError, MissingDependencyError, TaskDAG
@@ -127,7 +126,6 @@ class TaskmasterOrchestrator:
 
         tools_desc = self.registry.get_tools_description_prompt()
         prompt = PLANNING_PROMPT_TEMPLATE.format(
-            system_prompt=TASKMASTER_SYSTEM_PROMPT,
             goal=goal_input.goal,
             context=combined_context,
             tools_description=tools_desc,

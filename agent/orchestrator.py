@@ -142,9 +142,21 @@ class TaskmasterOrchestrator:
 
         plan_steps = []
         for idx, step_dict in enumerate(raw_steps, start=1):
-            depends = step_dict.get("depends_on", [])
+            depends = list(step_dict.get("depends_on", []))
+            # Automatically infer dependencies from embedded or standalone step references (e.g. $step_1.id)
+            args_str = json.dumps(step_dict.get("tool_args", {}))
+            for ref_match in self.STEP_REF_PATTERN.finditer(args_str):
+                ref_step_str = ref_match.group(1) or ref_match.group(3)
+                if ref_step_str:
+                    try:
+                        ref_step_num = int(ref_step_str)
+                        if 1 <= ref_step_num < idx and ref_step_num not in depends:
+                            depends.append(ref_step_num)
+                    except (ValueError, TypeError):
+                        pass
+
             # Validate dependencies reference valid earlier steps
-            valid_deps = [d for d in depends if isinstance(d, int) and 1 <= d < idx]
+            valid_deps = sorted(list(set(d for d in depends if isinstance(d, int) and 1 <= d < idx)))
 
             plan_steps.append(
                 PlanStep(

@@ -165,9 +165,13 @@ TOOL_VALIDATION_RULES = {
         ],
     },
     "media_controller": {
-        "action_required_fields": {
-            "youtube_play": ["query"],
-            "spotify_play": ["query"],
+        "action_required_any": {
+            "youtube_play": ["query", "url", "video_url", "video_id", "title", "search_query"],
+            "play_youtube": ["query", "url", "video_url", "video_id", "title", "search_query"],
+            "spotify_play": ["query", "track", "artist", "album", "url"],
+            "play_spotify": ["query", "track", "artist", "album", "url"],
+            "youtube_api_search": ["query", "search_query"],
+            "search_youtube_api": ["query", "search_query"],
         },
     },
     "os_desktop_tool": {
@@ -214,7 +218,7 @@ def check_execution_rails(tool_name: str, tool_args: Dict[str, Any]) -> Executio
     if tool_name == "google_docs" and "text" in tool_args and "content" not in tool_args:
         tool_args["content"] = tool_args["text"]
 
-    # Check action-specific required fields
+    # Check action-specific required fields (all required)
     if not action and ("subject" in tool_args or "body" in tool_args or "to" in tool_args):
         action = "send_email"
 
@@ -222,6 +226,12 @@ def check_execution_rails(tool_name: str, tool_args: Dict[str, Any]) -> Executio
     for field in action_reqs:
         if field not in tool_args or not tool_args[field]:
             violations.append(f"Missing required field '{field}' for tool '{tool_name}' (action: {action})")
+
+    # Check action-specific required fields (any required)
+    action_reqs_any = rules.get("action_required_any", {}).get(action, [])
+    if action_reqs_any:
+        if not any(f in tool_args and tool_args[f] for f in action_reqs_any):
+            violations.append(f"Missing required parameter for tool '{tool_name}' (action: {action}). Expected at least one of: {', '.join(action_reqs_any)}")
 
     # Run field-level validators
     for field, validator in rules.get("field_validators", {}).items():

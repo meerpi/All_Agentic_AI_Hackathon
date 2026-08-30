@@ -117,3 +117,51 @@ def test_trajectory_evaluator_string_status_defense():
     assert report.workflow_id == "wf_test"
     assert report.overall_score > 0
     assert report.plan_adherence.reasoning == "1/2 steps completed"
+
+
+def test_media_controller_guardrail_url_playback():
+    """Verify check_execution_rails allows youtube_play with 'url' or 'video_url' instead of rigidly demanding 'query'."""
+    from agent.guardrails import check_execution_rails
+
+    # Playback with URL should pass
+    res_url = check_execution_rails("media_controller", {"action": "youtube_play", "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"})
+    assert res_url.passed is True
+    assert len(res_url.violations) == 0
+
+    # Playback with search query should pass
+    res_query = check_execution_rails("media_controller", {"action": "youtube_play", "query": "Lex Fridman podcast"})
+    assert res_query.passed is True
+    assert len(res_query.violations) == 0
+
+    # Playback with empty args should fail
+    res_empty = check_execution_rails("media_controller", {"action": "youtube_play"})
+    assert res_empty.passed is False
+    assert "Missing required parameter" in res_empty.violations[0]
+
+
+def test_jira_search_jql_migration():
+    """Verify JiraTool._list_issues calls the modern /rest/api/3/search/jql endpoint."""
+    from agent.tools.jira_tool import JiraTool
+    import json
+
+    tool = JiraTool()
+    with patch.dict(os.environ, {"JIRA_URL": "https://mockjira.atlassian.net", "JIRA_EMAIL": "test@example.com", "JIRA_API_TOKEN": "token"}, clear=True), \
+         patch("urllib.request.urlopen") as mock_urlopen:
+        mock_response = MagicMock()
+        mock_response.read.return_value = json.dumps({
+            "issues": [
+                {"key": "KAN-101", "fields": {"summary": "Task 1", "status": {"name": "To Do"}, "priority": {"name": "High"}, "assignee": None}}
+            ]
+        }).encode("utf-8")
+        mock_urlopen.return_value.__enter__.return_value = mock_response
+
+        res = tool.run(action="list_issues", project_key="KAN")
+        assert res["action"] == "list_issues"
+        assert res["count"] == 1
+        assert res["issues"][0]["key"] == "KAN-101"
+
+        # Verify request targeted /rest/api/3/search/jql with POST
+        req = mock_urlopen.call_args[0][0]
+        assert "/rest/api/3/search/jql" in req.full_url
+        assert req.method == "POST"
+

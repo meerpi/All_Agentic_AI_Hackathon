@@ -91,7 +91,35 @@ class BrowserControllerTool(BaseTool):
                     )
             # 2. Click by selector
             elif selector:
-                await page.locator(selector).first.click(timeout=8000)
+                loc = page.locator(selector).first
+                is_optional = kwargs.get("optional", False) or any(
+                    k in selector.lower() for k in ["skip", "ad-", "ad_", "banner", "cookie", "consent", "close-button", "ad'"]
+                )
+                try:
+                    if is_optional:
+                        count = await page.locator(selector).count()
+                        if count > 0:
+                            await loc.click(timeout=3000)
+                        else:
+                            return {
+                                "status": "SUCCESS",
+                                "action": "click",
+                                "clicked": False,
+                                "url": page.url,
+                                "note": f"Optional element '{selector}' not present on page (no action needed).",
+                            }
+                    else:
+                        await loc.click(timeout=8000)
+                except Exception as e:
+                    if is_optional:
+                        return {
+                            "status": "SUCCESS",
+                            "action": "click",
+                            "clicked": False,
+                            "url": page.url,
+                            "note": f"Optional element '{selector}' was not clickable: {e}",
+                        }
+                    raise
             # 3. Click by vision coordinates [x, y]
             elif coord and isinstance(coord, (list, tuple)) and len(coord) == 2:
                 vp = page.viewport_size or {"width": 1280, "height": 800}

@@ -149,7 +149,7 @@ class YouTubeDriver:
             logger.debug(f"Consent dismissal notice: {e}")
 
     async def skip_ad(self, page: Optional[Page] = None) -> bool:
-        """Check for and click YouTube skip ad buttons."""
+        """Check for and click YouTube skip ad buttons if present."""
         if page is None:
             page = await self.manager.get_page()
 
@@ -161,11 +161,13 @@ class YouTubeDriver:
                         '.ytp-skip-ad-button',
                         '.ytp-ad-skip-button-modern',
                         'button.ytp-ad-overlay-close-button',
-                        '.ytp-ad-text.ytp-ad-preview-text'
+                        '.ytp-ad-text.ytp-ad-preview-text',
+                        '[aria-label*="Skip Ad"]',
+                        '[aria-label*="skip ad"]'
                     ];
                     for (const sel of skipSelectors) {
                         const btn = document.querySelector(sel);
-                        if (btn) {
+                        if (btn && btn.offsetParent !== null) {
                             btn.click();
                             return true;
                         }

@@ -70,7 +70,7 @@ class JiraTool(BaseTool):
         **kwargs: Any,
     ) -> Dict[str, Any]:
         action = action.lower()
-        active_project_key = os.getenv("JIRA_PROJECT_KEY") or project_key or "KAN"
+        active_project_key = project_key or os.getenv("JIRA_PROJECT_KEY") or "KAN"
 
         if action == "create_issue":
             return self._create_issue(
@@ -89,7 +89,7 @@ class JiraTool(BaseTool):
                 tasks=tasks or []
             )
         elif action == "list_issues":
-            return self._list_issues(project_key)
+            return self._list_issues(active_project_key)
         elif action == "get_issue":
             return self._get_issue(issue_key or "")
         elif action == "transition_issue":
@@ -117,31 +117,31 @@ class JiraTool(BaseTool):
 
         # 1. Try Live Jira Cloud REST API if credentials exist
         if jira_url and jira_email and jira_token:
-            try:
-                auth_str = base64.b64encode(f"{jira_email}:{jira_token}".encode("utf-8")).decode("utf-8")
-                api_endpoint = f"{jira_url.rstrip('/')}/rest/api/3/issue"
-                payload = {
-                    "fields": {
-                        "project": {"key": project_key},
-                        "summary": summary,
-                        "description": {
-                            "type": "doc",
-                            "version": 1,
-                            "content": [{"type": "paragraph", "content": [{"type": "text", "text": description}]}]
-                        },
-                        "issuetype": {"name": issue_type},
-                        "priority": {"name": priority}
-                    }
+            auth_str = base64.b64encode(f"{jira_email}:{jira_token}".encode("utf-8")).decode("utf-8")
+            api_endpoint = f"{jira_url.rstrip('/')}/rest/api/3/issue"
+            payload = {
+                "fields": {
+                    "project": {"key": project_key},
+                    "summary": summary,
+                    "description": {
+                        "type": "doc",
+                        "version": 1,
+                        "content": [{"type": "paragraph", "content": [{"type": "text", "text": description}]}]
+                    },
+                    "issuetype": {"name": issue_type},
+                    "priority": {"name": priority}
                 }
-                req = urllib.request.Request(
-                    api_endpoint,
-                    data=json.dumps(payload).encode("utf-8"),
-                    headers={
-                        "Authorization": f"Basic {auth_str}",
-                        "Content-Type": "application/json",
-                        "Accept": "application/json"
-                    }
-                )
+            }
+            req = urllib.request.Request(
+                api_endpoint,
+                data=json.dumps(payload).encode("utf-8"),
+                headers={
+                    "Authorization": f"Basic {auth_str}",
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            )
+            try:
                 with urllib.request.urlopen(req, timeout=10) as response:
                     res_data = json.loads(response.read().decode("utf-8"))
                     created_key = res_data.get("key", f"{project_key}-101")
@@ -153,10 +153,20 @@ class JiraTool(BaseTool):
                         "assignee": assignee,
                         "status": "CREATED_IN_JIRA_CLOUD"
                     }
+            except urllib.error.HTTPError as e:
+                err_body = e.read().decode("utf-8", errors="replace")
+                try:
+                    err_json = json.loads(err_body)
+                    msg = err_json.get("errorMessages") or err_json.get("errors") or err_body
+                except Exception:
+                    msg = err_body
+                logger.error(f"Jira Cloud API error (HTTP {e.code}): {msg}")
+                raise ValueError(f"Jira API Error ({e.code}) for project '{project_key}': {msg}")
             except Exception as e:
-                logger.warning(f"Jira Cloud API call failed: {e}. Falling back to zero-cost Jira board.")
+                logger.error(f"Jira Cloud API connection error: {e}")
+                raise
 
-        # 2. Zero-Cost Autonomous Issue Board
+        # 2. Zero-Cost Autonomous Issue Board (only when no cloud credentials configured)
         issues = self._load_issues()
         next_num = 100 + len(issues) + 1
         generated_key = f"{project_key}-{next_num}"

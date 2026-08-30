@@ -51,43 +51,95 @@ class BrowserControllerTool(BaseTool):
             if not url.startswith(("http://", "https://")):
                 url = "https://" + url
 
-            await page.goto(url, wait_until="domcontentloaded", timeout=30000)
+            response = await page.goto(url, wait_until="domcontentloaded", timeout=30000)
             await asyncio.sleep(1.5)
 
+            # Check HTTP status code from navigation response
+            http_status = response.status if response else 0
+            page_title = await page.title()
+            current_url = page.url
+
+            # Detect HTTP error pages (4xx, 5xx) or error page title patterns
+            error_title_patterns = ["error", "bad request", "not found", "forbidden", "denied", "unavailable", "blocked"]
+            is_http_error = http_status >= 400
+            is_error_title = any(p in page_title.lower() for p in error_title_patterns)
+
+            if is_http_error or is_error_title:
+                logger.warning(f"Navigation error: HTTP {http_status}, title='{page_title}', url={current_url}")
+
+                # Fallback: search Google for the intended content
+                import urllib.parse
+                parsed = urllib.parse.urlparse(url)
+                # Build a search query from the URL path components
+                path_parts = [p for p in parsed.path.strip("/").split("/") if p and len(p) > 2]
+                search_query = f"{parsed.hostname or ''} {' '.join(path_parts)}".strip()
+                if not search_query:
+                    search_query = url
+
+                logger.info(f"Falling back to Google search: '{search_query}'")
+                google_url = f"https://www.google.com/search?q={urllib.parse.quote_plus(search_query)}"
+                await page.goto(google_url, wait_until="domcontentloaded", timeout=30000)
+                await asyncio.sleep(2.0)
+
+                # Try clicking the first real search result link
+                try:
+                    # Google search result links are in <a> tags with h3 children
+                    first_result = await page.query_selector("div#search a h3")
+                    if first_result:
+                        parent_link = await first_result.evaluate_handle("el => el.closest('a')")
+                        if parent_link:
+                            await parent_link.as_element().click()
+                            await page.wait_for_load_state("domcontentloaded", timeout=15000)
+                            await asyncio.sleep(2.0)
+                            logger.info(f"Fallback navigation landed on: {page.url}")
+                except Exception as e:
+                    logger.warning(f"Could not click first Google result: {e}")
+
             # Detect interstitial/ad redirect pages and wait for real content
-            current_url = page.url.lower()
+            current_url_lower = page.url.lower()
             interstitial_patterns = ["interstitial", "consent", "/ads/", "redirect", "splash", "gateway", "landing"]
-            is_interstitial = any(p in current_url for p in interstitial_patterns)
+            is_interstitial = any(p in current_url_lower for p in interstitial_patterns)
 
             if is_interstitial:
-                logger.info(f"Interstitial page detected at {page.url}. Waiting for redirect to real content...")
-                # Wait up to 12 seconds for the page to auto-redirect past the interstitial
+                logger.info(f"Interstitial page detected at {page.url}. Waiting for redirect...")
                 for _ in range(6):
                     await asyncio.sleep(2.0)
                     new_url = page.url.lower()
                     if not any(p in new_url for p in interstitial_patterns):
                         logger.info(f"Redirect completed: {page.url}")
                         break
-                # After waiting, re-extract the page state from the real page
                 await asyncio.sleep(1.0)
+
+            # Final check: did we end up on a useful page?
+            final_title = await page.title()
+            final_status_ok = not any(p in final_title.lower() for p in error_title_patterns)
 
             state = await self.aria_parser.extract_page_state(page)
             return {
-                "status": "SUCCESS",
+                "status": "SUCCESS" if final_status_ok else "FAILED",
                 "action": "navigate",
                 "url": page.url,
-                "title": await page.title(),
+                "title": final_title,
+                "original_url": url,
+                "http_status": http_status,
+                "used_fallback": is_http_error or is_error_title,
                 "observation": state["untrusted_observation"],
+                "page_content": state["untrusted_observation"][:3000],
             }
 
         elif act == "aria_snapshot" or act == "observe":
             state = await self.aria_parser.extract_page_state(page)
+            obs = state["untrusted_observation"]
             return {
                 "status": "SUCCESS",
                 "action": "aria_snapshot",
                 "url": page.url,
                 "title": await page.title(),
-                "observation": state["untrusted_observation"],
+                "observation": obs,
+                "page_content": obs,
+                "content": obs,
+                "extracted_content": obs,
+                "text": obs,
                 "elements_count": len(state["elements"]),
             }
 

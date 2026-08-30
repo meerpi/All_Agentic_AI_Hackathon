@@ -89,6 +89,18 @@ class BrowserSessionManager:
             if self._playwright is None:
                 self._playwright = await async_playwright().start()
 
+            # Check if existing context is still alive
+            if self._context is not None:
+                try:
+                    if not self._context.pages or (self._active_page and self._active_page.is_closed()):
+                        if self._context.pages:
+                            self._active_page = self._context.pages[0]
+                        else:
+                            self._active_page = await self._context.new_page()
+                except Exception:
+                    self._context = None
+                    self._active_page = None
+
             if self._context is None:
                 is_headless = settings.BROWSER_HEADLESS if headed is None else not headed
                 
@@ -127,7 +139,7 @@ class BrowserSessionManager:
                     )
 
             # Retrieve or create active page
-            if not self._context.pages:
+            if not self._context.pages or (self._active_page and self._active_page.is_closed()):
                 self._active_page = await self._context.new_page()
             else:
                 self._active_page = self._context.pages[0]

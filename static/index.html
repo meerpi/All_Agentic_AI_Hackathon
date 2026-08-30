@@ -347,18 +347,115 @@
             font-weight: 600;
         }
 
+        /* Answer Hero Card */
+        .answer-card {
+            background: linear-gradient(135deg, rgba(121, 40, 202, 0.15) 0%, rgba(0, 223, 216, 0.1) 100%);
+            border: 1px solid rgba(121, 40, 202, 0.35);
+            border-radius: 14px;
+            padding: 1.5rem 1.75rem;
+            margin-bottom: 1rem;
+            animation: answerFadeIn 0.5s ease;
+        }
+
+        @keyframes answerFadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .answer-card .answer-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #c084fc;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-card .answer-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #f1f5f9;
+            font-weight: 400;
+        }
+
+        .answer-card .answer-text strong {
+            color: #00DFD8;
+            font-weight: 700;
+        }
+
         /* Deliverable Markdown Viewer */
         .artifact-box {
             background: rgba(10, 13, 20, 0.6);
             border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 1.25rem;
-            font-size: 0.9rem;
-            line-height: 1.6;
+            font-size: 0.88rem;
+            line-height: 1.65;
             color: #e2e8f0;
-            white-space: pre-wrap;
-            max-height: 300px;
+            max-height: 500px;
             overflow-y: auto;
+        }
+
+        .artifact-box h1, .artifact-box h2, .artifact-box h3 {
+            color: #38bdf8;
+            margin: 0.8rem 0 0.4rem;
+            font-weight: 700;
+        }
+
+        .artifact-box h1 { font-size: 1.15rem; }
+        .artifact-box h2 { font-size: 1rem; color: #818cf8; }
+        .artifact-box h3 { font-size: 0.92rem; color: #a5b4fc; }
+
+        .artifact-box strong { color: #00DFD8; }
+
+        .artifact-box ul, .artifact-box ol {
+            padding-left: 1.25rem;
+            margin: 0.3rem 0;
+        }
+
+        .artifact-box li { margin-bottom: 0.2rem; }
+
+        .artifact-box code {
+            background: rgba(255,255,255,0.08);
+            padding: 0.1rem 0.35rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.82rem;
+            color: #fbbf24;
+        }
+
+        .artifact-box pre {
+            background: rgba(6,8,13,0.8);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 0.75rem;
+            overflow-x: auto;
+            margin: 0.5rem 0;
+        }
+
+        .artifact-box pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .summary-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.8rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .summary-toggle:hover {
+            background: rgba(255,255,255,0.1);
+            color: #e2e8f0;
         }
 
         /* Tools Grid */
@@ -658,13 +755,19 @@
                 </div>
             </div>
 
+            <!-- Answer Hero Card -->
+            <div id="answerCard" style="display: none;"></div>
+
             <!-- Executive Report Deliverable -->
             <div class="card" id="deliverableCard" style="display: none;">
-                <div class="card-header">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                     <h3 class="card-title">
                         <i class="fa-solid fa-file-contract"></i>
-                        Executive Report Deliverable Artifact
+                        Agent Summary
                     </h3>
+                    <button class="summary-toggle" onclick="toggleSummary()" id="summaryToggleBtn">
+                        <i class="fa-solid fa-chevron-up"></i> Collapse
+                    </button>
                 </div>
                 <div class="artifact-box" id="artifactBox"></div>
             </div>
@@ -1143,8 +1246,11 @@
             });
 
             if (wf.summary) {
+                // Extract and display the key answer prominently
+                displayAnswerCard(wf.summary, wf.goal);
+                // Render full summary as formatted HTML
                 deliverableCard.style.display = 'flex';
-                artifactBox.textContent = wf.summary;
+                artifactBox.innerHTML = renderMarkdown(wf.summary);
             }
         }
 
@@ -1216,6 +1322,109 @@
                 refreshBrowserViewport();
             } catch (err) {
                 alert("Error triggering emergency stop: " + err);
+            }
+        }
+
+        // Lightweight Markdown → HTML renderer
+        function renderMarkdown(md) {
+            if (!md) return '';
+            let html = md
+                // Code blocks (```...```)
+                .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+                // Headers
+                .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+                .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+                .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+                // Bold
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                // Italic
+                .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                // Inline code
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                // Unordered lists
+                .replace(/^[\-\*] (.+)$/gm, '<li>$1</li>')
+                // Ordered lists
+                .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
+                // Links
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color:#38bdf8;">$1</a>')
+                // Line breaks
+                .replace(/\n\n/g, '<br><br>')
+                .replace(/\n/g, '<br>');
+            // Wrap consecutive <li> items in <ul>
+            html = html.replace(/(<li>.*?<\/li>)(\s*<br>)?/g, '<li>$1</li>');
+            html = html.replace(/(?:<li><li>(.*?)<\/li><\/li>)+/g, function(match) {
+                return '<ul>' + match.replace(/<li><li>/g, '<li>').replace(/<\/li><\/li>/g, '</li>') + '</ul>';
+            });
+            return html;
+        }
+
+        // Extract the key answer from the summary and display it prominently
+        function displayAnswerCard(summary, goal) {
+            const answerCard = document.getElementById('answerCard');
+            if (!summary) { answerCard.style.display = 'none'; return; }
+
+            // Extract key findings: look for lines with ** bold ** content
+            let keyFindings = [];
+            const boldMatches = summary.match(/\*\*([^*]+)\*\*/g);
+            if (boldMatches) {
+                keyFindings = boldMatches.slice(0, 6).map(m => m.replace(/\*\*/g, ''));
+            }
+
+            // Build concise answer from first meaningful paragraph
+            const lines = summary.split('\n').filter(l => l.trim());
+            let answerText = '';
+
+            // Try to find the actual answer content (skip headers and boilerplate)
+            for (const line of lines) {
+                const clean = line.replace(/^[#\-*\d.]+\s*/, '').trim();
+                if (clean.length > 40 && !clean.startsWith('Step') && !clean.startsWith('###') &&
+                    !clean.includes('Step-by-Step') && !clean.includes('Execution Summary') &&
+                    !clean.includes('Workflow Complete') && !clean.includes('Key Metrics') &&
+                    !clean.includes('Artifacts Created') && !clean.includes('Success Rate')) {
+                    answerText = clean;
+                    break;
+                }
+            }
+
+            // Build key findings pills
+            let pillsHtml = '';
+            if (keyFindings.length > 0) {
+                const meaningfulFindings = keyFindings.filter(f =>
+                    f.length > 2 && !f.includes('Step') && !f.match(/^\d/) &&
+                    !f.includes('Status') && !f.includes('Output')
+                );
+                if (meaningfulFindings.length > 0) {
+                    pillsHtml = '<div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.75rem;">' +
+                        meaningfulFindings.slice(0, 4).map(f =>
+                            `<span style="background:rgba(0,223,216,0.12);border:1px solid rgba(0,223,216,0.3);color:#00DFD8;padding:0.3rem 0.7rem;border-radius:20px;font-size:0.82rem;font-weight:600;">${f}</span>`
+                        ).join('') + '</div>';
+                }
+            }
+
+            if (answerText || pillsHtml) {
+                answerCard.style.display = 'block';
+                answerCard.innerHTML = `
+                    <div class="answer-card">
+                        <div class="answer-label"><i class="fa-solid fa-sparkles"></i> Key Result</div>
+                        ${answerText ? `<div class="answer-text">${renderMarkdown(answerText)}</div>` : ''}
+                        ${pillsHtml}
+                    </div>
+                `;
+            } else {
+                answerCard.style.display = 'none';
+            }
+        }
+
+        // Toggle summary visibility
+        function toggleSummary() {
+            const box = document.getElementById('artifactBox');
+            const btn = document.getElementById('summaryToggleBtn');
+            if (box.style.display === 'none') {
+                box.style.display = 'block';
+                btn.innerHTML = '<i class="fa-solid fa-chevron-up"></i> Collapse';
+            } else {
+                box.style.display = 'none';
+                btn.innerHTML = '<i class="fa-solid fa-chevron-down"></i> Show Full Summary';
             }
         }
 

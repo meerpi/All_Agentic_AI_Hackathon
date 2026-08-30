@@ -26,6 +26,8 @@ class DataExtractorTool(BaseTool):
 
         if not content.strip():
             return {
+                "status": "FAILED",
+                "error": "No input content provided for extraction. The source data was empty or not passed correctly.",
                 "source_type": source_type,
                 "processed_records_count": 0,
                 "extracted_fields": {f: None for f in fields},

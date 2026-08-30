@@ -52,7 +52,25 @@ class BrowserControllerTool(BaseTool):
                 url = "https://" + url
 
             await page.goto(url, wait_until="domcontentloaded", timeout=30000)
-            await asyncio.sleep(1.0)
+            await asyncio.sleep(1.5)
+
+            # Detect interstitial/ad redirect pages and wait for real content
+            current_url = page.url.lower()
+            interstitial_patterns = ["interstitial", "consent", "/ads/", "redirect", "splash", "gateway", "landing"]
+            is_interstitial = any(p in current_url for p in interstitial_patterns)
+
+            if is_interstitial:
+                logger.info(f"Interstitial page detected at {page.url}. Waiting for redirect to real content...")
+                # Wait up to 12 seconds for the page to auto-redirect past the interstitial
+                for _ in range(6):
+                    await asyncio.sleep(2.0)
+                    new_url = page.url.lower()
+                    if not any(p in new_url for p in interstitial_patterns):
+                        logger.info(f"Redirect completed: {page.url}")
+                        break
+                # After waiting, re-extract the page state from the real page
+                await asyncio.sleep(1.0)
+
             state = await self.aria_parser.extract_page_state(page)
             return {
                 "status": "SUCCESS",

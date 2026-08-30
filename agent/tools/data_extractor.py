@@ -17,8 +17,29 @@ class DataExtractorTool(BaseTool):
         fields_to_extract: Optional[List[str]] = None,
         **kwargs: Any
     ) -> Dict[str, Any]:
-        content = raw_content or kwargs.get("content") or kwargs.get("data") or kwargs.get("text") or ""
-        fields = fields_to_extract or ["status", "metric", "timestamp", "severity"]
+        raw_input = (
+            raw_content
+            or kwargs.get("content")
+            or kwargs.get("source_data")
+            or kwargs.get("input_data")
+            or kwargs.get("input")
+            or kwargs.get("data")
+            or kwargs.get("text")
+            or kwargs.get("source_content")
+            or kwargs.get("extracted_content")
+            or kwargs.get("page_content")
+            or kwargs.get("html")
+            or kwargs.get("observation")
+            or ""
+        )
+        if isinstance(raw_input, (dict, list)):
+            content = json.dumps(raw_input)
+        else:
+            content = str(raw_input or "")
+
+        fields = fields_to_extract or kwargs.get("schema") or ["status", "metric", "timestamp", "severity"]
+        if isinstance(fields, dict):
+            fields = list(fields.keys())
         
         extracted_fields: Dict[str, Any] = {}
         records: List[Dict[str, Any]] = []

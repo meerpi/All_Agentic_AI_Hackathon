@@ -26,11 +26,11 @@ class Settings(BaseSettings):
     PORT: int = 8000
 
 
-    # Jira Integration
-    JIRA_BASE_URL: str = "https://taskmasterjira.atlassian.net"
-    JIRA_EMAIL: str = "anima.mahanty1967@gmail.com"
+    # Jira Integration (Sourced from .env or environment)
+    JIRA_BASE_URL: str = ""
+    JIRA_EMAIL: str = ""
     JIRA_API_TOKEN: str = ""
-    JIRA_PROJECT_KEY: str = "KAN"
+    JIRA_PROJECT_KEY: str = ""
 
     # Autonomous Browser & Desktop Configuration
     BROWSER_HEADLESS: bool = False

@@ -169,17 +169,20 @@ class MultiAgentCouncilOrchestrator:
         doc_url = accumulated_context.get("doc_insights", {}).get("document_url", "")
         sheet_url = accumulated_context.get("ops_insights", {}).get("spreadsheet_url", "")
         jira_keys = accumulated_context.get("engineering_insights", {}).get("issue_keys", [])
+        audit_score = critic_resp.insights.get("audit_score", 100)
+        violations_count = len(critic_resp.insights.get("violations", []))
+        verdict = critic_resp.insights.get("verdict", "PASSED")
 
         summary = f"""# 🏛️ Multi-Agent Council Execution Report
 
-The **Taskmaster Hierarchical Multi-Agent Council** successfully executed the assigned goal across 5 specialized sub-agents with 100% compliance.
+The **Taskmaster Hierarchical Multi-Agent Council** executed the assigned goal across 5 specialized sub-agents. Audit status: **{verdict}**.
 
 ### 👥 Sub-Agent Contributions:
 1. **🔍 Intelligence & Intake Specialist**: Analyzed raw inputs and extracted {len(intel_resp.insights.get('action_items', []))} core action items.
 2. **⚡ Technical Product Owner**: Provisioned {len(jira_keys)} Jira Cloud tickets ({', '.join(jira_keys)}) totaling {accumulated_context.get('engineering_insights', {}).get('total_story_points', 0)} story points.
 3. **📄 Executive Communications Lead**: Authored Executive Meeting Minutes and dispatched Slack announcement.
 4. **📅 Operations Coordinator**: Created and synced the Sprint Backlog Google Sheet ({accumulated_context.get('ops_insights', {}).get('total_rows_synced', 0)} rows).
-5. **🛡️ Quality & Compliance Auditor**: Certified all artifacts with a **100/100 Audit Score (0 Violations)**.
+5. **🛡️ Quality & Compliance Auditor**: Certified artifacts with a **{audit_score}/100 Audit Score ({violations_count} Violations)**.
 
 ### 🔗 Live Artifact Links:
 - 🎫 **Jira Cloud Tickets:** {', '.join(jira_keys)}
@@ -190,10 +193,15 @@ The **Taskmaster Hierarchical Multi-Agent Council** successfully executed the as
         return CouncilExecutionResult(
             workflow_id=workflow_id,
             goal=goal,
-            status="COMPLETED",
+            status="COMPLETED" if verdict == "PASSED" else "NEEDS_REVISION",
             total_execution_time_ms=round(total_elapsed, 2),
             council_dialogue=dialogue,
             subagent_responses=responses,
             all_artifacts=all_artifacts,
             executive_summary=summary
         )
+
+    def dispatch(self, brief: str, context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """A2A protocol dispatch entrypoint."""
+        result = self.execute_council(goal=brief, context=context)
+        return result.model_dump(mode="json")

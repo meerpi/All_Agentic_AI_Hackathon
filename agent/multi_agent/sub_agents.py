@@ -65,19 +65,12 @@ Respond in strictly valid JSON:
         elapsed = (time.time() - start_time) * 1000
 
         action_items = parsed.get("action_items") or []
-        if not action_items:
-            action_items = [
-                {"summary": "Frontend Auth: Migrate React client to JWT bearer tokens", "assignee": "Alex Chen", "priority": "High", "story_points_estimate": 5, "description": "Migrate session cookies to JWT bearer tokens with refresh token rotation."},
-                {"summary": "Billing API: Add Redis caching & optimize queries", "assignee": "Priya Patel", "priority": "Critical", "story_points_estimate": 8, "description": "Reduce billing summary endpoint latency from 2.4s to sub-200ms with Redis."},
-                {"summary": "Security Compliance: Implement Cloud Audit Logs for role changes", "assignee": "Marcus Vance", "priority": "Medium", "story_points_estimate": 3, "description": "Implement immutable SOC2/HIPAA audit logging for user role modifications."}
-            ]
-            parsed["action_items"] = action_items
 
         return AgentResponse(
             agent_name=self.name,
             role=self.role,
             status="SUCCESS",
-            reasoning=f"Extracted {len(action_items)} action items and {len(parsed.get('decisions', []))} core decisions.",
+            reasoning=f"Extracted {len(action_items)} action items and {len(parsed.get('decisions', []))} core decisions from input.",
             insights=parsed,
             artifacts_created=[{"type": "intelligence_payload", "data": parsed}],
             execution_time_ms=round(elapsed, 2)
@@ -332,6 +325,7 @@ class CriticSubAgent(BaseSubAgent):
 
         is_valid = len(violations) == 0
         verdict = "PASSED" if is_valid else "REVISION_REQUIRED"
+        audit_score = 100 if is_valid else max(0, 100 - len(violations) * 25)
 
         val_res = {"is_valid": is_valid, "rules_verified": 175, "violations": violations}
         if validator_tool:
@@ -342,13 +336,18 @@ class CriticSubAgent(BaseSubAgent):
 
         elapsed = (time.time() - start_time) * 1000
 
+        if is_valid:
+            reasoning = f"Audit certified PASSED with 0 violations. All {len(tickets)} deliverables match across Google Workspace & Jira Cloud."
+        else:
+            reasoning = f"Audit flagged {len(violations)} compliance violations: {'; '.join(violations)}"
+
         return AgentResponse(
             agent_name=self.name,
             role=self.role,
             status="SUCCESS" if is_valid else "NEEDS_REVISION",
-            reasoning=f"Audit complete with 0 violations. All {len(tickets)} deliverables match across Google Workspace & Jira Cloud.",
-            insights={"verdict": verdict, "audit_score": 100 if is_valid else 75, "violations": violations},
-            artifacts_created=[{"type": "audit_verdict", "verdict": verdict, "score": 100}],
+            reasoning=reasoning,
+            insights={"verdict": verdict, "audit_score": audit_score, "violations": violations},
+            artifacts_created=[{"type": "audit_verdict", "verdict": verdict, "score": audit_score}],
             execution_time_ms=round(elapsed, 2),
             tool_calls_executed=[{"tool": "validator", "result": val_res}]
         )

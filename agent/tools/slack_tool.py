@@ -219,7 +219,14 @@ class SlackTool(BaseTool):
                         "status_code": response.getcode()
                     }
             except Exception as e:
-                logger.warning(f"Slack Block Kit post failed via webhook: {e}")
+                logger.error(f"Slack Block Kit post failed via webhook: {e}")
+                return {
+                    "action": "post_summary",
+                    "channel": channel,
+                    "title": title,
+                    "status": "FAILED",
+                    "error": f"Slack Block Kit webhook post failed: {str(e)}"
+                }
         elif bot_token:
             try:
                 req = urllib.request.Request(
@@ -251,15 +258,23 @@ class SlackTool(BaseTool):
                         "status_code": response.getcode()
                     }
             except Exception as e:
-                logger.warning(f"Slack Block Kit post failed via bot token: {e}")
+                logger.error(f"Slack Block Kit post failed via bot token: {e}")
+                return {
+                    "action": "post_summary",
+                    "channel": channel,
+                    "title": title,
+                    "status": "FAILED",
+                    "error": f"Slack Block Kit bot API post failed: {str(e)}"
+                }
 
-        logger.info(f"Generated and broadcast Slack Card for {channel}: {title}")
+        logger.info(f"SLACK_WEBHOOK_URL and SLACK_BOT_TOKEN not configured. Broadcast logged locally for {channel}: {title}")
         return {
             "action": "post_summary",
             "channel": channel,
             "title": title,
             "jira_keys_referenced": jira_keys,
             "doc_url_referenced": doc_url,
-            "status": "DISPATCHED",
+            "status": "LOCAL_LOGGED",
+            "warning": "SLACK_WEBHOOK_URL and SLACK_BOT_TOKEN are not set in environment. Summary card was logged locally instead of being delivered to Slack.",
             "timestamp": datetime.now(timezone.utc).isoformat()
         }

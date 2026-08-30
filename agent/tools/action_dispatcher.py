@@ -9,39 +9,52 @@ class ActionDispatcherTool(BaseTool):
 
     def run(
         self,
-        target_url: str = "https://httpbin.org/post",
+        target_url: Optional[str] = None,
+        url: Optional[str] = None,
         method: str = "POST",
         payload: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None,
         **kwargs: Any
     ) -> Dict[str, Any]:
-        data_payload = payload or {"event": "TASKMASTER_ACTION_TRIGGERED", "status": "OK"}
+        final_url = target_url or url or kwargs.get("webhook_url") or "https://httpbin.org/post"
+        data_payload = payload or kwargs.get("data") or {"event": "TASKMASTER_ACTION_TRIGGERED", "status": "OK"}
         
-        # Perform webhook call simulation or real HTTP call
-        if target_url.startswith("http://") or target_url.startswith("https://"):
+        if final_url.startswith("http://") or final_url.startswith("https://"):
             try:
-                with httpx.Client(timeout=5.0) as client:
+                with httpx.Client(timeout=10.0) as client:
                     if method.upper() == "POST":
-                        res = client.post(target_url, json=data_payload, headers=headers)
+                        res = client.post(final_url, json=data_payload, headers=headers)
+                    elif method.upper() == "PUT":
+                        res = client.put(final_url, json=data_payload, headers=headers)
+                    elif method.upper() == "PATCH":
+                        res = client.patch(final_url, json=data_payload, headers=headers)
+                    elif method.upper() == "DELETE":
+                        res = client.delete(final_url, headers=headers)
                     else:
-                        res = client.get(target_url, headers=headers)
+                        res = client.get(final_url, headers=headers)
+
+                    is_ok = res.is_success
                     return {
-                        "target_url": target_url,
+                        "target_url": final_url,
                         "status_code": res.status_code,
-                        "dispatched": True,
-                        "response_preview": str(res.text[:150])
+                        "dispatched": is_ok,
+                        "status": "DELIVERED" if is_ok else "FAILED",
+                        "response_preview": str(res.text[:200]),
+                        **({} if is_ok else {"error": f"HTTP {res.status_code}: {res.text[:200]}"})
                     }
             except Exception as err:
                 return {
-                    "target_url": target_url,
+                    "target_url": final_url,
                     "dispatched": False,
+                    "status": "FAILED",
                     "status_code": 500,
                     "error": str(err)
                 }
         
         return {
-            "target_url": target_url,
+            "target_url": final_url,
             "dispatched": False,
+            "status": "FAILED",
             "status_code": 400,
-            "error": "Invalid or missing target_url"
+            "error": "Invalid or missing target_url. URL must start with http:// or https://"
         }

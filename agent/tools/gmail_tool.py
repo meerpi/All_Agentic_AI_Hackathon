@@ -52,11 +52,15 @@ class GmailTool(BaseTool):
             elif action == "read_email":
                 return self._read_email(message_id or "")
             elif action == "send_email":
-                return self._send_email(to or "user@example.com", subject or "Workflow Update", body or "Task completed.")
+                if not to:
+                    return {"status": "FAILED", "error": "Missing required parameter 'to' (recipient email address)."}
+                return self._send_email(to, subject or "Workflow Update", body or "Task completed.")
             elif action == "search_emails":
                 return self._search_emails(query or "is:unread", max_results)
             elif action == "create_draft":
-                return self._create_draft(to or "user@example.com", subject or "Draft", body or "")
+                if not to:
+                    return {"status": "FAILED", "error": "Missing required parameter 'to' (recipient email address)."}
+                return self._create_draft(to, subject or "Draft", body or "")
             elif action == "read_thread":
                 return self._read_thread(kwargs.get("thread_id") or "")
             else:

@@ -31,4 +31,5 @@ data/browser_profile/
 data/youtube_screenshots/
 data/audit_logs/
 data/audit_logs.jsonl
+agent/data/
 *.log

@@ -69,15 +69,10 @@ class JiraTool(BaseTool):
         issue_key: Optional[str] = None,
         **kwargs: Any,
     ) -> Dict[str, Any]:
-        action = action.lower()
         env_project = os.getenv("JIRA_PROJECT_KEY") or "KAN"
-        # If project_key is missing or generic default placeholder, use env_project
-        if not project_key or project_key.upper() in ("ENG", "PROD", "DEFAULT", "PROJECT", "DEMO"):
-            active_project_key = env_project
-        else:
-            active_project_key = project_key.upper()
+        active_project_key = project_key.upper().strip() if (project_key and project_key.strip()) else env_project
 
-        if action == "create_issue":
+        if action in ("create_issue", "create"):
             return self._create_issue(
                 project_key=active_project_key,
                 summary=summary or "Untitled Task",

@@ -42,11 +42,19 @@ def test_individual_tool_executions():
     assert res2.success is True
     assert res2.data["status"] == "SUCCESS"
 
-    # Action Dispatcher
+    # Action Dispatcher with mocked successful HTTP response
     dispatcher = registry.get_tool("action_dispatcher")
-    res3 = dispatcher.execute(target_url="https://example.com/webhook", payload={"ping": "pong"})
-    assert res3.success is True
-    assert res3.data["dispatched"] is True
+    with patch("httpx.Client.post") as mock_post:
+        mock_resp = MagicMock()
+        mock_resp.is_success = True
+        mock_resp.status_code = 200
+        mock_resp.text = '{"status": "received"}'
+        mock_post.return_value = mock_resp
+
+        res3 = dispatcher.execute(target_url="https://example.com/webhook", payload={"ping": "pong"})
+        assert res3.success is True
+        assert res3.data["dispatched"] is True
+        assert res3.data["status"] == "DELIVERED"
 
     # Report Generator
     reporter = registry.get_tool("report_generator")
@@ -101,11 +109,8 @@ def test_orchestrator_end_to_end(MockLLM):
     assert "WORKFLOW_FINISHED" in event_types
 
 
-@patch("agent.orchestrator.GeminiClient")
-def test_api_run_workflow_endpoint(MockLLM):
-    mock_llm = MockLLM.return_value
-    mock_llm.last_token_usage = None
-    mock_llm.generate_json.return_value = {
+def test_api_run_workflow_endpoint():
+    mock_plan_json = {
         "steps": [
             {"step_number": 1, "description": "Extract customer fields", "tool_name": "data_extractor", "tool_args": {"raw_content": "customer intake"}},
             {"step_number": 2, "description": "Save record", "tool_name": "db_manager", "tool_args": {"action": "upsert", "collection": "leads", "data": {"id": "lead_1"}}, "depends_on": [1]},
@@ -113,26 +118,29 @@ def test_api_run_workflow_endpoint(MockLLM):
             {"step_number": 4, "description": "Generate summary", "tool_name": "report_generator", "tool_args": {"report_title": "Lead Report"}, "depends_on": [3]}
         ]
     }
-    mock_llm.generate_text.return_value = "Customer lead intake processed and executive summary generated."
 
-    payload = {
-        "goal": "Process customer lead intake form and generate executive summary",
-        "context": {"priority": "HIGH", "source": "web_form"}
-    }
-    response = client.post("/api/agent/run", json=payload)
-    assert response.status_code == 200
-    data = response.json()
-    assert data["status"] == "COMPLETED"
-    assert data["workflow_id"] is not None
-    assert len(data["steps"]) >= 4
+    import app as app_module
+    with patch.object(app_module.orchestrator.llm, "generate_json", return_value=mock_plan_json), \
+         patch.object(app_module.orchestrator.llm, "generate_text", return_value="Summary generated."):
 
-    # Verify status endpoint
-    wf_id = data["workflow_id"]
-    status_resp = client.get(f"/api/agent/status/{wf_id}")
-    assert status_resp.status_code == 200
-    assert status_resp.json()["workflow_id"] == wf_id
+        payload = {
+            "goal": "Process customer lead intake form and generate executive summary",
+            "context": {"priority": "HIGH", "source": "web_form"}
+        }
+        response = client.post("/api/agent/run", json=payload)
+        assert response.status_code == 200
+        data = response.json()
+        assert data["status"] == "COMPLETED"
+        assert data["workflow_id"] is not None
+        assert len(data["steps"]) >= 4
 
-    # Verify traces endpoint
-    trace_resp = client.get(f"/api/agent/traces/{wf_id}")
-    assert trace_resp.status_code == 200
-    assert trace_resp.json()["trace_count"] > 0
+        # Verify status endpoint
+        wf_id = data["workflow_id"]
+        status_resp = client.get(f"/api/agent/status/{wf_id}")
+        assert status_resp.status_code == 200
+        assert status_resp.json()["workflow_id"] == wf_id
+
+        # Verify traces endpoint
+        trace_resp = client.get(f"/api/agent/traces/{wf_id}")
+        assert trace_resp.status_code == 200
+        assert trace_resp.json()["trace_count"] > 0

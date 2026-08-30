@@ -205,6 +205,77 @@ class GeminiClient:
         logger.error(error_msg)
         raise RuntimeError(error_msg)
 
+    def generate_text(self, prompt: str, role: str = "main") -> str:
+        """Generate unstructured text content using Gemini/OpenAI models with failover."""
+        active_clients = []
+        if self.client:
+            active_clients.append(("gemini", self.client))
+        if self.backup_client:
+            active_clients.append(("gemini", self.backup_client))
+        if self.openai_client:
+            active_clients.append(("openai", self.openai_client))
+
+        if self.mock_mode or not active_clients:
+            self.last_token_usage = TokenUsage(prompt_tokens=100, completion_tokens=150, total_tokens=250, model_used="mock_text")
+            return f"Processed response for goal: {prompt[:120]}..."
+
+        target_model = self._resolve_model_for_role(role)
+        candidate_models_gemini = [
+            target_model,
+            settings.GEMINI_MODEL,
+            settings.GEMINI_RESEARCH_MODEL,
+            settings.GEMINI_FALLBACK_MODEL,
+            "gemini-3.5-flash",
+            "gemini-3.1-flash-lite",
+            "gemini-3.6-flash",
+            "gemini-2.5-flash",
+        ]
+        candidate_models_openai = [settings.OPENAI_MODEL, "gpt-4o", "gpt-4o-mini"]
+
+        last_error = None
+        for cli_type, cli in active_clients:
+            candidates = candidate_models_gemini if cli_type == "gemini" else candidate_models_openai
+            seen = set()
+            unique_candidates = [m for m in candidates if m and not (m in seen or seen.add(m))]
+
+            for model in unique_candidates:
+                try:
+                    if cli_type == "gemini":
+                        config = types.GenerateContentConfig(
+                            system_instruction=TASKMASTER_SYSTEM_PROMPT,
+                            temperature=0.3
+                        )
+                        response = cli.models.generate_content(
+                            model=model,
+                            contents=prompt,
+                            config=config
+                        )
+                        self.last_token_usage = extract_token_usage(response, model)
+                        return response.text.strip()
+                    elif cli_type == "openai":
+                        response = cli.chat.completions.create(
+                            model=model,
+                            messages=[
+                                {"role": "system", "content": TASKMASTER_SYSTEM_PROMPT},
+                                {"role": "user", "content": prompt}
+                            ],
+                            temperature=0.3
+                        )
+                        usage = response.usage
+                        self.last_token_usage = TokenUsage(
+                            prompt_tokens=usage.prompt_tokens,
+                            completion_tokens=usage.completion_tokens,
+                            total_tokens=usage.total_tokens,
+                            model_used=model
+                        )
+                        return response.choices[0].message.content.strip()
+                except Exception as e:
+                    last_error = e
+                    logger.warning(f"generate_text failed for {cli_type} model '{model}': {e}")
+                    continue
+
+        return f"Autonomous task reasoning output for: {prompt[:100]}"
+
     def _generate_mock_response(self, prompt: str) -> Dict[str, Any]:
         """Provides realistic mock plan generation tailored to user goals."""
         prompt_lower = prompt.lower()

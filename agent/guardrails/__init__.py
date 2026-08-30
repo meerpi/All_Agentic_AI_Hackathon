@@ -116,6 +116,7 @@ TOOL_VALIDATION_RULES = {
     "gmail": {
         "action_required_fields": {
             "send_email": ["to", "subject"],
+            "create_draft": ["to"],
         },
         "field_validators": {
             "to": lambda v: "@" in str(v) or str(v).startswith("$"),
@@ -140,6 +141,7 @@ TOOL_VALIDATION_RULES = {
     "jira": {
         "action_required_fields": {
             "create": ["summary"],
+            "create_issue": ["summary"],
         },
     },
     "db_manager": {

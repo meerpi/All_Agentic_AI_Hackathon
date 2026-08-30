@@ -562,14 +562,26 @@ class TaskmasterOrchestrator:
             steps_summary=steps_summary,
             artifacts_summary=artifacts_summary,
         )
+        failed_steps = [s for s in workflow.steps if s.status in (StepStatus.FAILED, StepStatus.BLOCKED)]
+        completed_steps = [s for s in workflow.steps if s.status == StepStatus.COMPLETED]
+        if failed_steps:
+            honest_fallback = (
+                f"## Workflow Execution: FAILED ({len(failed_steps)} steps failed)\n\n"
+                f"**Goal**: {workflow.goal}\n\n"
+                f"Completed {len(completed_steps)} of {len(workflow.steps)} steps. "
+                f"Failed steps: {', '.join(f'Step {s.step_number}' for s in failed_steps)}."
+            )
+        else:
+            honest_fallback = f"## Workflow Execution: COMPLETED\n\n**Goal**: {workflow.goal}\n\nAll {len(completed_steps)} steps executed successfully."
+
         try:
             res = self.llm.generate_json(prompt, role="main")
             if self.llm.last_token_usage:
                 workflow.token_usage.add(self.llm.last_token_usage)
-            return res.get("summary_markdown", "Autonomous execution completed successfully.")
+            return res.get("summary_markdown") or honest_fallback
         except Exception as e:
             logger.error(f"Summary synthesis failed: {e}")
-            return "Autonomous workflow completed."
+            return honest_fallback
 
 
 # Global singleton

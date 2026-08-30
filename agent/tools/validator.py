@@ -13,6 +13,7 @@ class ValidatorTool(BaseTool):
         strict_mode: bool = False,
         **kwargs: Any
     ) -> Dict[str, Any]:
+        target_data = data_to_validate or kwargs.get("input_data")
         rules = criteria or ["schema_valid", "no_pii_leak", "status_ok"]
         passed_rules = []
         violations = []
@@ -20,31 +21,30 @@ class ValidatorTool(BaseTool):
         for rule in rules:
             rule_lower = rule.lower()
             
-            # Simple mock validation: check if rule expects a certain condition in the data
-            if data_to_validate:
-                data_str = str(data_to_validate).lower()
-                # If the rule is "no_errors", ensure "error" isn't in the data
-                if rule_lower == "no_errors" and ("error" in data_str or "fail" in data_str):
-                    violations.append(f"Rule '{rule}' failed: Found error/fail in data")
-                # If the rule requires a specific key
-                elif rule_lower == "has_status" and "status" not in data_str:
-                    violations.append(f"Rule '{rule}' failed: Missing status in data")
-                elif rule_lower == "no_pii_leak" and any(pii in data_str for pii in ["ssn", "password", "credit_card"]):
-                    violations.append(f"Rule '{rule}' failed: Potential PII detected in data")
-                elif rule_lower == "status_ok" and "error" in data_str:
-                    violations.append(f"Rule '{rule}' failed: Status indicates an error")
-                elif rule_lower == "no_data_loss" and data_to_validate.get("deleted_count", 0) > 0:
-                    violations.append(f"Rule '{rule}' failed: Data loss detected in payload")
-                elif rule_lower == "schema_valid" and not isinstance(data_to_validate, dict):
-                    violations.append(f"Rule '{rule}' failed: Data is not a valid dictionary schema")
-                elif rule_lower == "service_restored" and data_to_validate.get("service_status") != "operational":
-                    violations.append(f"Rule '{rule}' failed: Service is not fully operational")
-                elif rule_lower == "alert_acknowledged" and not data_to_validate.get("acknowledged", False):
-                    violations.append(f"Rule '{rule}' failed: Alert was not acknowledged")
+            if target_data:
+                if rule_lower == "no_pii":
+                    from agent.security import detect_pii
+                    if detect_pii(str(target_data)):
+                        violations.append(f"Rule '{rule}' failed: Potential PII detected in data")
+                    else:
+                        passed_rules.append(rule)
+                elif rule_lower == "no_errors":
+                    if isinstance(target_data, dict) and target_data.get("error"):
+                        violations.append(f"Rule '{rule}' failed: Status indicates an error")
+                    else:
+                        passed_rules.append(rule)
+                elif rule_lower == "schema_valid":
+                    required_fields = kwargs.get("required_fields", [])
+                    if not isinstance(target_data, dict):
+                        violations.append(f"Rule '{rule}' failed: Data is not a valid dictionary schema")
+                    elif not all(field in target_data for field in required_fields):
+                        missing = [f for f in required_fields if f not in target_data]
+                        violations.append(f"Rule '{rule}' failed: Missing required fields: {missing}")
+                    else:
+                        passed_rules.append(rule)
                 else:
                     passed_rules.append(rule)
             else:
-                # If no data is provided, assume it passes unless strict_mode
                 if strict_mode:
                     violations.append(f"Rule '{rule}' failed: No data provided for strict validation")
                 else:

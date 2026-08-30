@@ -32,19 +32,16 @@ class ActionDispatcherTool(BaseTool):
                         "response_preview": str(res.text[:150])
                     }
             except Exception as err:
-                # Return simulated success for webhook dispatch when offline or internal mock URL
                 return {
                     "target_url": target_url,
-                    "dispatched": True,
-                    "simulated": True,
-                    "status_code": 200,
-                    "note": f"Internal endpoint call completed with payload: {data_payload}"
+                    "dispatched": False,
+                    "status_code": 500,
+                    "error": str(err)
                 }
         
         return {
             "target_url": target_url,
-            "dispatched": True,
-            "simulated": True,
-            "status_code": 200,
-            "payload_delivered": data_payload
+            "dispatched": False,
+            "status_code": 400,
+            "error": "Invalid or missing target_url"
         }

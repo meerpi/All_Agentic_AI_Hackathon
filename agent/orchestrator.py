@@ -59,6 +59,7 @@ class TaskmasterOrchestrator:
         self.evaluator = TrajectoryEvaluator(self.llm)
         self.workflows: Dict[str, WorkflowPlan] = {}
         self.traces: Dict[str, List[ExecutionTrace]] = {}
+        self.event_callbacks: Dict[str, callable] = {}
         self._load_persisted_state()
 
     def _load_persisted_state(self):
@@ -95,6 +96,9 @@ class TaskmasterOrchestrator:
         if workflow_id not in self.traces:
             self.traces[workflow_id] = []
         self.traces[workflow_id].append(trace)
+        
+        if workflow_id in self.event_callbacks:
+            self.event_callbacks[workflow_id](trace)
 
         # Also log to security audit log
         audit_logger.log(

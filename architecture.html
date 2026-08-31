@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAG Architecture & Engine — Taskmaster</title>
+    <meta name="description" content="Explore Taskmaster's Directed Acyclic Graph (DAG) task engine, topological sorting, Kahn's cycle detection, multi-agent council, and self-healing reflexion loops.">
+    <link rel="icon" type="image/png" href="/frontend/assets/favicon.png">
+    <link rel="stylesheet" href="/frontend/css/style.css?v=4.7">
+    <link rel="stylesheet" href="/frontend/css/landing.css?v=4.7">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 6rem;
+            position: relative;
+            z-index: 10;
+        }
+        .page-hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .page-title {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.03em;
+            margin: 1rem 0 0.75rem;
+        }
+        .page-subtitle {
+            font-size: 1.15rem;
+            color: #64748b;
+            max-width: 760px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .arch-diagram-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+            margin-bottom: 4rem;
+        }
+        .pipeline-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .pipeline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            position: relative;
+        }
+        .stage-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        .stage-box:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(37,99,235,0.08);
+        }
+        .stage-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 9999px;
+            background: #2563eb;
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .stage-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.35rem;
+        }
+        .stage-desc {
+            font-size: 0.85rem;
+            color: #64748b;
+            line-height: 1.5;
+        }
+        .section-heading {
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 1.75rem;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        .feature-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+        }
+        .feature-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(37, 99, 235, 0.1);
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+        .feature-desc {
+            font-size: 0.92rem;
+            color: #475569;
+            line-height: 1.6;
+        }
+        .council-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+        .council-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+        .council-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        .council-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.25rem;
+        }
+        .council-role {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #2563eb;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.5rem;
+        }
+        .council-desc {
+            font-size: 0.85rem;
+            color: #64748b;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body class="landing-body">
+    <div class="glow-orb-1"></div>
+    <div class="glow-orb-2"></div>
+
+    <header class="landing-header-container">
+        <div class="nav-spacer-left"></div>
+
+        <nav class="nav-pill-center">
+            <a href="/" class="nav-brand-icon" title="Taskmaster">
+                <img src="/frontend/t_logo.png" alt="Taskmaster Logo">
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="/features" class="nav-link">Features & Tools</a></li>
+                <li><a href="/architecture" class="nav-link active">Architecture</a></li>
+                <li><a href="/integrations" class="nav-link">Integrations</a></li>
+                <li><a href="/chat" class="nav-link">Agent Chat</a></li>
+            </ul>
+        </nav>
+
+        <div class="nav-right-container">
+            <a href="/chat" class="nav-signin-btn">
+                <span>Launch Chat</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </header>
+
+    <main class="page-container">
+        <section class="page-hero">
+            <div class="hero-badge">
+                <i class="fa-solid fa-diagram-project" style="color: #2563eb;"></i>
+                <span>Deterministic Execution &amp; Reflexion</span>
+            </div>
+            <h1 class="page-title">DAG Engine &amp; System Architecture</h1>
+            <p class="page-subtitle">
+                How Taskmaster turns open-ended natural language intent into robust, deterministic, self-healing execution graphs.
+            </p>
+        </section>
+
+        <!-- Interactive Pipeline Overview -->
+        <section class="arch-diagram-card">
+            <div class="pipeline-title">
+                <i class="fa-solid fa-code-branch" style="color: #2563eb;"></i>
+                <span>The 5-Stage Autonomous Execution Pipeline</span>
+            </div>
+
+            <div class="pipeline-grid">
+                <div class="stage-box">
+                    <span class="stage-number">1</span>
+                    <h4 class="stage-title">Intent &amp; Expansion</h4>
+                    <p class="stage-desc">Analyzes goal, expands context, parses attached documents, and identifies requirements.</p>
+                </div>
+                <div class="stage-box">
+                    <span class="stage-number">2</span>
+                    <h4 class="stage-title">DAG Generation</h4>
+                    <p class="stage-desc">Builds task graph with step-level dependencies and executes Kahn's topological sort.</p>
+                </div>
+                <div class="stage-box">
+                    <span class="stage-number">3</span>
+                    <h4 class="stage-title">Parallel Execution</h4>
+                    <p class="stage-desc">Runs independent branches concurrently via thread pools, resolving dynamic cross-step args.</p>
+                </div>
+                <div class="stage-box">
+                    <span class="stage-number">4</span>
+                    <h4 class="stage-title">Guardrail Audit</h4>
+                    <p class="stage-desc">Enforces 4-layer security checks, input sanitization, and PII anonymization in real-time.</p>
+                </div>
+                <div class="stage-box">
+                    <span class="stage-number">5</span>
+                    <h4 class="stage-title">Trajectory Eval</h4>
+                    <p class="stage-desc">Evaluates final execution against 4 multi-dimensional rubrics (0-100 score) and saves memory.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deep Dive Highlights -->
+        <h2 class="section-heading">Core Architectural Innovations</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-arrows-split-up-and-left"></i></div>
+                <h3 class="feature-title">Topological Sort &amp; Cycle Guard</h3>
+                <p class="feature-desc">Prevents deadlocks using Kahn's algorithm, guaranteeing that steps execute in strict dependency order while maximizing parallel throughput.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-link"></i></div>
+                <h3 class="feature-title">Dynamic Cross-Step Referencing</h3>
+                <p class="feature-desc">Allows downstream tasks to consume structured outputs from upstream steps using <code>$step_1.results[0].video_id</code> or <code>$step_2.doc_url</code> seamlessly.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-rotate-left"></i></div>
+                <h3 class="feature-title">Reflexion &amp; Self-Correction</h3>
+                <p class="feature-desc">When a tool returns an error, the agent diagnoses the failure, corrects arguments, or switches to fallback handlers without user disruption.</p>
+            </div>
+        </div>
+
+        <!-- Multi-Agent Council -->
+        <h2 class="section-heading">Autonomous Multi-Agent Council</h2>
+        <div class="council-grid">
+            <div class="council-card">
+                <div class="council-avatar" style="background: #2563eb;"><i class="fa-solid fa-brain"></i></div>
+                <h4 class="council-name">Lead Orchestrator</h4>
+                <div class="council-role">Planner &amp; Dispatcher</div>
+                <p class="council-desc">Synthesizes user objectives, creates DAG plans, and coordinates sub-agent workers.</p>
+            </div>
+            <div class="council-card">
+                <div class="council-avatar" style="background: #10b981;"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <h4 class="council-name">Research Specialist</h4>
+                <div class="council-role">Web &amp; Media Harvester</div>
+                <p class="council-desc">Drives Playwright, executes YouTube searches, and harvests structured online intelligence.</p>
+            </div>
+            <div class="council-card">
+                <div class="council-avatar" style="background: #f59e0b;"><i class="fa-solid fa-file-pen"></i></div>
+                <h4 class="council-name">Executive Writer</h4>
+                <div class="council-role">Workspace Producer</div>
+                <p class="council-desc">Formats professional Google Docs, Sheets, and emails with complete, publication-ready data.</p>
+            </div>
+            <div class="council-card">
+                <div class="council-avatar" style="background: #8b5cf6;"><i class="fa-solid fa-shield"></i></div>
+                <h4 class="council-name">Security Officer</h4>
+                <div class="council-role">Guardrail Enforcer</div>
+                <p class="council-desc">Audits tool calls, redacts PII, prevents prompt leaks, and stops destructive operations.</p>
+            </div>
+    </main>
+
+    <!-- Professional Multi-Column Enterprise Footer ("Tail") -->
+    <footer class="enterprise-footer">
+        <div class="footer-top-container">
+            <div class="footer-brand-col">
+                <a href="/" class="footer-brand-logo">
+                    <img src="/frontend/t_logo.png" alt="Taskmaster Logo">
+                    <span>Taskmaster</span>
+                </a>
+                <p class="footer-brand-bio">
+                    Next-generation Autonomous AI Agent Engine engineered for deterministic DAG execution, Playwright browser automation, and enterprise multi-tool workflows.
+                </p>
+                <div class="footer-badges-row">
+                    <span class="footer-pill-tag"><i class="fa-solid fa-gem" style="color: #2563eb;"></i> Gemini 3.1</span>
+                    <span class="footer-pill-tag"><i class="fa-solid fa-shield" style="color: #10b981;"></i> 4-Layer Rails</span>
+                    <span class="footer-pill-tag"><i class="fa-solid fa-database" style="color: #6366f1;"></i> SQLite ACID</span>
+                </div>
+            </div>
+
+            <div class="footer-nav-col">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="/features"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Features &amp; Tools</a></li>
+                    <li><a href="/architecture"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> DAG Engine</a></li>
+                    <li><a href="/integrations"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Integrations</a></li>
+                    <li><a href="/chat"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Agent Chat</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-nav-col">
+                <h4>Architecture</h4>
+                <ul>
+                    <li><a href="/architecture"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Topological DAG</a></li>
+                    <li><a href="/architecture"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Multi-Agent Council</a></li>
+                    <li><a href="/architecture"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Reflexion Loop</a></li>
+                    <li><a href="/integrations"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> A2A Open Protocol</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-nav-col">
+                <h4>Trust &amp; Legal</h4>
+                <ul>
+                    <li><a href="/docs" target="_blank"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> OpenAPI Specs</a></li>
+                    <li><a href="/"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Privacy &amp; Terms</a></li>
+                    <li><a href="/"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Security Model</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+            <div>
+                © 2026 Taskmaster AI Technologies Inc. All rights reserved.
+            </div>
+            <div class="footer-status-indicator">
+                <span class="status-dot-pulse"></span>
+                <span>All Systems Operational · v1.0.0 Stable</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

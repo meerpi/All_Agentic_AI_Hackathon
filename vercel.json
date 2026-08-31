@@ -2,16 +2,16 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/chat", "destination": "/frontend/chat.html" },
-    { "source": "/auth", "destination": "/frontend/auth.html" },
-    { "source": "/login", "destination": "/frontend/auth.html" },
-    { "source": "/register", "destination": "/frontend/auth.html" },
-    { "source": "/features", "destination": "/frontend/features.html" },
-    { "source": "/tools", "destination": "/frontend/features.html" },
-    { "source": "/architecture", "destination": "/frontend/architecture.html" },
-    { "source": "/dag", "destination": "/frontend/architecture.html" },
-    { "source": "/integrations", "destination": "/frontend/integrations.html" },
+    { "source": "/chat", "destination": "/chat.html" },
+    { "source": "/auth", "destination": "/auth.html" },
+    { "source": "/login", "destination": "/auth.html" },
+    { "source": "/register", "destination": "/auth.html" },
+    { "source": "/features", "destination": "/features.html" },
+    { "source": "/tools", "destination": "/features.html" },
+    { "source": "/architecture", "destination": "/architecture.html" },
+    { "source": "/dag", "destination": "/architecture.html" },
+    { "source": "/integrations", "destination": "/integrations.html" },
     { "source": "/static/:match*", "destination": "/frontend/:match*" },
-    { "source": "/", "destination": "/frontend/index.html" }
+    { "source": "/", "destination": "/index.html" }
   ]
 }

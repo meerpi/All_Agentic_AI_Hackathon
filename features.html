@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features & Tools — Taskmaster Autonomous Agent Engine</title>
+    <meta name="description" content="Explore Taskmaster's suite of 16+ autonomous tools spanning browser automation, Google Workspace, Jira, media playback, web scraping, and security guardrails.">
+    <link rel="icon" type="image/png" href="/frontend/assets/favicon.png">
+    <link rel="stylesheet" href="/frontend/css/style.css?v=4.7">
+    <link rel="stylesheet" href="/frontend/css/landing.css?v=4.7">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 6rem;
+            position: relative;
+            z-index: 10;
+        }
+        .page-hero {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+        .page-title {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.03em;
+            margin: 1rem 0 0.75rem;
+        }
+        .page-subtitle {
+            font-size: 1.15rem;
+            color: #64748b;
+            max-width: 720px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+        .filter-btn {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            color: #64748b;
+            padding: 0.6rem 1.2rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+        .filter-btn:hover {
+            border-color: #cbd5e1;
+            color: #0f172a;
+            transform: translateY(-1px);
+        }
+        .filter-btn.active {
+            background: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.75rem;
+        }
+        .tool-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 1.75rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .tool-card:hover {
+            transform: translateY(-4px);
+            border-color: #93c5fd;
+            box-shadow: 0 12px 28px rgba(37, 99, 235, 0.08);
+        }
+        .tool-card-top {
+            margin-bottom: 1.25rem;
+        }
+        .tool-icon-badge {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            margin-bottom: 1rem;
+        }
+        .tool-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.4rem;
+        }
+        .tool-category-tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+        }
+        .tool-desc {
+            font-size: 0.92rem;
+            color: #475569;
+            line-height: 1.55;
+            margin-bottom: 1rem;
+        }
+        .tool-features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.25rem;
+        }
+        .tool-features-list li {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .tool-features-list li i {
+            color: #10b981;
+            font-size: 0.75rem;
+        }
+        .tool-action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #2563eb;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.65rem 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .tool-action-btn:hover {
+            background: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
+        }
+        .cta-banner {
+            margin-top: 5rem;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 24px;
+            padding: 3.5rem 2rem;
+            text-align: center;
+            color: #ffffff;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
+        }
+        .cta-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+        }
+        .cta-desc {
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            font-size: 1.05rem;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: #2563eb;
+            color: #ffffff;
+            font-weight: 700;
+            padding: 0.9rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1rem;
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+            transition: all 0.2s ease;
+        }
+        .cta-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="landing-body">
+    <div class="glow-orb-1"></div>
+    <div class="glow-orb-2"></div>
+
+    <!-- Header: Centered Pill Navigation -->
+    <header class="landing-header-container">
+        <div class="nav-spacer-left"></div>
+
+        <nav class="nav-pill-center">
+            <a href="/" class="nav-brand-icon" title="Taskmaster">
+                <img src="/frontend/t_logo.png" alt="Taskmaster Logo">
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="/features" class="nav-link active">Features & Tools</a></li>
+                <li><a href="/architecture" class="nav-link">Architecture</a></li>
+                <li><a href="/integrations" class="nav-link">Integrations</a></li>
+                <li><a href="/chat" class="nav-link">Agent Chat</a></li>
+            </ul>
+        </nav>
+
+        <div class="nav-right-container">
+            <a href="/chat" class="nav-signin-btn">
+                <span>Launch Chat</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </header>
+
+    <main class="page-container">
+        <!-- Page Hero -->
+        <section class="page-hero">
+            <div class="hero-badge">
+                <i class="fa-solid fa-screwdriver-wrench" style="color: #2563eb;"></i>
+                <span>16+ Production-Grade Autonomous Tools</span>
+            </div>
+            <h1 class="page-title">Tools &amp; Capabilities</h1>
+            <p class="page-subtitle">
+                Taskmaster equips Gemini with specialized, deterministic execution tools to interact with real browsers, workspaces, databases, and APIs.
+            </p>
+        </section>
+
+        <!-- Category Filters -->
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterTools('all', this)">All Tools (16)</button>
+            <button class="filter-btn" onclick="filterTools('media', this)">Media &amp; Music</button>
+            <button class="filter-btn" onclick="filterTools('workspace', this)">Google Workspace</button>
+            <button class="filter-btn" onclick="filterTools('browser', this)">Browser Automation</button>
+            <button class="filter-btn" onclick="filterTools('jira', this)">Jira &amp; DevOps</button>
+            <button class="filter-btn" onclick="filterTools('data', this)">Data &amp; Security</button>
+        </div>
+
+        <!-- Tools Grid -->
+        <div class="tools-grid" id="toolsGrid">
+            <!-- 1. YouTube & Media Controller -->
+            <div class="tool-card" data-category="media">
+                <div class="tool-card-top">
+                    <div class="tool-icon-badge" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+                        <i class="fa-brands fa-youtube"></i>
+                    </div>
+                    <span class="tool-category-tag" style="background: rgba(239, 68, 68, 0.1); color: #dc2626;">Media &amp; Entertainment</span>
+                    <h3 class="tool-name">YouTube &amp; Spotify Media Controller</h3>
+                    <p class="tool-desc">Autonomous media search, playlist creation, transcript extraction, and playback with active video ad skipping.</p>
+                    <ul class="tool-features-list">
+                        <li><i class="fa-solid fa-check"></i> Sub-200ms official YouTube Data API v3 search</li>
+                        <li><i class="fa-solid fa-check"></i> Smart ad-detection &amp; auto-skip engine</li>
+                        <li><i class="fa-solid fa-check"></i> Precision duration timer with transport controls</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 2. Playwright Browser Controller -->
+            <div class="tool-card" data-category="browser">
+                <div class="tool-card-top">
+                    <div class="tool-icon-badge" style="background: rgba(37, 99, 235, 0.1); color: #2563eb;">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+                    <span class="tool-category-tag" style="background: rgba(37, 99, 235, 0.1); color: #1d4ed8;">Web Automation</span>
+                    <h3 class="tool-name">Playwright Headless Browser</h3>
+                    <p class="tool-desc">Autonomous web navigation, dynamic element clicking, form fill, cookie consent dismissal, and full-page scraping.</p>
+                    <ul class="tool-features-list">
+                        <li><i class="fa-solid fa-check"></i> Set-of-Marks visual element grounding</li>
+                        <li><i class="fa-solid fa-check"></i> Automatic cookie banner bypass</li>
+                        <li><i class="fa-solid fa-check"></i> Screenshot capture and DOM tree extraction</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 3. Google Workspace (Docs & Sheets) -->
+            <div class="tool-card" data-category="workspace">
+                <div class="tool-card-top">
+                    <div class="tool-icon-badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                        <i class="fa-solid fa-file-lines"></i>
+                    </div>
+                    <span class="tool-category-tag" style="background: rgba(16, 185, 129, 0.1); color: #047857;">Workspace &amp; Docs</span>
+                    <h3 class="tool-name">Google Docs &amp; Sheets Engine</h3>
+                    <p class="tool-desc">Synthesizes research and generates formatted Google Docs and structured Google Sheets with complete data tables.</p>
+                    <ul class="tool-features-list">
+                        <li><i class="fa-solid fa-check"></i> Direct Google Drive link generation</li>
+                        <li><i class="fa-solid fa-check"></i> Rich markdown to document styling engine</li>
+                        <li><i class="fa-solid fa-check"></i> Multi-tab spreadsheet data orchestration</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 4. Jira Project Orchestration -->
+            <div class="tool-card" data-category="jira">
+                <div class="tool-card-top">
+                    <div class="tool-icon-badge" style="background: rgba(14, 165, 233, 0.1); color: #0ea5e9;">
+                        <i class="fa-brands fa-jira"></i>
+                    </div>
+                    <span class="tool-category-tag" style="background: rgba(14, 165, 233, 0.1); color: #0284c7;">DevOps &amp; Planning</span>
+                    <h3 class="tool-name">Jira Cloud Issue Orchestrator</h3>
+                    <p class="tool-desc">Converts user goals into domain-accurate Jira Epics, Stories, acceptance criteria, story points, and sprint backlogs.</p>
+                    <ul class="tool-features-list">
+                        <li><i class="fa-solid fa-check"></i> Automated PRD to backlog decomposition</li>
+                        <li><i class="fa-solid fa-check"></i> Acceptance criteria and test coverage mapping</li>
+                        <li><i class="fa-solid fa-check"></i> REST API v3 integration with Jira Cloud</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 5. Gmail & Calendar Assistant -->
+            <div class="tool-card" data-category="workspace">
+                <div class="tool-card-top">
+                    <div class="tool-icon-badge" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <span class="tool-category-tag" style="background: rgba(245, 158, 11, 0.1); color: #b45309;">Workspace &amp; Scheduling</span>
+                    <h3 class="tool-name">Gmail &amp; Google Calendar</h3>
+                    <p class="tool-desc">Reads incoming inquiries, schedules calendar slots, crafts professional responses, and logs event confirmations.</p>
+                    <ul class="tool-features-list">
+                        <li><i class="fa-solid fa-check"></i> Autonomous client inquiry processing</li>
+                        <li><i class="fa-solid fa-check"></i> Conflict-free calendar slot scheduling</li>
+                        <li><i class="fa-solid fa-check"></i> Multi-step confirmation tracking</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 6. Security Guardrails & PII Masking -->
+            <div class="tool-card" data-category="data">
+                <div class="tool-card-top">
+                    <div class="tool-icon-badge" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <span class="tool-category-tag" style="background: rgba(139, 92, 246, 0.1); color: #6d28d9;">Security &amp; Safety</span>
+                    <h3 class="tool-name">Guardrails &amp; PII Anonymizer</h3>
+                    <p class="tool-desc">Four-layer security inspection on inputs, tool arguments, and output artifacts to prevent data leaks and injections.</p>
+                    <ul class="tool-features-list">
+                        <li><i class="fa-solid fa-check"></i> Automated PII masking (SSN, emails, credit cards)</li>
+                        <li><i class="fa-solid fa-check"></i> System prompt leak defense</li>
+                        <li><i class="fa-solid fa-check"></i> Destructive command block rails</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Professional Multi-Column Enterprise Footer ("Tail") -->
+    <footer class="enterprise-footer">
+        <div class="footer-top-container">
+            <div class="footer-brand-col">
+                <a href="/" class="footer-brand-logo">
+                    <img src="/frontend/t_logo.png" alt="Taskmaster Logo">
+                    <span>Taskmaster</span>
+                </a>
+                <p class="footer-brand-bio">
+                    Next-generation Autonomous AI Agent Engine engineered for deterministic DAG execution, Playwright browser automation, and enterprise multi-tool workflows.
+                </p>
+                <div class="footer-badges-row">
+                    <span class="footer-pill-tag"><i class="fa-solid fa-gem" style="color: #2563eb;"></i> Gemini 3.1</span>
+                    <span class="footer-pill-tag"><i class="fa-solid fa-shield" style="color: #10b981;"></i> 4-Layer Rails</span>
+                    <span class="footer-pill-tag"><i class="fa-solid fa-database" style="color: #6366f1;"></i> SQLite ACID</span>
+                </div>
+            </div>
+
+            <div class="footer-nav-col">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="/features"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Features &amp; Tools</a></li>
+                    <li><a href="/architecture"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> DAG Engine</a></li>
+                    <li><a href="/integrations"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Integrations</a></li>
+                    <li><a href="/chat"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Agent Chat</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-nav-col">
+                <h4>Architecture</h4>
+                <ul>
+                    <li><a href="/architecture"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Topological DAG</a></li>
+                    <li><a href="/architecture"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Multi-Agent Council</a></li>
+                    <li><a href="/architecture"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Reflexion Loop</a></li>
+                    <li><a href="/integrations"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> A2A Open Protocol</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-nav-col">
+                <h4>Trust &amp; Legal</h4>
+                <ul>
+                    <li><a href="/docs" target="_blank"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> OpenAPI Specs</a></li>
+                    <li><a href="/"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Privacy &amp; Terms</a></li>
+                    <li><a href="/"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Security Model</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+            <div>
+                © 2026 Taskmaster AI Technologies Inc. All rights reserved.
+            </div>
+            <div class="footer-status-indicator">
+                <span class="status-dot-pulse"></span>
+                <span>All Systems Operational · v1.0.0 Stable</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function filterTools(category, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const cards = document.querySelectorAll('.tool-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

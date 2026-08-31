@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskmaster Chat — Autonomous Agent Assistant</title>
+    <meta name="description" content="Conversational interface for the Taskmaster Autonomous Agent Engine.">
+    <link rel="icon" type="image/png" href="/frontend/assets/favicon.png">
+    <link rel="stylesheet" href="/frontend/css/style.css?v=5.4">
+    <link rel="stylesheet" href="/frontend/css/chat.css?v=5.4">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .user-profile-badge {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0.55rem 0.75rem;
+            background: #ffffff;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            overflow: hidden;
+        }
+        .user-avatar-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb, #0284c7);
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .user-text-details {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            text-align: left;
+        }
+        .user-name {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .user-email {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .btn-logout {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.35rem 0.5rem;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            transition: var(--transition-fast);
+        }
+        .btn-logout:hover {
+            color: #ef4444;
+            background: #fef2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-app-container">
+        <!-- ── Left Sidebar (History & Session Manager) ── -->
+        <aside class="chat-sidebar" id="chatSidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand">
+                    <a href="/" style="display:flex; align-items:center; gap:0.6rem; text-decoration:none; color:var(--text-primary);">
+                        <img src="/frontend/t_logo.png" alt="Taskmaster" style="width:28px; height:28px; object-fit:contain;">
+                        <span style="font-family:'Outfit',sans-serif; font-weight:800; font-size:1.15rem; letter-spacing:-0.3px; color:var(--text-primary);">Taskmaster</span>
+                    </a>
+                    <div style="display:flex; align-items:center; gap:0.4rem;">
+                        <span class="brand-badge" id="toolCountBadge">16 Tools</span>
+                        <button class="sidebar-toggle-btn" id="sidebarCollapseBtn" title="Collapse sidebar (Ctrl+[)" aria-label="Collapse sidebar">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button class="btn-new-chat" id="newChatBtn">
+                    <span><i class="fa-solid fa-plus" style="margin-right:0.4rem;"></i> New Task</span>
+                    <span class="shortcut-hint">Ctrl+K</span>
+                </button>
+            </div>
+
+            <!-- History List -->
+            <div class="sidebar-history" id="sidebarHistory">
+                <!-- Dynamically populated from SQLite backend -->
+            </div>
+
+            <!-- Sidebar Footer with User Profile & Logout -->
+            <div class="sidebar-footer" style="padding: 0.75rem 1rem;">
+                <div class="user-profile-badge" id="userProfileBadge">
+                    <div class="user-info">
+                        <div class="user-avatar-circle" id="userAvatarLetter">U</div>
+                        <div class="user-text-details">
+                            <span class="user-name" id="userNameLabel">User</span>
+                            <span class="user-email" id="userEmailLabel">user@taskmaster.ai</span>
+                        </div>
+                    </div>
+                    <button class="btn-logout" id="logoutBtn" title="Sign Out" onclick="AuthManager.logout()">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ── Center Chat Arena ── -->
+        <main class="chat-main">
+            <!-- Navbar -->
+            <header class="chat-navbar">
+                <div class="navbar-left" style="display:flex; align-items:center; gap:0.6rem;">
+                    <button class="sidebar-open-btn" id="sidebarOpenBtn" title="Open sidebar (Ctrl+[)" aria-label="Open sidebar">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                    </button>
+                    <button class="navbar-new-chat-btn" id="navbarNewChatBtn" onclick="startNewChat()" title="New Chat (Ctrl+K)">
+                        <i class="fa-solid fa-plus"></i> <span>New Task</span>
+                    </button>
+                    <span class="navbar-model-badge">
+                        <i class="fa-solid fa-wand-magic-sparkles" style="color:#2563eb; font-size:0.85rem;"></i>
+                        <span>Autonomous Agent</span>
+                    </span>
+                </div>
+
+                <div class="navbar-right" style="display:flex; align-items:center; gap:0.75rem;">
+                    <div class="status-pill healthy" id="statusPill">● Healthy</div>
+                    <a href="/" class="btn btn-secondary" style="padding:0.35rem 0.75rem; font-size:0.78rem; display:inline-flex; align-items:center; gap:0.35rem;">
+                        <i class="fa-solid fa-house"></i> <span>Home</span>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Messages Stream -->
+            <div class="messages-container" id="messagesContainer">
+                <!-- Welcome Hero (Visible on Empty Chat) -->
+                <div class="welcome-hero" id="welcomeHero">
+                    <div class="welcome-icon">
+                        <img src="/frontend/t_logo.png" alt="Taskmaster AI" />
+                    </div>
+                    <h2 class="welcome-title">How can Taskmaster assist you today?</h2>
+                    <p class="welcome-subtitle">
+                        Ask the agent to research, analyze videos, automate web browsing, manage emails, or coordinate workflows.
+                    </p>
+
+                    <div class="prompt-suggestions-grid">
+                        <div class="prompt-chip" onclick="fillPrompt('Search YouTube for Lex Fridman Yann LeCun podcast, play the first result for 30 seconds, then close the browser')">
+                            <div class="chip-title"><i class="fa-brands fa-youtube" style="color:#ef4444;"></i> YouTube Search &amp; Play</div>
+                            <div class="chip-desc">Search, play with active ad-skip, close after 30s</div>
+                        </div>
+
+                        <div class="prompt-chip" onclick="fillPrompt('Go to https://youtu.be/PGUdWfB8nLg and tell me who is this video about and at what timestamp is his mentor first mentioned?')">
+                            <div class="chip-title"><i class="fa-solid fa-film" style="color:#0284c7;"></i> Video Transcript Analysis</div>
+                            <div class="chip-desc">Extract entities, mentors, and timestamps</div>
+                        </div>
+
+                        <div class="prompt-chip" onclick="fillPrompt('Navigate to news.ycombinator.com, extract the top 5 headlines, and return them as a list')">
+                            <div class="chip-title"><i class="fa-solid fa-newspaper" style="color:#059669;"></i> Web Scraping &amp; Headlines</div>
+                            <div class="chip-desc">Extract top 5 trending tech articles</div>
+                        </div>
+
+                        <div class="prompt-chip" onclick="fillPrompt('Create a Google Doc summarizing the advantages of multi-agent architectures vs single LLMs')">
+                            <div class="chip-title"><i class="fa-solid fa-file-lines" style="color:#7c3aed;"></i> Document Deliverable</div>
+                            <div class="chip-desc">Research and publish to Google Docs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Messages Thread Inner -->
+                <div class="messages-inner" id="messagesInner"></div>
+            </div>
+
+            <!-- Floating Input Bar with Plus Attachment Button & Popover -->
+            <div class="chat-input-wrapper">
+                <!-- Live Attachment Previews -->
+                <div class="attachment-preview-strip" id="attachmentPreviewStrip"></div>
+
+                <div class="chat-input-box">
+                    <!-- Left-Aligned Attachment Menu Starting From Chatbox Start -->
+                    <div class="chat-attach-menu" id="attachMenu">
+                        <button type="button" class="attach-menu-item" onclick="triggerSpecificUpload('image')">
+                            <span class="attach-icon-badge img-badge"><i class="fa-solid fa-image"></i></span>
+                            <div class="attach-item-text">
+                                <strong>Photos & Images</strong>
+                                <span>PNG, JPG, WEBP, Screenshots</span>
+                            </div>
+                        </button>
+                        <button type="button" class="attach-menu-item" onclick="triggerSpecificUpload('document')">
+                            <span class="attach-icon-badge doc-badge"><i class="fa-solid fa-file-pdf"></i></span>
+                            <div class="attach-item-text">
+                                <strong>Documents & PDFs</strong>
+                                <span>PDF, DOCX, TXT, Markdown</span>
+                            </div>
+                        </button>
+                        <button type="button" class="attach-menu-item" onclick="triggerSpecificUpload('data')">
+                            <span class="attach-icon-badge data-badge"><i class="fa-solid fa-table"></i></span>
+                            <div class="attach-item-text">
+                                <strong>Data & Spreadsheets</strong>
+                                <span>CSV, XLSX, JSON files</span>
+                            </div>
+                        </button>
+                        <button type="button" class="attach-menu-item" onclick="triggerSpecificUpload('code')">
+                            <span class="attach-icon-badge code-badge"><i class="fa-solid fa-code"></i></span>
+                            <div class="attach-item-text">
+                                <strong>Code & Scripts</strong>
+                                <span>Python, JS, HTML, SQL, etc.</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <input type="file" id="fileAttachmentInput" multiple style="display:none;" />
+                    <button type="button" class="chat-attach-btn" id="attachBtn" title="Attach pictures, documents, data, or code" aria-expanded="false">
+                        <i class="fa-solid fa-plus" id="attachBtnIcon"></i>
+                    </button>
+                    <textarea class="chat-textarea" id="chatInput" rows="1" placeholder="Send a goal to the agent or ask about attached files... (Shift+Enter for new line)"></textarea>
+                    <button class="chat-send-btn" id="sendBtn" title="Send message" disabled>
+                        <i class="fa-solid fa-arrow-up"></i>
+                    </button>
+                </div>
+                <div class="input-footer-hint">
+                    Taskmaster can make mistakes. Consider checking important information.
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="confirm-modal-backdrop" id="deleteConfirmModal" onclick="closeDeleteModal()" style="display:none;">
+        <div class="confirm-modal-card" onclick="event.stopPropagation()">
+            <div class="confirm-modal-icon">
+                <i class="fa-solid fa-trash-can"></i>
+            </div>
+            <h3 class="confirm-modal-title">Delete chat?</h3>
+            <p class="confirm-modal-desc">This will permanently delete this conversation and its history. This action cannot be undone.</p>
+            <div class="confirm-modal-actions">
+                <button type="button" class="btn-modal-cancel" onclick="closeDeleteModal()">Cancel</button>
+                <button type="button" class="btn-modal-delete" id="confirmDeleteBtn" onclick="executeDeleteSession()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/frontend/js/api.js?v=5.6"></script>
+    <script src="/frontend/js/chat.js?v=5.6"></script>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrations & Ecosystem — Taskmaster</title>
+    <meta name="description" content="Explore Taskmaster's native integrations with Google Workspace, YouTube Data API, Spotify, Atlassian Jira Cloud, Playwright, MCP Server, and SQLite.">
+    <link rel="icon" type="image/png" href="/frontend/assets/favicon.png">
+    <link rel="stylesheet" href="/frontend/css/style.css?v=4.7">
+    <link rel="stylesheet" href="/frontend/css/landing.css?v=4.7">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 6rem;
+            position: relative;
+            z-index: 10;
+        }
+        .page-hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .page-title {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.03em;
+            margin: 1rem 0 0.75rem;
+        }
+        .page-subtitle {
+            font-size: 1.15rem;
+            color: #64748b;
+            max-width: 760px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .integrations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        .integration-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s ease;
+        }
+        .integration-card:hover {
+            transform: translateY(-4px);
+            border-color: #93c5fd;
+            box-shadow: 0 12px 28px rgba(37, 99, 235, 0.08);
+        }
+        .integration-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+        .integration-icon-box {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+        }
+        .integration-title-group h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0 0 0.2rem;
+        }
+        .integration-status-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #10b981;
+        }
+        .integration-status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+        .integration-desc {
+            font-size: 0.92rem;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+        .integration-specs {
+            background: #f8fafc;
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            margin-bottom: 0.35rem;
+        }
+        .spec-item:last-child {
+            margin-bottom: 0;
+        }
+        .spec-label {
+            color: #64748b;
+        }
+        .spec-val {
+            font-weight: 600;
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body class="landing-body">
+    <div class="glow-orb-1"></div>
+    <div class="glow-orb-2"></div>
+
+    <header class="landing-header-container">
+        <div class="nav-spacer-left"></div>
+
+        <nav class="nav-pill-center">
+            <a href="/" class="nav-brand-icon" title="Taskmaster">
+                <img src="/frontend/t_logo.png" alt="Taskmaster Logo">
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="/features" class="nav-link">Features & Tools</a></li>
+                <li><a href="/architecture" class="nav-link">Architecture</a></li>
+                <li><a href="/integrations" class="nav-link active">Integrations</a></li>
+                <li><a href="/chat" class="nav-link">Agent Chat</a></li>
+            </ul>
+        </nav>
+
+        <div class="nav-right-container">
+            <a href="/chat" class="nav-signin-btn">
+                <span>Launch Chat</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </header>
+
+    <main class="page-container">
+        <section class="page-hero">
+            <div class="hero-badge">
+                <i class="fa-solid fa-plug" style="color: #2563eb;"></i>
+                <span>Connected Platform Ecosystem</span>
+            </div>
+            <h1 class="page-title">Ecosystem &amp; API Integrations</h1>
+            <p class="page-subtitle">
+                Taskmaster interfaces directly with the applications and services your team depends on every day.
+            </p>
+        </section>
+
+        <!-- Integrations Grid -->
+        <div class="integrations-grid">
+            <!-- 1. Google Workspace -->
+            <div class="integration-card">
+                <div>
+                    <div class="integration-header">
+                        <div class="integration-icon-box" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                            <i class="fa-solid fa-file-lines"></i>
+                        </div>
+                        <div class="integration-title-group">
+                            <h3>Google Workspace</h3>
+                            <span class="integration-status-tag"><span class="integration-status-dot"></span> Active &amp; Verified</span>
+                        </div>
+                    </div>
+                    <p class="integration-desc">Autonomous generation of Google Docs, structured Google Sheets tables, automated Gmail replies, and Google Calendar scheduling.</p>
+                    <div class="integration-specs">
+                        <div class="spec-item"><span class="spec-label">Auth Method</span><span class="spec-val">OAuth 2.0 / Service Account</span></div>
+                        <div class="spec-item"><span class="spec-label">Services</span><span class="spec-val">Docs, Sheets, Gmail, Calendar</span></div>
+                        <div class="spec-item"><span class="spec-label">Latency</span><span class="spec-val">&lt; 400ms</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. YouTube Media Platform -->
+            <div class="integration-card">
+                <div>
+                    <div class="integration-header">
+                        <div class="integration-icon-box" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+                            <i class="fa-brands fa-youtube"></i>
+                        </div>
+                        <div class="integration-title-group">
+                            <h3>YouTube Platform</h3>
+                            <span class="integration-status-tag"><span class="integration-status-dot"></span> Active &amp; Verified</span>
+                        </div>
+                    </div>
+                    <p class="integration-desc">High-speed video catalogue search, transcript extraction with timestamps, and browser playback with active ad-skipping.</p>
+                    <div class="integration-specs">
+                        <div class="spec-item"><span class="spec-label">API</span><span class="spec-val">YouTube Data API v3 + Web Fallback</span></div>
+                        <div class="spec-item"><span class="spec-label">Features</span><span class="spec-val">Ad Skip, Transcripts, Playlists</span></div>
+                        <div class="spec-item"><span class="spec-label">Search Speed</span><span class="spec-val">&lt; 200ms</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Atlassian Jira Cloud -->
+            <div class="integration-card">
+                <div>
+                    <div class="integration-header">
+                        <div class="integration-icon-box" style="background: rgba(14, 165, 233, 0.1); color: #0ea5e9;">
+                            <i class="fa-brands fa-jira"></i>
+                        </div>
+                        <div class="integration-title-group">
+                            <h3>Atlassian Jira Cloud</h3>
+                            <span class="integration-status-tag"><span class="integration-status-dot"></span> Active &amp; Verified</span>
+                        </div>
+                    </div>
+                    <p class="integration-desc">Direct decomposition of user goals and PRDs into Jira Epics, Stories, acceptance criteria, story points, and sprint backlogs.</p>
+                    <div class="integration-specs">
+                        <div class="spec-item"><span class="spec-label">API</span><span class="spec-val">Jira REST API v3</span></div>
+                        <div class="spec-item"><span class="spec-label">Decomposition</span><span class="spec-val">Epics, Tasks, Sub-Tasks</span></div>
+                        <div class="spec-item"><span class="spec-label">Auth</span><span class="spec-val">API Token / OAuth</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Playwright Headless Browser Engine -->
+            <div class="integration-card">
+                <div>
+                    <div class="integration-header">
+                        <div class="integration-icon-box" style="background: rgba(37, 99, 235, 0.1); color: #2563eb;">
+                            <i class="fa-solid fa-desktop"></i>
+                        </div>
+                        <div class="integration-title-group">
+                            <h3>Playwright Browser</h3>
+                            <span class="integration-status-tag"><span class="integration-status-dot"></span> Active &amp; Verified</span>
+                        </div>
+                    </div>
+                    <p class="integration-desc">Automated Chromium browser engine with Set-of-Marks visual element grounding, cookie consent dismissal, and live screenshot capture.</p>
+                    <div class="integration-specs">
+                        <div class="spec-item"><span class="spec-label">Engine</span><span class="spec-val">Chromium Headless / Headed</span></div>
+                        <div class="spec-item"><span class="spec-label">Grounding</span><span class="spec-val">Set-of-Marks Badging</span></div>
+                        <div class="spec-item"><span class="spec-label">Isolation</span><span class="spec-val">Ephemeral Sandboxed Contexts</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. SQLite Multi-User Storage -->
+            <div class="integration-card">
+                <div>
+                    <div class="integration-header">
+                        <div class="integration-icon-box" style="background: rgba(99, 102, 241, 0.1); color: #6366f1;">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <div class="integration-title-group">
+                            <h3>SQLite Storage Engine</h3>
+                            <span class="integration-status-tag"><span class="integration-status-dot"></span> Active &amp; Verified</span>
+                        </div>
+                    </div>
+                    <p class="integration-desc">Thread-safe, WAL-enabled relational storage persisting multi-user chat histories, execution traces, sessions, and memory checkpoints.</p>
+                    <div class="integration-specs">
+                        <div class="spec-item"><span class="spec-label">Mode</span><span class="spec-val">WAL (Write-Ahead Logging)</span></div>
+                        <div class="spec-item"><span class="spec-label">Security</span><span class="spec-val">PBKDF2 Password Hashing</span></div>
+                        <div class="spec-item"><span class="spec-label">Transactions</span><span class="spec-val">ACID-Compliant</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. A2A & MCP Standards -->
+            <div class="integration-card">
+                <div>
+                    <div class="integration-header">
+                        <div class="integration-icon-box" style="background: rgba(236, 72, 153, 0.1); color: #ec4899;">
+                            <i class="fa-solid fa-network-wired"></i>
+                        </div>
+                        <div class="integration-title-group">
+                            <h3>A2A &amp; MCP Protocol</h3>
+                            <span class="integration-status-tag"><span class="integration-status-dot"></span> Active &amp; Verified</span>
+                        </div>
+                    </div>
+                    <p class="integration-desc">Compliant with Agent-to-Agent (A2A) protocol for decentralized agent discovery and Model Context Protocol (MCP) tool exposition.</p>
+                    <div class="integration-specs">
+                        <div class="spec-item"><span class="spec-label">Standard</span><span class="spec-val">A2A Protocol + MCP Server</span></div>
+                        <div class="spec-item"><span class="spec-label">Discovery</span><span class="spec-val"><code>/.well-known/agent.json</code></span></div>
+                        <div class="spec-item"><span class="spec-label">Streaming</span><span class="spec-val">SSE Token Streaming</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Professional Multi-Column Enterprise Footer ("Tail") -->
+    <footer class="enterprise-footer">
+        <div class="footer-top-container">
+            <div class="footer-brand-col">
+                <a href="/" class="footer-brand-logo">
+                    <img src="/frontend/t_logo.png" alt="Taskmaster Logo">
+                    <span>Taskmaster</span>
+                </a>
+                <p class="footer-brand-bio">
+                    Next-generation Autonomous AI Agent Engine engineered for deterministic DAG execution, Playwright browser automation, and enterprise multi-tool workflows.
+                </p>
+                <div class="footer-badges-row">
+                    <span class="footer-pill-tag"><i class="fa-solid fa-gem" style="color: #2563eb;"></i> Gemini 3.1</span>
+                    <span class="footer-pill-tag"><i class="fa-solid fa-shield" style="color: #10b981;"></i> 4-Layer Rails</span>
+                    <span class="footer-pill-tag"><i class="fa-solid fa-database" style="color: #6366f1;"></i> SQLite ACID</span>
+                </div>
+            </div>
+
+            <div class="footer-nav-col">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="/features"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Features &amp; Tools</a></li>
+                    <li><a href="/architecture"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> DAG Engine</a></li>
+                    <li><a href="/integrations"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Integrations</a></li>
+                    <li><a href="/chat"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Agent Chat</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-nav-col">
+                <h4>Architecture</h4>
+                <ul>
+                    <li><a href="/architecture"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Topological DAG</a></li>
+                    <li><a href="/architecture"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Multi-Agent Council</a></li>
+                    <li><a href="/architecture"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Reflexion Loop</a></li>
+                    <li><a href="/integrations"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> A2A Open Protocol</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-nav-col">
+                <h4>Trust &amp; Legal</h4>
+                <ul>
+                    <li><a href="/docs" target="_blank"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> OpenAPI Specs</a></li>
+                    <li><a href="/"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Privacy &amp; Terms</a></li>
+                    <li><a href="/"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Security Model</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+            <div>
+                © 2026 Taskmaster AI Technologies Inc. All rights reserved.
+            </div>
+            <div class="footer-status-indicator">
+                <span class="status-dot-pulse"></span>
+                <span>All Systems Operational · v1.0.0 Stable</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

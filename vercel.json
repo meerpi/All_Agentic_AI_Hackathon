@@ -2,7 +2,6 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/", "destination": "/frontend/index.html" },
     { "source": "/chat", "destination": "/frontend/chat.html" },
     { "source": "/auth", "destination": "/frontend/auth.html" },
     { "source": "/login", "destination": "/frontend/auth.html" },
@@ -13,6 +12,6 @@
     { "source": "/dag", "destination": "/frontend/architecture.html" },
     { "source": "/integrations", "destination": "/frontend/integrations.html" },
     { "source": "/static/:match*", "destination": "/frontend/:match*" },
-    { "source": "/api/:match*", "destination": "https://YOUR-BACKEND-URL.run.app/api/:match*" }
+    { "source": "/", "destination": "/frontend/index.html" }
   ]
 }

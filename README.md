@@ -3,6 +3,51 @@
 > **Built for the All Things Agentic Hackathon — Track: Taskmaster**  
 > *Next-generation autonomous AI agent engine powered by Gemini 3.5 & Google Cloud Infrastructure.*
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Google%20Cloud%20Run-blue?style=for-the-badge&logo=google-cloud)](https://taskmaster-agent-558277271154.us-central1.run.app)
+[![API Health](https://img.shields.io/badge/API%20Health-HEALTHY-success?style=for-the-badge)](https://taskmaster-agent-558277271154.us-central1.run.app/api/health)
+[![Python 3.12](https://img.shields.io/badge/Python-3.12-yellow?style=for-the-badge&logo=python)](https://www.python.org/)
+
+---
+
+## 🌐 Live Deployment & Demo Links
+
+- 🚀 **Live Web Platform**: [https://taskmaster-agent-558277271154.us-central1.run.app](https://taskmaster-agent-558277271154.us-central1.run.app)
+- 💬 **Live Agent Chat Workspace**: [https://taskmaster-agent-558277271154.us-central1.run.app/chat](https://taskmaster-agent-558277271154.us-central1.run.app/chat)
+- 🏛️ **Architecture & DAG Visualizer**: [https://taskmaster-agent-558277271154.us-central1.run.app/architecture](https://taskmaster-agent-558277271154.us-central1.run.app/architecture)
+- 🧰 **Live Tools Explorer (16+ Tools)**: [https://taskmaster-agent-558277271154.us-central1.run.app/features](https://taskmaster-agent-558277271154.us-central1.run.app/features)
+
+---
+
+## 🧪 Reproducible Testing Instructions for Judges
+
+### Method 1: Instant Online Verification (Zero Setup)
+1. Open the [Live Agent Chat](https://taskmaster-agent-558277271154.us-central1.run.app/chat).
+2. Try executing any test prompt:
+   - **DAG Decomposition**: *"Deconstruct a project plan to build and deploy an autonomous AI microservice on Google Cloud Run with security checks, dependency graphs, and documentation."*
+   - **Research & Synthesis**: *"Research recent breakthroughs in Agentic AI architectures, summarize the top 3 trends, and structure an executive briefing."*
+3. Observe the Multi-Agent Council (Planner, Critic, Tool Master, Synthesizer) dynamically generating DAG nodes, resolving dependencies, and streaming results live via SSE.
+4. Verify system health and tool registry:
+   ```bash
+   curl -s https://taskmaster-agent-558277271154.us-central1.run.app/api/health
+   ```
+
+### Method 2: Local Reproduction & Automated Test Suite
+```bash
+# 1. Clone the repository
+git clone https://github.com/Tejas-Ranjeet/All_Agentic_AI_Hackathon.git
+cd All_Agentic_AI_Hackathon
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Run the complete automated test suite
+pytest tests/ -v
+
+# 4. Start local server
+uvicorn app:app --reload --port 8000
+```
+Open `http://localhost:8000` to interact locally.
+
 ---
 
 ## 📌 Executive Overview

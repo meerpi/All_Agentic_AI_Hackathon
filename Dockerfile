@@ -26,9 +26,10 @@ COPY . .
 # Ensure data runtime directories exist
 RUN mkdir -p data/checkpoints data/workflows data/audit_logs
 
-# Expose port (Cloud Run defaults to PORT 8080 or $PORT)
+# Expose port (Cloud Run sets and injects PORT env variable, default 8080)
 ENV PORT=8080
-EXPOSE $PORT
+EXPOSE 8080
 
 # Run FastAPI app with Uvicorn worker bound to $PORT
-CMD uvicorn app:app --host 0.0.0.0 --port $PORT
+CMD exec uvicorn app:app --host 0.0.0.0 --port ${PORT:-8080}
+

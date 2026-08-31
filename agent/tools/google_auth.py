@@ -7,6 +7,8 @@ Supports:
 """
 
 import os
+import json
+import base64
 import logging
 from typing import Optional
 
@@ -15,6 +17,41 @@ logger = logging.getLogger("taskmaster.google_auth")
 # Base directory is the project root (parent of agent/)
 from pathlib import Path
 _BASE_DIR = str(Path(__file__).resolve().parent.parent.parent)
+
+def ensure_google_credentials_files():
+    """
+    Automatically unpacks bundled Google OAuth token and credentials from data/auth/google_vault.json
+    if credentials.json or token.json are not present on disk.
+    """
+    vault_path = os.path.join(_BASE_DIR, "data", "auth", "vault.json")
+    if not os.path.exists(vault_path):
+        vault_path = os.path.join(_BASE_DIR, "data", "auth", "google_vault.json")
+    if os.path.exists(vault_path):
+        try:
+            with open(vault_path, "r", encoding="utf-8") as f:
+                vault = json.load(f)
+            creds_b64 = vault.get("credentials_b64")
+            token_b64 = vault.get("token_b64")
+
+            creds_target = os.path.join(_BASE_DIR, "credentials.json")
+            if creds_b64 and not os.path.exists(creds_target):
+                creds_content = base64.b64decode(creds_b64).decode("utf-8")
+                with open(creds_target, "w", encoding="utf-8") as f:
+                    f.write(creds_content)
+                logger.info(f"Unpacked credentials.json from vault to {creds_target}")
+
+            token_target = os.path.join(_BASE_DIR, "token.json")
+            if token_b64 and not os.path.exists(token_target):
+                token_content = base64.b64decode(token_b64).decode("utf-8")
+                with open(token_target, "w", encoding="utf-8") as f:
+                    f.write(token_content)
+                logger.info(f"Unpacked token.json from vault to {token_target}")
+        except Exception as e:
+            logger.warning(f"Auto-unpack of Google credentials vault failed: {e}")
+
+# Run credential unpack on import
+ensure_google_credentials_files()
+
 CREDENTIALS_PATH = os.path.join(_BASE_DIR, "credentials.json")
 if not os.path.exists(CREDENTIALS_PATH):
     import glob
@@ -51,10 +88,11 @@ def get_google_credentials():
     """
     Returns valid Google OAuth2 credentials for the current user.
     Attempts:
-      1. Saved token.json
+      1. Saved token.json (or unpacked from vault)
       2. InstalledAppFlow with credentials.json
       3. Application Default Credentials (gcloud ADC) fallback
     """
+    ensure_google_credentials_files()
     if not GOOGLE_AUTH_AVAILABLE:
         logger.error("Google auth libraries not installed.")
         return None

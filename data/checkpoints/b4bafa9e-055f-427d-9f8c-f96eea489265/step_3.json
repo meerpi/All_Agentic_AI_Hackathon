@@ -1,0 +1,1528 @@
+{
+  "workflow_id": "b4bafa9e-055f-427d-9f8c-f96eea489265",
+  "step_number": 3,
+  "timestamp": "2026-08-31T07:28:59.497270+00:00",
+  "state": {
+    "workflow_id": "b4bafa9e-055f-427d-9f8c-f96eea489265",
+    "goal": "Go to https://youtu.be/PGUdWfB8nLg and tell me who is this video about and at what timestamp is his mentor first mentioned",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "19c84e04-9265-44a5-b636-f6a2b7ab8221",
+        "description": "Retrieve the transcript for the YouTube video PGUdWfB8nLg",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_transcript",
+          "video_id": "PGUdWfB8nLg"
+        },
+        "reasoning": "Using the media_controller's youtube_transcript action is the most direct and efficient way to get the full text and timestamps of the video without needing to watch it in real-time.",
+        "status": "COMPLETED",
+        "result": {
+          "status": "SUCCESS",
+          "video_id": "PGUdWfB8nLg",
+          "language": "en",
+          "snippet_count": 277,
+          "transcript": [
+            {
+              "start": 0.28,
+              "duration": 4.8,
+              "text": "when I was young my family lived"
+            },
+            {
+              "start": 2.72,
+              "duration": 5.2,
+              "text": "overseas uh I lived in Indonesia for a"
+            },
+            {
+              "start": 5.08,
+              "duration": 4.56,
+              "text": "few years and my mother she didn't have"
+            },
+            {
+              "start": 7.92,
+              "duration": 3.76,
+              "text": "the money to send me where all the"
+            },
+            {
+              "start": 9.64,
+              "duration": 4.12,
+              "text": "American kids went to school but she"
+            },
+            {
+              "start": 11.68,
+              "duration": 5.28,
+              "text": "thought it was important for me to keep"
+            },
+            {
+              "start": 13.76,
+              "duration": 6.08,
+              "text": "up with an American education so she"
+            },
+            {
+              "start": 16.96,
+              "duration": 5.88,
+              "text": "decided to teach me extra lessons"
+            },
+            {
+              "start": 19.84,
+              "duration": 4.6,
+              "text": "herself Monday through Friday but"
+            },
+            {
+              "start": 22.84,
+              "duration": 3.6,
+              "text": "because she had to go to work the only"
+            },
+            {
+              "start": 24.44,
+              "duration": 4.36,
+              "text": "time she could do it was at 4:30 in the"
+            },
+            {
+              "start": 26.44,
+              "duration": 4.0,
+              "text": "morning but whenever I'd complain my"
+            },
+            {
+              "start": 28.8,
+              "duration": 4.08,
+              "text": "mother would just give me one looks and"
+            },
+            {
+              "start": 30.44,
+              "duration": 4.72,
+              "text": "she'd say this is no picnic for me"
+            },
+            {
+              "start": 32.88,
+              "duration": 2.28,
+              "text": "either"
+            },
+            {
+              "start": 35.2,
+              "duration": 4.56,
+              "text": "Buster so I know that some of you are"
+            },
+            {
+              "start": 37.4,
+              "duration": 4.56,
+              "text": "still adjusting to being back at school"
+            },
+            {
+              "start": 39.76,
+              "duration": 5.48,
+              "text": "but I'm here today because I have"
+            },
+            {
+              "start": 41.96,
+              "duration": 5.12,
+              "text": "something important to discuss with you"
+            },
+            {
+              "start": 45.24,
+              "duration": 4.68,
+              "text": "my father left my family when I was 2"
+            },
+            {
+              "start": 47.08,
+              "duration": 5.32,
+              "text": "years old and I was raised by a single"
+            },
+            {
+              "start": 49.92,
+              "duration": 4.2,
+              "text": "mom who had to work and who struggled at"
+            },
+            {
+              "start": 52.4,
+              "duration": 3.52,
+              "text": "times to pay the bills and wasn't always"
+            },
+            {
+              "start": 54.12,
+              "duration": 4.92,
+              "text": "able to give us the things that other"
+            },
+            {
+              "start": 55.92,
+              "duration": 5.64,
+              "text": "kids had there were times when I missed"
+            },
+            {
+              "start": 59.04,
+              "duration": 4.2,
+              "text": "having a father in my life there were"
+            },
+            {
+              "start": 61.56,
+              "duration": 4.68,
+              "text": "times when I was lonely and I felt like"
+            },
+            {
+              "start": 63.24,
+              "duration": 4.96,
+              "text": "I didn't fit in so I wasn't always as"
+            },
+            {
+              "start": 66.24,
+              "duration": 3.44,
+              "text": "focused as I should have been on school"
+            },
+            {
+              "start": 68.2,
+              "duration": 3.48,
+              "text": "and I did some things that I'm not proud"
+            },
+            {
+              "start": 69.68,
+              "duration": 5.16,
+              "text": "of and I got in more trouble than I"
+            },
+            {
+              "start": 71.68,
+              "duration": 5.88,
+              "text": "should have and my life could have"
+            },
+            {
+              "start": 74.84,
+              "duration": 6.64,
+              "text": "easily taken a turn for the"
+            },
+            {
+              "start": 77.56,
+              "duration": 5.56,
+              "text": "worst but I was I was lucky I got a lot"
+            },
+            {
+              "start": 81.48,
+              "duration": 3.12,
+              "text": "of Second Chances and I had the"
+            },
+            {
+              "start": 83.12,
+              "duration": 3.92,
+              "text": "opportunity to go to college and law"
+            },
+            {
+              "start": 84.6,
+              "duration": 5.0,
+              "text": "school and follow my"
+            },
+            {
+              "start": 87.04,
+              "duration": 5.24,
+              "text": "dreams my wife our First Lady Michelle"
+            },
+            {
+              "start": 89.6,
+              "duration": 4.64,
+              "text": "Obama mama she has a similar story"
+            },
+            {
+              "start": 92.28,
+              "duration": 3.76,
+              "text": "neither of her parents had gone to"
+            },
+            {
+              "start": 94.24,
+              "duration": 4.2,
+              "text": "college and they didn't have a lot of"
+            },
+            {
+              "start": 96.04,
+              "duration": 4.12,
+              "text": "money but they worked hard and she"
+            },
+            {
+              "start": 98.44,
+              "duration": 3.96,
+              "text": "worked hard so that she could go to the"
+            },
+            {
+              "start": 100.16,
+              "duration": 4.56,
+              "text": "best schools in this"
+            },
+            {
+              "start": 102.4,
+              "duration": 4.64,
+              "text": "country some of you might not have those"
+            },
+            {
+              "start": 104.72,
+              "duration": 4.48,
+              "text": "advantages maybe you don't have adults"
+            },
+            {
+              "start": 107.04,
+              "duration": 4.6,
+              "text": "in your life who give you the support"
+            },
+            {
+              "start": 109.2,
+              "duration": 3.92,
+              "text": "that you need maybe someone in your"
+            },
+            {
+              "start": 111.64,
+              "duration": 3.96,
+              "text": "family has lost their job and there's"
+            },
+            {
+              "start": 113.12,
+              "duration": 3.96,
+              "text": "not enough money to go around maybe you"
+            },
+            {
+              "start": 115.6,
+              "duration": 4.48,
+              "text": "live in a neighborhood where you don't"
+            },
+            {
+              "start": 117.08,
+              "duration": 5.24,
+              "text": "feel safe or have friends who are Pres"
+            },
+            {
+              "start": 120.08,
+              "duration": 5.72,
+              "text": "in you to do things you know aren't"
+            },
+            {
+              "start": 122.32,
+              "duration": 5.36,
+              "text": "right maybe you could be a great writer"
+            },
+            {
+              "start": 125.8,
+              "duration": 4.4,
+              "text": "maybe even good enough to write a book"
+            },
+            {
+              "start": 127.68,
+              "duration": 5.56,
+              "text": "or articles in a newspaper but you might"
+            },
+            {
+              "start": 130.2,
+              "duration": 5.52,
+              "text": "not know it until you write that English"
+            },
+            {
+              "start": 133.24,
+              "duration": 5.24,
+              "text": "paper uh that English class paper that's"
+            },
+            {
+              "start": 135.72,
+              "duration": 4.92,
+              "text": "assigned to you maybe you could be an"
+            },
+            {
+              "start": 138.48,
+              "duration": 4.24,
+              "text": "innovator or an inventor maybe even good"
+            },
+            {
+              "start": 140.64,
+              "duration": 5.12,
+              "text": "enough to come up with the next iPhone"
+            },
+            {
+              "start": 142.72,
+              "duration": 4.96,
+              "text": "or the new medicine or vaccine but you"
+            },
+            {
+              "start": 145.76,
+              "duration": 5.04,
+              "text": "might not know it until you do your"
+            },
+            {
+              "start": 147.68,
+              "duration": 6.12,
+              "text": "project for your science class"
+            },
+            {
+              "start": 150.8,
+              "duration": 6.0,
+              "text": "maybe you could be a mayor or a senator"
+            },
+            {
+              "start": 153.8,
+              "duration": 5.08,
+              "text": "or a Supreme Court Justice but you might"
+            },
+            {
+              "start": 156.8,
+              "duration": 4.72,
+              "text": "not know that until you join student"
+            },
+            {
+              "start": 158.88,
+              "duration": 5.2,
+              "text": "government or the debate"
+            },
+            {
+              "start": 161.52,
+              "duration": 4.64,
+              "text": "team and no matter what you want to do"
+            },
+            {
+              "start": 164.08,
+              "duration": 4.52,
+              "text": "with your life I guarantee that you'll"
+            },
+            {
+              "start": 166.16,
+              "duration": 4.76,
+              "text": "need an education to do it you want to"
+            },
+            {
+              "start": 168.6,
+              "duration": 4.44,
+              "text": "be a doctor or a teacher or a police"
+            },
+            {
+              "start": 170.92,
+              "duration": 4.52,
+              "text": "officer you want to be a nurse or an"
+            },
+            {
+              "start": 173.04,
+              "duration": 4.64,
+              "text": "architect a lawyer or a member of our"
+            },
+            {
+              "start": 175.44,
+              "duration": 4.12,
+              "text": "military you're going to need a good"
+            },
+            {
+              "start": 177.68,
+              "duration": 4.16,
+              "text": "education for every single one of those"
+            },
+            {
+              "start": 179.56,
+              "duration": 2.28,
+              "text": "careers"
+            },
+            {
+              "start": 182.32,
+              "duration": 4.04,
+              "text": "you cannot drop out of school and just"
+            },
+            {
+              "start": 184.68,
+              "duration": 5.04,
+              "text": "drop into a good"
+            },
+            {
+              "start": 186.36,
+              "duration": 6.96,
+              "text": "job you've got to train for it and work"
+            },
+            {
+              "start": 189.72,
+              "duration": 5.04,
+              "text": "for it and learn for it and this isn't"
+            },
+            {
+              "start": 193.32,
+              "duration": 2.56,
+              "text": "just important for your own life and"
+            },
+            {
+              "start": 194.76,
+              "duration": 3.56,
+              "text": "your own"
+            },
+            {
+              "start": 195.88,
+              "duration": 4.8,
+              "text": "future what you make of your education"
+            },
+            {
+              "start": 198.32,
+              "duration": 5.6,
+              "text": "will decide nothing less than the future"
+            },
+            {
+              "start": 200.68,
+              "duration": 4.72,
+              "text": "of this country the future of America"
+            },
+            {
+              "start": 203.92,
+              "duration": 3.88,
+              "text": "depends on"
+            },
+            {
+              "start": 205.4,
+              "duration": 4.68,
+              "text": "you what you're learning in school today"
+            },
+            {
+              "start": 207.8,
+              "duration": 5.6,
+              "text": "will determine whether we as a nation"
+            },
+            {
+              "start": 210.08,
+              "duration": 5.48,
+              "text": "can meet our greatest challenges in the"
+            },
+            {
+              "start": 213.4,
+              "duration": 4.36,
+              "text": "future you'll need the knowledge and"
+            },
+            {
+              "start": 215.56,
+              "duration": 4.6,
+              "text": "problem solving skills you learn in"
+            },
+            {
+              "start": 217.76,
+              "duration": 4.08,
+              "text": "science and math to cure diseases like"
+            },
+            {
+              "start": 220.16,
+              "duration": 3.84,
+              "text": "cancer and AIDS and to develop new"
+            },
+            {
+              "start": 221.84,
+              "duration": 4.44,
+              "text": "Energy Technologies and protect our"
+            },
+            {
+              "start": 224.0,
+              "duration": 4.32,
+              "text": "environment you'll need the insights and"
+            },
+            {
+              "start": 226.28,
+              "duration": 4.0,
+              "text": "critical thinking skills you gain in"
+            },
+            {
+              "start": 228.32,
+              "duration": 3.88,
+              "text": "history and social studies to fight"
+            },
+            {
+              "start": 230.28,
+              "duration": 4.16,
+              "text": "poverty and homelessness crime and"
+            },
+            {
+              "start": 232.2,
+              "duration": 3.92,
+              "text": "discrimination and make our nation more"
+            },
+            {
+              "start": 234.44,
+              "duration": 4.28,
+              "text": "fair and more"
+            },
+            {
+              "start": 236.12,
+              "duration": 4.36,
+              "text": "free you'll need the creativity and"
+            },
+            {
+              "start": 238.72,
+              "duration": 3.92,
+              "text": "Ingenuity you develop in all your"
+            },
+            {
+              "start": 240.48,
+              "duration": 5.12,
+              "text": "classes to build new companies that will"
+            },
+            {
+              "start": 242.64,
+              "duration": 4.96,
+              "text": "create new jobs and boost our economy we"
+            },
+            {
+              "start": 245.6,
+              "duration": 3.88,
+              "text": "need every single one of you to develop"
+            },
+            {
+              "start": 247.6,
+              "duration": 5.08,
+              "text": "your talents and your skills and your"
+            },
+            {
+              "start": 249.48,
+              "duration": 5.88,
+              "text": "intellect so you can help us old folks"
+            },
+            {
+              "start": 252.68,
+              "duration": 5.92,
+              "text": "solve our most difficult"
+            },
+            {
+              "start": 255.36,
+              "duration": 5.64,
+              "text": "problems if you don't do that if you"
+            },
+            {
+              "start": 258.6,
+              "duration": 5.08,
+              "text": "quit on school you're not just quitting"
+            },
+            {
+              "start": 261.0,
+              "duration": 4.88,
+              "text": "on yourself you're quitting on your"
+            },
+            {
+              "start": 263.68,
+              "duration": 3.4,
+              "text": "country I know it's not always easy to"
+            },
+            {
+              "start": 265.88,
+              "duration": 3.16,
+              "text": "do well in"
+            },
+            {
+              "start": 267.08,
+              "duration": 4.32,
+              "text": "school I know a lot of you have"
+            },
+            {
+              "start": 269.04,
+              "duration": 3.88,
+              "text": "challenges in your your lives right now"
+            },
+            {
+              "start": 271.4,
+              "duration": 2.52,
+              "text": "that can make it hard to focus on your"
+            },
+            {
+              "start": 272.92,
+              "duration": 4.76,
+              "text": "school"
+            },
+            {
+              "start": 273.92,
+              "duration": 6.72,
+              "text": "work I get it I know what it's like but"
+            },
+            {
+              "start": 277.68,
+              "duration": 5.4,
+              "text": "at the end of the day the circumstances"
+            },
+            {
+              "start": 280.64,
+              "duration": 5.04,
+              "text": "of your life what you look like where"
+            },
+            {
+              "start": 283.08,
+              "duration": 5.52,
+              "text": "you come from how much money you have"
+            },
+            {
+              "start": 285.68,
+              "duration": 4.72,
+              "text": "what you've got going on at home none of"
+            },
+            {
+              "start": 288.6,
+              "duration": 4.12,
+              "text": "that is an excuse for neglecting your"
+            },
+            {
+              "start": 290.4,
+              "duration": 5.12,
+              "text": "homework or having a bad attitude in"
+            },
+            {
+              "start": 292.72,
+              "duration": 4.68,
+              "text": "school that's no excuse for talking back"
+            },
+            {
+              "start": 295.52,
+              "duration": 4.44,
+              "text": "to your teacher or cutting class or"
+            },
+            {
+              "start": 297.4,
+              "duration": 5.4,
+              "text": "dropping out of school there is no"
+            },
+            {
+              "start": 299.96,
+              "duration": 5.32,
+              "text": "excuse for not"
+            },
+            {
+              "start": 302.8,
+              "duration": 5.24,
+              "text": "trying where you are right now doesn't"
+            },
+            {
+              "start": 305.28,
+              "duration": 4.88,
+              "text": "have to determine where you'll end up no"
+            },
+            {
+              "start": 308.04,
+              "duration": 4.0,
+              "text": "one's written your destiny for you"
+            },
+            {
+              "start": 310.16,
+              "duration": 4.96,
+              "text": "because here in America you write your"
+            },
+            {
+              "start": 312.04,
+              "duration": 5.6,
+              "text": "own destiny you make your own"
+            },
+            {
+              "start": 315.12,
+              "duration": 5.36,
+              "text": "future that's what young people like you"
+            },
+            {
+              "start": 317.64,
+              "duration": 5.04,
+              "text": "are doing every day all across"
+            },
+            {
+              "start": 320.48,
+              "duration": 3.96,
+              "text": "America that's why today I'm calling on"
+            },
+            {
+              "start": 322.68,
+              "duration": 3.92,
+              "text": "each of you to set your own goals for"
+            },
+            {
+              "start": 324.44,
+              "duration": 3.12,
+              "text": "your education and do everything you can"
+            },
+            {
+              "start": 326.6,
+              "duration": 3.36,
+              "text": "to meet"
+            },
+            {
+              "start": 327.56,
+              "duration": 5.2,
+              "text": "them your goal can be something as"
+            },
+            {
+              "start": 329.96,
+              "duration": 5.68,
+              "text": "simple as doing all your homework paying"
+            },
+            {
+              "start": 332.76,
+              "duration": 5.52,
+              "text": "attention in class or spending some time"
+            },
+            {
+              "start": 335.64,
+              "duration": 4.96,
+              "text": "each day reading a"
+            },
+            {
+              "start": 338.28,
+              "duration": 4.0,
+              "text": "book maybe you'll decide to get involved"
+            },
+            {
+              "start": 340.6,
+              "duration": 3.28,
+              "text": "in an extracurricular activity or"
+            },
+            {
+              "start": 342.28,
+              "duration": 3.96,
+              "text": "volunteer in your"
+            },
+            {
+              "start": 343.88,
+              "duration": 4.2,
+              "text": "community maybe you'll decide to stand"
+            },
+            {
+              "start": 346.24,
+              "duration": 4.68,
+              "text": "up for kids who are being teased or"
+            },
+            {
+              "start": 348.08,
+              "duration": 6.36,
+              "text": "bullied because of who they are or how"
+            },
+            {
+              "start": 350.92,
+              "duration": 6.0,
+              "text": "they look because you believe like I do"
+            },
+            {
+              "start": 354.44,
+              "duration": 5.44,
+              "text": "that all young people deserve a safe"
+            },
+            {
+              "start": 356.92,
+              "duration": 4.36,
+              "text": "environment to study and learn"
+            },
+            {
+              "start": 359.88,
+              "duration": 3.64,
+              "text": "maybe you'll decide to take better care"
+            },
+            {
+              "start": 361.28,
+              "duration": 5.76,
+              "text": "of yourself so you could be more ready"
+            },
+            {
+              "start": 363.52,
+              "duration": 6.04,
+              "text": "to learn but whatever you resolve to do"
+            },
+            {
+              "start": 367.04,
+              "duration": 3.8,
+              "text": "I want you to commit to it I want you to"
+            },
+            {
+              "start": 369.56,
+              "duration": 3.6,
+              "text": "really work at"
+            },
+            {
+              "start": 370.84,
+              "duration": 4.6,
+              "text": "it I know that sometimes you get that"
+            },
+            {
+              "start": 373.16,
+              "duration": 4.52,
+              "text": "sense from TV that you can be rich and"
+            },
+            {
+              "start": 375.44,
+              "duration": 3.84,
+              "text": "successful without any hard work that"
+            },
+            {
+              "start": 377.68,
+              "duration": 5.04,
+              "text": "your ticket to success is through"
+            },
+            {
+              "start": 379.28,
+              "duration": 5.24,
+              "text": "rapping or basketball or being a reality"
+            },
+            {
+              "start": 382.72,
+              "duration": 4.12,
+              "text": "TV"
+            },
+            {
+              "start": 384.52,
+              "duration": 3.72,
+              "text": "star chances are you're not going to be"
+            },
+            {
+              "start": 386.84,
+              "duration": 4.12,
+              "text": "any of those"
+            },
+            {
+              "start": 388.24,
+              "duration": 4.88,
+              "text": "things the truth truth is being"
+            },
+            {
+              "start": 390.96,
+              "duration": 5.2,
+              "text": "successful is"
+            },
+            {
+              "start": 393.12,
+              "duration": 4.16,
+              "text": "hard you won't love every subject that"
+            },
+            {
+              "start": 396.16,
+              "duration": 4.48,
+              "text": "you"
+            },
+            {
+              "start": 397.28,
+              "duration": 4.6,
+              "text": "study you won't click with every teacher"
+            },
+            {
+              "start": 400.64,
+              "duration": 4.52,
+              "text": "that you"
+            },
+            {
+              "start": 401.88,
+              "duration": 6.08,
+              "text": "have not every homework assignment will"
+            },
+            {
+              "start": 405.16,
+              "duration": 4.52,
+              "text": "seem completely relevant to your life"
+            },
+            {
+              "start": 407.96,
+              "duration": 4.52,
+              "text": "right at this"
+            },
+            {
+              "start": 409.68,
+              "duration": 5.48,
+              "text": "minute and you won't necessarily succeed"
+            },
+            {
+              "start": 412.48,
+              "duration": 4.68,
+              "text": "at everything the first time you"
+            },
+            {
+              "start": 415.16,
+              "duration": 4.48,
+              "text": "try that's"
+            },
+            {
+              "start": 417.16,
+              "duration": 4.12,
+              "text": "okay some of the most successful people"
+            },
+            {
+              "start": 419.64,
+              "duration": 2.44,
+              "text": "in the world are the ones who've had the"
+            },
+            {
+              "start": 421.28,
+              "duration": 3.24,
+              "text": "most"
+            },
+            {
+              "start": 422.08,
+              "duration": 5.0,
+              "text": "failures JK"
+            },
+            {
+              "start": 424.52,
+              "duration": 5.08,
+              "text": "Rollins who wrote Harry"
+            },
+            {
+              "start": 427.08,
+              "duration": 6.72,
+              "text": "Potter her first Harry Potter book was"
+            },
+            {
+              "start": 429.6,
+              "duration": 6.68,
+              "text": "rejected 12 times before it was finally"
+            },
+            {
+              "start": 433.8,
+              "duration": 4.44,
+              "text": "published Michael Jordan was cut from"
+            },
+            {
+              "start": 436.28,
+              "duration": 4.6,
+              "text": "his high school basketball"
+            },
+            {
+              "start": 438.24,
+              "duration": 4.84,
+              "text": "team he lost hundreds of games and"
+            },
+            {
+              "start": 440.88,
+              "duration": 5.04,
+              "text": "missed thousands of shots during his"
+            },
+            {
+              "start": 443.08,
+              "duration": 5.48,
+              "text": "career but he once said I have failed"
+            },
+            {
+              "start": 445.92,
+              "duration": 5.32,
+              "text": "over and over and over again in my life"
+            },
+            {
+              "start": 448.56,
+              "duration": 5.32,
+              "text": "and that's why I sued succeed these"
+            },
+            {
+              "start": 451.24,
+              "duration": 5.24,
+              "text": "people succeeded because they understood"
+            },
+            {
+              "start": 453.88,
+              "duration": 5.56,
+              "text": "that you can't let your failures Define"
+            },
+            {
+              "start": 456.48,
+              "duration": 5.64,
+              "text": "you you have to let your failures teach"
+            },
+            {
+              "start": 459.44,
+              "duration": 4.68,
+              "text": "you you have to let them show you what"
+            },
+            {
+              "start": 462.12,
+              "duration": 4.8,
+              "text": "to do differently the next"
+            },
+            {
+              "start": 464.12,
+              "duration": 4.88,
+              "text": "time so if you get into trouble that"
+            },
+            {
+              "start": 466.92,
+              "duration": 5.72,
+              "text": "doesn't mean you're a troublemaker it"
+            },
+            {
+              "start": 469.0,
+              "duration": 5.72,
+              "text": "means you need to try harder to act"
+            },
+            {
+              "start": 472.64,
+              "duration": 3.8,
+              "text": "right if you get a bad grade that"
+            },
+            {
+              "start": 474.72,
+              "duration": 5.96,
+              "text": "doesn't mean you're stupid it just means"
+            },
+            {
+              "start": 476.44,
+              "duration": 7.56,
+              "text": "you need to spend more time studying"
+            },
+            {
+              "start": 480.68,
+              "duration": 6.84,
+              "text": "no one's born being good at all things"
+            },
+            {
+              "start": 484.0,
+              "duration": 6.0,
+              "text": "you become good at things through hard"
+            },
+            {
+              "start": 487.52,
+              "duration": 4.32,
+              "text": "work you're not a varsity athlete the"
+            },
+            {
+              "start": 490.0,
+              "duration": 3.56,
+              "text": "first time you play a new sport you"
+            },
+            {
+              "start": 491.84,
+              "duration": 4.76,
+              "text": "don't hit every note the first time you"
+            },
+            {
+              "start": 493.56,
+              "duration": 5.8,
+              "text": "sing a song you've got to practice the"
+            },
+            {
+              "start": 496.6,
+              "duration": 4.96,
+              "text": "same principle applies to your"
+            },
+            {
+              "start": 499.36,
+              "duration": 3.8,
+              "text": "schoolwork you might have to do a math"
+            },
+            {
+              "start": 501.56,
+              "duration": 3.48,
+              "text": "problem a few times before you get it"
+            },
+            {
+              "start": 503.16,
+              "duration": 4.44,
+              "text": "right you might have to read something a"
+            },
+            {
+              "start": 505.04,
+              "duration": 4.52,
+              "text": "few times before you understand it you"
+            },
+            {
+              "start": 507.6,
+              "duration": 5.2,
+              "text": "definitely have to do a few drafts of a"
+            },
+            {
+              "start": 509.56,
+              "duration": 6.4,
+              "text": "paper before it's good enough to hand"
+            },
+            {
+              "start": 512.8,
+              "duration": 5.08,
+              "text": "in don't be afraid to ask questions"
+            },
+            {
+              "start": 515.96,
+              "duration": 3.96,
+              "text": "don't be afraid to ask for help when you"
+            },
+            {
+              "start": 517.88,
+              "duration": 4.32,
+              "text": "need it I do that every"
+            },
+            {
+              "start": 519.92,
+              "duration": 4.72,
+              "text": "day asking for help isn't a sign of"
+            },
+            {
+              "start": 522.2,
+              "duration": 3.88,
+              "text": "weakness it's a sign of strength because"
+            },
+            {
+              "start": 524.64,
+              "duration": 3.72,
+              "text": "it shows you have the courage to admit"
+            },
+            {
+              "start": 526.08,
+              "duration": 4.8,
+              "text": "when you don't know something and that"
+            },
+            {
+              "start": 528.36,
+              "duration": 5.72,
+              "text": "then allows you to learn something"
+            },
+            {
+              "start": 530.88,
+              "duration": 5.32,
+              "text": "new so find an adult that you trust a"
+            },
+            {
+              "start": 534.08,
+              "duration": 4.72,
+              "text": "parent a grandparent or a teacher a"
+            },
+            {
+              "start": 536.2,
+              "duration": 6.0,
+              "text": "coach or a counselor and ask them to"
+            },
+            {
+              "start": 538.8,
+              "duration": 5.72,
+              "text": "help you stay on track to meet your"
+            },
+            {
+              "start": 542.2,
+              "duration": 4.4,
+              "text": "goals and even when you're struggling"
+            },
+            {
+              "start": 544.52,
+              "duration": 4.6,
+              "text": "even when you're discouraged and you"
+            },
+            {
+              "start": 546.6,
+              "duration": 5.8,
+              "text": "feel like other people have given up on"
+            },
+            {
+              "start": 549.12,
+              "duration": 5.52,
+              "text": "you don't ever give up on"
+            },
+            {
+              "start": 552.4,
+              "duration": 4.88,
+              "text": "yourself because when you give up on"
+            },
+            {
+              "start": 554.64,
+              "duration": 5.2,
+              "text": "yourself you give up on your"
+            },
+            {
+              "start": 557.28,
+              "duration": 5.0,
+              "text": "country the story of America isn't about"
+            },
+            {
+              "start": 559.84,
+              "duration": 4.08,
+              "text": "people who quit when things got tough"
+            },
+            {
+              "start": 562.28,
+              "duration": 3.56,
+              "text": "it's about people who kept going who"
+            },
+            {
+              "start": 563.92,
+              "duration": 4.44,
+              "text": "tried harder who loved their country too"
+            },
+            {
+              "start": 565.84,
+              "duration": 5.64,
+              "text": "much to do anything less than their"
+            },
+            {
+              "start": 568.36,
+              "duration": 5.92,
+              "text": "best it's the story of students who sat"
+            },
+            {
+              "start": 571.48,
+              "duration": 4.96,
+              "text": "where you sit 250 years ago and went on"
+            },
+            {
+              "start": 574.28,
+              "duration": 4.4,
+              "text": "to wage a revolution and they founded"
+            },
+            {
+              "start": 576.44,
+              "duration": 5.32,
+              "text": "this nation young"
+            },
+            {
+              "start": 578.68,
+              "duration": 5.28,
+              "text": "people students who sat where you sit 75"
+            },
+            {
+              "start": 581.76,
+              "duration": 4.92,
+              "text": "years ago who overcame a depression and"
+            },
+            {
+              "start": 583.96,
+              "duration": 4.4,
+              "text": "won a World War who fought for civil"
+            },
+            {
+              "start": 586.68,
+              "duration": 4.56,
+              "text": "rights and put a man on the"
+            },
+            {
+              "start": 588.36,
+              "duration": 5.04,
+              "text": "moon students who sat where you sit 20"
+            },
+            {
+              "start": 591.24,
+              "duration": 4.16,
+              "text": "years ago who founded Google and Twitter"
+            },
+            {
+              "start": 593.4,
+              "duration": 4.92,
+              "text": "and Facebook and change the way we"
+            },
+            {
+              "start": 595.4,
+              "duration": 5.8,
+              "text": "communicate with each other so today I"
+            },
+            {
+              "start": 598.32,
+              "duration": 5.84,
+              "text": "want to ask all of you what's your"
+            },
+            {
+              "start": 601.2,
+              "duration": 4.16,
+              "text": "contribution going to be what problems"
+            },
+            {
+              "start": 604.16,
+              "duration": 5.08,
+              "text": "are you going to"
+            },
+            {
+              "start": 605.36,
+              "duration": 6.2,
+              "text": "solve what discoveries will you"
+            },
+            {
+              "start": 609.24,
+              "duration": 4.68,
+              "text": "make what will a president who comes"
+            },
+            {
+              "start": 611.56,
+              "duration": 5.44,
+              "text": "here in 20 or 50 or 100 years say about"
+            },
+            {
+              "start": 613.92,
+              "duration": 5.4,
+              "text": "what all of you did for this"
+            },
+            {
+              "start": 617.0,
+              "duration": 4.12,
+              "text": "country you know your families your"
+            },
+            {
+              "start": 619.32,
+              "duration": 3.6,
+              "text": "teachers and I are doing everything we"
+            },
+            {
+              "start": 621.12,
+              "duration": 3.92,
+              "text": "can to make sure you have the education"
+            },
+            {
+              "start": 622.92,
+              "duration": 4.32,
+              "text": "you need to answer these"
+            },
+            {
+              "start": 625.04,
+              "duration": 3.68,
+              "text": "questions I'm working hard to fix up"
+            },
+            {
+              "start": 627.24,
+              "duration": 2.92,
+              "text": "your classrooms and get you the books"
+            },
+            {
+              "start": 628.72,
+              "duration": 2.64,
+              "text": "and the equipment and the computers you"
+            },
+            {
+              "start": 630.16,
+              "duration": 3.96,
+              "text": "need to"
+            },
+            {
+              "start": 631.36,
+              "duration": 6.4,
+              "text": "learn but you've got to do your part"
+            },
+            {
+              "start": 634.12,
+              "duration": 4.92,
+              "text": "too so I expect all of you to get"
+            },
+            {
+              "start": 637.76,
+              "duration": 3.8,
+              "text": "serious this"
+            },
+            {
+              "start": 639.04,
+              "duration": 6.0,
+              "text": "year I expect you to put your best"
+            },
+            {
+              "start": 641.56,
+              "duration": 6.24,
+              "text": "effort into everything you do I expect"
+            },
+            {
+              "start": 645.04,
+              "duration": 6.52,
+              "text": "great things from each of"
+            },
+            {
+              "start": 647.8,
+              "duration": 6.04,
+              "text": "you so don't let us down don't let your"
+            },
+            {
+              "start": 651.56,
+              "duration": 4.88,
+              "text": "family down or your country down most of"
+            },
+            {
+              "start": 653.84,
+              "duration": 7.2,
+              "text": "all don't let yourself"
+            },
+            {
+              "start": 656.44,
+              "duration": 4.6,
+              "text": "down make us all proud"
+            },
+            {
+              "start": 666.01,
+              "duration": 3.19,
+              "text": "[Music]"
+            }
+          ],
+          "full_text": "when I was young my family lived overseas uh I lived in Indonesia for a few years and my mother she didn't have the money to send me where all the American kids went to school but she thought it was important for me to keep up with an American education so she decided to teach me extra lessons herself Monday through Friday but because she had to go to work the only time she could do it was at 4:30 in the morning but whenever I'd complain my mother would just give me one looks and she'd say this is no picnic for me either Buster so I know that some of you are still adjusting to being back at school but I'm here today because I have something important to discuss with you my father left my family when I was 2 years old and I was raised by a single mom who had to work and who struggled at times to pay the bills and wasn't always able to give us the things that other kids had there were times when I missed having a father in my life there were times when I was lonely and I felt like I didn't fit in so I wasn't always as focused as I should have been on school and I did some things that I'm not proud of and I got in more trouble than I should have and my life could have easily taken a turn for the worst but I was I was lucky I got a lot of Second Chances and I had the opportunity to go to college and law school and follow my dreams my wife our First Lady Michelle Obama mama she has a similar story neither of her parents had gone to college and they didn't have a lot of money but they worked hard and she worked hard so that she could go to the best schools in this country some of you might not have those advantages maybe you don't have adults in your life who give you the support that you need maybe someone in your family has lost their job and there's not enough money to go around maybe you live in a neighborhood where you don't feel safe or have friends who are Pres in you to do things you know aren't right maybe you could be a great writer maybe even good enough to write a book or articles in a newspaper but you might not know it until you write that English paper uh that English class paper that's assigned to you maybe you could be an innovator or an inventor maybe even good enough to come up with the next iPhone or the new medicine or vaccine but you might not know it until you do your project for your science class maybe you could be a mayor or a senator or a Supreme Court Justice but you might not know that until you join student government or the debate team and no matter what you want to do with your life I guarantee that you'll need an education to do it you want to be a doctor or a teacher or a police officer you want to be a nurse or an architect a lawyer or a member of our military you're going to need a good education for every single one of those careers you cannot drop out of school and just drop into a good job you've got to train for it and work for it and learn for it and this isn't just important for your own life and your own future what you make of your education will decide nothing less than the future of this country the future of America depends on you what you're learning in school today will determine whether we as a nation can meet our greatest challenges in the future you'll need the knowledge and problem solving skills you learn in science and math to cure diseases like cancer and AIDS and to develop new Energy Technologies and protect our environment you'll need the insights and critical thinking skills you gain in history and social studies to fight poverty and homelessness crime and discrimination and make our nation more fair and more free you'll need the creativity and Ingenuity you develop in all your classes to build new companies that will create new jobs and boost our economy we need every single one of you to develop your talents and your skills and your intellect so you can help us old folks solve our most difficult problems if you don't do that if you quit on school you're not just quitting on yourself you're quitting on your country I know it's not always easy to do well in school I know a lot of you have challenges in your your lives right now that can make it hard to focus on your school work I get it I know what it's like but at the end of the day the circumstances of your life what you look like where you come from how much money you have what you've got going on at home none of that is an excuse for neglecting your homework or having a bad attitude in school that's no excuse for talking back to your teacher or cutting class or dropping out of school there is no excuse for not trying where you are right now doesn't have to determine where you'll end up no one's written your destiny for you because here in America you write your own destiny you make your own future that's what young people like you are doing every day all across America that's why today I'm calling on each of you to set your own goals for your education and do everything you can to meet them your goal can be something as simple as doing all your homework paying attention in class or spending some time each day reading a book maybe you'll decide to get involved in an extracurricular activity or volunteer in your community maybe you'll decide to stand up for kids who are being teased or bullied because of who they are or how they look because you believe like I do that all young people deserve a safe environment to study and learn maybe you'll decide to take better care of yourself so you could be more ready to learn but whatever you resolve to do I want you to commit to it I want you to really work at it I know that sometimes you get that sense from TV that you can be rich and successful without any hard work that your ticket to success is through rapping or basketball or being a reality TV star chances are you're not going to be any of those things the truth truth is being successful is hard you won't love every subject that you study you won't click with every teacher that you have not every homework assignment will seem completely relevant to your life right at this minute and you won't necessarily succeed at everything the first time you try that's okay some of the most successful people in the world are the ones who've had the most failures JK Rollins who wrote Harry Potter her first Harry Potter book was rejected 12 times before it was finally published Michael Jordan was cut from his high school basketball team he lost hundreds of games and missed thousands of shots during his career but he once said I have failed over and over and over again in my life and that's why I sued succeed these people succeeded because they understood that you can't let your failures Define you you have to let your failures teach you you have to let them show you what to do differently the next time so if you get into trouble that doesn't mean you're a troublemaker it means you need to try harder to act right if you get a bad grade that doesn't mean you're stupid it just means you need to spend more time studying no one's born being good at all things you become good at things through hard work you're not a varsity athlete the first time you play a new sport you don't hit every note the first time you sing a song you've got to practice the same principle applies to your schoolwork you might have to do a math problem a few times before you get it right you might have to read something a few times before you understand it you definitely have to do a few drafts of a paper before it's good enough to hand in don't be afraid to ask questions don't be afraid to ask for help when you need it I do that every day asking for help isn't a sign of weakness it's a sign of strength because it shows you have the courage to admit when you don't know something and that then allows you to learn something new so find an adult that you trust a parent a grandparent or a teacher a coach or a counselor and ask them to help you stay on track to meet your goals and even when you're st"
+        },
+        "error": null,
+        "execution_time_ms": 2307.2922229766846,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "2842ac90-f3c7-4850-a364-21bc0316bc8c",
+        "description": "Extract the subject of the video and the timestamp of their mentor's first mention from the transcript",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "raw_content": "$step_1.transcript",
+          "extraction_query": "Identify who the video is about and find the exact timestamp (or time range) where their mentor is first mentioned in the transcript."
+        },
+        "reasoning": "The data_extractor tool is designed to parse unstructured text (like a transcript) and extract specific structured information based on a natural language query.",
+        "status": "COMPLETED",
+        "result": {
+          "status": "SUCCESS",
+          "source_type": "text_payload",
+          "extraction_query": "Identify who the video is about and find the exact timestamp (or time range) where their mentor is first mentioned in the transcript.",
+          "processed_records_count": 1,
+          "extracted_data": [
+            {
+              "subject": "Barack Obama",
+              "mentor_mention_timestamp": "Not found"
+            }
+          ],
+          "records": [
+            {
+              "subject": "Barack Obama",
+              "mentor_mention_timestamp": "Not found"
+            }
+          ],
+          "summary": "The video is about Barack Obama, but no mention of a mentor is present in the provided transcript.",
+          "raw_snippet": "[{\"start\": 0.28, \"duration\": 4.8, \"text\": \"when I was young my family lived\"}, {\"start\": 2.72, \"duration\": 5.2, \"text\": \"overseas uh I lived in Indonesia for a\"}, {\"start\": 5.08, \"duration\": 4.56, \"te..."
+        },
+        "error": null,
+        "execution_time_ms": 6741.2519454956055,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "e57f4910-e628-4807-a538-61060f71ab8e",
+        "description": "Generate a final report summarizing the findings",
+        "tool_name": "report_generator",
+        "tool_args": {
+          "title": "YouTube Video Analysis: PGUdWfB8nLg",
+          "sections": [
+            {
+              "heading": "Video Subject and Mentor Mention Timestamp",
+              "content": "$step_2.extracted_data"
+            }
+          ]
+        },
+        "reasoning": "Compiling the extracted information into a structured report ensures a clean, professional, and easily readable final answer for the user.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T07:28:50.385860",
+    "updated_at": "2026-08-31T07:28:50.390342Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 2935,
+      "total_completion_tokens": 497,
+      "total_tokens": 3432,
+      "total_estimated_cost_usd": 0.000738,
+      "calls": [
+        {
+          "prompt_tokens": 2935,
+          "completion_tokens": 497,
+          "total_tokens": 3432,
+          "model_used": "gemini-3.5-flash",
+          "estimated_cost_usd": 0.000738
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

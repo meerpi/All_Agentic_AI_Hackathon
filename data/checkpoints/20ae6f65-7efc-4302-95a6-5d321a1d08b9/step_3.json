@@ -1,0 +1,169 @@
+{
+  "workflow_id": "20ae6f65-7efc-4302-95a6-5d321a1d08b9",
+  "step_number": 3,
+  "timestamp": "2026-08-31T10:23:30.364187+00:00",
+  "state": {
+    "workflow_id": "20ae6f65-7efc-4302-95a6-5d321a1d08b9",
+    "goal": "play me the video of one direction of youtube for 1 minute",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "a0c54671-f310-41c3-9c74-037488cca590",
+        "description": "Search for One Direction on YouTube to retrieve a valid video ID.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_api_search",
+          "query": "One Direction"
+        },
+        "reasoning": "Need to identify a specific video ID for One Direction to initiate playback.",
+        "status": "COMPLETED",
+        "result": {
+          "status": "SUCCESS",
+          "query": "One Direction",
+          "results": [
+            {
+              "title": "One Direction - Steal My Girl",
+              "channel": "One Direction",
+              "video_id": "UpsKGvPjAgw",
+              "url": "https://www.youtube.com/watch?v=UpsKGvPjAgw",
+              "description": "Video by One Direction"
+            },
+            {
+              "title": "One Direction Greatest Hits Songs #onedirection #onedirectionsongs #music #songs",
+              "channel": "Lets_Play",
+              "video_id": "5McQascwX6M",
+              "url": "https://www.youtube.com/watch?v=5McQascwX6M",
+              "description": "Video by Lets_Play"
+            },
+            {
+              "title": "One Direction - Drag Me Down (Official Video)",
+              "channel": "One Direction",
+              "video_id": "Jwgf3wmiA04",
+              "url": "https://www.youtube.com/watch?v=Jwgf3wmiA04",
+              "description": "Video by One Direction"
+            },
+            {
+              "title": "One Direction - Best Song Ever",
+              "channel": "One Direction",
+              "video_id": "o_v9MY_FMcw",
+              "url": "https://www.youtube.com/watch?v=o_v9MY_FMcw",
+              "description": "Video by One Direction"
+            },
+            {
+              "title": "One Direction - Perfect (Official Video)",
+              "channel": "One Direction",
+              "video_id": "Ho32Oh6b4jc",
+              "url": "https://www.youtube.com/watch?v=Ho32Oh6b4jc",
+              "description": "Video by One Direction"
+            }
+          ]
+        },
+        "error": null,
+        "execution_time_ms": 2337.460994720459,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "c0d4ffe1-c271-49b6-b1f4-733694bb356e",
+        "description": "Play the identified One Direction video.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "video_id": "$step_1.results[0].video_id"
+        },
+        "reasoning": "Initiating playback using the video ID retrieved from the search results.",
+        "status": "COMPLETED",
+        "result": {
+          "status": "SUCCESS",
+          "action": "youtube_play_video",
+          "url": "https://www.youtube.com/watch?v=UpsKGvPjAgw",
+          "seek_seconds": null,
+          "duration_played_seconds": null,
+          "ads_skipped_count": 0,
+          "playback_state": {
+            "playing": true,
+            "paused": false,
+            "currentTime": 2,
+            "duration": 10,
+            "muted": false,
+            "volume": 56,
+            "title": "One Direction - Steal My Girl",
+            "channel": "One Direction"
+          }
+        },
+        "error": null,
+        "execution_time_ms": 5110.333442687988,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "cfe1c390-9f1e-4217-a15c-c4d0353c37e2",
+        "description": "Wait for 60 seconds and then stop the playback.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_control",
+          "command": "stop",
+          "delay_seconds": 60
+        },
+        "reasoning": "The user requested the video play for exactly 1 minute; the media controller supports timed control.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T10:23:22.870175",
+    "updated_at": "2026-08-31T10:23:22.873699Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 2897,
+      "total_completion_tokens": 380,
+      "total_tokens": 3277,
+      "total_estimated_cost_usd": 0.000663,
+      "calls": [
+        {
+          "prompt_tokens": 2897,
+          "completion_tokens": 380,
+          "total_tokens": 3277,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000663
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

@@ -90,8 +90,8 @@ DISCORD_TOKEN=your_token_here python discord_bot.py
 ### 1. Local Setup
 ```bash
 # Clone repository
-git clone <your-repo-url>
-cd AI_AGENT
+git clone https://github.com/Tejas-Ranjeet/All_Agentic_AI_Hackathon.git
+cd All_Agentic_AI_Hackathon
 
 # Create virtual environment & install dependencies
 python -m venv venv

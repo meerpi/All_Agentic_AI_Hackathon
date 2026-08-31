@@ -75,7 +75,7 @@ async def workflow_sse_generator(goal_text: str, require_approval: bool = False,
 
         def execute_in_thread():
             try:
-                final = orchestrator.execute_plan(plan.workflow_id)
+                final = orchestrator.execute_workflow(plan.workflow_id)
                 loop.call_soon_threadsafe(queue.put_nowait, {"type": "completed", "plan": final})
             except Exception as e:
                 loop.call_soon_threadsafe(queue.put_nowait, {"type": "error", "error": e})
@@ -138,12 +138,13 @@ async def workflow_sse_generator(goal_text: str, require_approval: bool = False,
             del orchestrator.event_callbacks[plan.workflow_id]
 
         if final_plan:
-            # Emit completion
+            # Emit completion with full step data and summary
             yield StreamEvent("workflow_completed", {
                 "workflow_id": final_plan.workflow_id,
                 "status": final_plan.status.value,
                 "summary": final_plan.summary,
-                "tokens": final_plan.token_usage.model_dump(mode="json"),
+                "steps": [s.model_dump(mode="json") for s in final_plan.steps],
+                "tokens": final_plan.token_usage.model_dump(mode="json") if final_plan.token_usage else {},
                 "eval_scores": final_plan.eval_scores,
             }).to_sse()
 

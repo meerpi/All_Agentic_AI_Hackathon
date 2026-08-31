@@ -1,0 +1,126 @@
+{
+  "workflow_id": "b4139487-2b0e-419d-b8e6-12edd40fe858",
+  "step_number": 2,
+  "timestamp": "2026-08-31T13:28:44.113556+00:00",
+  "state": {
+    "workflow_id": "b4139487-2b0e-419d-b8e6-12edd40fe858",
+    "goal": "open youtube video of pm modi and putin in same car",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "5c535a56-91ae-46cd-a8ab-739d9c731baf",
+        "description": "Search YouTube for a video featuring PM Modi and Vladimir Putin in the same car.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_api_search",
+          "query": "PM Modi and Vladimir Putin in the same car"
+        },
+        "reasoning": "Need to identify the correct video URL from the search results to fulfill the user's request.",
+        "status": "COMPLETED",
+        "result": {
+          "status": "SUCCESS",
+          "query": "PM Modi and Vladimir Putin in the same car",
+          "results": [
+            {
+              "title": "PM Modi And Putin Travel Together In One Car; Exclusive Moment Goes Viral",
+              "channel": "Business Today",
+              "video_id": "AwSXci1eaBI",
+              "url": "https://www.youtube.com/watch?v=AwSXci1eaBI",
+              "description": "Video by Business Today"
+            },
+            {
+              "title": "Vladimir Putin Arrives In Kyrgyzstan | Xi Jinping & PM Modi Meetings On SCO Sidelines  | N18G",
+              "channel": "CNBC-TV18",
+              "video_id": "MM1_xmCvfTY",
+              "url": "https://www.youtube.com/watch?v=MM1_xmCvfTY",
+              "description": "Video by CNBC-TV18"
+            },
+            {
+              "title": "Watch: PM Modi And President Putin Travel Together In Same Car To 7 Lok Kalyan Marg For Dinner",
+              "channel": "India Today",
+              "video_id": "ia5ipKK5fW8",
+              "url": "https://www.youtube.com/watch?v=ia5ipKK5fW8",
+              "description": "Video by India Today"
+            },
+            {
+              "title": "Putin & Modi Travel In Same Car From Delhi Airport; Indian PM Shares Inside Look | Watch",
+              "channel": "Times Of India",
+              "video_id": "Tj8sNpMDG8E",
+              "url": "https://www.youtube.com/watch?v=Tj8sNpMDG8E",
+              "description": "Video by Times Of India"
+            },
+            {
+              "title": "PM Modi & President Putin Travel Together in Same Car | Iconic India-Russia Moment",
+              "channel": "India Today",
+              "video_id": "cOQdxqTaTj0",
+              "url": "https://www.youtube.com/watch?v=cOQdxqTaTj0",
+              "description": "Video by India Today"
+            }
+          ]
+        },
+        "error": null,
+        "execution_time_ms": 3264.841318130493,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "07ae350c-8fbe-4ba0-b834-2b02b3bfef60",
+        "description": "Play the most relevant video found in the search results.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "url": "$step_1.results[0].url"
+        },
+        "reasoning": "The user explicitly requested to open and play the video.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T13:28:40.743257",
+    "updated_at": "2026-08-31T13:28:40.808573Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3036,
+      "total_completion_tokens": 267,
+      "total_tokens": 3303,
+      "total_estimated_cost_usd": 0.000616,
+      "calls": [
+        {
+          "prompt_tokens": 3036,
+          "completion_tokens": 267,
+          "total_tokens": 3303,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000616
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "workflow_id": "8e6bb274-5881-4ce6-8682-3c001d897225",
+  "step_number": 1,
+  "timestamp": "2026-08-31T07:07:18.098810+00:00",
+  "state": {
+    "workflow_id": "8e6bb274-5881-4ce6-8682-3c001d897225",
+    "goal": "Go to https://youtu.be/P_Dpgph81-U and tell me who is this video about and at what timestamp is his mentor first mentioned",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "37b0ac94-bee9-46e7-b5db-416fa0b40abf",
+        "description": "Retrieve the transcript of the YouTube video P_Dpgph81-U using the media controller tool.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_transcript",
+          "video_id": "P_Dpgph81-U"
+        },
+        "reasoning": "The media_controller tool has a specific action 'youtube_transcript' which is the most direct and efficient way to retrieve the text and timestamps of a YouTube video without needing to load and scrape the page manually.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "67bd3ab4-6a81-433d-9a6f-be8ce88bfe58",
+        "description": "Extract the subject of the video and the timestamp of their mentor's first mention from the transcript.",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "extraction_query": "Identify who this video is about and find the exact timestamp (or time range) where his or her mentor is first mentioned in the transcript.",
+          "text": "$step_1"
+        },
+        "reasoning": "The data_extractor tool is designed to parse unstructured text (like a transcript) and extract specific structured answers based on a natural language query.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "48dd36a0-f9f3-41e8-9a1f-02dc5d50f023",
+        "description": "Generate a structured report presenting the findings from the video analysis.",
+        "tool_name": "report_generator",
+        "tool_args": {
+          "title": "YouTube Video Analysis: Subject and Mentor Identification",
+          "sections": [
+            {
+              "heading": "Analysis Summary",
+              "content": "$step_2"
+            }
+          ]
+        },
+        "reasoning": "The report_generator compiles the extracted information into a clean, professional markdown report to clearly answer the user's query.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T07:07:18.071167",
+    "updated_at": "2026-08-31T07:07:18.077178Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 2894,
+      "total_completion_tokens": 494,
+      "total_tokens": 3388,
+      "total_estimated_cost_usd": 0.000731,
+      "calls": [
+        {
+          "prompt_tokens": 2894,
+          "completion_tokens": 494,
+          "total_tokens": 3388,
+          "model_used": "gemini-3.5-flash",
+          "estimated_cost_usd": 0.000731
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "workflow_id": "1d6c5527-6791-4ad5-86ed-3d6c671724da",
+  "step_number": 1,
+  "timestamp": "2026-08-31T11:23:31.080533+00:00",
+  "state": {
+    "workflow_id": "1d6c5527-6791-4ad5-86ed-3d6c671724da",
+    "goal": "stop after 30 sec",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "b29771e1-1050-4f99-9e67-300c0421b599",
+        "description": "Stop the currently playing media playback",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "stop"
+        },
+        "reasoning": "The user goal is to stop playback. The media_controller tool provides an explicit action to stop current media.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T11:23:31.011385",
+    "updated_at": "2026-08-31T11:23:31.076127Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3050,
+      "total_completion_tokens": 118,
+      "total_tokens": 3168,
+      "total_estimated_cost_usd": 0.000528,
+      "calls": [
+        {
+          "prompt_tokens": 3050,
+          "completion_tokens": 118,
+          "total_tokens": 3168,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000528
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

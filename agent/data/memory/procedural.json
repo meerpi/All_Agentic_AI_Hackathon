@@ -1,0 +1,1760 @@
+[
+  {
+    "timestamp": "2026-08-31T11:18:42.705180+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url",
+      "duration_seconds",
+      "auto_skip_ads"
+    ],
+    "goal_context": "play shape of you for 10 seconds"
+  },
+  {
+    "timestamp": "2026-08-31T11:18:51.229038+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play shape of you for 10 seconds"
+  },
+  {
+    "timestamp": "2026-08-31T11:18:51.242143+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play shape of you for 10 seconds"
+  },
+  {
+    "timestamp": "2026-08-31T11:23:03.528037+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play the latest linus techtips youtube vid"
+  },
+  {
+    "timestamp": "2026-08-31T11:23:17.527678+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url",
+      "auto_skip_ads"
+    ],
+    "goal_context": "play the latest linus techtips youtube vid"
+  },
+  {
+    "timestamp": "2026-08-31T11:23:24.847304+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play the latest linus techtips youtube vid"
+  },
+  {
+    "timestamp": "2026-08-31T11:23:24.857393+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play the latest linus techtips youtube vid"
+  },
+  {
+    "timestamp": "2026-08-31T11:23:31.231522+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action"
+    ],
+    "goal_context": "stop after 30 sec"
+  },
+  {
+    "timestamp": "2026-08-31T11:23:46.685190+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "stop after 30 sec"
+  },
+  {
+    "timestamp": "2026-08-31T11:24:47.105263+00:00",
+    "type": "FAILURE",
+    "tool_name": "action_dispatcher",
+    "tool_args_keys": [
+      "action",
+      "bucket_name",
+      "region",
+      "acl"
+    ],
+    "error": "Invalid or missing target_url. URL must start with http:// or https://",
+    "goal_context": "I have to first create a s3 then srtore db in document db then host it in cloud create 3 detailed jira tickets based on this."
+  },
+  {
+    "timestamp": "2026-08-31T11:24:47.123166+00:00",
+    "type": "FAILURE",
+    "tool_name": "action_dispatcher",
+    "tool_args_keys": [
+      "action",
+      "cluster_identifier",
+      "instance_class",
+      "master_username",
+      "master_password",
+      "database_name"
+    ],
+    "error": "Invalid or missing target_url. URL must start with http:// or https://",
+    "goal_context": "I have to first create a s3 then srtore db in document db then host it in cloud create 3 detailed jira tickets based on this."
+  },
+  {
+    "timestamp": "2026-08-31T11:26:08.151044+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [
+      "action",
+      "title",
+      "data"
+    ],
+    "goal_context": "create a detailed workout plan in google sheets  for the week accounting for 2 rest days."
+  },
+  {
+    "timestamp": "2026-08-31T11:26:18.811021+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [],
+    "goal_context": "create a detailed workout plan in google sheets  for the week accounting for 2 rest days."
+  },
+  {
+    "timestamp": "2026-08-31T11:26:44.368810+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [
+      "title",
+      "rows"
+    ],
+    "goal_context": "create a detailed workout plan in google sheets for the week accounting for 2 rest days."
+  },
+  {
+    "timestamp": "2026-08-31T11:26:55.203314+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [],
+    "goal_context": "create a detailed workout plan in google sheets for the week accounting for 2 rest days."
+  },
+  {
+    "timestamp": "2026-08-31T11:27:09.257743+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [
+      "query"
+    ],
+    "goal_context": "where is the google sheet link."
+  },
+  {
+    "timestamp": "2026-08-31T11:27:09.290998+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "data",
+      "extraction_query"
+    ],
+    "goal_context": "where is the google sheet link."
+  },
+  {
+    "timestamp": "2026-08-31T11:27:20.294266+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [],
+    "goal_context": "where is the google sheet link."
+  },
+  {
+    "timestamp": "2026-08-31T11:27:20.308908+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "where is the google sheet link."
+  },
+  {
+    "timestamp": "2026-08-31T11:28:03.267703+00:00",
+    "type": "SUCCESS",
+    "tool_name": "db_manager",
+    "tool_args_keys": [
+      "query"
+    ],
+    "goal_context": "not valid create a valid working link."
+  },
+  {
+    "timestamp": "2026-08-31T11:28:03.301536+00:00",
+    "type": "FAILURE",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [
+      "action",
+      "spreadsheet_id",
+      "range"
+    ],
+    "error": "Google Sheets API Error (read_sheet): Unresolved or invalid spreadsheet_id: '$step_1.spreadsheet_id'. A valid Google Spreadsheet ID is required to read sheet.. Ensure Google OAuth credentials (token.j",
+    "goal_context": "not valid create a valid working link."
+  },
+  {
+    "timestamp": "2026-08-31T11:29:13.470111+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play the eminem latest songs for 20 sec"
+  },
+  {
+    "timestamp": "2026-08-31T11:29:28.584101+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url",
+      "duration_seconds",
+      "auto_skip_ads"
+    ],
+    "goal_context": "play the eminem latest songs for 20 sec"
+  },
+  {
+    "timestamp": "2026-08-31T11:29:36.148449+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play the eminem latest songs for 20 sec"
+  },
+  {
+    "timestamp": "2026-08-31T11:29:36.155600+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play the eminem latest songs for 20 sec"
+  },
+  {
+    "timestamp": "2026-08-31T11:30:27.871757+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play iphone 18 review for 20 sec by linus"
+  },
+  {
+    "timestamp": "2026-08-31T11:30:41.427499+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url",
+      "duration_seconds",
+      "auto_skip_ads"
+    ],
+    "goal_context": "play iphone 18 review for 20 sec by linus"
+  },
+  {
+    "timestamp": "2026-08-31T11:30:49.696541+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play iphone 18 review for 20 sec by linus"
+  },
+  {
+    "timestamp": "2026-08-31T11:30:49.708172+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play iphone 18 review for 20 sec by linus"
+  },
+  {
+    "timestamp": "2026-08-31T11:35:34.367550+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "paly hips dont lie for 20 seconds"
+  },
+  {
+    "timestamp": "2026-08-31T11:35:44.060426+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url",
+      "duration_seconds",
+      "auto_skip_ads"
+    ],
+    "goal_context": "paly hips dont lie for 20 seconds"
+  },
+  {
+    "timestamp": "2026-08-31T11:35:51.720487+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "paly hips dont lie for 20 seconds"
+  },
+  {
+    "timestamp": "2026-08-31T11:35:51.727251+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "paly hips dont lie for 20 seconds"
+  },
+  {
+    "timestamp": "2026-08-31T11:36:36.570829+00:00",
+    "type": "SUCCESS",
+    "tool_name": "browser_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "give me a google doc about narendra modi"
+  },
+  {
+    "timestamp": "2026-08-31T11:36:44.169629+00:00",
+    "type": "FAILURE",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "extraction_query",
+      "raw_content"
+    ],
+    "error": "Unknown tool error",
+    "goal_context": "give me a google doc about narendra modi"
+  },
+  {
+    "timestamp": "2026-08-31T11:38:31.074434+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "title",
+      "content"
+    ],
+    "goal_context": "give me google doc"
+  },
+  {
+    "timestamp": "2026-08-31T11:38:43.555641+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "give me google doc"
+  },
+  {
+    "timestamp": "2026-08-31T11:40:28.605272+00:00",
+    "type": "SUCCESS",
+    "tool_name": "browser_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "find the top 10 economics, extract the top 5 headlines, and return them as a list"
+  },
+  {
+    "timestamp": "2026-08-31T11:40:37.548341+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "extraction_query",
+      "source_data"
+    ],
+    "goal_context": "find the top 10 economics, extract the top 5 headlines, and return them as a list"
+  },
+  {
+    "timestamp": "2026-08-31T11:40:37.583887+00:00",
+    "type": "SUCCESS",
+    "tool_name": "report_generator",
+    "tool_args_keys": [
+      "report_type",
+      "content"
+    ],
+    "goal_context": "find the top 10 economics, extract the top 5 headlines, and return them as a list"
+  },
+  {
+    "timestamp": "2026-08-31T11:40:43.653384+00:00",
+    "type": "SUCCESS",
+    "tool_name": "browser_controller",
+    "tool_args_keys": [],
+    "goal_context": "find the top 10 economics, extract the top 5 headlines, and return them as a list"
+  },
+  {
+    "timestamp": "2026-08-31T11:40:43.663817+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "find the top 10 economics, extract the top 5 headlines, and return them as a list"
+  },
+  {
+    "timestamp": "2026-08-31T11:40:43.666398+00:00",
+    "type": "SUCCESS",
+    "tool_name": "report_generator",
+    "tool_args_keys": [],
+    "goal_context": "find the top 10 economics, extract the top 5 headlines, and return them as a list"
+  },
+  {
+    "timestamp": "2026-08-31T11:41:41.210991+00:00",
+    "type": "SUCCESS",
+    "tool_name": "python_sandbox",
+    "tool_args_keys": [
+      "code"
+    ],
+    "goal_context": "create a detailed nutrition plan accounting for one cheat day and balanced diet."
+  },
+  {
+    "timestamp": "2026-08-31T11:42:01.501389+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [
+      "title",
+      "rows"
+    ],
+    "goal_context": "create a detailed nutrition plan accounting for one cheat day and balanced diet."
+  },
+  {
+    "timestamp": "2026-08-31T11:42:07.939952+00:00",
+    "type": "SUCCESS",
+    "tool_name": "python_sandbox",
+    "tool_args_keys": [],
+    "goal_context": "create a detailed nutrition plan accounting for one cheat day and balanced diet."
+  },
+  {
+    "timestamp": "2026-08-31T11:42:07.944206+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_sheets",
+    "tool_args_keys": [],
+    "goal_context": "create a detailed nutrition plan accounting for one cheat day and balanced diet."
+  },
+  {
+    "timestamp": "2026-08-31T11:43:45.504942+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "limit"
+    ],
+    "goal_context": "summerise my past 10 emails"
+  },
+  {
+    "timestamp": "2026-08-31T11:43:53.256007+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "extraction_query",
+      "raw_content"
+    ],
+    "goal_context": "summerise my past 10 emails"
+  },
+  {
+    "timestamp": "2026-08-31T11:43:56.971133+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "action",
+      "title",
+      "content"
+    ],
+    "goal_context": "summerise my past 10 emails"
+  },
+  {
+    "timestamp": "2026-08-31T11:44:07.741529+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "summerise my past 10 emails"
+  },
+  {
+    "timestamp": "2026-08-31T11:44:07.751528+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "summerise my past 10 emails"
+  },
+  {
+    "timestamp": "2026-08-31T11:44:07.754357+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "summerise my past 10 emails"
+  },
+  {
+    "timestamp": "2026-08-31T11:44:52.702632+00:00",
+    "type": "SUCCESS",
+    "tool_name": "browser_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "capture a screen shot of youtube homepage"
+  },
+  {
+    "timestamp": "2026-08-31T11:44:52.737170+00:00",
+    "type": "FAILURE",
+    "tool_name": "browser_controller",
+    "tool_args_keys": [
+      "action",
+      "filename"
+    ],
+    "error": "Unknown browser action: 'capture_screenshot'.",
+    "goal_context": "capture a screen shot of youtube homepage"
+  },
+  {
+    "timestamp": "2026-08-31T11:45:42.410876+00:00",
+    "type": "FAILURE",
+    "tool_name": "os_desktop_tool",
+    "tool_args_keys": [
+      "action",
+      "file_path"
+    ],
+    "error": "Windows graphics function failed (no error provided): BitBlt",
+    "goal_context": "save the screenshot to a google doc"
+  },
+  {
+    "timestamp": "2026-08-31T11:47:24.258106+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_calendar",
+    "tool_args_keys": [
+      "action",
+      "time_min",
+      "time_max"
+    ],
+    "goal_context": "send a email to tejasranjeet03@gmail.com  about out meeting tomorrow."
+  },
+  {
+    "timestamp": "2026-08-31T11:47:25.679971+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "recipient",
+      "subject",
+      "body"
+    ],
+    "goal_context": "send a email to tejasranjeet03@gmail.com  about out meeting tomorrow."
+  },
+  {
+    "timestamp": "2026-08-31T11:47:41.321746+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_calendar",
+    "tool_args_keys": [],
+    "goal_context": "send a email to tejasranjeet03@gmail.com  about out meeting tomorrow."
+  },
+  {
+    "timestamp": "2026-08-31T11:47:41.329535+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "send a email to tejasranjeet03@gmail.com  about out meeting tomorrow."
+  },
+  {
+    "timestamp": "2026-08-31T11:48:16.377786+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "recipient",
+      "subject",
+      "body"
+    ],
+    "goal_context": "Send a mail to rakeshkabir@gmail.com about eating too much gewar"
+  },
+  {
+    "timestamp": "2026-08-31T11:48:34.562856+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "Send a mail to rakeshkabir@gmail.com about eating too much gewar"
+  },
+  {
+    "timestamp": "2026-08-31T11:49:41.402285+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "recipient",
+      "subject",
+      "body"
+    ],
+    "goal_context": "Send a mail to  prkm.bdo.am@gmail.com about trees."
+  },
+  {
+    "timestamp": "2026-08-31T11:49:48.177811+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "Send a mail to  prkm.bdo.am@gmail.com about trees."
+  },
+  {
+    "timestamp": "2026-08-31T11:51:20.493125+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "title",
+      "content"
+    ],
+    "goal_context": "Create a Google docs about trees."
+  },
+  {
+    "timestamp": "2026-08-31T11:51:27.497214+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "Create a Google docs about trees."
+  },
+  {
+    "timestamp": "2026-08-31T12:23:35.233259+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "title",
+      "content"
+    ],
+    "goal_context": "hello"
+  },
+  {
+    "timestamp": "2026-08-31T12:23:40.586913+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "hello"
+  },
+  {
+    "timestamp": "2026-08-31T13:28:09.985927+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "title",
+      "content"
+    ],
+    "goal_context": "hi what all skills do u know"
+  },
+  {
+    "timestamp": "2026-08-31T13:28:17.312174+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "hi what all skills do u know"
+  },
+  {
+    "timestamp": "2026-08-31T13:28:44.100987+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "open youtube video of pm modi and putin in same car"
+  },
+  {
+    "timestamp": "2026-08-31T13:28:55.263148+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "open youtube video of pm modi and putin in same car"
+  },
+  {
+    "timestamp": "2026-08-31T13:29:06.161398+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "open youtube video of pm modi and putin in same car"
+  },
+  {
+    "timestamp": "2026-08-31T13:29:06.171622+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "open youtube video of pm modi and putin in same car"
+  },
+  {
+    "timestamp": "2026-08-31T13:29:21.137093+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "dai dai song"
+  },
+  {
+    "timestamp": "2026-08-31T13:29:30.323191+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "dai dai song"
+  },
+  {
+    "timestamp": "2026-08-31T13:29:41.239042+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "dai dai song"
+  },
+  {
+    "timestamp": "2026-08-31T13:29:41.252059+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "dai dai song"
+  },
+  {
+    "timestamp": "2026-08-31T13:30:01.797728+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T13:30:09.598862+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url",
+      "auto_skip_ads"
+    ],
+    "goal_context": "hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T13:30:18.323937+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T13:30:18.333079+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T13:37:28.664910+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "title",
+      "content"
+    ],
+    "goal_context": "hi"
+  },
+  {
+    "timestamp": "2026-08-31T13:37:38.604544+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "hi"
+  },
+  {
+    "timestamp": "2026-08-31T13:54:37.732172+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "extraction_query",
+      "input_data"
+    ],
+    "goal_context": "[Attached Document: \"PS_Associate Software Engineer.pdf\" (application/pdf)]:\n```\n%PDF-1.7\r\n%\ufffd\ufffd\ufffd\ufffd\r\n1 0 obj\r\n<</Type/Catalog/Pages 2 0 R/Lang(en) /StructTreeRoot 28 0 R/MarkInfo<</Marked true>>/Metadata"
+  },
+  {
+    "timestamp": "2026-08-31T13:54:39.901020+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "title",
+      "content"
+    ],
+    "goal_context": "[Attached Document: \"PS_Associate Software Engineer.pdf\" (application/pdf)]:\n```\n%PDF-1.7\r\n%\ufffd\ufffd\ufffd\ufffd\r\n1 0 obj\r\n<</Type/Catalog/Pages 2 0 R/Lang(en) /StructTreeRoot 28 0 R/MarkInfo<</Marked true>>/Metadata"
+  },
+  {
+    "timestamp": "2026-08-31T13:54:52.714051+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "[Attached Document: \"PS_Associate Software Engineer.pdf\" (application/pdf)]:\n```\n%PDF-1.7\r\n%\ufffd\ufffd\ufffd\ufffd\r\n1 0 obj\r\n<</Type/Catalog/Pages 2 0 R/Lang(en) /StructTreeRoot 28 0 R/MarkInfo<</Marked true>>/Metadata"
+  },
+  {
+    "timestamp": "2026-08-31T13:54:52.722559+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "[Attached Document: \"PS_Associate Software Engineer.pdf\" (application/pdf)]:\n```\n%PDF-1.7\r\n%\ufffd\ufffd\ufffd\ufffd\r\n1 0 obj\r\n<</Type/Catalog/Pages 2 0 R/Lang(en) /StructTreeRoot 28 0 R/MarkInfo<</Marked true>>/Metadata"
+  },
+  {
+    "timestamp": "2026-08-31T13:57:17.790018+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "action",
+      "title",
+      "content"
+    ],
+    "goal_context": "hi"
+  },
+  {
+    "timestamp": "2026-08-31T13:57:27.802923+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "hi"
+  },
+  {
+    "timestamp": "2026-08-31T13:57:31.544565+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [
+      "action",
+      "title",
+      "content"
+    ],
+    "goal_context": "hi"
+  },
+  {
+    "timestamp": "2026-08-31T13:57:41.044631+00:00",
+    "type": "SUCCESS",
+    "tool_name": "google_docs",
+    "tool_args_keys": [],
+    "goal_context": "hi"
+  },
+  {
+    "timestamp": "2026-08-31T14:16:40.178358+00:00",
+    "type": "SUCCESS",
+    "tool_name": "browser_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "what is the name of india prime minsiter"
+  },
+  {
+    "timestamp": "2026-08-31T14:16:46.999690+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [
+      "extraction_query",
+      "content_source",
+      "raw_content"
+    ],
+    "goal_context": "what is the name of india prime minsiter"
+  },
+  {
+    "timestamp": "2026-08-31T14:16:55.244595+00:00",
+    "type": "SUCCESS",
+    "tool_name": "browser_controller",
+    "tool_args_keys": [],
+    "goal_context": "what is the name of india prime minsiter"
+  },
+  {
+    "timestamp": "2026-08-31T14:16:55.257797+00:00",
+    "type": "SUCCESS",
+    "tool_name": "data_extractor",
+    "tool_args_keys": [],
+    "goal_context": "what is the name of india prime minsiter"
+  },
+  {
+    "timestamp": "2026-08-31T14:17:30.887761+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie song"
+  },
+  {
+    "timestamp": "2026-08-31T14:17:54.344093+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play hips dont lie song"
+  },
+  {
+    "timestamp": "2026-08-31T14:18:02.763861+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie song"
+  },
+  {
+    "timestamp": "2026-08-31T14:18:02.769645+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie song"
+  },
+  {
+    "timestamp": "2026-08-31T14:18:20.996404+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:18:27.926376+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:18:35.591964+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:18:35.601585+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:21:05.049100+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "palyy hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:21:26.078739+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "palyy hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:21:34.011392+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "palyy hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:21:34.024293+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "palyy hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:22:02.675020+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie for 10 secons"
+  },
+  {
+    "timestamp": "2026-08-31T14:22:11.812482+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url",
+      "duration_seconds"
+    ],
+    "goal_context": "play hips dont lie for 10 secons"
+  },
+  {
+    "timestamp": "2026-08-31T14:22:21.756647+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie for 10 secons"
+  },
+  {
+    "timestamp": "2026-08-31T14:22:21.763069+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie for 10 secons"
+  },
+  {
+    "timestamp": "2026-08-31T14:22:46.767188+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie for 10 seconds"
+  },
+  {
+    "timestamp": "2026-08-31T14:22:56.340602+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url",
+      "duration_seconds",
+      "auto_skip_ads"
+    ],
+    "goal_context": "play hips dont lie for 10 seconds"
+  },
+  {
+    "timestamp": "2026-08-31T14:23:31.490456+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie for 10 seconds"
+  },
+  {
+    "timestamp": "2026-08-31T14:23:31.496763+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie for 10 seconds"
+  },
+  {
+    "timestamp": "2026-08-31T14:31:10.789904+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie video for 10 secons"
+  },
+  {
+    "timestamp": "2026-08-31T14:31:28.568011+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url",
+      "duration_seconds",
+      "auto_skip_ads"
+    ],
+    "goal_context": "play hips dont lie video for 10 secons"
+  },
+  {
+    "timestamp": "2026-08-31T14:31:34.024732+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie video for 10 secons"
+  },
+  {
+    "timestamp": "2026-08-31T14:31:34.030202+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie video for 10 secons"
+  },
+  {
+    "timestamp": "2026-08-31T14:31:50.142547+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie video"
+  },
+  {
+    "timestamp": "2026-08-31T14:31:56.922250+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play hips dont lie video"
+  },
+  {
+    "timestamp": "2026-08-31T14:32:01.746457+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie video"
+  },
+  {
+    "timestamp": "2026-08-31T14:32:01.761554+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie video"
+  },
+  {
+    "timestamp": "2026-08-31T14:35:23.173720+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:35:41.470444+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url",
+      "auto_skip_ads"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:35:54.709795+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:35:54.717933+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:36:41.948461+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:36:50.762746+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url",
+      "auto_skip_ads"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:36:58.331093+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:36:58.343502+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:37:39.922271+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:37:51.624448+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url",
+      "auto_skip_ads"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:38:00.096538+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:38:00.111207+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:38:54.460918+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:39:13.366622+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:39:21.839684+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:39:21.853672+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:39:36.708174+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:39:46.560530+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:39:55.243397+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:39:55.256541+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T14:52:50.174904+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie song"
+  },
+  {
+    "timestamp": "2026-08-31T14:53:02.845847+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play hips dont lie song"
+  },
+  {
+    "timestamp": "2026-08-31T14:53:08.023996+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie song"
+  },
+  {
+    "timestamp": "2026-08-31T14:53:08.034745+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie song"
+  },
+  {
+    "timestamp": "2026-08-31T14:54:21.986797+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "recipient",
+      "subject",
+      "body"
+    ],
+    "goal_context": "hi"
+  },
+  {
+    "timestamp": "2026-08-31T14:54:27.471825+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "hi"
+  },
+  {
+    "timestamp": "2026-08-31T14:56:21.670030+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie video"
+  },
+  {
+    "timestamp": "2026-08-31T14:56:31.452402+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play hips dont lie video"
+  },
+  {
+    "timestamp": "2026-08-31T14:56:37.987037+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie video"
+  },
+  {
+    "timestamp": "2026-08-31T14:56:37.994619+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie video"
+  },
+  {
+    "timestamp": "2026-08-31T14:58:15.396912+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play dia dia song"
+  },
+  {
+    "timestamp": "2026-08-31T14:58:32.851620+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play dia dia song"
+  },
+  {
+    "timestamp": "2026-08-31T14:58:40.370884+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play dia dia song"
+  },
+  {
+    "timestamp": "2026-08-31T14:58:40.385908+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play dia dia song"
+  },
+  {
+    "timestamp": "2026-08-31T14:59:00.323675+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "recipient",
+      "subject",
+      "body"
+    ],
+    "goal_context": "hlo"
+  },
+  {
+    "timestamp": "2026-08-31T14:59:08.359484+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "hlo"
+  },
+  {
+    "timestamp": "2026-08-31T15:00:42.886609+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T15:01:06.954687+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T15:01:20.197160+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T15:01:20.219938+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T15:01:24.631446+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "recipient",
+      "subject",
+      "body"
+    ],
+    "goal_context": "hi"
+  },
+  {
+    "timestamp": "2026-08-31T15:01:33.702091+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "hi"
+  },
+  {
+    "timestamp": "2026-08-31T15:09:16.384063+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T15:09:34.176729+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T15:09:41.326727+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [
+      "action",
+      "recipient",
+      "subject",
+      "body"
+    ],
+    "goal_context": "hi"
+  },
+  {
+    "timestamp": "2026-08-31T15:09:43.963911+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T15:09:43.974994+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T15:09:50.541376+00:00",
+    "type": "SUCCESS",
+    "tool_name": "gmail",
+    "tool_args_keys": [],
+    "goal_context": "hi"
+  },
+  {
+    "timestamp": "2026-08-31T15:15:21.008401+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T15:15:39.808652+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T15:15:50.481607+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T15:15:50.487461+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T15:16:08.206613+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play dia dia"
+  },
+  {
+    "timestamp": "2026-08-31T15:16:15.717798+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play dia dia"
+  },
+  {
+    "timestamp": "2026-08-31T15:16:24.554218+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play dia dia"
+  },
+  {
+    "timestamp": "2026-08-31T15:16:24.557759+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play dia dia"
+  },
+  {
+    "timestamp": "2026-08-31T15:18:10.164435+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T15:18:19.564739+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T15:18:27.335598+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T15:18:27.344418+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie"
+  },
+  {
+    "timestamp": "2026-08-31T15:22:53.910590+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play hips dont lie song"
+  },
+  {
+    "timestamp": "2026-08-31T15:23:05.922073+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play hips dont lie song"
+  },
+  {
+    "timestamp": "2026-08-31T15:23:15.079857+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie song"
+  },
+  {
+    "timestamp": "2026-08-31T15:23:15.090041+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play hips dont lie song"
+  },
+  {
+    "timestamp": "2026-08-31T15:25:15.144699+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play dia dia song"
+  },
+  {
+    "timestamp": "2026-08-31T15:25:23.259464+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play dia dia song"
+  },
+  {
+    "timestamp": "2026-08-31T15:25:31.402548+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play dia dia song"
+  },
+  {
+    "timestamp": "2026-08-31T15:25:31.419066+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play dia dia song"
+  },
+  {
+    "timestamp": "2026-08-31T15:27:12.120783+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play kabira song"
+  },
+  {
+    "timestamp": "2026-08-31T15:27:23.954638+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play kabira song"
+  },
+  {
+    "timestamp": "2026-08-31T15:27:30.948153+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "query"
+    ],
+    "goal_context": "play kesariya song"
+  },
+  {
+    "timestamp": "2026-08-31T15:27:35.151144+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play kabira song"
+  },
+  {
+    "timestamp": "2026-08-31T15:27:35.167440+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play kabira song"
+  },
+  {
+    "timestamp": "2026-08-31T15:27:40.292849+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [
+      "action",
+      "url"
+    ],
+    "goal_context": "play kesariya song"
+  },
+  {
+    "timestamp": "2026-08-31T15:27:47.153440+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play kesariya song"
+  },
+  {
+    "timestamp": "2026-08-31T15:27:47.174232+00:00",
+    "type": "SUCCESS",
+    "tool_name": "media_controller",
+    "tool_args_keys": [],
+    "goal_context": "play kesariya song"
+  }
+]

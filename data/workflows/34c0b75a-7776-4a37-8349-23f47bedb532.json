@@ -1,0 +1,164 @@
+{
+  "workflow_id": "34c0b75a-7776-4a37-8349-23f47bedb532",
+  "goal": "save the screenshot to a google doc",
+  "steps": [
+    {
+      "step_number": 1,
+      "step_id": "7382901d-776b-439c-b220-c2dbaa6c5e89",
+      "description": "Capture a screenshot of the current screen state",
+      "tool_name": "os_desktop_tool",
+      "tool_args": {
+        "action": "capture_screen",
+        "file_path": "screenshot_capture.png"
+      },
+      "reasoning": "The goal requires a screenshot; the OS desktop tool is the only capability that can capture the local display.",
+      "status": "FAILED",
+      "result": null,
+      "error": "Windows graphics function failed (no error provided): BitBlt",
+      "execution_time_ms": 3.477811813354492,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 2,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "is_approved": false,
+      "token_usage": null
+    },
+    {
+      "step_number": 2,
+      "step_id": "e76a8a3f-145d-4ac3-a28e-d6ab97e2a135",
+      "description": "Create a new Google Doc and insert the captured screenshot",
+      "tool_name": "google_docs",
+      "tool_args": {
+        "action": "create_document",
+        "title": "Captured Screen Report",
+        "content": "This document contains the screenshot captured on 2026-08-31. Image file: screenshot_capture.png"
+      },
+      "reasoning": "A Google Doc is required to store the image; creating the document is the first step to establishing the container for the artifact.",
+      "status": "BLOCKED",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [
+        1
+      ],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "is_approved": false,
+      "token_usage": null
+    }
+  ],
+  "status": "FAILED",
+  "current_step_index": 0,
+  "final_artifact": {
+    "results": [],
+    "step_count": 2
+  },
+  "summary": "## \u26a0\ufe0f Workflow Execution Status\n\nI was unable to complete your request to save a screenshot to a Google Doc due to a technical failure during the capture process.\n\n* **Issue:** The system failed to capture the screen state (Step 1).\n* **Impact:** The subsequent step to create and populate the Google Doc was blocked.",
+  "created_at": "2026-08-31T11:45:42.340165",
+  "updated_at": "2026-08-31T11:45:59.718195Z",
+  "require_approval": false,
+  "tags": [],
+  "context_id": null,
+  "token_usage": {
+    "total_prompt_tokens": 6871,
+    "total_completion_tokens": 624,
+    "total_tokens": 7495,
+    "total_estimated_cost_usd": 0.0014060000000000001,
+    "calls": [
+      {
+        "prompt_tokens": 3030,
+        "completion_tokens": 302,
+        "total_tokens": 3332,
+        "model_used": "gemini-3.1-flash-lite",
+        "estimated_cost_usd": 0.000636
+      },
+      {
+        "prompt_tokens": 2186,
+        "completion_tokens": 131,
+        "total_tokens": 2317,
+        "model_used": "gemini-3.6-flash",
+        "estimated_cost_usd": 0.000407
+      },
+      {
+        "prompt_tokens": 1655,
+        "completion_tokens": 191,
+        "total_tokens": 1846,
+        "model_used": "gemini-3.1-flash-lite",
+        "estimated_cost_usd": 0.000363
+      }
+    ]
+  },
+  "checkpoint_data": null,
+  "paused_at_step": null,
+  "eval_scores": {
+    "workflow_id": "34c0b75a-7776-4a37-8349-23f47bedb532",
+    "overall_score": 50.0,
+    "passed": false,
+    "plan_quality": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The plan was logically sound and directly mapped to the user's goal of capturing a screenshot and saving it to a Google Doc.",
+      "findings": [
+        "Step 1 correctly identified the need for a screen capture.",
+        "Step 2 correctly identified the need for document creation.",
+        "Dependencies were correctly defined."
+      ]
+    },
+    "plan_adherence": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The agent followed the plan exactly as defined, attempting the first step before proceeding to the second.",
+      "findings": [
+        "Agent did not skip steps.",
+        "Agent respected the dependency between step 1 and step 2."
+      ]
+    },
+    "tool_selection": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The tools selected were appropriate for the requested actions.",
+      "findings": [
+        "os_desktop_tool is the correct tool for screen capture.",
+        "google_docs is the correct tool for document creation."
+      ]
+    },
+    "argument_correctness": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The arguments provided to the tools were well-formed and contained the necessary parameters.",
+      "findings": [
+        "Step 1 arguments included action and file path.",
+        "Step 2 arguments included title and content."
+      ]
+    },
+    "error_recovery": {
+      "score": 0.0,
+      "passed": false,
+      "reasoning": "The agent failed to recover from the error in Step 1. It simply stopped, leaving the goal unachieved.",
+      "findings": [
+        "Step 1 failed due to a system-level error (BitBlt).",
+        "The agent did not attempt a retry, diagnostic check, or alternative capture method."
+      ]
+    },
+    "result_utilization": {
+      "score": 0.0,
+      "passed": false,
+      "reasoning": "The final artifact is empty because the agent failed to handle the error state and did not produce any meaningful output.",
+      "findings": [
+        "Final results list is empty.",
+        "No document ID or confirmation was generated."
+      ]
+    },
+    "execution_time_ms": 0.0,
+    "total_steps": 2,
+    "tools_used": [
+      "os_desktop_tool",
+      "google_docs"
+    ]
+  }
+}

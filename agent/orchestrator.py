@@ -401,7 +401,7 @@ class TaskmasterOrchestrator:
         resolved = copy.deepcopy(args)
 
         def _walk_path(obj, path_str: str):
-            """Walk a dot/bracket path like .results[0].video_id on obj."""
+            """Walk a dot/bracket path like .results[0].video_id on obj with automatic fallback resolution."""
             if not path_str:
                 return obj
             # Tokenize: split ".results[0].video_id" into ["results", 0, "video_id"]
@@ -413,7 +413,7 @@ class TaskmasterOrchestrator:
                     tokens.append(int(part[1]))
 
             current = obj
-            for token in tokens:
+            for idx, token in enumerate(tokens):
                 if current is None:
                     return None
                 if isinstance(token, int):
@@ -423,7 +423,17 @@ class TaskmasterOrchestrator:
                         return None
                 else:
                     if isinstance(current, dict):
-                        current = current.get(token)
+                        if token in current:
+                            current = current[token]
+                        elif idx == 0 and ("results" in current or "items" in current or "data" in current):
+                            # Smart fallback: If caller references $step_1.video_id but output is results=[{video_id: ...}]
+                            container = current.get("results") or current.get("items") or current.get("data")
+                            if isinstance(container, list) and len(container) > 0 and isinstance(container[0], dict) and token in container[0]:
+                                current = container[0][token]
+                            else:
+                                return None
+                        else:
+                            return None
                     else:
                         current = getattr(current, token, None)
             return current
@@ -478,9 +488,22 @@ class TaskmasterOrchestrator:
         workflow_id = workflow.workflow_id
         resolved_args = self._resolve_dynamic_args(step.tool_args, step_results)
 
+        # Auto-inject parent dependency data if content/input/data argument is missing
+        if step.depends_on and step.tool_name in ("data_extractor", "report_generator", "validator"):
+            has_content = any(k in resolved_args for k in ("raw_content", "content", "data", "source_data", "input", "input_data", "source_content", "html", "observation", "page_content", "text"))
+            if not has_content:
+                parent_step_num = step.depends_on[0]
+                parent_res = step_results.get(parent_step_num, {})
+                if isinstance(parent_res, dict):
+                    content_val = parent_res.get("page_content") or parent_res.get("observation") or parent_res.get("content") or parent_res.get("full_text") or parent_res.get("extracted_content") or parent_res
+                else:
+                    content_val = parent_res
+                resolved_args["raw_content"] = content_val
+
         step.status = StepStatus.IN_PROGRESS
         self._add_trace(workflow_id, "STEP_STARTED", step_number=step.step_number,
                         details={"tool": step.tool_name, "args": step.tool_args})
+
 
         tool = self.registry.get_tool(step.tool_name)
         if not tool:
@@ -589,13 +612,34 @@ class TaskmasterOrchestrator:
     def _synthesize_final_summary(self, workflow: WorkflowPlan, results: List[Dict]) -> str:
         steps_summary = "\n".join(f"- Step {s.step_number}: {s.description} ({s.status.value})" for s in workflow.steps)
         artifacts_summary = json.dumps(results, indent=2, default=str)
+
+        failed_steps = [s for s in workflow.steps if s.status in (StepStatus.FAILED, StepStatus.BLOCKED)]
+        completed_steps = [s for s in workflow.steps if s.status == StepStatus.COMPLETED]
+
+        # Fast-path for single-step media playback (media_controller, youtube, spotify) to eliminate extra LLM latency
+        if len(workflow.steps) == 1 and completed_steps and not failed_steps:
+            s0 = workflow.steps[0]
+            if s0.tool_name in ("media_controller", "youtube", "spotify") and results:
+                r0 = results[0] if isinstance(results[0], dict) else {}
+                title = r0.get("video_title") or r0.get("title") or r0.get("query") or workflow.goal
+                playback_state = r0.get("playback_state") if isinstance(r0.get("playback_state"), dict) else {}
+                author = r0.get("author") or r0.get("channel") or playback_state.get("channel") or ""
+                dur = r0.get("duration") or r0.get("duration_played_seconds") or ""
+                dur_str = f" ({dur}s)" if dur and str(dur).isdigit() else (f" ({dur})" if dur else "")
+                channel_str = f"\n* **Channel:** {author}" if author else ""
+                return (
+                    f"## 🎵 Now Playing: {title}\n\n"
+                    f"I have successfully initiated playback of the requested track:\n\n"
+                    f"* **Track:** {title}{dur_str}"
+                    f"{channel_str}\n"
+                    f"* **Status:** Playback started"
+                )
+
         prompt = FINAL_SUMMARY_PROMPT.format(
             goal=workflow.goal,
             steps_summary=steps_summary,
             artifacts_summary=artifacts_summary,
         )
-        failed_steps = [s for s in workflow.steps if s.status in (StepStatus.FAILED, StepStatus.BLOCKED)]
-        completed_steps = [s for s in workflow.steps if s.status == StepStatus.COMPLETED]
         if failed_steps:
             honest_fallback = (
                 f"## Workflow Execution: FAILED ({len(failed_steps)} steps failed)\n\n"

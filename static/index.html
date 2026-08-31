@@ -10,18 +10,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            --bg-primary: #0a0d14;
-            --bg-card: rgba(18, 24, 38, 0.75);
-            --bg-card-hover: rgba(26, 35, 56, 0.85);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --accent-gemini: linear-gradient(135deg, #7928CA 0%, #4338CA 50%, #00DFD8 100%);
-            --accent-glow: rgba(121, 40, 202, 0.35);
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
+            --bg-primary: #05060c;
+            --bg-card: rgba(13, 17, 28, 0.7);
+            --bg-card-hover: rgba(22, 28, 45, 0.85);
+            --border-color: rgba(255, 255, 255, 0.05);
+            --accent-gemini: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #06b6d4 100%);
+            --accent-glow: rgba(99, 102, 241, 0.25);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
             --success: #10b981;
             --warning: #f59e0b;
-            --info: #3b82f6;
+            --info: #0ea5e9;
             --danger: #ef4444;
+            --purple: #8b5cf6;
+            --radius-lg: 16px;
+            --radius-md: 10px;
         }
 
         * {
@@ -36,19 +39,21 @@
             color: var(--text-main);
             min-height: 100vh;
             background-image: 
-                radial-gradient(circle at 15% 15%, rgba(121, 40, 202, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 85% 85%, rgba(0, 223, 216, 0.12) 0%, transparent 40%);
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.07) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
             background-attachment: fixed;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
-        /* Header */
+        /* Header styling */
         header {
-            background: rgba(10, 13, 20, 0.8);
-            backdrop-filter: blur(16px);
+            background: rgba(5, 6, 12, 0.8);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-color);
-            padding: 1rem 2rem;
+            padding: 0.85rem 2rem;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -60,55 +65,56 @@
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.85rem;
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 12px;
             background: var(--accent-gemini);
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 0 20px var(--accent-glow);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: white;
         }
 
         .logo-title h1 {
-            font-size: 1.35rem;
-            font-weight: 700;
+            font-size: 1.3rem;
+            font-weight: 800;
             letter-spacing: -0.5px;
-            background: linear-gradient(90deg, #ffffff, #d1d5db);
+            background: linear-gradient(90deg, #ffffff, #e2e8f0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .logo-title span {
-            font-size: 0.75rem;
-            color: #93c5fd;
+            font-size: 0.72rem;
+            color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             font-weight: 600;
         }
 
         .status-badges {
             display: flex;
-            gap: 0.75rem;
+            gap: 0.85rem;
             align-items: center;
         }
 
         .badge {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-color);
-            padding: 0.35rem 0.85rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.78rem;
             font-weight: 500;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: #cbd5e1;
         }
 
         .badge-dot {
@@ -119,32 +125,84 @@
             box-shadow: 0 0 10px var(--success);
         }
 
-        /* Layout Grid */
-        .main-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 1.5rem;
+        /* Primary layout container with tab navigation */
+        .dashboard-container {
+            display: flex;
             flex: 1;
+            max-width: 1600px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
         }
 
-        @media (max-width: 1024px) {
-            .main-container {
-                grid-template-columns: 1fr;
-            }
+        /* Sidebar Tabs bar */
+        .sidebar-tabs {
+            width: 250px;
+            border-right: 1px solid var(--border-color);
+            background: rgba(5, 6, 12, 0.4);
+            padding: 1.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex-shrink: 0;
         }
 
-        /* Card Styles */
+        .tab-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            padding: 0.85rem 1.1rem;
+            border-radius: var(--radius-md);
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .tab-btn i {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background: rgba(99, 102, 241, 0.12);
+            border-color: rgba(99, 102, 241, 0.25);
+            color: #a5b4fc;
+            box-shadow: inset 0 0 12px rgba(99, 102, 241, 0.05);
+        }
+
+        /* Main Workspace tab panels wrapper */
+        .workspace-panel {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            display: none;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .workspace-panel.active {
+            display: flex;
+        }
+
+        /* Card components styling */
         .card {
             background: var(--bg-card);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
+            border-radius: var(--radius-lg);
             padding: 1.5rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
             display: flex;
             flex-direction: column;
             gap: 1.25rem;
@@ -160,44 +218,19 @@
         }
 
         .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.05rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 0.6rem;
-            color: #f3f4f6;
+            gap: 0.65rem;
+            color: #f1f5f9;
         }
 
         .card-title i {
             color: #818cf8;
         }
 
-        /* Form Controls */
-        label {
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            margin-bottom: 0.35rem;
-            display: block;
-        }
-
-        textarea, input, select {
-            width: 100%;
-            background: rgba(10, 13, 20, 0.6);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 0.85rem;
-            color: white;
-            font-size: 0.95rem;
-            outline: none;
-            transition: all 0.2s ease;
-        }
-
-        textarea:focus, input:focus, select:focus {
-            border-color: #818cf8;
-            box-shadow: 0 0 12px rgba(129, 140, 248, 0.25);
-        }
-
+        /* Templates configuration pills styling */
         .template-pills {
             display: flex;
             flex-wrap: wrap;
@@ -205,75 +238,144 @@
         }
 
         .pill {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 0.4rem 0.85rem;
-            font-size: 0.78rem;
+            border-radius: 24px;
+            padding: 0.45rem 1rem;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.2s ease;
             color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
         }
 
         .pill:hover {
-            background: rgba(129, 140, 248, 0.15);
+            background: rgba(99, 102, 241, 0.15);
             border-color: #818cf8;
             color: white;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.15);
+        }
+
+        /* Button styles */
+        .btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            padding: 0.7rem 1.2rem;
+            border-radius: var(--radius-md);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            border: none;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.35);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            filter: brightness(1.1);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5);
         }
 
         .btn-launch {
             background: var(--accent-gemini);
             border: none;
-            border-radius: 10px;
-            padding: 0.9rem;
+            border-radius: var(--radius-md);
+            padding: 0.85rem 1.5rem;
             color: white;
-            font-size: 1rem;
-            font-weight: 600;
+            font-size: 0.95rem;
+            font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.6rem;
             box-shadow: 0 4px 20px var(--accent-glow);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.25s ease;
         }
 
-        .btn-launch:hover {
+        .btn-launch:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(121, 40, 202, 0.5);
+            box-shadow: 0 6px 25px rgba(168, 85, 247, 0.45);
         }
 
         .btn-launch:active {
             transform: translateY(0);
         }
 
-        /* Workflow Steps Display */
+        /* Inputs & Textareas */
+        textarea, input, select {
+            width: 100%;
+            background: rgba(5, 6, 12, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0.85rem;
+            color: white;
+            font-size: 0.92rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        textarea:focus, input:focus, select:focus {
+            border-color: #818cf8;
+            box-shadow: 0 0 12px rgba(129, 140, 248, 0.2);
+        }
+
+        /* Roster Grid */
+        .roster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .roster-card {
+            background: rgba(5, 6, 12, 0.35);
+            padding: 0.85rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        /* Execution results elements */
         .step-list {
             display: flex;
             flex-direction: column;
             gap: 0.85rem;
-            max-height: 450px;
+            max-height: 500px;
             overflow-y: auto;
-            padding-right: 0.5rem;
+            padding-right: 0.4rem;
         }
 
         .step-card {
-            background: rgba(10, 13, 20, 0.5);
+            background: rgba(5, 6, 12, 0.45);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: var(--radius-md);
             padding: 1rem;
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
             position: relative;
-            overflow: hidden;
             transition: border-color 0.2s ease;
         }
 
-        .step-card.completed {
-            border-left: 4px solid var(--success);
-        }
-
+        .step-card.completed { border-left: 4px solid var(--success); }
+        .step-card.failed { border-left: 4px solid var(--danger); }
         .step-card.in_progress {
             border-left: 4px solid var(--warning);
             animation: pulse-border 1.5s infinite;
@@ -292,18 +394,15 @@
         }
 
         .step-title {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             font-weight: 600;
             color: #f1f5f9;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         .tool-badge {
-            background: rgba(99, 102, 241, 0.15);
+            background: rgba(99, 102, 241, 0.12);
             color: #a5b4fc;
-            border: 1px solid rgba(99, 102, 241, 0.3);
+            border: 1px solid rgba(99, 102, 241, 0.25);
             font-size: 0.72rem;
             padding: 0.2rem 0.5rem;
             border-radius: 6px;
@@ -313,475 +412,612 @@
         .step-reasoning {
             font-size: 0.82rem;
             color: var(--text-muted);
-            line-height: 1.4;
+            line-height: 1.45;
         }
 
-        /* Telemetry & Log Console */
-        .terminal-box {
-            background: #06080d;
+        /* Playback Viewport */
+        .viewport-box {
+            background: #020408;
+            border-radius: var(--radius-md);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Terminal Console */
+        .terminal-box {
+            background: #03050a;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
             padding: 1rem;
             font-family: 'Fira Code', monospace;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: #a7f3d0;
             max-height: 250px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 0.35rem;
+            gap: 0.4rem;
         }
 
         .log-line {
             display: flex;
             gap: 0.6rem;
-            line-height: 1.5;
+            line-height: 1.45;
         }
 
-        .log-time {
-            color: #64748b;
+        .log-time { color: #57657a; }
+        .log-event { color: #38bdf8; font-weight: 600; }
+
+        /* Tools grid inside Direct Playground */
+        .tools-selector-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1.5rem;
+            min-height: 480px;
         }
 
-        .log-event {
+        .tools-list-side {
+            border-right: 1px solid var(--border-color);
+            padding-right: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            max-height: 520px;
+            overflow-y: auto;
+        }
+
+        .tool-select-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            color: var(--text-muted);
+            text-align: left;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .tool-select-btn:hover {
+            background: rgba(255, 255, 255, 0.02);
+            color: white;
+        }
+
+        .tool-select-btn.active {
+            background: rgba(14, 165, 233, 0.1);
+            border-color: rgba(14, 165, 233, 0.2);
             color: #38bdf8;
+        }
+
+        .tool-desc-sub {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tool-execution-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding-left: 0.5rem;
+        }
+
+        /* Audit logs table styling */
+        .audit-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        .audit-table th {
+            padding: 0.75rem;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-muted);
             font-weight: 600;
         }
 
-        /* Answer Hero Card */
-        .answer-card {
-            background: linear-gradient(135deg, rgba(121, 40, 202, 0.15) 0%, rgba(0, 223, 216, 0.1) 100%);
-            border: 1px solid rgba(121, 40, 202, 0.35);
-            border-radius: 14px;
-            padding: 1.5rem 1.75rem;
-            margin-bottom: 1rem;
-            animation: answerFadeIn 0.5s ease;
+        .audit-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            color: #e2e8f0;
         }
 
-        @keyframes answerFadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
+        /* Answer Card styling */
+        .answer-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(6, 182, 212, 0.1) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            border-radius: var(--radius-md);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .answer-card .answer-label {
+        .answer-label {
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            color: #c084fc;
+            color: #a5b4fc;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
 
-        .answer-card .answer-text {
-            font-size: 1.1rem;
-            line-height: 1.6;
+        .answer-text {
+            font-size: 1.05rem;
+            line-height: 1.55;
             color: #f1f5f9;
-            font-weight: 400;
         }
 
-        .answer-card .answer-text strong {
-            color: #00DFD8;
-            font-weight: 700;
-        }
-
-        /* Deliverable Markdown Viewer */
         .artifact-box {
-            background: rgba(10, 13, 20, 0.6);
+            background: rgba(5, 6, 12, 0.45);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: var(--radius-md);
             padding: 1.25rem;
             font-size: 0.88rem;
-            line-height: 1.65;
-            color: #e2e8f0;
-            max-height: 500px;
+            line-height: 1.6;
+            color: #cbd5e1;
+            max-height: 480px;
             overflow-y: auto;
         }
 
-        .artifact-box h1, .artifact-box h2, .artifact-box h3 {
-            color: #38bdf8;
-            margin: 0.8rem 0 0.4rem;
-            font-weight: 700;
-        }
+        .artifact-box h1 { font-size: 1.4rem; color: #a5b4fc; margin-bottom: 0.75rem; margin-top: 0.75rem;}
+        .artifact-box h2 { font-size: 1.2rem; color: #38bdf8; margin-bottom: 0.6rem; margin-top: 0.75rem;}
+        .artifact-box h3 { font-size: 1rem; color: #818cf8; margin-bottom: 0.5rem; }
+        .artifact-box ul { margin-left: 1.25rem; margin-bottom: 0.75rem; }
+        .artifact-box code { font-family: 'Fira Code', monospace; background: rgba(255,255,255,0.06); padding: 0.15rem 0.3rem; border-radius: 4px; color: #f472b6; font-size: 0.8rem; }
+        .artifact-box pre { background: #03050a; border: 1px solid var(--border-color); border-radius: 6px; padding: 0.75rem; overflow-x: auto; margin-bottom: 1rem; }
+        .artifact-box pre code { background: transparent; padding: 0; color: #e2e8f0; font-size: 0.82rem; }
 
-        .artifact-box h1 { font-size: 1.15rem; }
-        .artifact-box h2 { font-size: 1rem; color: #818cf8; }
-        .artifact-box h3 { font-size: 0.92rem; color: #a5b4fc; }
-
-        .artifact-box strong { color: #00DFD8; }
-
-        .artifact-box ul, .artifact-box ol {
-            padding-left: 1.25rem;
-            margin: 0.3rem 0;
-        }
-
-        .artifact-box li { margin-bottom: 0.2rem; }
-
-        .artifact-box code {
-            background: rgba(255,255,255,0.08);
-            padding: 0.1rem 0.35rem;
-            border-radius: 4px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.82rem;
-            color: #fbbf24;
-        }
-
-        .artifact-box pre {
-            background: rgba(6,8,13,0.8);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 8px;
-            padding: 0.75rem;
-            overflow-x: auto;
-            margin: 0.5rem 0;
-        }
-
-        .artifact-box pre code {
-            background: none;
-            padding: 0;
-        }
-
-        .summary-toggle {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.35rem 0.8rem;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 6px;
-            color: var(--text-muted);
-            font-size: 0.78rem;
-            cursor: pointer;
-            margin-top: 0.5rem;
-            transition: all 0.2s;
-        }
-
-        .summary-toggle:hover {
-            background: rgba(255,255,255,0.1);
-            color: #e2e8f0;
-        }
-
-        /* Tools Grid */
-        .tools-grid {
+        /* General layout grid */
+        .workspace-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 0.75rem;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 1.5rem;
         }
 
-        .tool-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 0.85rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.35rem;
+        @media (max-width: 1100px) {
+            .workspace-grid { grid-template-columns: 1fr; }
+            .dashboard-container { flex-direction: column; }
+            .sidebar-tabs { width: 100%; border-right: none; border-bottom: 1px solid var(--border-color); }
         }
 
-        .tool-card-name {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #38bdf8;
-            font-family: 'Fira Code', monospace;
-        }
-
-        .tool-card-desc {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        /* Footer */
         footer {
-            border-top: 1px solid var(--border-color);
-            padding: 1rem 2rem;
             text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
             font-size: 0.8rem;
             color: var(--text-muted);
-            margin-top: auto;
+            background: rgba(5, 6, 12, 0.9);
         }
 
-        footer a {
-            color: #818cf8;
-            text-decoration: none;
+        /* Spinner */
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-top-color: #a5b4fc;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
         }
     </style>
 </head>
 <body>
 
-    <!-- Top Navigation Header -->
+    <!-- Header Navigation -->
     <header>
         <div class="logo-container">
             <div class="logo-icon">
-                <i class="fa-solid fa-layer-group"></i>
+                <i class="fa-solid fa-microchip"></i>
             </div>
             <div class="logo-title">
-                <h1>Taskmaster AI Engine</h1>
-                <span>All Things Agentic Hackathon 2026</span>
+                <h1>Taskmaster AI Control Center</h1>
+                <span>Engine v2.0 • Autonomous Orchestrator</span>
             </div>
         </div>
         <div class="status-badges">
             <div class="badge">
                 <div class="badge-dot"></div>
-                Gemini 3.5 Flash Active
+                Gemini 3.5 Active
             </div>
             <div class="badge">
-                <i class="fa-solid fa-server" style="color: #60a5fa;"></i>
-                Cloud Run Container Ready
+                <i class="fa-solid fa-server" style="color: #38bdf8;"></i>
+                Local Node Running
             </div>
             <a href="/docs" target="_blank" class="badge" style="text-decoration: none; color: white;">
                 <i class="fa-solid fa-code"></i>
-                Swagger OpenAPI Docs
+                API Docs ↗
             </a>
         </div>
     </header>
 
-    <!-- Main App Container -->
-    <main class="main-container">
-        
-        <!-- Left Panel: Input & Control -->
-        <section style="display: flex; flex-direction: column; gap: 1.5rem;">
-            
-            <!-- Autonomous Event Watcher & Ingestion Hub -->
-            <div class="card" style="border: 1px solid rgba(129, 140, 248, 0.35); background: linear-gradient(135deg, rgba(30, 27, 75, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);">
-                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                    <h2 class="card-title" style="color: #a5b4fc;">
-                        <i class="fa-solid fa-satellite-dish fa-spin" style="--fa-animation-duration: 4s; color: #38bdf8;"></i>
-                        Event-Driven Autonomous Watcher
-                    </h2>
-                    <span id="watcherBadge" class="status-badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 999px;">
-                        <i class="fa-solid fa-circle-dot"></i> Watcher: ACTIVE
-                    </span>
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation Tabs -->
+        <aside class="sidebar-tabs">
+            <button class="tab-btn active" onclick="switchTab('council-tab')">
+                <i class="fa-solid fa-people-group"></i> 🏛️ Council Room
+            </button>
+            <button class="tab-btn" onclick="switchTab('playground-tab')">
+                <i class="fa-solid fa-toolbox"></i> 🛠️ Direct Playground
+            </button>
+            <button class="tab-btn" onclick="switchTab('pipeline-tab')">
+                <i class="fa-solid fa-satellite-dish"></i> 📡 Event Watcher
+            </button>
+            <button class="tab-btn" onclick="switchTab('env-tab')">
+                <i class="fa-solid fa-sliders"></i> ⚙️ System Settings
+            </button>
+        </aside>
+
+        <!-- 1. COUNCIL ORCHESTRATOR PANEL -->
+        <section id="council-tab" class="workspace-panel active">
+            <div class="workspace-grid">
+                <!-- Left Panel: Launch Goals -->
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fa-solid fa-play"></i> Launch Autonomous Goal
+                            </h2>
+                        </div>
+                        
+                        <div>
+                            <label style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.4rem; display:block;">Select Scenario Template:</label>
+                            <div class="template-pills">
+                                <div class="pill" style="border-color: rgba(99, 102, 241, 0.45); background: rgba(99, 102, 241, 0.08);" onclick="setGoal('Coordinate new freelance client inquiry from Sarah Jenkins (Lumina Health): schedule 45-min discovery call on Google Calendar, write SOW SOW proposal in Google Docs, log lead to Google Sheets, and draft client response in Gmail.')">
+                                    💼 Freelance pipeline
+                                </div>
+                                <div class="pill" style="border-color: rgba(6, 182, 212, 0.45); background: rgba(6, 182, 212, 0.08);" onclick="setGoal('Act as an Automated Product Manager: parse Sprint Planning transcript, extract decisions and action items, create PROD Jira engineering tasks, write Executive Meeting Minutes in Google Docs, sync Sprint Backlog to Google Sheets, and post an executive Block Kit announcement to Slack.')">
+                                    📊 Sprint Manager
+                                </div>
+                                <div class="pill" style="border-color: rgba(239, 68, 68, 0.45); background: rgba(239, 68, 68, 0.08);" onclick="setGoal('Search for Lex Fridman Yann LeCun podcast on YouTube and play it with ad auto-skip.')">
+                                    🎬 YouTube Controller
+                                </div>
+                                <div class="pill" style="border-color: rgba(16, 185, 129, 0.45); background: rgba(16, 185, 129, 0.08);" onclick="setGoal('Navigate to news.ycombinator.com, extract top 3 trending headlines via ARIA snapshot, and compile briefing document in Google Docs.')">
+                                    🌐 Web Scraper
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                                <label for="goalInput" style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0;">Task Goal Instructions:</label>
+                                <button class="btn" onclick="startVoiceRecognition()" id="micButton" style="padding: 0.35rem 0.75rem; font-size: 0.78rem;">
+                                    <i class="fa-solid fa-microphone"></i> Voice Command
+                                </button>
+                            </div>
+                            <textarea id="goalInput" rows="3" placeholder="Describe a complex, multi-step goal for the agent to execute..."></textarea>
+                        </div>
+
+                        <div style="display: flex; gap: 0.75rem;">
+                            <button class="btn-launch" onclick="triggerMultiAgentCouncil()" id="councilLaunchBtn" style="flex: 2;">
+                                <i class="fa-solid fa-people-group"></i> Dispatch Multi-Agent Council (5 Agents)
+                            </button>
+                            <button class="btn" onclick="triggerAgentRun()" id="singleAgentBtn" style="flex: 1;">
+                                <i class="fa-solid fa-bolt"></i> Single Agent
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Multi-Agent Council Roster -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fa-solid fa-users-gear"></i> Active Council Specialized Roles
+                            </h3>
+                        </div>
+                        <div class="roster-grid">
+                            <div class="roster-card" style="border-left: 3px solid #38bdf8;">
+                                <div style="font-weight: 600; color: #38bdf8; font-size: 0.82rem;"><i class="fa-solid fa-brain"></i> Intelligence</div>
+                                <div style="font-size: 0.7rem; color: var(--text-muted);">Decomposition & Sizing</div>
+                            </div>
+                            <div class="roster-card" style="border-left: 3px solid #818cf8;">
+                                <div style="font-weight: 600; color: #818cf8; font-size: 0.82rem;"><i class="fa-solid fa-code"></i> PM / Jira</div>
+                                <div style="font-size: 0.7rem; color: var(--text-muted);">Backlog & Scrum Tasks</div>
+                            </div>
+                            <div class="roster-card" style="border-left: 3px solid #34d399;">
+                                <div style="font-weight: 600; color: #34d399; font-size: 0.82rem;"><i class="fa-solid fa-file-lines"></i> Executive Doc</div>
+                                <div style="font-size: 0.7rem; color: var(--text-muted);">Docs & Slack Updates</div>
+                            </div>
+                            <div class="roster-card" style="border-left: 3px solid #fbbf24;">
+                                <div style="font-weight: 600; color: #fbbf24; font-size: 0.82rem;"><i class="fa-solid fa-calendar-check"></i> Operations</div>
+                                <div style="font-size: 0.7rem; color: var(--text-muted);">Sheets & Calendars</div>
+                            </div>
+                            <div class="roster-card" style="border-left: 3px solid #f43f5e;">
+                                <div style="font-weight: 600; color: #f43f5e; font-size: 0.82rem;"><i class="fa-solid fa-shield-halved"></i> Auditor</div>
+                                <div style="font-size: 0.7rem; color: var(--text-muted);">Security & Guardrails</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Registered Tools List -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fa-solid fa-toolbox"></i> Installed Agent Tools
+                            </h3>
+                        </div>
+                        <div style="display:flex; flex-wrap:wrap; gap:0.4rem;" id="toolsListGrid">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
-                    Continuously listens for incoming Gmail client inquiries or webhook events, and autonomously routes tasks across Google Calendar, Docs, Sheets, and Gmail.
-                </p>
-                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                    <button class="btn btn-secondary" onclick="simulateInquiry()" style="flex: 1; background: var(--accent-gemini); color: white; border: none; font-weight: 600; box-shadow: 0 0 15px var(--accent-glow);">
-                        <i class="fa-solid fa-bolt"></i> ⚡ Simulate Client Inquiry Event
-                    </button>
-                    <button class="btn btn-secondary" id="watcherToggleBtn" onclick="toggleWatcher()" style="padding: 0.6rem 1rem;">
-                        <i class="fa-solid fa-power-off"></i> Toggle Poller
-                    </button>
+
+                <!-- Right Panel: Deliverables, Dialogue, Browser & Steps -->
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    
+                    <!-- Key Result / Executive Summary (Prominently at Top) -->
+                    <div class="card" id="deliverableCard" style="display: none; border: 1px solid rgba(99, 102, 241, 0.4); background: rgba(15, 23, 42, 0.9); box-shadow: 0 4px 25px rgba(0,0,0,0.3);">
+                        <div class="card-header" style="border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.5rem;">
+                            <h3 class="card-title" style="color: #38bdf8; font-weight: 700;"><i class="fa-solid fa-sparkles"></i> Executive Result & Deliverables</h3>
+                            <button class="btn" onclick="toggleSummary()" id="summaryToggleBtn" style="padding: 0.25rem 0.5rem; font-size: 0.72rem;">
+                                <i class="fa-solid fa-chevron-up"></i> Collapse
+                            </button>
+                        </div>
+                        <div class="artifact-box" id="artifactBox"></div>
+                    </div>
+
+                    <!-- Interactive Dialogue -->
+                    <div class="card" style="background: linear-gradient(135deg, rgba(13, 17, 28, 0.8) 0%, rgba(30, 27, 75, 0.3) 100%);">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa-solid fa-comments"></i> Council Inter-Agent Dialogue</h3>
+                            <span id="councilStatusBadge" class="badge" style="display:none; font-size:0.7rem; padding: 0.2rem 0.6rem; border-color: rgba(99,102,241,0.3);">COUNCIL_ACTIVE</span>
+                        </div>
+                        <div id="councilDialogueStream" style="display:flex; flex-direction:column; gap:0.75rem; max-height: 250px; overflow-y:auto; padding: 0.25rem;">
+                            <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 1.5rem;">
+                                Dispatch the council to monitor multi-agent alignment in real-time.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Browser Viewport Feed -->
+                    <div class="card" style="border: 1px solid rgba(6, 182, 212, 0.25);">
+                        <div class="card-header">
+                            <h3 class="card-title" style="color: #06b6d4;"><i class="fa-solid fa-desktop"></i> Live Browser Feed</h3>
+                            <div style="display:flex; gap:0.4rem;">
+                                <button class="btn" onclick="refreshBrowserViewport()" style="padding: 0.25rem 0.5rem; font-size: 0.72rem;">
+                                    <i class="fa-solid fa-rotate"></i> Refresh View
+                                </button>
+                                <button class="btn" onclick="emergencyKillBrowser()" style="padding: 0.25rem 0.5rem; font-size: 0.72rem; background: var(--danger); border: none;">
+                                    <i class="fa-solid fa-power-off"></i> Panic Stop
+                                </button>
+                            </div>
+                        </div>
+                        <div style="font-size:0.75rem; color: var(--text-muted); display:flex; justify-content:space-between; margin-bottom:-0.5rem;">
+                            <span id="browserUrlText">URL: <i>No active browser session</i></span>
+                            <span id="browserActiveStatus"><i class="fa-solid fa-circle"></i> IDLE</span>
+                        </div>
+                        <div class="viewport-box" id="browserViewportContainer">
+                            <div id="browserEmptyPlaceholder" style="color: var(--text-muted); font-size: 0.85rem; text-align: center;">
+                                <i class="fa-solid fa-window-maximize" style="font-size: 1.8rem; color: #1e293b; margin-bottom: 0.4rem; display: block;"></i>
+                                Web automation views will stream here.
+                            </div>
+                            <img id="browserLiveImage" style="width: 100%; height: auto; display: none; border-radius: 8px;" alt="Live Browser Viewport" />
+                        </div>
+                    </div>
+
+                    <!-- Execution Plan & Technical Details -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa-solid fa-bars-staggered"></i> Council Plan & Execution Steps</h3>
+                            <span id="workflowStatusBadge" class="badge" style="display: none;">STATUS</span>
+                        </div>
+                        <div class="step-list" id="stepList">
+                            <div style="text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 0.85rem;">
+                                DAG and step execution cards will render once started.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Telemetry reasoning Box -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa-solid fa-terminal"></i> Telemetry Reasoning Traces</h3>
+                        </div>
+                        <div class="terminal-box" id="terminalBox">
+                            <div class="log-line">
+                                <span class="log-time">[SYSTEM]</span>
+                                <span>Agent Orchestrator ready. Waiting for task goals...</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">
-                        <i class="fa-solid fa-bolt"></i>
-                        Launch Autonomous Workflow Goal
-                    </h2>
-                </div>
-
-                <div>
-                    <label>Select Sample Scenario Template:</label>
-                    <div class="template-pills">
-                        <div class="pill" style="border-color: rgba(129, 140, 248, 0.5); background: rgba(99, 102, 241, 0.15); font-weight: 600;" onclick="setGoal('Coordinate new freelance client inquiry from Sarah Jenkins (Lumina Health): schedule 45-min discovery call on Google Calendar, write tailored SOW proposal in Google Docs, log lead to Google Sheets CRM, and draft client response in Gmail.')">
-                            🌟 💼 Freelance Pipeline Coordinator (Inquiry ➔ Calendar ➔ Docs ➔ Sheets ➔ Gmail)
-                        </div>
-                        <div class="pill" style="border-color: rgba(56, 189, 248, 0.5); background: rgba(14, 165, 233, 0.15); font-weight: 600;" onclick="setGoal('Act as an Automated Product Manager: parse Sprint Planning transcript, extract decisions and action items, create PROD Jira engineering tasks, write Executive Meeting Minutes in Google Docs, sync Sprint Backlog to Google Sheets, and post an executive Block Kit announcement to Slack.')">
-                            🌟 📊 Automated Product Manager (Transcript ➔ Jira ➔ Google Docs ➔ Sheets ➔ Slack)
-                        </div>
-                        <div class="pill" style="border-color: rgba(239, 68, 68, 0.5); background: rgba(239, 68, 68, 0.15); font-weight: 600;" onclick="setGoal('Search for Lex Fridman Yann LeCun podcast on YouTube and play it with ad auto-skip.')">
-                            🌐 🎬 Autonomous YouTube DJ (Search ➔ Play ➔ Ad Auto-Skip ➔ Verify)
-                        </div>
-                        <div class="pill" style="border-color: rgba(16, 185, 129, 0.5); background: rgba(16, 185, 129, 0.15); font-weight: 600;" onclick="setGoal('Search for Coldplay on Spotify, play the top track, and create a high-priority Focus Playlist.')">
-                            🌐 🎵 Autonomous Spotify Controller (Web Player ➔ Search ➔ MPRIS Fast-Path)
-                        </div>
-                        <div class="pill" style="border-color: rgba(168, 85, 247, 0.5); background: rgba(168, 85, 247, 0.15); font-weight: 600;" onclick="setGoal('Navigate to news.ycombinator.com, extract top 3 trending headlines via ARIA snapshot, and compile briefing document in Google Docs.')">
-                            🌐 💻 Autonomous Web Scraper (Playwright ➔ ARIA Parser ➔ Docs ➔ Slack)
-                        </div>
-                        <div class="pill" onclick="setGoal('Audit service cluster error logs, save incident record in central DB, dispatch remediation webhook, and generate executive report.')">
-                            🚨 Incident Remediation Chore
-                        </div>
-                        <div class="pill" onclick="setGoal('Process messy customer intake form, extract key metrics, insert record into CRM storage, and compile onboarding briefing.')">
-                            💼 Customer Lead Intake Chore
-                        </div>
-                        <div class="pill" onclick="setGoal('Run security compliance scan, validate zero-trust credentials, log telemetry traces, and alert team on Slack.')">
-                            🛡️ Security & Compliance Chore
-                        </div>
-                        <div class="pill" onclick="setGoal('Query legacy database for inactive accounts, cross-reference with billing API, export CSV of accounts to deactivate, and email report to billing admin.')">
-                            💰 Revenue Leakage Audit
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                        <label for="goalInput" style="margin-bottom: 0;">Taskmaster Goal Instructions:</label>
-                        <button class="btn btn-secondary" onclick="startVoiceRecognition()" id="micButton" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">
-                            <i class="fa-solid fa-microphone"></i> Voice Command
-                        </button>
-                    </div>
-                    <textarea id="goalInput" rows="4" placeholder="Describe a complex, multi-step operational goal for the agent to execute autonomously..."></textarea>
-                </div>
-
-                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-                    <button class="btn-launch" onclick="triggerMultiAgentCouncil()" style="flex: 2; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #06b6d4 100%);">
-                        <i class="fa-solid fa-people-group"></i>
-                        Dispatch Multi-Agent Council (5 Specialized Agents)
-                    </button>
-                    <button class="btn btn-secondary" onclick="triggerAgentRun()" style="flex: 1; padding: 0.8rem;">
-                        <i class="fa-solid fa-bolt"></i> Single Agent
-                    </button>
-                </div>
-            </div>
-
-            <!-- Multi-Agent Council Roster -->
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="fa-solid fa-users-gear"></i>
-                        Multi-Agent Council (5 Specialized Sub-Agents)
-                    </h3>
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
-                    <div style="background: rgba(15, 23, 42, 0.6); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(129, 140, 248, 0.2);">
-                        <div style="font-weight: 600; color: #38bdf8; font-size: 0.82rem;"><i class="fa-solid fa-brain"></i> Intelligence Specialist</div>
-                        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Entity resolution & action item decomposition</div>
-                    </div>
-                    <div style="background: rgba(15, 23, 42, 0.6); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(129, 140, 248, 0.2);">
-                        <div style="font-weight: 600; color: #a5b4fc; font-size: 0.82rem;"><i class="fa-solid fa-code"></i> Tech Product Owner</div>
-                        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Fibonacci sizing & Jira Cloud ticket provisioning</div>
-                    </div>
-                    <div style="background: rgba(15, 23, 42, 0.6); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(129, 140, 248, 0.2);">
-                        <div style="font-weight: 600; color: #34d399; font-size: 0.82rem;"><i class="fa-solid fa-file-lines"></i> Executive Doc Lead</div>
-                        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Google Docs Minutes & Slack Block Kit broadcasts</div>
-                    </div>
-                    <div style="background: rgba(15, 23, 42, 0.6); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(129, 140, 248, 0.2);">
-                        <div style="font-weight: 600; color: #fbbf24; font-size: 0.82rem;"><i class="fa-solid fa-calendar-check"></i> Operations Coordinator</div>
-                        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Google Sheets Backlog & Calendar scheduling</div>
-                    </div>
-                    <div style="background: rgba(15, 23, 42, 0.6); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(129, 140, 248, 0.2);">
-                        <div style="font-weight: 600; color: #f43f5e; font-size: 0.82rem;"><i class="fa-solid fa-shield-halved"></i> Compliance Auditor</div>
-                        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Reflexion loop & cross-platform consistency audit</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Registered Tools Catalog -->
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="fa-solid fa-toolbox"></i>
-                        Agent Tool Suite (13 Active Integrations)
-                    </h3>
-                </div>
-                <div class="tools-grid" id="toolsGrid">
-                    <!-- Populated dynamically via JS -->
-                </div>
-            </div>
-
         </section>
 
-        <!-- Right Panel: Live Execution & Traces -->
-        <section style="display: flex; flex-direction: column; gap: 1.5rem;">
-            
-            <!-- Multi-Agent Council Live Dialogue -->
-            <div class="card" id="councilDialogueCard" style="border: 1px solid rgba(129, 140, 248, 0.35); background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 27, 75, 0.5) 100%);">
-                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 class="card-title" style="color: #a5b4fc;">
-                        <i class="fa-solid fa-comments"></i>
-                        🏛️ Multi-Agent Council Inter-Agent Dialogue
-                    </h3>
-                    <span id="councilStatusBadge" class="status-badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 999px; display: none;">
-                        COUNCIL_ACTIVE
-                    </span>
-                </div>
-                <div id="councilDialogueStream" style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 380px; overflow-y: auto; padding: 0.5rem;">
-                    <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 1rem;">
-                        Click "Dispatch Multi-Agent Council" to watch the 5 specialized sub-agents collaborate in real time.
-                    </div>
-                </div>
-            </div>
-
-            <!-- Execution Steps Progress -->
+        <!-- 2. DIRECT PLAYGROUND PANEL -->
+        <section id="playground-tab" class="workspace-panel">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="fa-solid fa-bars-staggered"></i>
-                        Council Execution Plan & Deliverables
-                    </h3>
-                    <span id="workflowStatusBadge" class="badge" style="display: none;">STATUS</span>
+                    <h2 class="card-title"><i class="fa-solid fa-flask"></i> Direct Tool Executor Console</h2>
+                    <p style="font-size:0.8rem; color:var(--text-muted);">Execute individual backend tools directly with customized JSON arguments.</p>
                 </div>
                 
-                <div class="step-list" id="stepList">
-                    <div style="text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.9rem;">
-                        <i class="fa-solid fa-network-wired" style="font-size: 2rem; margin-bottom: 0.5rem; color: #818cf8; display: block;"></i>
-                        Select a template or type a goal to launch the Taskmaster ReAct loop.
+                <div class="tools-selector-grid">
+                    <!-- Left: Tools selection list -->
+                    <div class="tools-list-side" id="playgroundToolsList">
+                        <!-- Populated dynamically -->
+                    </div>
+
+                    <!-- Right: Tool input parameters form -->
+                    <div class="tool-execution-form">
+                        <h3 id="selectedToolTitle" style="color:#38bdf8;">Select a tool</h3>
+                        <p id="selectedToolDesc" style="font-size:0.85rem; color:var(--text-muted); line-height:1.4; margin-bottom:0.5rem;">Pick a tool from the list on the left to invoke its backend APIs directly.</p>
+                        
+                        <div id="toolInputsContainer" style="display:flex; flex-direction:column; gap:0.85rem;">
+                            <!-- Form fields populated dynamically -->
+                        </div>
+
+                        <div style="margin-top:1rem; display:flex; gap:0.75rem;">
+                            <button class="btn btn-primary" onclick="executePlaygroundTool()" id="executeToolBtn" disabled>
+                                <i class="fa-solid fa-play"></i> Execute Tool Direct
+                            </button>
+                        </div>
+
+                        <div style="margin-top:1.5rem; display:flex; flex-direction:column; gap:0.5rem;">
+                            <label style="font-weight:600; font-size:0.82rem; color:var(--text-muted);"><i class="fa-solid fa-receipt"></i> Execution Output Response:</label>
+                            <pre id="toolOutputResponse" style="background:#03050a; border:1px solid var(--border-color); border-radius:8px; padding:1rem; font-family:'Fira Code', monospace; font-size:0.8rem; color:#a7f3d0; max-height:300px; overflow-y:auto; line-height:1.4;">Waiting for execution...</pre>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!-- OpenTelemetry Trace Logs -->
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        <i class="fa-solid fa-terminal"></i>
-                        OpenTelemetry Reasoning Traces
-                    </h3>
-                </div>
-                <div class="terminal-box" id="terminalBox">
-                    <div class="log-line">
-                        <span class="log-time">[SYSTEM]</span>
-                        <span>Agent Orchestrator initialized. Ready for goal parsing...</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Live Autonomous Browser & Computer Control Viewport -->
-            <div class="card" id="browserViewportCard" style="border: 1px solid rgba(0, 223, 216, 0.35); background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(6, 78, 59, 0.25) 100%);">
-                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 class="card-title" style="color: #00dfd8; display: flex; align-items: center; gap: 0.5rem;">
-                        <i class="fa-solid fa-desktop"></i>
-                        🌐 Live Browser & Computer Control Viewport
-                    </h3>
-                    <div style="display: flex; gap: 0.5rem; align-items: center;">
-                        <button class="btn btn-secondary" onclick="refreshBrowserViewport()" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">
-                            <i class="fa-solid fa-arrows-rotate"></i> Refresh View
-                        </button>
-                        <button class="btn" onclick="emergencyKillBrowser()" style="padding: 0.25rem 0.6rem; font-size: 0.75rem; background: #ef4444; color: white; border: none; font-weight: 700; border-radius: 6px; cursor: pointer;">
-                            <i class="fa-solid fa-hand"></i> EMERGENCY STOP
-                        </button>
-                    </div>
-                </div>
-                <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.75rem; display: flex; justify-content: space-between;">
-                    <span id="browserUrlText">URL: <i>No active browser session</i></span>
-                    <span id="browserActiveStatus" style="color: #64748b;"><i class="fa-solid fa-circle"></i> IDLE</span>
-                </div>
-                <div id="browserViewportContainer" style="background: #020617; border-radius: 8px; border: 1px solid var(--border-color); min-height: 180px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
-                    <div id="browserEmptyPlaceholder" style="color: var(--text-muted); font-size: 0.85rem; text-align: center; padding: 1.5rem;">
-                        <i class="fa-solid fa-window-maximize" style="font-size: 2rem; color: #334155; margin-bottom: 0.5rem; display: block;"></i>
-                        Browser viewport feed will appear here when agent executes web/media steps.
-                    </div>
-                    <img id="browserLiveImage" style="width: 100%; height: auto; display: none; border-radius: 8px;" alt="Live Browser Viewport" />
-                </div>
-            </div>
-
-            <!-- Answer Hero Card -->
-            <div id="answerCard" style="display: none;"></div>
-
-            <!-- Executive Report Deliverable -->
-            <div class="card" id="deliverableCard" style="display: none;">
-                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 class="card-title">
-                        <i class="fa-solid fa-file-contract"></i>
-                        Agent Summary
-                    </h3>
-                    <button class="summary-toggle" onclick="toggleSummary()" id="summaryToggleBtn">
-                        <i class="fa-solid fa-chevron-up"></i> Collapse
-                    </button>
-                </div>
-                <div class="artifact-box" id="artifactBox"></div>
-            </div>
-
         </section>
 
-    </main>
+        <!-- 3. PIPELINE & EVENT WATCHER PANEL -->
+        <section id="pipeline-tab" class="workspace-panel">
+            <div class="workspace-grid">
+                <!-- Watcher control card -->
+                <div class="card" style="border-color: rgba(99,102,241,0.25);">
+                    <div class="card-header">
+                        <h2 class="card-title" style="color:#a5b4fc;"><i class="fa-solid fa-satellite-dish"></i> Gmail Watcher & Webhooks</h2>
+                        <span id="watcherBadge" class="badge" style="border-color: rgba(16, 185, 129, 0.3); color: #34d399; font-size:0.75rem;">
+                            Watcher: ACTIVE
+                        </span>
+                    </div>
+                    <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.45;">
+                        The system runs an active background client listener to check Gmail inboxes. It routes new incoming enquiries to automate calendars, proposals, CRM sheets, and client replies.
+                    </p>
+                    <div style="display:flex; gap:0.75rem;">
+                        <button class="btn btn-primary" onclick="simulateInquiry()" style="flex:1;">
+                            <i class="fa-solid fa-bolt"></i> Ingest Simulated Inquiry Event
+                        </button>
+                        <button class="btn" id="watcherToggleBtn" onclick="toggleWatcher()">
+                            <i class="fa-solid fa-toggle-on"></i> Toggle Watcher
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Database history logs card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fa-solid fa-database"></i> SQLite Incident Audit Trail</h3>
+                        <button class="btn" onclick="loadAuditLogs()" style="padding:0.25rem 0.6rem; font-size:0.72rem;">
+                            <i class="fa-solid fa-arrows-rotate"></i> Refresh DB Logs
+                        </button>
+                    </div>
+                    <div style="max-height: 400px; overflow-y: auto; border:1px solid var(--border-color); border-radius:8px;">
+                        <table class="audit-table">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>Event</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody id="auditLogsBody">
+                                <tr>
+                                    <td colspan="3" style="text-align:center; color:var(--text-muted); padding:2rem;">Click Refresh to load database audit events.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. SYSTEM SETTINGS PANEL -->
+        <section id="env-tab" class="workspace-panel">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fa-solid fa-sliders"></i> Engine Telemetry & Environment Check</h2>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:1.2rem;">
+                    <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.45;">
+                        Verify current configuration and environment credentials. Unset variables will fallback to local simulators or mock execution loops automatically.
+                    </p>
+                    
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:1rem;">
+                        <!-- Gemini status -->
+                        <div style="background: rgba(5,6,12,0.4); border:1px solid var(--border-color); border-radius:8px; padding:1rem; display:flex; flex-direction:column; gap:0.5rem;">
+                            <div style="font-weight:600; font-size:0.9rem; color:#818cf8;"><i class="fa-solid fa-robot"></i> Gemini Core Model</div>
+                            <div style="font-size:0.8rem; color:var(--text-muted); display:flex; justify-content:space-between;">
+                                <span>Main Model:</span>
+                                <strong style="color:white;" id="envMainModel">gemini-3.5-flash</strong>
+                            </div>
+                            <div style="font-size:0.8rem; color:var(--text-muted); display:flex; justify-content:space-between;">
+                                <span>Research Model:</span>
+                                <strong style="color:white;" id="envResearchModel">gemini-3.1-flash-lite</strong>
+                            </div>
+                        </div>
+
+                        <!-- Google Workspace status -->
+                        <div style="background: rgba(5,6,12,0.4); border:1px solid var(--border-color); border-radius:8px; padding:1rem; display:flex; flex-direction:column; gap:0.5rem;">
+                            <div style="font-weight:600; font-size:0.9rem; color:#10b981;"><i class="fa-brands fa-google"></i> Google OAuth Status</div>
+                            <div style="font-size:0.8rem; color:var(--text-muted); display:flex; justify-content:space-between;">
+                                <span>Client secret:</span>
+                                <strong style="color:#10b981;" id="envClientSecret">Loaded (client_secret_*.json)</strong>
+                            </div>
+                            <div style="font-size:0.8rem; color:var(--text-muted); display:flex; justify-content:space-between;">
+                                <span>User Session:</span>
+                                <strong style="color:#10b981;" id="envTokenSession">Authorized (token.json)</strong>
+                            </div>
+                        </div>
+
+                        <!-- Jira config -->
+                        <div style="background: rgba(5,6,12,0.4); border:1px solid var(--border-color); border-radius:8px; padding:1rem; display:flex; flex-direction:column; gap:0.5rem;">
+                            <div style="font-weight:600; font-size:0.9rem; color:#38bdf8;"><i class="fa-brands fa-jira"></i> Jira Cloud Integration</div>
+                            <div style="font-size:0.8rem; color:var(--text-muted); display:flex; justify-content:space-between;">
+                                <span>Atlassian Host:</span>
+                                <strong style="color:white;" id="envJiraHost">taskmasterjira.atlassian.net</strong>
+                            </div>
+                            <div style="font-size:0.8rem; color:var(--text-muted); display:flex; justify-content:space-between;">
+                                <span>Project Key:</span>
+                                <strong style="color:white;" id="envJiraProject">KAN</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <!-- Footer -->
     <footer>
-        Taskmaster Autonomous Agent Engine &bull; Person 1 (AI/Agent Lead) Deliverable &bull; Powered by Gemini 3.5 & Google Cloud Run
+        Taskmaster Autonomous Agent Engine Center &bull; Powered by Gemini 3.5 & Google Cloud Run
     </footer>
 
     <script>
+        // Global variables
+        let registeredTools = [];
+        let selectedPlaygroundToolName = '';
+        let browserPollInterval = null;
+
+        // Switch panels tab navigation
+        function switchTab(tabId) {
+            document.querySelectorAll('.workspace-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            
+            // Find button trigger
+            const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+            if (btn) btn.classList.add('active');
+
+            // Hook for loading dynamic data
+            if (tabId === 'pipeline-tab') {
+                loadAuditLogs();
+            } else if (tabId === 'env-tab') {
+                loadEnvStatus();
+            }
+        }
+
         // Voice Command feature using Web Speech API
         function startVoiceRecognition() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -804,15 +1040,12 @@
                 const speechResult = event.results[0][0].transcript;
                 document.getElementById('goalInput').value = speechResult;
                 micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i> Voice Command';
-                
-                // Automatically trigger run when speech is recognized
                 setTimeout(triggerAgentRun, 500);
             };
             
             recognition.onerror = function(event) {
                 console.error('Speech recognition error:', event.error);
                 micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i> Voice Command';
-                alert('Voice recognition error: ' + event.error);
             };
             
             recognition.onend = function() {
@@ -825,16 +1058,31 @@
             try {
                 const res = await fetch('/api/agent/tools');
                 const data = await res.json();
-                const container = document.getElementById('toolsGrid');
+                registeredTools = data.tools;
+
+                // 1. Populate sidebar small tags list in Council tab
+                const container = document.getElementById('toolsListGrid');
                 container.innerHTML = '';
-                data.tools.forEach(tool => {
+                registeredTools.forEach(tool => {
                     container.innerHTML += `
-                        <div class="tool-card">
-                            <div class="tool-card-name">${tool.name}</div>
-                            <div class="tool-card-desc">${tool.description}</div>
-                        </div>
+                        <span class="tool-badge" style="font-size:0.75rem; padding:0.25rem 0.6rem; cursor:pointer;" onclick="switchTab('playground-tab'); selectPlaygroundTool('${tool.name}')">
+                            <i class="fa-solid fa-screwdriver-wrench"></i> ${tool.name}
+                        </span>
                     `;
                 });
+
+                // 2. Populate tools list inside Playground Tab
+                const playgroundList = document.getElementById('playgroundToolsList');
+                playgroundList.innerHTML = '';
+                registeredTools.forEach(tool => {
+                    playgroundList.innerHTML += `
+                        <button class="tool-select-btn" id="pg-btn-${tool.name}" onclick="selectPlaygroundTool('${tool.name}')">
+                            <strong style="color:white; font-size:0.85rem;">${tool.name}</strong>
+                            <span class="tool-desc-sub">${tool.description}</span>
+                        </button>
+                    `;
+                });
+
             } catch (err) {
                 console.error("Failed to load tools:", err);
             }
@@ -850,14 +1098,17 @@
                 const res = await fetch('/api/pipeline/watcher');
                 const data = await res.json();
                 const badge = document.getElementById('watcherBadge');
+                const toggle = document.getElementById('watcherToggleBtn');
                 if (data.is_running) {
-                    badge.innerHTML = '<i class="fa-solid fa-circle-dot" style="color:#10b981;"></i> Watcher: ACTIVE';
+                    badge.innerHTML = '<i class="fa-solid fa-circle-dot" style="color:#10b981;"></i> ACTIVE';
                     badge.style.borderColor = 'rgba(16, 185, 129, 0.4)';
                     badge.style.color = '#34d399';
+                    toggle.innerHTML = '<i class="fa-solid fa-toggle-on"></i> Pause Watcher';
                 } else {
-                    badge.innerHTML = '<i class="fa-solid fa-circle-pause" style="color:#f59e0b;"></i> Watcher: PAUSED';
+                    badge.innerHTML = '<i class="fa-solid fa-circle-pause" style="color:#f59e0b;"></i> PAUSED';
                     badge.style.borderColor = 'rgba(245, 158, 11, 0.4)';
                     badge.style.color = '#fbbf24';
+                    toggle.innerHTML = '<i class="fa-solid fa-toggle-off"></i> Start Watcher';
                 }
             } catch (e) {
                 console.log("Watcher status check:", e);
@@ -880,10 +1131,9 @@
             const stepList = document.getElementById('stepList');
             const terminal = document.getElementById('terminalBox');
             const deliverableCard = document.getElementById('deliverableCard');
-            const statusBadge = document.getElementById('workflowStatusBadge');
 
             stepList.innerHTML = `<div style="text-align: center; padding: 2rem;"><i class="fa-solid fa-satellite-dish fa-spin" style="font-size: 2.2rem; color: #38bdf8;"></i><br><br><strong>Inquiry Ingestion Event Detected!</strong><br><span style="color:var(--text-muted); font-size:0.85rem;">Autonomous Routing across Google Calendar, Docs, Sheets, and Gmail...</span></div>`;
-            terminal.innerHTML = `<div class="log-line"><span class="log-time">[${new Date().toLocaleTimeString()}]</span> <span class="log-event">INQUIRY_INGESTED</span> <span>Sarah Jenkins (Lumina Health) — $12,500 Patient Analytics Dashboard</span></div>`;
+            terminal.innerHTML = `<div class="log-line"><span class="log-time">[${new Date().toLocaleTimeString()}]</span> <span class="log-event">INQUIRY_INGESTED</span> <span>Sarah Jenkins (Lumina Health) — patient analytics dashboard</span></div>`;
             deliverableCard.style.display = 'none';
 
             try {
@@ -896,11 +1146,13 @@
                 const workflow = resData.workflow;
                 renderWorkflow(workflow);
                 fetchTraces(workflow.workflow_id);
+                startBrowserPolling();
             } catch (err) {
                 stepList.innerHTML = `<div style="color: var(--danger); text-align: center;">Error simulating inquiry: ${err.message}</div>`;
             }
         }
 
+        // Trigger Multi-Agent Council
         async function triggerMultiAgentCouncil() {
             const goal = document.getElementById('goalInput').value.trim();
             if (!goal) {
@@ -915,21 +1167,24 @@
             const terminal = document.getElementById('terminalBox');
 
             statusBadge.style.display = 'inline-flex';
-            statusBadge.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> COUNCIL_DELIBERATING';
-            statusBadge.style.background = 'rgba(129, 140, 248, 0.2)';
-            statusBadge.style.color = '#a5b4fc';
+            statusBadge.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> DELIBERATING...';
+            statusBadge.style.borderColor = 'rgba(168, 85, 247, 0.4)';
+            statusBadge.style.color = '#c084fc';
 
             stream.innerHTML = `
-                <div style="text-align: center; padding: 1.5rem; color: #a5b4fc;">
-                    <i class="fa-solid fa-users-viewfinder fa-beat" style="font-size: 2rem; margin-bottom: 0.5rem; color: #38bdf8;"></i>
+                <div style="text-align: center; padding: 1.5rem; color: #c084fc;">
+                    <i class="fa-solid fa-users-viewfinder fa-beat" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
                     <br><strong>Meta-Orchestrator Convening Council...</strong>
-                    <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.3rem;">Delegating across Intelligence, Engineering, Executive Doc, Operations, and Critic Agents</div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.3rem;">Evaluating roles...</div>
                 </div>
             `;
             stepList.innerHTML = `<div style="text-align: center; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: #818cf8;"></i><br><br>Executing Multi-Agent Council Pipeline...</div>`;
             deliverableCard.style.display = 'none';
 
             terminal.innerHTML = `<div class="log-line"><span class="log-time">[${new Date().toLocaleTimeString()}]</span> <span class="log-event">COUNCIL_DISPATCHED</span> <span>${goal}</span></div>`;
+
+            // Start polling browser viewport
+            startBrowserPolling();
 
             try {
                 const response = await fetch('/api/multi-agent/run', {
@@ -939,17 +1194,18 @@
                         goal: goal,
                         context: {
                             transcript: goal,
-                            meeting_title: "Sprint Review & Security Review"
+                            meeting_title: "Sprint Review & Audit Sync"
                         }
                     })
                 });
 
                 const result = await response.json();
                 renderCouncilResult(result);
-
             } catch (err) {
                 stream.innerHTML = `<div style="color: var(--danger); text-align: center;">Error running council: ${err.message}</div>`;
                 stepList.innerHTML = `<div style="color: var(--danger); text-align: center;">Error: ${err.message}</div>`;
+            } finally {
+                stopBrowserPolling();
             }
         }
 
@@ -960,11 +1216,10 @@
             const deliverableCard = document.getElementById('deliverableCard');
             const artifactBox = document.getElementById('artifactBox');
 
-            statusBadge.innerHTML = '<i class="fa-solid fa-check-double"></i> COUNCIL_CONSENSUS_REACHED';
-            statusBadge.style.background = 'rgba(16, 185, 129, 0.2)';
+            statusBadge.innerHTML = '<i class="fa-solid fa-check"></i> CONSENSUS_REACHED';
+            statusBadge.style.borderColor = 'rgba(16, 185, 129, 0.4)';
             statusBadge.style.color = '#34d399';
 
-            // 1. Render Council Dialogue Stream
             stream.innerHTML = '';
             const roleIcons = {
                 'Meta-Orchestrator': 'fa-crown',
@@ -991,29 +1246,28 @@
                 let artifactsHtml = '';
                 if (d.artifacts_attached && d.artifacts_attached.length > 0) {
                     artifactsHtml = `<div style="margin-top:0.3rem; display:flex; gap:0.4rem; flex-wrap:wrap;">` +
-                        d.artifacts_attached.map(a => `<span style="background:rgba(255,255,255,0.08); padding:0.15rem 0.45rem; border-radius:4px; font-size:0.72rem; color:#e2e8f0;">📦 ${a.type || 'artifact'}</span>`).join('') +
+                        d.artifacts_attached.map(a => `<span style="background:rgba(255,255,255,0.06); padding:0.15rem 0.45rem; border-radius:4px; font-size:0.72rem; color:#e2e8f0;">📦 ${a.type || 'artifact'}</span>`).join('') +
                         `</div>`;
                 }
 
                 stream.innerHTML += `
-                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(129, 140, 248, 0.2); border-left: 3px solid ${color}; padding: 0.65rem 0.85rem; border-radius: 6px; font-size: 0.82rem;">
+                    <div style="background: rgba(5,6,12,0.4); border: 1px solid rgba(255,255,255,0.04); border-left: 3px solid ${color}; padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.82rem;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
                             <span style="font-weight: 600; color: ${color};"><i class="fa-solid ${icon}"></i> ${d.sender} <span style="font-weight: 400; color: var(--text-muted); font-size: 0.75rem;">➔ ${d.recipient}</span></span>
                             <span style="font-size: 0.7rem; color: var(--text-muted);">${time}</span>
                         </div>
-                        <div style="color: #cbd5e1; line-height: 1.35;">${d.message}</div>
+                        <div style="color: #cbd5e1; line-height: 1.4;">${d.message}</div>
                         ${artifactsHtml}
                     </div>
                 `;
             });
 
-            // 2. Render Sub-Agent Plan & Artifacts in stepList
             stepList.innerHTML = '';
             result.subagent_responses.forEach((resp, idx) => {
                 let artifactBadges = '';
                 
                 if (resp.insights && resp.insights.issue_keys) {
-                    const keysHtml = resp.insights.issue_keys.map(k => `<span style="background:rgba(99,102,241,0.25); color:#a5b4fc; border:1px solid rgba(99,102,241,0.4); padding:0.15rem 0.5rem; border-radius:4px; font-family:monospace; font-size:0.78rem;">${k}</span>`).join(' ');
+                    const keysHtml = resp.insights.issue_keys.map(k => `<span style="background:rgba(99,102,241,0.15); color:#a5b4fc; border:1px solid rgba(99,102,241,0.3); padding:0.15rem 0.5rem; border-radius:4px; font-family:monospace; font-size:0.78rem;">${k}</span>`).join(' ');
                     artifactBadges += `
                         <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: #c7d2fe;">
                             <i class="fa-solid fa-list-check" style="color: #818cf8;"></i> <strong>Jira Tickets:</strong> ${keysHtml}
@@ -1025,7 +1279,7 @@
                     artifactBadges += `
                         <div style="margin-top: 0.5rem;">
                             <a href="${resp.insights.document_url}" target="_blank" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.8rem; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 8px; color: #38bdf8; text-decoration: none; font-size: 0.82rem; font-weight: 600;">
-                                <i class="fa-solid fa-file-lines"></i> Open Google Doc Minutes
+                                <i class="fa-solid fa-file-lines"></i> Open Google Doc
                             </a>
                         </div>
                     `;
@@ -1035,7 +1289,7 @@
                     artifactBadges += `
                         <div style="margin-top: 0.5rem;">
                             <a href="${resp.insights.spreadsheet_url}" target="_blank" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.8rem; background: rgba(52, 211, 153, 0.15); border: 1px solid rgba(52, 211, 153, 0.4); border-radius: 8px; color: #34d399; text-decoration: none; font-size: 0.82rem; font-weight: 600;">
-                                <i class="fa-solid fa-table"></i> Open Google Sheets Sprint Backlog
+                                <i class="fa-solid fa-table"></i> Open Google Sheet
                             </a>
                         </div>
                     `;
@@ -1050,18 +1304,17 @@
                             <span class="tool-badge"><i class="fa-solid fa-user-gear"></i> ${resp.role}</span>
                         </div>
                         <div class="step-reasoning">
-                            <strong>Output / Decision:</strong> ${resp.reasoning}
+                            <strong>Decision:</strong> ${resp.reasoning}
                         </div>
                         ${artifactBadges}
-                        <div style="font-size: 0.75rem; color: #a7f3d0; margin-top: 0.4rem;"><i class="fa-solid fa-clock"></i> Execution: ${resp.execution_time_ms}ms</div>
+                        <div style="font-size: 0.75rem; color: #a7f3d0; margin-top: 0.4rem;"><i class="fa-solid fa-clock"></i> Latency: ${resp.execution_time_ms}ms</div>
                     </div>
                 `;
             });
 
-            // 3. Render Executive Summary
             if (result.executive_summary) {
                 deliverableCard.style.display = 'flex';
-                artifactBox.textContent = result.executive_summary;
+                artifactBox.innerHTML = renderMarkdown(result.executive_summary);
             }
         }
 
@@ -1077,9 +1330,12 @@
             const deliverableCard = document.getElementById('deliverableCard');
             const statusBadge = document.getElementById('workflowStatusBadge');
 
-            stepList.innerHTML = `<div style="text-align: center; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: #818cf8;"></i><br><br>Generating autonomous execution plan with Gemini...</div>`;
+            stepList.innerHTML = `<div style="text-align: center; padding: 2rem;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem; color: #818cf8;"></i><br><br>Generating plan...</div>`;
             terminal.innerHTML = `<div class="log-line"><span class="log-time">[${new Date().toLocaleTimeString()}]</span> <span class="log-event">GOAL_RECEIVED</span> <span>${goal}</span></div>`;
             deliverableCard.style.display = 'none';
+
+            // Start polling browser viewport
+            startBrowserPolling();
 
             try {
                 const response = await fetch('/api/agent/run', {
@@ -1091,9 +1347,10 @@
                 const workflow = await response.json();
                 renderWorkflow(workflow);
                 fetchTraces(workflow.workflow_id);
-
             } catch (err) {
                 stepList.innerHTML = `<div style="color: var(--danger); text-align: center;">Error running agent: ${err.message}</div>`;
+            } finally {
+                stopBrowserPolling();
             }
         }
 
@@ -1105,22 +1362,20 @@
 
             statusBadge.style.display = 'inline-flex';
             statusBadge.innerText = wf.status;
-            statusBadge.style.backgroundColor = wf.status === 'COMPLETED' ? 'rgba(16, 185, 129, 0.2)' : 'rgba(245, 158, 11, 0.2)';
+            statusBadge.style.borderColor = wf.status === 'COMPLETED' ? 'rgba(16, 185, 129, 0.4)' : 'rgba(245, 158, 11, 0.4)';
             statusBadge.style.color = wf.status === 'COMPLETED' ? '#34d399' : '#fbbf24';
 
             stepList.innerHTML = '';
 
-            // --- DAG Canvas ---
+            // Render SVG DAG
             const dagContainer = document.createElement('div');
-            dagContainer.style.cssText = 'margin-bottom:1.5rem;overflow-x:auto;';
+            dagContainer.style.cssText = 'margin-bottom:1.5rem; overflow-x:auto; background:rgba(5,6,12,0.3); border:1px solid var(--border-color); border-radius:8px; padding:1rem;';
             const steps = wf.steps || [];
 
-            // Compute parallel levels (BFS layering by depends_on)
             const levels = [];
             const stepByNum = {};
             steps.forEach(s => { stepByNum[s.step_number] = s; });
             const assigned = new Set();
-            // Level 0: steps with no dependencies
             let currentLevel = steps.filter(s => !s.depends_on || s.depends_on.length === 0).map(s => s.step_number);
             while (currentLevel.length > 0) {
                 levels.push(currentLevel);
@@ -1133,34 +1388,28 @@
                 });
                 currentLevel = nextLevel;
             }
-            // Catch any unassigned steps
             steps.forEach(s => { if (!assigned.has(s.step_number)) { if (levels.length === 0) levels.push([]); levels[levels.length - 1].push(s.step_number); }});
 
-            const nodeW = 160, nodeH = 50, padX = 40, padY = 70, topPad = 30;
+            const nodeW = 160, nodeH = 50, padX = 40, padY = 60, topPad = 20;
             const maxPerLevel = Math.max(...levels.map(l => l.length), 1);
             const svgW = Math.max(maxPerLevel * (nodeW + padX) + padX, 400);
-            const svgH = levels.length * (nodeH + padY) + topPad + 20;
+            const svgH = levels.length * (nodeH + padY) + topPad + 10;
 
-            // Compute node positions
             const nodePos = {};
             levels.forEach((level, li) => {
                 const totalW = level.length * nodeW + (level.length - 1) * padX;
                 const startX = (svgW - totalW) / 2;
                 level.forEach((sn, ni) => {
-                    nodePos[sn] = {
-                        x: startX + ni * (nodeW + padX),
-                        y: topPad + li * (nodeH + padY),
-                    };
+                    nodePos[sn] = { x: startX + ni * (nodeW + padX), y: topPad + li * (nodeH + padY) };
                 });
             });
 
             const statusColors = {
                 completed: '#10b981', failed: '#ef4444', in_progress: '#f59e0b',
-                pending: '#6b7280', blocked: '#64748b', waiting_approval: '#8b5cf6',
+                pending: '#64748b', blocked: '#64748b', waiting_approval: '#8b5cf6',
             };
 
             let svgContent = '';
-            // Draw edges
             steps.forEach(s => {
                 if (!s.depends_on) return;
                 const to = nodePos[s.step_number];
@@ -1171,27 +1420,27 @@
                     const x1 = from.x + nodeW / 2, y1 = from.y + nodeH;
                     const x2 = to.x + nodeW / 2, y2 = to.y;
                     const midY = (y1 + y2) / 2;
-                    svgContent += `<path d="M${x1},${y1} C${x1},${midY} ${x2},${midY} ${x2},${y2}" fill="none" stroke="rgba(148,163,184,0.5)" stroke-width="2" marker-end="url(#arrowhead)"/>`;
+                    svgContent += `<path d="M${x1},${y1} C${x1},${midY} ${x2},${midY} ${x2},${y2}" fill="none" stroke="rgba(148,163,184,0.3)" stroke-width="2" marker-end="url(#arrowhead)"/>`;
                 });
             });
-            // Draw nodes
+
             steps.forEach(s => {
                 const pos = nodePos[s.step_number];
                 if (!pos) return;
-                const color = statusColors[(s.status || 'pending').toLowerCase()] || '#6b7280';
-                svgContent += `<rect x="${pos.x}" y="${pos.y}" width="${nodeW}" height="${nodeH}" rx="8" fill="rgba(30,41,59,0.9)" stroke="${color}" stroke-width="2"/>`;
-                svgContent += `<text x="${pos.x + nodeW/2}" y="${pos.y + 20}" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">Step ${s.step_number}</text>`;
-                svgContent += `<text x="${pos.x + nodeW/2}" y="${pos.y + 37}" text-anchor="middle" fill="${color}" font-size="10">${s.tool_name}</text>`;
+                const color = statusColors[(s.status || 'pending').toLowerCase()] || '#64748b';
+                svgContent += `<rect x="${pos.x}" y="${pos.y}" width="${nodeW}" height="${nodeH}" rx="8" fill="rgba(15,23,42,0.8)" stroke="${color}" stroke-width="2"/>`;
+                svgContent += `<text x="${pos.x + nodeW/2}" y="${pos.y + 20}" text-anchor="middle" fill="#f8fafc" font-size="11" font-weight="600">Step ${s.step_number}</text>`;
+                svgContent += `<text x="${pos.x + nodeW/2}" y="${pos.y + 36}" text-anchor="middle" fill="${color}" font-size="9" font-family="monospace">${s.tool_name}</text>`;
             });
 
-            const svg = `<svg width="${svgW}" height="${svgH}" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto;">
-                <defs><marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="rgba(148,163,184,0.7)"/></marker></defs>
+            const svg = `<svg width="100%" height="${svgH}" viewBox="0 0 ${svgW} ${svgH}" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+                <defs><marker id="arrowhead" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto"><polygon points="0 0, 6 2, 0 4" fill="rgba(148,163,184,0.5)"/></marker></defs>
                 ${svgContent}
             </svg>`;
-            dagContainer.innerHTML = `<div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.5rem;font-weight:600;"><i class="fa-solid fa-diagram-project"></i> DAG Execution Graph</div>${svg}`;
+            dagContainer.innerHTML = `<div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;font-weight:600;"><i class="fa-solid fa-diagram-project"></i> DAG Execution Plan Topology</div>${svg}`;
             stepList.appendChild(dagContainer);
 
-            // --- Step detail cards (below the DAG) ---
+            // Append cards
             wf.steps.forEach(step => {
                 let linkHtml = '';
                 const res = step.result || {};
@@ -1205,12 +1454,9 @@
                     } else if (url.includes('docs.google.com/spreadsheets')) {
                         btnLabel = 'Open Google Sheet';
                         icon = 'fa-table';
-                    } else if (url.includes('calendar.event') || url.includes('calendar.google.com')) {
-                        btnLabel = 'Open Google Calendar Event';
-                        icon = 'fa-calendar-check';
                     }
                     linkHtml = `
-                        <div style="margin-top: 0.6rem;">
+                        <div style="margin-top: 0.5rem;">
                             <a href="${url}" target="_blank" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.4rem 0.8rem; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 8px; color: #38bdf8; text-decoration: none; font-size: 0.82rem; font-weight: 600;">
                                 <i class="fa-solid ${icon}"></i> ${btnLabel}
                             </a>
@@ -1219,10 +1465,10 @@
                 }
 
                 if (res.issue_keys && Array.isArray(res.issue_keys) && res.issue_keys.length > 0) {
-                    const keysHtml = res.issue_keys.map(k => `<span style="background:rgba(99,102,241,0.25); color:#a5b4fc; border:1px solid rgba(99,102,241,0.4); padding:0.15rem 0.5rem; border-radius:4px; font-family:monospace; font-size:0.78rem;">${k}</span>`).join(' ');
+                    const keysHtml = res.issue_keys.map(k => `<span style="background:rgba(99,102,241,0.2); color:#a5b4fc; border:1px solid rgba(99,102,241,0.35); padding:0.15rem 0.5rem; border-radius:4px; font-family:monospace; font-size:0.78rem;">${k}</span>`).join(' ');
                     linkHtml += `
-                        <div style="margin-top: 0.6rem; display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: #c7d2fe;">
-                            <i class="fa-solid fa-list-check" style="color: #818cf8;"></i> <strong>Created Jira Tasks:</strong> ${keysHtml}
+                        <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: #c7d2fe;">
+                            <i class="fa-solid fa-list-check" style="color: #818cf8;"></i> <strong>Tickets:</strong> ${keysHtml}
                         </div>
                     `;
                 }
@@ -1232,7 +1478,6 @@
                         <div class="step-header">
                             <div class="step-title">
                                 <span>Step ${step.step_number}: ${step.description}</span>
-                                ${step.depends_on && step.depends_on.length ? `<span style="font-size:0.7rem;color:#94a3b8;margin-left:0.5rem;">depends on: ${step.depends_on.join(', ')}</span>` : ''}
                             </div>
                             <span class="tool-badge"><i class="fa-solid fa-wrench"></i> ${step.tool_name}</span>
                         </div>
@@ -1240,15 +1485,12 @@
                             <strong>Reasoning:</strong> ${step.reasoning}
                         </div>
                         ${linkHtml}
-                        ${step.execution_time_ms ? `<div style="font-size: 0.75rem; color: #a7f3d0; margin-top: 0.4rem;"><i class="fa-solid fa-clock"></i> Latency: ${step.execution_time_ms}ms</div>` : ''}
                     </div>
                 `;
             });
 
             if (wf.summary) {
-                // Extract and display the key answer prominently
                 displayAnswerCard(wf.summary, wf.goal);
-                // Render full summary as formatted HTML
                 deliverableCard.style.display = 'flex';
                 artifactBox.innerHTML = renderMarkdown(wf.summary);
             }
@@ -1276,7 +1518,23 @@
             }
         }
 
-        // Browser Viewport & Emergency Stop Controls
+        // Browser polling
+        function startBrowserPolling() {
+            if (browserPollInterval) clearInterval(browserPollInterval);
+            browserPollInterval = setInterval(refreshBrowserViewport, 3000);
+            refreshBrowserViewport();
+        }
+
+        function stopBrowserPolling() {
+            setTimeout(() => {
+                if (browserPollInterval) {
+                    clearInterval(browserPollInterval);
+                    browserPollInterval = null;
+                }
+                refreshBrowserViewport();
+            }, 5000);
+        }
+
         async function refreshBrowserViewport() {
             try {
                 const statusRes = await fetch('/api/browser/status');
@@ -1289,7 +1547,7 @@
 
                 if (statusData.active) {
                     urlEl.innerHTML = `URL: <strong>${statusData.current_url || 'about:blank'}</strong>`;
-                    statusEl.innerHTML = `<i class="fa-solid fa-circle fa-beat" style="color: #10b981;"></i> ACTIVE (${statusData.page_count} tab)`;
+                    statusEl.innerHTML = `<i class="fa-solid fa-circle fa-beat" style="color: #10b981; font-size:0.75rem;"></i> ACTIVE (${statusData.page_count} tab)`;
                     
                     const shotRes = await fetch('/api/browser/screenshot?annotated=true');
                     if (shotRes.ok) {
@@ -1302,7 +1560,7 @@
                     }
                 } else {
                     urlEl.innerHTML = `URL: <i>No active browser session</i>`;
-                    statusEl.innerHTML = `<i class="fa-solid fa-circle" style="color: #64748b;"></i> IDLE`;
+                    statusEl.innerHTML = `<i class="fa-solid fa-circle" style="color: #64748b; font-size:0.75rem;"></i> IDLE`;
                     imgEl.style.display = 'none';
                     placeholder.style.display = 'block';
                 }
@@ -1312,101 +1570,384 @@
         }
 
         async function emergencyKillBrowser() {
-            if (!confirm("🚨 Activate Emergency Kill Switch? This will immediately terminate all active browser and desktop automation sessions.")) {
-                return;
-            }
+            if (!confirm("🚨 emergency Kill? This will terminate all active automation browsers.")) return;
             try {
                 const res = await fetch('/api/browser/kill', { method: 'POST' });
                 const data = await res.json();
-                alert("🛑 " + (data.message || "Browser automation terminated."));
+                alert(data.message || "Browser automation terminated.");
                 refreshBrowserViewport();
             } catch (err) {
                 alert("Error triggering emergency stop: " + err);
             }
         }
 
-        // Lightweight Markdown → HTML renderer
-        function renderMarkdown(md) {
-            if (!md) return '';
-            let html = md
-                // Code blocks (```...```)
-                .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
-                // Headers
-                .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-                .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-                .replace(/^# (.+)$/gm, '<h1>$1</h1>')
-                // Bold
-                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-                // Italic
-                .replace(/\*(.+?)\*/g, '<em>$1</em>')
-                // Inline code
-                .replace(/`([^`]+)`/g, '<code>$1</code>')
-                // Unordered lists
-                .replace(/^[\-\*] (.+)$/gm, '<li>$1</li>')
-                // Ordered lists
-                .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
-                // Links
-                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color:#38bdf8;">$1</a>')
-                // Line breaks
-                .replace(/\n\n/g, '<br><br>')
-                .replace(/\n/g, '<br>');
-            // Wrap consecutive <li> items in <ul>
-            html = html.replace(/(<li>.*?<\/li>)(\s*<br>)?/g, '<li>$1</li>');
-            html = html.replace(/(?:<li><li>(.*?)<\/li><\/li>)+/g, function(match) {
-                return '<ul>' + match.replace(/<li><li>/g, '<li>').replace(/<\/li><\/li>/g, '</li>') + '</ul>';
+        // Direct Playground tool interaction
+        function selectPlaygroundTool(toolName) {
+            selectedPlaygroundToolName = toolName;
+            
+            // Mark tab active
+            document.querySelectorAll('.tool-select-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById(`pg-btn-${toolName}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            const tool = registeredTools.find(t => t.name === toolName);
+            if (!tool) return;
+
+            document.getElementById('selectedToolTitle').textContent = `⚙️ tool: ${tool.name}`;
+            document.getElementById('selectedToolDesc').textContent = tool.description;
+
+            // Generate dynamic input forms based on tool attributes
+            const container = document.getElementById('toolInputsContainer');
+            container.innerHTML = '';
+
+            // Pre-defined arguments configuration for standard tools to make playground extremely simple
+            const toolArgumentsMapping = {
+                'slack': [
+                    { name: 'action', type: 'select', options: ['post_message', 'post_summary', 'get_history'], default: 'post_message' },
+                    { name: 'channel', type: 'text', placeholder: '#general', default: '#general' },
+                    { name: 'message', type: 'textarea', placeholder: 'Enter announcement text...' }
+                ],
+                'jira_tool': [
+                    { name: 'action', type: 'select', options: ['create_issue', 'get_issue', 'transition_issue', 'list_issues'], default: 'list_issues' },
+                    { name: 'summary', type: 'text', placeholder: 'Issue summary...' },
+                    { name: 'description', type: 'textarea', placeholder: 'Describe technical details...' },
+                    { name: 'issue_key', type: 'text', placeholder: 'KAN-12' }
+                ],
+                'gmail_tool': [
+                    { name: 'action', type: 'select', options: ['list_emails', 'send_email', 'get_history'], default: 'list_emails' },
+                    { name: 'to', type: 'text', placeholder: 'recipient@email.com' },
+                    { name: 'subject', type: 'text', placeholder: 'Subject line...' },
+                    { name: 'body', type: 'textarea', placeholder: 'Body content...' }
+                ],
+                'google_docs_tool': [
+                    { name: 'action', type: 'select', options: ['create_document', 'append_text', 'read_document'], default: 'create_document' },
+                    { name: 'title', type: 'text', placeholder: 'Document Title' },
+                    { name: 'text', type: 'textarea', placeholder: 'Content to append...' }
+                ],
+                'google_sheets_tool': [
+                    { name: 'action', type: 'select', options: ['create_spreadsheet', 'append_row', 'read_spreadsheet'], default: 'create_spreadsheet' },
+                    { name: 'title', type: 'text', placeholder: 'Spreadsheet Title' },
+                    { name: 'row_data', type: 'text', placeholder: '["Row1 Col1", "Row1 Col2"] (JSON array format)' }
+                ],
+                'browser_controller': [
+                    { name: 'action', type: 'select', options: ['navigate', 'aria_snapshot', 'click', 'type', 'screenshot'], default: 'navigate' },
+                    { name: 'url', type: 'text', placeholder: 'https://news.ycombinator.com' },
+                    { name: 'selector', type: 'text', placeholder: '[e1] selector index' },
+                    { name: 'text', type: 'text', placeholder: 'Text to input...' }
+                ]
+            };
+
+            const fields = toolArgumentsMapping[toolName] || [
+                { name: 'action', type: 'text', placeholder: 'action_name' },
+                { name: 'arguments_json', type: 'textarea', placeholder: '{"param1": "value1"}' }
+            ];
+
+            fields.forEach(f => {
+                const label = `<label style="font-weight:500; font-size:0.82rem; margin-bottom:0.25rem;">${f.name}</label>`;
+                let input = '';
+                if (f.type === 'select') {
+                    input = `<select id="pg-field-${f.name}">
+                        ${f.options.map(opt => `<option value="${opt}" ${opt === f.default ? 'selected' : ''}>${opt}</option>`).join('')}
+                    </select>`;
+                } else if (f.type === 'textarea') {
+                    input = `<textarea id="pg-field-${f.name}" rows="3" placeholder="${f.placeholder || ''}">${f.default || ''}</textarea>`;
+                } else {
+                    input = `<input type="text" id="pg-field-${f.name}" placeholder="${f.placeholder || ''}" value="${f.default || ''}">`;
+                }
+                container.innerHTML += `<div style="display:flex; flex-direction:column;">${label}${input}</div>`;
             });
-            return html;
+
+            document.getElementById('executeToolBtn').disabled = false;
         }
 
-        // Extract the key answer from the summary and display it prominently
+        async function executePlaygroundTool() {
+            if (!selectedPlaygroundToolName) return;
+
+            const btn = document.getElementById('executeToolBtn');
+            const output = document.getElementById('toolOutputResponse');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Executing...';
+            output.textContent = 'Executing backend tool... Please wait.';
+
+            // Collect arguments
+            const payloadArgs = {};
+            const fields = Array.from(document.querySelectorAll('[id^="pg-field-"]'));
+            
+            let jsonParseError = false;
+            fields.forEach(field => {
+                const name = field.id.replace('pg-field-', '');
+                let val = field.value.trim();
+
+                if (name === 'row_data' && val) {
+                    try {
+                        val = JSON.parse(val);
+                    } catch (e) {
+                        output.textContent = 'JSON Parse Error: Make sure your row_data format is a valid JSON array, e.g. ["a", "b"]';
+                        jsonParseError = true;
+                    }
+                } else if (name === 'arguments_json' && val) {
+                    try {
+                        const parsed = JSON.parse(val);
+                        Object.assign(payloadArgs, parsed);
+                    } catch (e) {
+                        output.textContent = 'JSON Parse Error: Make sure arguments_json is valid JSON structure, e.g. {"key": "val"}';
+                        jsonParseError = true;
+                    }
+                }
+
+                if (name !== 'arguments_json') {
+                    payloadArgs[name] = val;
+                }
+            });
+
+            if (jsonParseError) {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-play"></i> Execute Tool Direct';
+                return;
+            }
+
+            try {
+                const start = Date.now();
+                const res = await fetch('/api/agent/tool/execute', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        tool_name: selectedPlaygroundToolName,
+                        arguments: payloadArgs
+                    })
+                });
+
+                const data = await res.json();
+                const elapsed = Date.now() - start;
+                output.textContent = `[HTTP STATUS ${res.status}] Executed in ${elapsed}ms\n\n` + JSON.stringify(data, null, 2);
+            } catch (err) {
+                output.textContent = 'Execution Request Failed:\n' + err.message;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-play"></i> Execute Tool Direct';
+            }
+        }
+
+        // Load DB Audit Logs
+        async function loadAuditLogs() {
+            const body = document.getElementById('auditLogsBody');
+            body.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:1.5rem;"><i class="fa-solid fa-spinner fa-spin"></i> Reading SQLite audit trail...</td></tr>';
+            try {
+                const res = await fetch('/api/agent/audit-logs?limit=30');
+                const data = await res.json();
+                const entries = data.audit_entries || [];
+
+                if (entries.length === 0) {
+                    body.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--text-muted); padding:2rem;">No audit logs stored yet in taskmaster.db.</td></tr>';
+                    return;
+                }
+
+                body.innerHTML = entries.map(e => {
+                    const time = new Date(e.timestamp).toLocaleTimeString();
+                    return `
+                        <tr>
+                            <td><span style="font-family:monospace; color:#818cf8;">${time}</span></td>
+                            <td><span class="tool-badge" style="background:rgba(244,63,94,0.12); color:#f43f5e; border-color:rgba(244,63,94,0.2);">${e.event_type}</span></td>
+                            <td><span style="font-family:monospace; font-size:0.75rem; color:#cbd5e1;">${JSON.stringify(e.details)}</span></td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (err) {
+                body.innerHTML = `<tr><td colspan="3" style="color:var(--danger); text-align:center; padding:1.5rem;">Failed to fetch database logs: ${err.message}</td></tr>`;
+            }
+        }
+
+        // Load Settings config
+        async function loadEnvStatus() {
+            try {
+                const res = await fetch('/api/health');
+                const d = await res.json();
+                if (d.models) {
+                    document.getElementById('envMainModel').textContent = d.models.main || 'gemini-3.5-flash';
+                    document.getElementById('envResearchModel').textContent = d.models.research || 'gemini-3.1-flash-lite';
+                }
+            } catch (e) {
+                console.log("Failed to load environment health info:", e);
+            }
+        }
+
+        // Markdown renderer helper
+        function renderMarkdown(md) {
+            if (!md) return '';
+
+            let text = md.replace(/\r\n/g, '\n');
+            const lines = text.split('\n');
+            let output = [];
+            let inTable = false;
+            let inUl = false;
+            let inOl = false;
+
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i];
+                const trimmed = line.trim();
+
+                // 1. Table Parsing
+                if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+                    if (inUl) { output.push('</ul>'); inUl = false; }
+                    if (inOl) { output.push('</ol>'); inOl = false; }
+
+                    const cells = trimmed.split('|').slice(1, -1).map(c => c.trim());
+                    if (cells.every(c => /^:?-+:?$/.test(c))) {
+                        continue;
+                    }
+                    if (!inTable) {
+                        inTable = true;
+                        output.push('<table class="audit-table" style="margin: 0.75rem 0; width:100%;"><thead><tr>' + cells.map(c => `<th>${formatInline(c)}</th>`).join('') + '</tr></thead><tbody>');
+                    } else {
+                        output.push('<tr>' + cells.map(c => `<td>${formatInline(c)}</td>`).join('') + '</tr>');
+                    }
+                    continue;
+                } else if (inTable) {
+                    inTable = false;
+                    output.push('</tbody></table>');
+                }
+
+                // 2. Ordered List Parsing (e.g. "1. Title")
+                const olMatch = trimmed.match(/^(\d+)\.\s+(.+)$/);
+                if (olMatch) {
+                    if (inUl) { output.push('</ul>'); inUl = false; }
+                    if (!inOl) { output.push('<ol style="margin-left:1.4rem; margin-bottom:0.8rem;">'); inOl = true; }
+                    output.push(`<li style="margin-bottom:0.4rem; line-height:1.6;">${formatInline(olMatch[2])}</li>`);
+                    continue;
+                } else if (inOl && trimmed === '') {
+                    inOl = false;
+                    output.push('</ol>');
+                }
+
+                // 3. Unordered List Parsing
+                const ulMatch = trimmed.match(/^[-*•]\s+(.+)$/);
+                if (ulMatch) {
+                    if (inOl) { output.push('</ol>'); inOl = false; }
+                    if (!inUl) { output.push('<ul style="margin-left:1.4rem; margin-bottom:0.8rem;">'); inUl = true; }
+                    output.push(`<li style="margin-bottom:0.35rem; line-height:1.6;">${formatInline(ulMatch[1])}</li>`);
+                    continue;
+                } else if (inUl && trimmed === '') {
+                    inUl = false;
+                    output.push('</ul>');
+                }
+
+                // 4. Headings
+                if (trimmed.startsWith('### ')) {
+                    if (inUl) { output.push('</ul>'); inUl = false; }
+                    if (inOl) { output.push('</ol>'); inOl = false; }
+                    output.push(`<h3>${formatInline(trimmed.substring(4))}</h3>`);
+                    continue;
+                }
+                if (trimmed.startsWith('## ')) {
+                    if (inUl) { output.push('</ul>'); inUl = false; }
+                    if (inOl) { output.push('</ol>'); inOl = false; }
+                    output.push(`<h2>${formatInline(trimmed.substring(3))}</h2>`);
+                    continue;
+                }
+                if (trimmed.startsWith('# ')) {
+                    if (inUl) { output.push('</ul>'); inUl = false; }
+                    if (inOl) { output.push('</ol>'); inOl = false; }
+                    output.push(`<h1>${formatInline(trimmed.substring(2))}</h1>`);
+                    continue;
+                }
+
+                // 5. Blockquotes
+                if (trimmed.startsWith('> ')) {
+                    if (inUl) { output.push('</ul>'); inUl = false; }
+                    if (inOl) { output.push('</ol>'); inOl = false; }
+                    output.push(`<blockquote style="border-left: 3px solid #6366f1; padding: 0.5rem 0.75rem; color: #94a3b8; margin: 0.6rem 0; background: rgba(99,102,241,0.08); border-radius: 0 4px 4px 0;">${formatInline(trimmed.substring(2))}</blockquote>`);
+                    continue;
+                }
+
+                // 6. Empty Line
+                if (trimmed === '') {
+                    if (inUl) { output.push('</ul>'); inUl = false; }
+                    if (inOl) { output.push('</ol>'); inOl = false; }
+                    continue;
+                }
+
+                // 7. Regular paragraph
+                output.push(`<p style="margin-bottom:0.5rem; line-height:1.6;">${formatInline(trimmed)}</p>`);
+            }
+
+            if (inTable) output.push('</tbody></table>');
+            if (inUl) output.push('</ul>');
+            if (inOl) output.push('</ol>');
+
+            return output.join('\n');
+        }
+
+        function formatInline(str) {
+            if (!str) return '';
+            return str
+                .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/\*\*(.+?)\*\*/g, '<strong style="color:#f8fafc;">$1</strong>')
+                .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color:#38bdf8; font-weight:600; text-decoration:none;">$1 ↗</a>');
+        }
+
+        // Answer Hero Cards
+
         function displayAnswerCard(summary, goal) {
             const answerCard = document.getElementById('answerCard');
             if (!summary) { answerCard.style.display = 'none'; return; }
 
-            // Extract key findings: look for lines with ** bold ** content
-            let keyFindings = [];
-            const boldMatches = summary.match(/\*\*([^*]+)\*\*/g);
-            if (boldMatches) {
-                keyFindings = boldMatches.slice(0, 6).map(m => m.replace(/\*\*/g, ''));
-            }
+            let boldMatches = summary.match(/\*\*([^*]+)\*\*/g) || [];
+            let keyFindings = boldMatches
+                .map(m => m.replace(/\*\*/g, '').trim())
+                .filter(m => m.length > 2 && m.length < 35 && !m.includes('Step') && !m.includes('Status') && !m.includes('Output') && !m.includes('Completed') && !m.includes('Metrics') && !m.includes('Execution'))
+                .slice(0, 6);
 
-            // Build concise answer from first meaningful paragraph
-            const lines = summary.split('\n').filter(l => l.trim());
-            let answerText = '';
+            // Extract the direct answer or main takeaway lines
+            const lines = summary.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+            let answerLines = [];
+            let isRecordingDirectAnswer = false;
 
-            // Try to find the actual answer content (skip headers and boilerplate)
-            for (const line of lines) {
-                const clean = line.replace(/^[#\-*\d.]+\s*/, '').trim();
-                if (clean.length > 40 && !clean.startsWith('Step') && !clean.startsWith('###') &&
-                    !clean.includes('Step-by-Step') && !clean.includes('Execution Summary') &&
-                    !clean.includes('Workflow Complete') && !clean.includes('Key Metrics') &&
-                    !clean.includes('Artifacts Created') && !clean.includes('Success Rate')) {
-                    answerText = clean;
+            for (const l of lines) {
+                if (l.includes('Direct Findings') || l.includes('Direct Answer') || l.includes('Key Findings') || l.includes('Key Takeaways')) {
+                    isRecordingDirectAnswer = true;
+                    continue;
+                }
+                if (isRecordingDirectAnswer && (l.startsWith('#') || l.startsWith('## ') || l.startsWith('### '))) {
                     break;
                 }
-            }
-
-            // Build key findings pills
-            let pillsHtml = '';
-            if (keyFindings.length > 0) {
-                const meaningfulFindings = keyFindings.filter(f =>
-                    f.length > 2 && !f.includes('Step') && !f.match(/^\d/) &&
-                    !f.includes('Status') && !f.includes('Output')
-                );
-                if (meaningfulFindings.length > 0) {
-                    pillsHtml = '<div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.75rem;">' +
-                        meaningfulFindings.slice(0, 4).map(f =>
-                            `<span style="background:rgba(0,223,216,0.12);border:1px solid rgba(0,223,216,0.3);color:#00DFD8;padding:0.3rem 0.7rem;border-radius:20px;font-size:0.82rem;font-weight:600;">${f}</span>`
-                        ).join('') + '</div>';
+                if (isRecordingDirectAnswer) {
+                    answerLines.push(l);
                 }
             }
 
-            if (answerText || pillsHtml) {
+            let mainContent = '';
+            if (answerLines.length > 0) {
+                mainContent = renderMarkdown(answerLines.join('\n'));
+            } else {
+                for (const line of lines) {
+                    const clean = line.replace(/^[#\-*\d.]+\s*/, '').trim();
+                    if (clean.length > 30 && !clean.startsWith('Step') && !clean.startsWith('###') &&
+                        !clean.includes('Step-by-Step') && !clean.includes('Execution Summary') &&
+                        !clean.includes('Workflow Complete') && !clean.includes('Key Metrics') &&
+                        !clean.includes('Artifacts Created') && !clean.includes('Success Rate')) {
+                        mainContent = `<p>${renderMarkdown(clean)}</p>`;
+                        break;
+                    }
+                }
+            }
+
+            let pillsHtml = '';
+            if (keyFindings.length > 0) {
+                pillsHtml = '<div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.75rem;">' +
+                    keyFindings.slice(0, 5).map(f =>
+                        `<span style="background:rgba(6,182,212,0.15);border:1px solid rgba(6,182,212,0.35);color:#38bdf8;padding:0.25rem 0.65rem;border-radius:20px;font-size:0.78rem;font-weight:600;">✨ ${f}</span>`
+                    ).join('') + '</div>';
+            }
+
+            if (mainContent || pillsHtml) {
                 answerCard.style.display = 'block';
                 answerCard.innerHTML = `
                     <div class="answer-card">
-                        <div class="answer-label"><i class="fa-solid fa-sparkles"></i> Key Result</div>
-                        ${answerText ? `<div class="answer-text">${renderMarkdown(answerText)}</div>` : ''}
+                        <div class="answer-label"><i class="fa-solid fa-sparkles"></i> Executed Core Finding & Direct Answer</div>
+                        <div class="answer-text">${mainContent}</div>
                         ${pillsHtml}
                     </div>
                 `;
@@ -1415,7 +1956,7 @@
             }
         }
 
-        // Toggle summary visibility
+
         function toggleSummary() {
             const box = document.getElementById('artifactBox');
             const btn = document.getElementById('summaryToggleBtn');
@@ -1424,11 +1965,11 @@
                 btn.innerHTML = '<i class="fa-solid fa-chevron-up"></i> Collapse';
             } else {
                 box.style.display = 'none';
-                btn.innerHTML = '<i class="fa-solid fa-chevron-down"></i> Show Full Summary';
+                btn.innerHTML = '<i class="fa-solid fa-chevron-down"></i> Show Details';
             }
         }
 
-        // Initialize on load
+        // Initialize elements
         loadTools();
         checkWatcherStatus();
         setGoal('Coordinate new freelance client inquiry from Sarah Jenkins (Lumina Health): schedule 45-min discovery call on Google Calendar, write tailored SOW proposal in Google Docs, log lead to Google Sheets CRM, and draft client response in Gmail.');

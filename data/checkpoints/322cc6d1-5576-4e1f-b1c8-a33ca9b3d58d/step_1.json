@@ -1,0 +1,86 @@
+{
+  "workflow_id": "322cc6d1-5576-4e1f-b1c8-a33ca9b3d58d",
+  "step_number": 1,
+  "timestamp": "2026-08-31T15:27:29.485463+00:00",
+  "state": {
+    "workflow_id": "322cc6d1-5576-4e1f-b1c8-a33ca9b3d58d",
+    "goal": "play kesariya song",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "e952d9b6-7fb3-49c1-815f-57ae3de48590",
+        "description": "Search for the song 'Kesariya' on YouTube to retrieve the most relevant video URL.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_api_search",
+          "query": "Kesariya song official video"
+        },
+        "reasoning": "Need to identify the correct video URL for the requested song before playback can be initiated.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "e158017d-51ac-452a-bbda-3bcb26429138",
+        "description": "Play the identified 'Kesariya' song video.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "url": "$step_1.results[0].url"
+        },
+        "reasoning": "Using the URL extracted from the search results to trigger the media playback.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T15:27:29.413217",
+    "updated_at": "2026-08-31T15:27:29.480209Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3026,
+      "total_completion_tokens": 265,
+      "total_tokens": 3291,
+      "total_estimated_cost_usd": 0.000613,
+      "calls": [
+        {
+          "prompt_tokens": 3026,
+          "completion_tokens": 265,
+          "total_tokens": 3291,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000613
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

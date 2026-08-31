@@ -1,0 +1,87 @@
+{
+  "workflow_id": "df03f6c4-07fc-464a-a811-8f0f0b2f5c7b",
+  "step_number": 1,
+  "timestamp": "2026-08-31T08:18:48.545245+00:00",
+  "state": {
+    "workflow_id": "df03f6c4-07fc-464a-a811-8f0f0b2f5c7b",
+    "goal": "Check my Google Calendar for upcoming events this week and list them",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "aca2ff7c-a8a0-447a-aa0b-a4decf9c2f47",
+        "description": "Fetch all events from the user's Google Calendar for the current week.",
+        "tool_name": "google_calendar",
+        "tool_args": {
+          "action": "list_events",
+          "time_min": "2026-08-31T00:00:00Z",
+          "time_max": "2026-09-06T23:59:59Z"
+        },
+        "reasoning": "To list upcoming events for the week, I must first query the calendar API for the specific date range starting from today (2026-08-31) through the end of the week.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "1d766090-d5ee-45bf-9b14-cd3ea7e7f039",
+        "description": "Format and present the list of events found in the calendar.",
+        "tool_name": "report_generator",
+        "tool_args": {
+          "report_type": "summary",
+          "content": "The following events were found in your Google Calendar for the week of August 31, 2026: $step_1.events"
+        },
+        "reasoning": "The raw data from the calendar needs to be compiled into a readable, structured format for the user.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T08:18:48.537794",
+    "updated_at": "2026-08-31T08:18:48.542261Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 2899,
+      "total_completion_tokens": 360,
+      "total_tokens": 3259,
+      "total_estimated_cost_usd": 0.000651,
+      "calls": [
+        {
+          "prompt_tokens": 2899,
+          "completion_tokens": 360,
+          "total_tokens": 3259,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000651
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

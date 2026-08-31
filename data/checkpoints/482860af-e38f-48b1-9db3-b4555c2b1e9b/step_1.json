@@ -1,0 +1,88 @@
+{
+  "workflow_id": "482860af-e38f-48b1-9db3-b4555c2b1e9b",
+  "step_number": 1,
+  "timestamp": "2026-08-31T11:13:02.518230+00:00",
+  "state": {
+    "workflow_id": "482860af-e38f-48b1-9db3-b4555c2b1e9b",
+    "goal": "play shakira song for 1 minute",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "f7df2b28-7558-4a5d-8546-328fe7206bf4",
+        "description": "Search for a Shakira song on YouTube to obtain a valid playback URL.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_api_search",
+          "query": "Shakira greatest hits"
+        },
+        "reasoning": "Need to identify a specific video URL before playback can be initiated.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "76c9bd77-984c-4882-ab7f-7c32d4d26a3e",
+        "description": "Play the identified Shakira video for exactly 60 seconds.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "url": "$step_1.results[0].url",
+          "duration_seconds": 60,
+          "auto_skip_ads": true
+        },
+        "reasoning": "The goal is to play the media for a specific duration of 1 minute.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T11:13:02.451800",
+    "updated_at": "2026-08-31T11:13:02.510774Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3052,
+      "total_completion_tokens": 280,
+      "total_tokens": 3332,
+      "total_estimated_cost_usd": 0.000626,
+      "calls": [
+        {
+          "prompt_tokens": 3052,
+          "completion_tokens": 280,
+          "total_tokens": 3332,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000626
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

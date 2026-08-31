@@ -1,0 +1,151 @@
+{
+  "workflow_id": "77fce228-183c-4f63-8558-0e554a35f47a",
+  "step_number": 2,
+  "timestamp": "2026-08-31T08:39:26.154831+00:00",
+  "state": {
+    "workflow_id": "77fce228-183c-4f63-8558-0e554a35f47a",
+    "goal": "Search YouTube for Lex Fridman Yann LeCun podcast, play the first result for 30 seconds, then close the browser",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "903b77f2-2355-4dd5-aa40-a18d6f5530a7",
+        "description": "Search YouTube for the Lex Fridman and Yann LeCun podcast",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_api_search",
+          "query": "Lex Fridman Yann LeCun podcast"
+        },
+        "reasoning": "Need to retrieve the video ID for the first result to perform playback.",
+        "status": "COMPLETED",
+        "result": {
+          "status": "SUCCESS",
+          "query": "Lex Fridman Yann LeCun podcast",
+          "results": [
+            {
+              "title": "Yann Lecun: Meta AI, Open Source, Limits of LLMs, AGI & the Future of AI | Lex Fridman Podcast #416",
+              "channel": "Lex Fridman",
+              "video_id": "5t1vTLU7s40",
+              "url": "https://www.youtube.com/watch?v=5t1vTLU7s40",
+              "description": "Video by Lex Fridman"
+            },
+            {
+              "title": "Yann LeCun: Deep Learning, ConvNets, and Self-Supervised Learning | Lex Fridman Podcast #36",
+              "channel": "Lex Fridman",
+              "video_id": "SGSOCuByo24",
+              "url": "https://www.youtube.com/watch?v=SGSOCuByo24",
+              "description": "Video by Lex Fridman"
+            },
+            {
+              "title": "DHH: Future of Programming, AI, Agentic Engineering, Vibe Coding & Linux | Lex Fridman Podcast #501",
+              "channel": "Lex Fridman",
+              "video_id": "NYFGCESmikA",
+              "url": "https://www.youtube.com/watch?v=NYFGCESmikA",
+              "description": "Video by Lex Fridman"
+            },
+            {
+              "title": "Yann LeCun: AGI is far away | Lex Fridman Podcast Clips",
+              "channel": "Lex Clips",
+              "video_id": "ketW8xsL-ig",
+              "url": "https://www.youtube.com/watch?v=ketW8xsL-ig",
+              "description": "Video by Lex Clips"
+            },
+            {
+              "title": "Yann LeCun: Dark Matter of Intelligence and Self-Supervised Learning | Lex Fridman Podcast #258",
+              "channel": "Lex Fridman",
+              "video_id": "SGzMElJ11Cc",
+              "url": "https://www.youtube.com/watch?v=SGzMElJ11Cc",
+              "description": "Video by Lex Fridman"
+            }
+          ]
+        },
+        "error": null,
+        "execution_time_ms": 2676.774024963379,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "8b5f5fc0-e34f-4651-bde0-917b10a1567a",
+        "description": "Play the first search result for 30 seconds",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "video_id": "$step_1.results[0].video_id",
+          "duration_seconds": 30
+        },
+        "reasoning": "Using the video ID from the search results to initiate playback for the requested duration.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "f93002dc-6a95-4342-93d1-eedef34ff296",
+        "description": "Close the browser after playback",
+        "tool_name": "browser_controller",
+        "tool_args": {
+          "action": "close_browser"
+        },
+        "reasoning": "Requirement to close the browser once the playback task is complete.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T08:39:23.441018",
+    "updated_at": "2026-08-31T08:39:23.444638Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 2905,
+      "total_completion_tokens": 373,
+      "total_tokens": 3278,
+      "total_estimated_cost_usd": 0.00066,
+      "calls": [
+        {
+          "prompt_tokens": 2905,
+          "completion_tokens": 373,
+          "total_tokens": 3278,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.00066
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

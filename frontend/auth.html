@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In — Taskmaster Autonomous Agent Engine</title>
+    <meta name="description" content="Sign in or create an account for Taskmaster Autonomous AI Agent Engine to access your personalized workspace and chat history.">
+    <link rel="icon" type="image/png" href="/frontend/assets/favicon.png">
+    <link rel="stylesheet" href="/frontend/css/style.css?v=5.1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background: radial-gradient(at 15% 10%, rgba(224, 231, 255, 0.6) 0px, transparent 55%),
+                        radial-gradient(at 85% 15%, rgba(207, 250, 254, 0.5) 0px, transparent 55%),
+                        radial-gradient(at 50% 80%, rgba(241, 245, 249, 0.95) 0px, transparent 60%),
+                        #f8fafc;
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        /* ── Full Master Container ── */
+        .auth-app-frame {
+            display: flex;
+            width: 100%;
+            max-width: 1180px;
+            height: calc(100vh - 3rem);
+            max-height: 720px;
+            background: #ffffff;
+            border-radius: 24px;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 25px 60px rgba(15, 23, 42, 0.08), 0 0 40px rgba(37, 99, 235, 0.04);
+            overflow: hidden;
+        }
+
+        /* ── Left Column: Form (48%) ── */
+        .auth-form-side {
+            width: 48%;
+            min-width: 420px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2.5rem 3rem;
+            background: #ffffff;
+            border-right: 1px solid #f1f5f9;
+            overflow-y: auto;
+        }
+
+        .auth-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .auth-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            text-decoration: none;
+            color: #0f172a;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.4px;
+        }
+
+        .auth-brand img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+        }
+
+        .auth-back-link {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: var(--transition-fast);
+            padding: 0.35rem 0.75rem;
+            border-radius: var(--radius-full);
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+
+        .auth-back-link:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            background: #ffffff;
+        }
+
+        .auth-form-body {
+            margin: auto 0;
+            padding: 0.75rem 0;
+        }
+
+        .auth-header {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .auth-heading {
+            font-size: 1.65rem;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.3rem;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .auth-subheading {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Tab Switcher */
+        .auth-tab-pill {
+            display: flex;
+            background: #f1f5f9;
+            padding: 3px;
+            border-radius: var(--radius-full);
+            margin-bottom: 1.35rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 0.55rem 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            background: #ffffff;
+            color: var(--primary);
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+        }
+
+        /* Form Inputs */
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.95rem;
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            text-align: left;
+        }
+
+        .field-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .field-input-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .field-icon {
+            position: absolute;
+            left: 0.9rem;
+            color: #94a3b8;
+            font-size: 0.88rem;
+        }
+
+        .field-input {
+            width: 100%;
+            padding: 0.68rem 0.9rem 0.68rem 2.35rem;
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            outline: none;
+            transition: var(--transition-fast);
+            font-family: inherit;
+        }
+
+        .field-input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .field-eye-btn {
+            position: absolute;
+            right: 0.9rem;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 0.2rem;
+        }
+
+        .field-eye-btn:hover {
+            color: var(--text-primary);
+        }
+
+        /* Alerts */
+        .auth-alert {
+            padding: 0.6rem 0.8rem;
+            border-radius: var(--radius-md);
+            font-size: 0.82rem;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .auth-alert.error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+        }
+
+        .auth-alert.success {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #15803d;
+        }
+
+        /* Submit Button */
+        .btn-submit-action {
+            width: 100%;
+            padding: 0.78rem;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 0.92rem;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.25rem;
+        }
+
+        .btn-submit-action:hover {
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .btn-submit-action:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Quick Demo Row */
+        .quick-demo-box {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .quick-demo-label {
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .quick-demo-pills {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .pill-btn {
+            font-size: 0.74rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 0.25rem 0.65rem;
+            border-radius: var(--radius-full);
+            color: #334155;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-weight: 600;
+        }
+
+        .pill-btn:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+            background: #ffffff;
+        }
+
+        .auth-footer-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.76rem;
+            color: var(--text-dim);
+            padding-top: 0.75rem;
+            border-top: 1px solid #f8fafc;
+        }
+
+        .auth-footer-links {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .auth-footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .auth-footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* ── Right Column: Visual Showcase (52%) ── */
+        .auth-showcase-side {
+            flex: 1;
+            background: linear-gradient(145deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 2.75rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle Ambient Glow */
+        .auth-showcase-side::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(186, 230, 253, 0.45) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .showcase-header-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.35rem 0.85rem;
+            background: #ffffff;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: var(--radius-full);
+            color: #2563eb;
+            font-size: 0.78rem;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.05);
+            width: fit-content;
+            margin-bottom: 1rem;
+        }
+
+        .showcase-title-text {
+            font-size: 1.85rem;
+            font-weight: 800;
+            line-height: 1.25;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.75rem;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .showcase-title-text span {
+            background: linear-gradient(135deg, #2563eb 0%, #0284c7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .showcase-desc-text {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Visual Feature Cards */
+        .showcase-cards-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .feature-mini-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-md);
+            padding: 1rem 1.15rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.95rem;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.02);
+            transition: var(--transition-fast);
+        }
+
+        .feature-mini-card:hover {
+            border-color: rgba(37, 99, 235, 0.4);
+            transform: translateX(3px);
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.06);
+        }
+
+        .mini-card-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: rgba(37, 99, 235, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563eb;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        .mini-card-content h4 {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.15rem;
+        }
+
+        .mini-card-content p {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        /* Bottom Feature Badges */
+        .showcase-foot-strip {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid #e2e8f0;
+            flex-wrap: wrap;
+        }
+
+        .foot-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.25rem 0.65rem;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-full);
+            font-size: 0.74rem;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .tag-dot-green {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #16a34a;
+            box-shadow: 0 0 5px #16a34a;
+        }
+
+        /* Responsive Breakpoint */
+        @media (max-width: 900px) {
+            body { overflow-y: auto; height: auto; padding: 1rem; }
+            .auth-app-frame { flex-direction: column; height: auto; max-height: none; }
+            .auth-form-side { width: 100%; min-width: 100%; height: auto; padding: 2rem; border-right: none; }
+            .auth-showcase-side { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-app-frame">
+        <!-- ── Left Column: Form & Actions ── -->
+        <div class="auth-form-side">
+            <div class="auth-top-bar">
+                <a href="/" class="auth-brand">
+                    <img src="/frontend/t_logo.png" alt="Taskmaster Logo">
+                    <span>Taskmaster</span>
+                </a>
+                <a href="/" class="auth-back-link">
+                    <i class="fa-solid fa-arrow-left"></i> Home
+                </a>
+            </div>
+
+            <div class="auth-form-body">
+                <div class="auth-header">
+                    <h2 class="auth-heading" id="authHeaderTitle">Welcome Back</h2>
+                    <p class="auth-subheading" id="authHeaderSubtitle">Sign in to access your autonomous agent workspace</p>
+                </div>
+
+                <!-- Pill Switcher -->
+                <div class="auth-tab-pill">
+                    <button type="button" class="tab-btn active" id="tabSignIn" onclick="switchTab('signin')">Sign In</button>
+                    <button type="button" class="tab-btn" id="tabSignUp" onclick="switchTab('signup')">Create Account</button>
+                </div>
+
+                <!-- Alerts -->
+                <div class="auth-alert error" id="errorAlert">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span id="errorMessage">Invalid email or password</span>
+                </div>
+
+                <div class="auth-alert success" id="successAlert">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span id="successMessage">Authenticated successfully</span>
+                </div>
+
+                <!-- Form -->
+                <form class="auth-form" id="authForm" onsubmit="handleAuthSubmit(event)">
+                    <!-- Full Name (Only on signup) -->
+                    <div class="field-group" id="groupFullName" style="display: none;">
+                        <label class="field-label" for="fullNameInput">Full Name</label>
+                        <div class="field-input-box">
+                            <i class="fa-regular fa-user field-icon"></i>
+                            <input type="text" class="field-input" id="fullNameInput" placeholder="e.g. Alex Turing">
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="field-group">
+                        <label class="field-label" for="emailInput">Email Address</label>
+                        <div class="field-input-box">
+                            <i class="fa-regular fa-envelope field-icon"></i>
+                            <input type="email" class="field-input" id="emailInput" placeholder="alex@taskmaster.ai" required>
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="field-group">
+                        <label class="field-label" for="passwordInput">Password</label>
+                        <div class="field-input-box">
+                            <i class="fa-solid fa-lock field-icon"></i>
+                            <input type="password" class="field-input" id="passwordInput" placeholder="••••••••" required>
+                            <button type="button" class="field-eye-btn" onclick="togglePasswordVisibility()" title="Toggle password">
+                                <i class="fa-regular fa-eye" id="pwdEyeIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit-action" id="submitBtn">
+                        <span id="submitBtnText">Sign In</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+
+                <!-- Quick Demo Fill -->
+                <div class="quick-demo-box">
+                    <span class="quick-demo-label">Quick Demo:</span>
+                    <div class="quick-demo-pills">
+                        <button type="button" class="pill-btn" onclick="fillDemo('demo@taskmaster.ai', 'demo1234')">Demo User</button>
+                        <button type="button" class="pill-btn" onclick="fillDemo('engineer@taskmaster.ai', 'agent2026')">Engineer</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Left Footer -->
+            <div class="auth-footer-bar">
+                <span>© 2026 Taskmaster AI</span>
+                <div class="auth-footer-links">
+                    <a href="javascript:void(0)" onclick="openPolicyModal('privacy')">Privacy</a>
+                    <span>•</span>
+                    <a href="javascript:void(0)" onclick="openPolicyModal('terms')">Terms</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Right Column: Elegant Project Showcase ── -->
+        <div class="auth-showcase-side">
+            <div>
+                <div class="showcase-header-pill">
+                    <i class="fa-solid fa-sparkles"></i>
+                    <span>Next-Gen Autonomous Agent</span>
+                </div>
+
+                <h1 class="showcase-title-text">
+                    Turn Complex Goals into<br>
+                    <span>Autonomous Real-World Action</span>
+                </h1>
+
+                <p class="showcase-desc-text">
+                    Taskmaster decomposes high-level requests into verifiable DAG execution plans with Playwright browser control and 16 native connectors.
+                </p>
+
+                <div class="showcase-cards-col">
+                    <div class="feature-mini-card">
+                        <div class="mini-card-icon">
+                            <i class="fa-solid fa-diagram-project"></i>
+                        </div>
+                        <div class="mini-card-content">
+                            <h4>Deterministic DAG Planning</h4>
+                            <p>Translates ambiguous goals into ordered execution pipelines with automatic error recovery.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-mini-card">
+                        <div class="mini-card-icon">
+                            <i class="fa-solid fa-globe"></i>
+                        </div>
+                        <div class="mini-card-content">
+                            <h4>Playwright Browser Automation</h4>
+                            <p>Automates real web interactions with ARIA detection, ad-skipping, and video playback.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-mini-card">
+                        <div class="mini-card-icon">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+                        <div class="mini-card-content">
+                            <h4>SQLite Multi-User Isolation</h4>
+                            <p>ACID-compliant storage with permanent user chat segregation and PBKDF2 encryption.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Tags -->
+            <div class="showcase-foot-strip">
+                <div class="foot-tag">
+                    <span class="tag-dot-green"></span>
+                    <span>16 Tool Suite</span>
+                </div>
+                <div class="foot-tag">
+                    <i class="fa-solid fa-shield-halved" style="color:#2563eb; font-size:0.75rem;"></i>
+                    <span>Enterprise Guardrails</span>
+                </div>
+                <div class="foot-tag">
+                    <i class="fa-solid fa-bolt" style="color:#0284c7; font-size:0.75rem;"></i>
+                    <span>Real-Time Stream</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Policy Modal -->
+    <div class="policy-modal-backdrop" id="policyModalBackdrop" onclick="closePolicyModal()" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(15,23,42,0.4); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; z-index:9999; padding:1.5rem;">
+        <div class="policy-modal-card" onclick="event.stopPropagation()" style="background:#ffffff; border-radius:var(--radius-xl); border:1px solid var(--border-medium); box-shadow:0 25px 60px rgba(15,23,42,0.2); width:100%; max-width:580px; max-height:80vh; display:flex; flex-direction:column; overflow:hidden;">
+            <div class="policy-modal-header" style="display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.75rem; border-bottom:1px solid #f1f5f9;">
+                <h3 id="policyModalTitle" style="font-size:1.15rem; font-weight:700; color:#0f172a; margin:0;">Policy Information</h3>
+                <button type="button" class="btn-close-modal" onclick="closePolicyModal()" style="background:#f1f5f9; border:none; width:32px; height:32px; border-radius:50%; cursor:pointer; color:var(--text-muted); font-size:0.95rem; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="policy-modal-body" id="policyModalBody" style="padding:1.75rem; overflow-y:auto; font-size:0.9rem; line-height:1.65; color:var(--text-secondary);"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'signin';
+
+        // Check if already authenticated
+        window.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('taskmaster_auth_token');
+            if (token) {
+                try {
+                    const res = await fetch('/api/auth/me', {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    const data = await res.json();
+                    if (res.ok && data.status === 'SUCCESS') {
+                        window.location.href = '/chat';
+                    }
+                } catch (e) {
+                    localStorage.removeItem('taskmaster_auth_token');
+                }
+            }
+        });
+
+        function switchTab(mode) {
+            currentMode = mode;
+            hideAlerts();
+            const tabSignIn = document.getElementById('tabSignIn');
+            const tabSignUp = document.getElementById('tabSignUp');
+            const groupFullName = document.getElementById('groupFullName');
+            const title = document.getElementById('authHeaderTitle');
+            const subtitle = document.getElementById('authHeaderSubtitle');
+            const submitBtnText = document.getElementById('submitBtnText');
+
+            if (mode === 'signin') {
+                tabSignIn.classList.add('active');
+                tabSignUp.classList.remove('active');
+                groupFullName.style.display = 'none';
+                document.getElementById('fullNameInput').required = false;
+                title.textContent = 'Welcome Back';
+                subtitle.textContent = 'Sign in to access your autonomous agent workspace';
+                submitBtnText.textContent = 'Sign In';
+            } else {
+                tabSignUp.classList.add('active');
+                tabSignIn.classList.remove('active');
+                groupFullName.style.display = 'flex';
+                document.getElementById('fullNameInput').required = true;
+                title.textContent = 'Create Account';
+                subtitle.textContent = 'Get started with your private Taskmaster workspace';
+                submitBtnText.textContent = 'Create Account';
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const input = document.getElementById('passwordInput');
+            const icon = document.getElementById('pwdEyeIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        function fillDemo(email, pwd) {
+            switchTab('signin');
+            document.getElementById('emailInput').value = email;
+            document.getElementById('passwordInput').value = pwd;
+        }
+
+        function showAlert(type, msg) {
+            hideAlerts();
+            if (type === 'error') {
+                const el = document.getElementById('errorAlert');
+                document.getElementById('errorMessage').textContent = msg;
+                el.style.display = 'flex';
+            } else {
+                const el = document.getElementById('successAlert');
+                document.getElementById('successMessage').textContent = msg;
+                el.style.display = 'flex';
+            }
+        }
+
+        function hideAlerts() {
+            document.getElementById('errorAlert').style.display = 'none';
+            document.getElementById('successAlert').style.display = 'none';
+        }
+
+        async function handleAuthSubmit(e) {
+            e.preventDefault();
+            hideAlerts();
+
+            const email = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value;
+            const fullName = document.getElementById('fullNameInput').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (!email || !password) {
+                showAlert('error', 'Please enter both email and password.');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Authenticating...';
+
+            try {
+                if (currentMode === 'signin') {
+                    // Sign In API
+                    let res = await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password })
+                    });
+                    let result = await res.json();
+
+                    if (!res.ok) {
+                        // If demo user doesn't exist yet, auto-register them seamlessly for demo convenience
+                        if (email.endsWith('@taskmaster.ai')) {
+                            res = await fetch('/api/auth/register', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ email, password, full_name: email.split('@')[0] })
+                            });
+                            result = await res.json();
+                        }
+                    }
+
+                    if (res.ok && result.data && result.data.token) {
+                        localStorage.setItem('taskmaster_auth_token', result.data.token);
+                        localStorage.setItem('taskmaster_user', JSON.stringify(result.data.user));
+                        showAlert('success', 'Signed in successfully! Redirecting...');
+                        setTimeout(() => { window.location.href = '/chat'; }, 600);
+                    } else {
+                        showAlert('error', result.detail || 'Invalid email or password.');
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<span>Sign In</span> <i class="fa-solid fa-arrow-right"></i>';
+                    }
+                } else {
+                    // Sign Up API
+                    const res = await fetch('/api/auth/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password, full_name: fullName })
+                    });
+                    const result = await res.json();
+
+                    if (res.ok && result.data && result.data.token) {
+                        localStorage.setItem('taskmaster_auth_token', result.data.token);
+                        localStorage.setItem('taskmaster_user', JSON.stringify(result.data.user));
+                        showAlert('success', 'Account created! Redirecting to workspace...');
+                        setTimeout(() => { window.location.href = '/chat'; }, 600);
+                    } else {
+                        showAlert('error', result.detail || 'Registration failed.');
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<span>Create Account</span> <i class="fa-solid fa-arrow-right"></i>';
+                    }
+                }
+            } catch (err) {
+                showAlert('error', 'Connection error. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Continue</span> <i class="fa-solid fa-arrow-right"></i>';
+            }
+        }
+
+        function openPolicyModal(type) {
+            const backdrop = document.getElementById('policyModalBackdrop');
+            const titleEl = document.getElementById('policyModalTitle');
+            const bodyEl = document.getElementById('policyModalBody');
+            if (!backdrop || !titleEl || !bodyEl) return;
+
+            const modalData = {
+                privacy: {
+                    title: "Privacy & Data Protection Policy",
+                    content: `
+                        <h4>1. Zero Data Scraping & Confidentiality</h4>
+                        <p>Taskmaster stores your chat history, credentials, and custom task deliverables securely in your private SQLite database.</p>
+                        <h4>2. Client-Side Authentication</h4>
+                        <p>All authentication tokens are secured with cryptographically hashed PBKDF2-SHA256 credentials.</p>
+                    `
+                },
+                terms: {
+                    title: "Terms of Service",
+                    content: `
+                        <h4>1. Permissible Usage</h4>
+                        <p>Taskmaster provides multi-agent workflows. Outputs should be verified for mission-critical operations.</p>
+                        <h4>2. Security Safeguards</h4>
+                        <p>Automated safety rails screen inputs against prompt injection and malicious commands.</p>
+                    `
+                }
+            };
+
+            const info = modalData[type] || modalData.privacy;
+            titleEl.textContent = info.title;
+            bodyEl.innerHTML = info.content;
+            backdrop.style.display = 'flex';
+        }
+
+        function closePolicyModal() {
+            const backdrop = document.getElementById('policyModalBackdrop');
+            if (backdrop) backdrop.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

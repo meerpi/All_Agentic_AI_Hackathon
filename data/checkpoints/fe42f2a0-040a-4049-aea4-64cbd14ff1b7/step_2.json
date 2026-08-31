@@ -1,0 +1,141 @@
+{
+  "workflow_id": "fe42f2a0-040a-4049-aea4-64cbd14ff1b7",
+  "step_number": 2,
+  "timestamp": "2026-08-31T07:42:36.002569+00:00",
+  "state": {
+    "workflow_id": "fe42f2a0-040a-4049-aea4-64cbd14ff1b7",
+    "goal": "Process customer lead intake form and generate executive summary",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "03ddaab0-a6a2-41de-a8be-c4da4240b08e",
+        "description": "Extract customer fields",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "raw_content": "customer intake"
+        },
+        "reasoning": "Agent selected tool for step execution",
+        "status": "COMPLETED",
+        "result": {
+          "source_type": "text_payload",
+          "processed_records_count": 1,
+          "extracted_fields": {
+            "status": null,
+            "metric": null,
+            "timestamp": null,
+            "severity": null
+          },
+          "records_sample": [],
+          "raw_snippet": "customer intake"
+        },
+        "error": null,
+        "execution_time_ms": 0.0,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "ac11dc94-b79d-444f-aa30-fd240c60122c",
+        "description": "Save record",
+        "tool_name": "db_manager",
+        "tool_args": {
+          "action": "upsert",
+          "collection": "leads",
+          "data": {
+            "id": "lead_1"
+          }
+        },
+        "reasoning": "Agent selected tool for step execution",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "00ecc4bc-c8dc-4826-b36f-54941099d854",
+        "description": "Validate lead",
+        "tool_name": "validator",
+        "tool_args": {
+          "rules": [
+            "no_errors"
+          ]
+        },
+        "reasoning": "Agent selected tool for step execution",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 4,
+        "step_id": "2728edca-953e-493c-95ff-400c3f236716",
+        "description": "Generate summary",
+        "tool_name": "report_generator",
+        "tool_args": {
+          "report_title": "Lead Report"
+        },
+        "reasoning": "Agent selected tool for step execution",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          3
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T07:42:35.974841",
+    "updated_at": "2026-08-31T07:42:35.982015Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 0,
+      "total_completion_tokens": 0,
+      "total_tokens": 0,
+      "total_estimated_cost_usd": 0.0,
+      "calls": []
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

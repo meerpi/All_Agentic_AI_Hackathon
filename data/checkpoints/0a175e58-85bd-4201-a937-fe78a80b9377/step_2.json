@@ -1,0 +1,128 @@
+{
+  "workflow_id": "0a175e58-85bd-4201-a937-fe78a80b9377",
+  "step_number": 2,
+  "timestamp": "2026-08-31T11:29:13.486715+00:00",
+  "state": {
+    "workflow_id": "0a175e58-85bd-4201-a937-fe78a80b9377",
+    "goal": "play the eminem latest songs for 20 sec",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "d48d89d8-94eb-4d2e-bb41-220ce7ffd8fd",
+        "description": "Search for the latest Eminem songs on YouTube",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_api_search",
+          "query": "latest Eminem songs 2026"
+        },
+        "reasoning": "Need to identify the most recent track to fulfill the user's request for 'latest songs'.",
+        "status": "COMPLETED",
+        "result": {
+          "status": "SUCCESS",
+          "query": "latest Eminem songs 2026",
+          "results": [
+            {
+              "title": "Eminem - Houdini [Official Music Video]",
+              "channel": "EminemMusic",
+              "video_id": "22tVWwmTie8",
+              "url": "https://www.youtube.com/watch?v=22tVWwmTie8",
+              "description": "Video by EminemMusic"
+            },
+            {
+              "title": "Eminem - Somebody Save Me (feat. Jelly Roll) [Official Music Video]",
+              "channel": "EminemMusic",
+              "video_id": "Vwa0HenQMi4",
+              "url": "https://www.youtube.com/watch?v=Vwa0HenQMi4",
+              "description": "Video by EminemMusic"
+            },
+            {
+              "title": "LL COOL J - Murdergram Deux ft. Eminem",
+              "channel": "LL COOL J",
+              "video_id": "50Tl8E0Vvms",
+              "url": "https://www.youtube.com/watch?v=50Tl8E0Vvms",
+              "description": "Video by LL COOL J"
+            },
+            {
+              "title": "Eminem - Still Shady (2026)",
+              "channel": "D2T US and Compton Bred Music",
+              "video_id": "hRjvQAn92Ik",
+              "url": "https://www.youtube.com/watch?v=hRjvQAn92Ik",
+              "description": "Video by D2T US and Compton Bred Music"
+            },
+            {
+              "title": "Eminem - Doomsday 2 (Official Music Video)",
+              "channel": "Lyrical Lemonade",
+              "video_id": "Evut8BfrZ2U",
+              "url": "https://www.youtube.com/watch?v=Evut8BfrZ2U",
+              "description": "Video by Lyrical Lemonade"
+            }
+          ]
+        },
+        "error": null,
+        "execution_time_ms": 4138.120889663696,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "2fa88b75-435b-49c3-9f63-056f9e2d6012",
+        "description": "Play the top search result for 20 seconds",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "url": "$step_1.results[0].url",
+          "duration_seconds": 20,
+          "auto_skip_ads": true
+        },
+        "reasoning": "Using the URL from the search results to initiate playback for the requested duration.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T11:29:09.248598",
+    "updated_at": "2026-08-31T11:29:09.317363Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3040,
+      "total_completion_tokens": 285,
+      "total_tokens": 3325,
+      "total_estimated_cost_usd": 0.000627,
+      "calls": [
+        {
+          "prompt_tokens": 3040,
+          "completion_tokens": 285,
+          "total_tokens": 3325,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000627
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

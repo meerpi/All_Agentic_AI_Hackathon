@@ -1,0 +1,62 @@
+{
+  "workflow_id": "273f03a2-0d2b-49bd-96db-21ff17e03551",
+  "step_number": 1,
+  "timestamp": "2026-08-31T08:19:39.891202+00:00",
+  "state": {
+    "workflow_id": "273f03a2-0d2b-49bd-96db-21ff17e03551",
+    "goal": "Send a Slack message to #general saying: Team standup moved to 3pm today",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "b2cdd97f-f87d-4780-9c55-587a038490cf",
+        "description": "Post the meeting update message to the #general Slack channel.",
+        "tool_name": "slack",
+        "tool_args": {
+          "action": "post_message",
+          "channel": "#general",
+          "text": "Team standup moved to 3pm today"
+        },
+        "reasoning": "The goal is to notify the team via Slack. The slack tool's post_message action is the direct and correct method to deliver this specific text to the requested channel.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T08:19:39.883626",
+    "updated_at": "2026-08-31T08:19:39.888368Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 2902,
+      "total_completion_tokens": 160,
+      "total_tokens": 3062,
+      "total_estimated_cost_usd": 0.000531,
+      "calls": [
+        {
+          "prompt_tokens": 2902,
+          "completion_tokens": 160,
+          "total_tokens": 3062,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000531
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

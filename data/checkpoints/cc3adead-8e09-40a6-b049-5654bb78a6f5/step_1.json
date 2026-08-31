@@ -1,0 +1,111 @@
+{
+  "workflow_id": "cc3adead-8e09-40a6-b049-5654bb78a6f5",
+  "step_number": 1,
+  "timestamp": "2026-08-31T11:43:40.825744+00:00",
+  "state": {
+    "workflow_id": "cc3adead-8e09-40a6-b049-5654bb78a6f5",
+    "goal": "summerise my past 10 emails",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "a4c36616-09be-486a-bd35-08f61675e49b",
+        "description": "Fetch the 10 most recent emails from the Gmail inbox.",
+        "tool_name": "gmail",
+        "tool_args": {
+          "action": "read_inbox",
+          "limit": 10
+        },
+        "reasoning": "To summarize the past 10 emails, I must first retrieve the raw content from the user's Gmail account.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "5cd8b323-8229-49ba-bdbe-e0ea87f3d497",
+        "description": "Extract and summarize the content of the retrieved emails.",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "extraction_query": "Summarize the following 10 emails into a concise list of key points, highlighting sender, subject, and main action items for each: $step_1.emails"
+        },
+        "reasoning": "The raw email data needs to be processed into a readable summary format using the data extraction tool.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "a8ffc596-12ce-4b85-9b9a-3e3da77964d7",
+        "description": "Create a Google Doc containing the summarized email report.",
+        "tool_name": "google_docs",
+        "tool_args": {
+          "action": "create_document",
+          "title": "Summary of Recent 10 Emails",
+          "content": "$step_2.summary"
+        },
+        "reasoning": "Presenting the summary in a Google Doc provides a persistent and professional artifact for the user.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T11:43:40.762491",
+    "updated_at": "2026-08-31T11:43:40.822067Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3034,
+      "total_completion_tokens": 413,
+      "total_tokens": 3447,
+      "total_estimated_cost_usd": 0.000703,
+      "calls": [
+        {
+          "prompt_tokens": 3034,
+          "completion_tokens": 413,
+          "total_tokens": 3447,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000703
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

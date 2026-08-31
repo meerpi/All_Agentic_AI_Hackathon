@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskmaster — Autonomous AI Agent Engine</title>
+    <meta name="description" content="Production-grade AI Agent with DAG task execution, Playwright browser automation, multi-tool suite, and security guardrails.">
+    <link rel="icon" type="image/png" href="/frontend/assets/favicon.png">
+    <link rel="stylesheet" href="/frontend/css/style.css?v=4.7">
+    <link rel="stylesheet" href="/frontend/css/landing.css?v=4.7">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="landing-body">
+    <!-- Glowing Orbs Background -->
+    <div class="glow-orb-1"></div>
+    <div class="glow-orb-2"></div>
+
+    <!-- Header: Centered Pill Navigation + Separate Right Sign In Button -->
+    <header class="landing-header-container">
+        <div class="nav-spacer-left"></div>
+
+        <nav class="nav-pill-center">
+            <a href="/" class="nav-brand-icon" title="Taskmaster">
+                <img src="/frontend/t_logo.png" alt="Taskmaster Logo">
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="/features" class="nav-link">Features &amp; Tools</a></li>
+                <li><a href="/architecture" class="nav-link">Architecture</a></li>
+                <li><a href="/integrations" class="nav-link">Integrations</a></li>
+                <li><a href="/chat" class="nav-link">Agent Chat</a></li>
+            </ul>
+        </nav>
+
+        <div class="nav-right-container">
+            <a href="/auth" class="nav-signin-btn" id="navSignInBtn">
+                <span>Sign In</span>
+                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="hero-section">
+        <!-- Pill Badge -->
+        <div class="hero-badge">
+            <i class="fa-solid fa-sparkles" style="color: #2563eb;"></i>
+            <span>Next-Gen Autonomous AI Execution Engine</span>
+        </div>
+
+        <!-- Main Heading -->
+        <h1 class="hero-title">
+            Turn Complex Goals into<br>
+            <span class="typewriter-container">
+                <span class="hero-gradient-text" id="dynamicHeroPhrase">Autonomous Real-World Action</span><span class="typewriter-cursor">|</span>
+            </span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="hero-subtitle">
+            Taskmaster breaks down high-level objectives into self-healing DAG execution plans.
+            It drives real browsers, manages Google Workspace &amp; Jira, skips video ads, and synthesizes intelligence.
+        </p>
+
+        <!-- Live Animated DAG Execution Stream Preview Window -->
+        <div class="hero-preview-window" id="architecture">
+            <div class="preview-window-header">
+                <div class="window-dots">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                </div>
+                <span class="window-title">taskmaster-agent-engine // dag-stream</span>
+                <span class="window-status"><span class="dot-green-live"></span> Live</span>
+            </div>
+
+            <div class="preview-window-body">
+                <div class="dag-stream-header">
+                    <div class="dag-stream-title">
+                        <i class="fa-solid fa-chart-line" style="color: #2563eb;"></i>
+                        <span>DAG Execution Stream</span>
+                    </div>
+                    <a href="/chat" class="btn-view-dag">View DAG</a>
+                </div>
+
+                <!-- 5-Step Animated Flow Pipeline -->
+                <div class="dag-pipeline-flow" id="dagPipelineContainer">
+                    <!-- Step 1 -->
+                    <div class="dag-step-card" id="stepCard1">
+                        <div class="step-card-header">
+                            <i class="fa-regular fa-circle-check step-icon-success" id="stepIcon1"></i>
+                            <span class="step-title">Goal Received</span>
+                        </div>
+                        <div class="step-subtitle" id="stepSub1">Analyze intent</div>
+                        <div class="step-timestamp" id="stepTime1">00:02</div>
+                    </div>
+
+                    <div class="dag-step-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+                    <!-- Step 2 -->
+                    <div class="dag-step-card" id="stepCard2">
+                        <div class="step-card-header">
+                            <i class="fa-regular fa-circle-check step-icon-success" id="stepIcon2"></i>
+                            <span class="step-title">Plan DAG</span>
+                        </div>
+                        <div class="step-subtitle" id="stepSub2">Break into tasks</div>
+                        <div class="step-timestamp" id="stepTime2">00:04</div>
+                    </div>
+
+                    <div class="dag-step-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+                    <!-- Step 3 -->
+                    <div class="dag-step-card" id="stepCard3">
+                        <div class="step-card-header">
+                            <i class="fa-solid fa-spinner fa-spin step-icon-running" id="stepIcon3"></i>
+                            <span class="step-title">Execute Tasks</span>
+                        </div>
+                        <div class="step-subtitle text-running" id="stepSub3">Running...</div>
+                        <div class="step-timestamp" id="stepTime3">02:18</div>
+                    </div>
+
+                    <div class="dag-step-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+                    <!-- Step 4 -->
+                    <div class="dag-step-card" id="stepCard4">
+                        <div class="step-card-header">
+                            <i class="fa-solid fa-circle-nodes step-icon-pending" id="stepIcon4"></i>
+                            <span class="step-title">Synthesize Results</span>
+                        </div>
+                        <div class="step-subtitle" id="stepSub4">Aggregating data</div>
+                        <div class="step-timestamp" id="stepTime4">--:--</div>
+                    </div>
+
+                    <div class="dag-step-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+
+                    <!-- Step 5 -->
+                    <div class="dag-step-card" id="stepCard5">
+                        <div class="step-card-header">
+                            <i class="fa-regular fa-clock step-icon-pending" id="stepIcon5"></i>
+                            <span class="step-title">Deliver Output</span>
+                        </div>
+                        <div class="step-subtitle" id="stepSub5">Pending</div>
+                        <div class="step-timestamp" id="stepTime5">--:--</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="section-header">
+            <div class="section-tag">Core Engine Capabilities</div>
+            <h2 class="section-title">Engineered for Autonomous Reliability</h2>
+        </div>
+
+        <div class="grid-3">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-diagram-project"></i></div>
+                <h3>Deterministic DAG Planning</h3>
+                <p>Translates complex ambiguous requests into structured Directed Acyclic Graphs with strict dependency resolution and parallel execution.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-globe"></i></div>
+                <h3>Headless &amp; Headed Browser</h3>
+                <p>Full Playwright browser automation with ARIA reference clicking, auto-consent dismissal, and real-time live viewport streaming.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-toolbox"></i></div>
+                <h3>16 Native Tool Integrations</h3>
+                <p>Built-in connectors for Gmail, Google Docs, Sheets, Calendar, Jira Cloud, YouTube Data API, Spotify, and Python Sandbox.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h3>Enterprise Safety Rails</h3>
+                <p>Automatic PII redaction, prompt injection screening, human-in-the-loop approval triggers, and emergency panic kill switches.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-database"></i></div>
+                <h3>SQLite Multi-User Isolation</h3>
+                <p>Permanent ACID-compliant database storage with segregated chat history, session records, and credential security.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fa-solid fa-rotate"></i></div>
+                <h3>Self-Correction Engine</h3>
+                <p>Detects runtime errors, analyzes failure trajectories with Critic LLMs, and autonomously re-attempts alternative tool strategies.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Multi-Column Enterprise Footer ("Tail") -->
+    <footer class="enterprise-footer">
+        <div class="footer-top-container">
+            <!-- Brand Column -->
+            <div class="footer-brand-col">
+                <a href="/" class="footer-brand-logo">
+                    <img src="/frontend/t_logo.png" alt="Taskmaster Logo">
+                    <span>Taskmaster</span>
+                </a>
+                <p class="footer-brand-bio">
+                    Next-generation Autonomous AI Agent Engine engineered for deterministic DAG execution, Playwright browser automation, and enterprise multi-tool workflows.
+                </p>
+                <div class="footer-badges-row">
+                    <span class="footer-pill-tag"><i class="fa-solid fa-gem" style="color: #2563eb;"></i> Gemini 3.1</span>
+                    <span class="footer-pill-tag"><i class="fa-solid fa-shield" style="color: #10b981;"></i> 4-Layer Rails</span>
+                    <span class="footer-pill-tag"><i class="fa-solid fa-database" style="color: #6366f1;"></i> SQLite ACID</span>
+                </div>
+            </div>
+
+            <!-- Product & Features -->
+            <div class="footer-nav-col">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="/features"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Features &amp; Tools</a></li>
+                    <li><a href="/architecture"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> DAG Engine</a></li>
+                    <li><a href="/integrations"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Integrations</a></li>
+                    <li><a href="/chat"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Agent Chat</a></li>
+                    <li><a href="/auth"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Sign In / Register</a></li>
+                </ul>
+            </div>
+
+            <!-- Architecture & Standards -->
+            <div class="footer-nav-col">
+                <h4>Architecture</h4>
+                <ul>
+                    <li><a href="/architecture"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Topological DAG</a></li>
+                    <li><a href="/architecture"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Multi-Agent Council</a></li>
+                    <li><a href="/architecture"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Reflexion Loop</a></li>
+                    <li><a href="/integrations"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> A2A Open Protocol</a></li>
+                    <li><a href="/integrations"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> MCP Server</a></li>
+                </ul>
+            </div>
+
+            <!-- Enterprise & Legal -->
+            <div class="footer-nav-col">
+                <h4>Trust &amp; Legal</h4>
+                <ul>
+                    <li><a href="/docs" target="_blank"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> OpenAPI Specs</a></li>
+                    <li><a href="javascript:void(0)" onclick="openPolicyModal('privacy')"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Privacy Policy</a></li>
+                    <li><a href="javascript:void(0)" onclick="openPolicyModal('terms')"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Terms of Service</a></li>
+                    <li><a href="javascript:void(0)" onclick="openPolicyModal('security')"><i class="fa-solid fa-chevron-right" style="font-size: 0.65rem;"></i> Security Whitepaper</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+            <div>
+                © 2026 Taskmaster AI Technologies Inc. All rights reserved.
+            </div>
+            <div class="footer-status-indicator">
+                <span class="status-dot-pulse"></span>
+                <span>All Systems Operational · v1.0.0 Stable</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Legal & Policy Modal -->
+    <div class="policy-modal-backdrop" id="policyModalBackdrop" onclick="closePolicyModal()">
+        <div class="policy-modal-card" onclick="event.stopPropagation()">
+            <div class="policy-modal-header">
+                <h3 id="policyModalTitle">Policy Information</h3>
+                <button class="btn-close-modal" onclick="closePolicyModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="policy-modal-body" id="policyModalBody">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <script src="/frontend/js/landing.js?v=4.6"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+{
+  "workflow_id": "6d38763d-9f68-4380-b171-6dc1527ea017",
+  "step_number": 1,
+  "timestamp": "2026-08-31T07:25:35.506925+00:00",
+  "state": {
+    "workflow_id": "6d38763d-9f68-4380-b171-6dc1527ea017",
+    "goal": "Process customer lead intake form and generate executive summary",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "2326b473-f803-4792-8551-f74699d05151",
+        "description": "Extract customer fields",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "raw_content": "customer intake"
+        },
+        "reasoning": "Agent selected tool for step execution",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "6b25fb46-4afc-4445-a00c-eef5f479a167",
+        "description": "Save record",
+        "tool_name": "db_manager",
+        "tool_args": {
+          "action": "upsert",
+          "collection": "leads",
+          "data": {
+            "id": "lead_1"
+          }
+        },
+        "reasoning": "Agent selected tool for step execution",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "6c9b362a-9a37-4bc0-bdee-46b7eae27bf2",
+        "description": "Validate lead",
+        "tool_name": "validator",
+        "tool_args": {
+          "rules": [
+            "no_errors"
+          ]
+        },
+        "reasoning": "Agent selected tool for step execution",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 4,
+        "step_id": "19c9dde2-1209-44db-b29e-63d00b388200",
+        "description": "Generate summary",
+        "tool_name": "report_generator",
+        "tool_args": {
+          "report_title": "Lead Report"
+        },
+        "reasoning": "Agent selected tool for step execution",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          3
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T07:25:35.503422",
+    "updated_at": "2026-08-31T07:25:35.505764Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 0,
+      "total_completion_tokens": 0,
+      "total_tokens": 0,
+      "total_estimated_cost_usd": 0.0,
+      "calls": []
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

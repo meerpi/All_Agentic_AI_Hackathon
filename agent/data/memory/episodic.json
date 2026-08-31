@@ -1,0 +1,1269 @@
+[
+  {
+    "timestamp": "2026-08-31T05:13:03.586599+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "d15bb7cb-4a5c-4017-a9d3-42275bb8d17a",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "data_extractor",
+        "db_manager",
+        "validator",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T05:13:19.604397+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "1b18d144-abc4-4c6a-befc-15178bae6f95",
+    "details": {
+      "goal": "test guardrail",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T05:14:09.785510+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  },
+  {
+    "timestamp": "2026-08-31T05:14:16.202695+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "e915cc94-713d-451e-8575-4c65b3c73a9c",
+    "details": {
+      "goal": "test blocked",
+      "tools_used": [
+        "data_extractor",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T05:23:14.883674+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "6119f3b9-66d3-4dca-8509-ff7cfb799571",
+    "details": {
+      "goal": "test blocked",
+      "tools_used": [
+        "data_extractor",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T07:01:17.121364+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "a03a1804-fdc4-4b14-b37b-16b19bda27db",
+    "details": {
+      "goal": "Go to https://www.youtube.com/watch?v=wZa7yNAXHK4 and tell me who is this video about and at what timestamp is his mentor first mentioned",
+      "tools_used": [
+        "media_controller",
+        "data_extractor"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T07:02:07.721002+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "986f742a-aafd-401d-9f61-07bd404d2245",
+    "details": {
+      "goal": "Go to https://youtu.be/KlfuFFGWw64 and tell me who is this video about and at what timestamp is his mentor first mentioned",
+      "tools_used": [
+        "media_controller",
+        "data_extractor"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T07:21:13.560077+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "34959629-8481-4531-b58e-80d4d7936e67",
+    "details": {
+      "goal": "Go to https://youtu.be/8X4waecpf1k and tell me who is this video about and at what timestamp is his mentor first mentioned",
+      "tools_used": [
+        "media_controller",
+        "data_extractor"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T07:27:43.191685+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "9efa858b-f255-486a-8422-ec1521af2f85",
+    "details": {
+      "goal": "Go to https://youtu.be/8X4waecpf1k and tell me who is this video about and at what timestamp is his mentor first mentioned",
+      "tools_used": [
+        "media_controller",
+        "data_extractor",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T07:29:55.290282+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "b4bafa9e-055f-427d-9f8c-f96eea489265",
+    "details": {
+      "goal": "Go to https://youtu.be/PGUdWfB8nLg and tell me who is this video about and at what timestamp is his mentor first mentioned",
+      "tools_used": [
+        "media_controller",
+        "data_extractor",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T07:35:35.013410+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "ea33ff23-560c-4341-8936-5122a73d8b3b",
+    "details": {
+      "goal": "Go to https://www.youtube.com/watch?v=wZa7yNAXHK4 and tell me who is this video about and at what timestamp is his mentor first mentioned",
+      "tools_used": [
+        "media_controller",
+        "data_extractor"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T07:37:15.170436+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "33d1c39a-a5e0-473a-a291-44a4288e250e",
+    "details": {
+      "goal": "Go to https://www.youtube.com/watch?v=wZa7yNAXHK4 and tell me who is this video about and at what timestamp is his mentor first mentioned",
+      "tools_used": [
+        "media_controller",
+        "data_extractor",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T07:37:42.443190+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "3a2b4f06-477b-4b84-ac21-5b73c71f8985",
+    "details": {
+      "goal": "Go to https://www.youtube.com/watch?v=wZa7yNAXHK4 and tell me who is this video about and at what timestamp is his mentor first mentioned",
+      "tools_used": [
+        "media_controller",
+        "data_extractor"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T07:38:31.367229+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "02a3d871-9f8e-4608-b480-91ec75dc469b",
+    "details": {
+      "goal": "Go to https://youtu.be/PGUdWfB8nLg and tell me who is this video about and at what timestamp is his mentor first mentioned",
+      "tools_used": [
+        "media_controller",
+        "data_extractor",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T07:39:35.264410+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "f4ad7b66-1423-4491-9da5-e0378b0c5d5f",
+    "details": {
+      "goal": "Go to https://www.youtube.com/watch?v=PGUdWfB8nLg and tell me who is this video about and at what timestamp is his mentor first mentioned",
+      "tools_used": [
+        "media_controller",
+        "data_extractor"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T07:44:14.922993+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "671e8b52-5fb9-4d34-b399-d29d482cf487",
+    "details": {
+      "goal": "Go to https://www.youtube.com/watch?v=PGUdWfB8nLg and tell me who is this video about and at what timestamp is his mentor first mentioned",
+      "tools_used": [
+        "media_controller",
+        "data_extractor"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T07:49:36.427660+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "adbf7227-ee52-4a7c-bb93-41c83b99bd3b",
+    "details": {
+      "goal": "Process customer lead intake form and generate executive summary",
+      "tools_used": [
+        "data_extractor",
+        "db_manager",
+        "validator",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T07:49:40.083655+00:00",
+    "event_type": "TEST_EVENT",
+    "workflow_id": "wf-123",
+    "details": {
+      "action": "sync"
+    }
+  },
+  {
+    "timestamp": "2026-08-31T07:49:40.167286+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "72d19499-b352-4f21-b66b-e6be4c17bc0d",
+    "details": {
+      "goal": "test blocked",
+      "tools_used": [
+        "data_extractor",
+        "validator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T07:49:46.018478+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "711939f6-5d2e-4775-82d7-68dbf789993b",
+    "details": {
+      "goal": "test guardrail",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T08:03:13.139421+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "dba4e68f-01c6-4568-a81c-ba75a5252856",
+    "details": {
+      "goal": "Search YouTube for Lex Fridman Yann LeCun podcast, play the first result for 30 seconds, then close the browser",
+      "tools_used": [
+        "media_controller",
+        "media_controller",
+        "browser_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T08:05:19.268244+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "d083786d-199d-4b9e-b43f-ad68242a988d",
+    "details": {
+      "goal": "Search YouTube for Lex Fridman Yann LeCun podcast, play the first result for 30 seconds, then close the browser",
+      "tools_used": [
+        "media_controller",
+        "media_controller",
+        "browser_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T08:06:26.461141+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "a4144029-b1da-44c8-9df0-15e7a25fa29a",
+    "details": {
+      "goal": "Navigate to news.ycombinator.com, extract the top 5 headlines, and return them as a list",
+      "tools_used": [
+        "browser_controller",
+        "data_extractor"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T08:10:48.504071+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "85b7066a-937a-4fc4-97ab-0338eb68a692",
+    "details": {
+      "goal": "Navigate to news.ycombinator.com, extract the top 5 headlines, and return them as a list",
+      "tools_used": [
+        "browser_controller",
+        "data_extractor"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T08:12:14.370390+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "be5753ad-ea98-4ec8-89ab-4e0e8eacf3f8",
+    "details": {
+      "goal": "Navigate to news.ycombinator.com, extract the top 5 headlines, and return them as a list",
+      "tools_used": [
+        "browser_controller",
+        "data_extractor"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T08:12:50.879156+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "ef3359b9-98a9-4e68-9ac0-cf5068242098",
+    "details": {
+      "goal": "Read my latest 3 Gmail emails and summarize who they are from and what they are about",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T08:18:58.521081+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "df03f6c4-07fc-464a-a811-8f0f0b2f5c7b",
+    "details": {
+      "goal": "Check my Google Calendar for upcoming events this week and list them",
+      "tools_used": [
+        "google_calendar",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T08:19:50.597403+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "273f03a2-0d2b-49bd-96db-21ff17e03551",
+    "details": {
+      "goal": "Send a Slack message to #general saying: Team standup moved to 3pm today",
+      "tools_used": [
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T08:21:05.108378+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "318c23d1-27f1-4cc4-9243-170490a1692b",
+    "details": {
+      "goal": "create a google doc with content about narendra modi",
+      "tools_used": [
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T08:24:18.743484+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "9944a99c-acf2-4408-8c9d-c292a8e455cf",
+    "details": {
+      "goal": "create a google doc with content about kabir roy from VIT Bhopal University",
+      "tools_used": [
+        "browser_controller",
+        "data_extractor",
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T08:35:18.437590+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "88d807cd-af49-49f5-89bd-71fb18ce0539",
+    "details": {
+      "goal": "tell ma about narendra modi",
+      "tools_used": [
+        "browser_controller",
+        "data_extractor",
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T08:40:16.207441+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "77fce228-183c-4f63-8558-0e554a35f47a",
+    "details": {
+      "goal": "Search YouTube for Lex Fridman Yann LeCun podcast, play the first result for 30 seconds, then close the browser",
+      "tools_used": [
+        "media_controller",
+        "media_controller",
+        "browser_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T10:13:05.680844+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "cfe67202-b3d6-4eaa-999c-9381039d5cc5",
+    "details": {
+      "goal": "hi baby",
+      "tools_used": [
+        "slack"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T10:16:20.076653+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "4180ef02-d5a9-49e7-b4f3-cd7122535dd0",
+    "details": {
+      "goal": "Open despacito on ytb and stop it after 1 minute",
+      "tools_used": [
+        "media_controller",
+        "python_sandbox",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T10:16:45.620885+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "e10b147f-0792-4d07-a1be-5945a1c13053",
+    "details": {
+      "goal": "Open despacito on ytb and stop it after 1 minute",
+      "tools_used": [
+        "media_controller",
+        "media_controller",
+        "python_sandbox",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T10:23:47.640826+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "20ae6f65-7efc-4302-95a6-5d321a1d08b9",
+    "details": {
+      "goal": "play me the video of one direction of youtube for 1 minute",
+      "tools_used": [
+        "media_controller",
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T10:28:59.304098+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "1cec19f9-f536-4a8a-a958-952699d4b897",
+    "details": {
+      "goal": "play me the youtube video of dia dia for 1 minute",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T10:30:47.504405+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "2e191114-4e67-49ed-a5d5-f13c7922c479",
+    "details": {
+      "goal": "play me the youtube video of dia dia for 1 minute",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T10:35:15.017969+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "8141003f-299a-4b31-8655-d064e56f8415",
+    "details": {
+      "goal": "play me the video of hips dont lie for 1 minute",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T10:42:46.495631+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "ad331c24-ab15-4719-aa01-652138b6bfaa",
+    "details": {
+      "goal": "play hips dont lie for 1 minute on youtube",
+      "tools_used": [
+        "media_controller",
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T10:48:46.384980+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "b8c7514a-222a-417a-8839-eec0b07d3eff",
+    "details": {
+      "goal": "search and play Believer on youtube for 5 seconds",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T10:57:01.147515+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "2bb3a4b5-9b9a-4e51-92ad-182c2763b869",
+    "details": {
+      "goal": "play shakira video for 1 minute",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:10:31.203503+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "15e80a45-80aa-4c40-95ab-b4054e0e7be7",
+    "details": {
+      "goal": "play shakira video for 1 minute",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:13:36.259103+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "482860af-e38f-48b1-9db3-b4555c2b1e9b",
+    "details": {
+      "goal": "play shakira song for 1 minute",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:14:06.843839+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "faf555dc-67f4-450c-ac93-97fcc3c5c39c",
+    "details": {
+      "goal": "play hips dont lie for 1 minute",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:17:40.671343+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "7762ce4a-1a31-4d5e-bde7-aecca0cb5893",
+    "details": {
+      "goal": "play hips dont lie for 1 minute",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:18:51.224303+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "2a58b4ec-55c8-47c5-ae27-d0246919f8f6",
+    "details": {
+      "goal": "play shape of you for 10 seconds",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:23:24.843373+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "b9d7cbf4-d340-4d36-9c6a-601263058c0c",
+    "details": {
+      "goal": "play the latest linus techtips youtube vid",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:23:46.679594+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "1d6c5527-6791-4ad5-86ed-3d6c671724da",
+    "details": {
+      "goal": "stop after 30 sec",
+      "tools_used": [
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:25:03.747602+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "6fd694af-27a6-4b5c-9c13-37816123d976",
+    "details": {
+      "goal": "I have to first create a s3 then srtore db in document db then host it in cloud create 3 detailed jira tickets based on this.",
+      "tools_used": [
+        "action_dispatcher",
+        "action_dispatcher",
+        "jira"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:26:18.806392+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "e065580c-e8d6-45fb-a8de-9f3f61465484",
+    "details": {
+      "goal": "create a detailed workout plan in google sheets  for the week accounting for 2 rest days.",
+      "tools_used": [
+        "google_sheets"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:26:55.197064+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "a87f85fa-9b9f-4cbd-a3de-5cf1e68a4f3c",
+    "details": {
+      "goal": "create a detailed workout plan in google sheets for the week accounting for 2 rest days.",
+      "tools_used": [
+        "google_sheets"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:27:20.282917+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "e0def19e-9970-483b-b8b3-cb5c84e6af71",
+    "details": {
+      "goal": "where is the google sheet link.",
+      "tools_used": [
+        "db_manager",
+        "data_extractor"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:28:13.811107+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "2c94ef7f-83bf-4565-ac28-5d61aadce392",
+    "details": {
+      "goal": "not valid create a valid working link.",
+      "tools_used": [
+        "db_manager",
+        "google_sheets",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:29:36.142912+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "0a175e58-85bd-4201-a937-fe78a80b9377",
+    "details": {
+      "goal": "play the eminem latest songs for 20 sec",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:30:49.692530+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "aef0e7ff-bb54-4395-9bf1-c6f4c500dba3",
+    "details": {
+      "goal": "play iphone 18 review for 20 sec by linus",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:35:51.712551+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "a6a0f35c-76eb-4d69-a799-46e309a58920",
+    "details": {
+      "goal": "paly hips dont lie for 20 seconds",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:37:27.272972+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "1ec689a4-4eab-4cbb-a260-48b7053342bc",
+    "details": {
+      "goal": "give me a google doc about narendra modi",
+      "tools_used": [
+        "browser_controller",
+        "data_extractor",
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:38:43.546113+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "50b1d8fe-4a60-492a-9e6b-f48bb7529ce5",
+    "details": {
+      "goal": "give me google doc",
+      "tools_used": [
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:40:43.647494+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "044dc5e4-4eee-4575-a2ac-8795d65ab237",
+    "details": {
+      "goal": "find the top 10 economics, extract the top 5 headlines, and return them as a list",
+      "tools_used": [
+        "browser_controller",
+        "data_extractor",
+        "report_generator"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:42:07.931874+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "34d699f8-41d3-41d6-9271-bafcb5e38746",
+    "details": {
+      "goal": "create a detailed nutrition plan accounting for one cheat day and balanced diet.",
+      "tools_used": [
+        "python_sandbox",
+        "google_sheets"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:44:07.737508+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "cc3adead-8e09-40a6-b049-5654bb78a6f5",
+    "details": {
+      "goal": "summerise my past 10 emails",
+      "tools_used": [
+        "gmail",
+        "data_extractor",
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:45:12.254663+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "b6c9e204-3b05-458f-ae9e-49ae3ec68a3d",
+    "details": {
+      "goal": "capture a screen shot of youtube homepage",
+      "tools_used": [
+        "browser_controller",
+        "browser_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:46:35.246855+00:00",
+    "event_type": "WORKFLOW_FAILED",
+    "workflow_id": "34c0b75a-7776-4a37-8349-23f47bedb532",
+    "details": {
+      "goal": "save the screenshot to a google doc",
+      "tools_used": [
+        "os_desktop_tool",
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:47:41.316766+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "4211406c-92b2-4091-b452-15bc18cdcdb6",
+    "details": {
+      "goal": "send a email to tejasranjeet03@gmail.com  about out meeting tomorrow.",
+      "tools_used": [
+        "google_calendar",
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:48:34.556301+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "fdf39b96-3218-40ec-9598-fff9bcbea0fc",
+    "details": {
+      "goal": "Send a mail to rakeshkabir@gmail.com about eating too much gewar",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:49:48.170537+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "0cda7a2f-5ce7-43c1-8fe5-962033a341d9",
+    "details": {
+      "goal": "Send a mail to  prkm.bdo.am@gmail.com about trees.",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T11:51:27.497214+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "1a148403-6623-436b-bfec-cbe262b278ea",
+    "details": {
+      "goal": "Create a Google docs about trees.",
+      "tools_used": [
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T12:23:40.583351+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "371436d0-af23-4495-a246-f480552a99f5",
+    "details": {
+      "goal": "hello",
+      "tools_used": [
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T13:28:17.304615+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "18f0f8a8-4d88-4364-8cf0-03f3b535bceb",
+    "details": {
+      "goal": "hi what all skills do u know",
+      "tools_used": [
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T13:29:06.152768+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "b4139487-2b0e-419d-b8e6-12edd40fe858",
+    "details": {
+      "goal": "open youtube video of pm modi and putin in same car",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T13:29:41.232716+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "b470b356-e0a2-4fa4-a347-ba879d49a9ae",
+    "details": {
+      "goal": "dai dai song",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T13:30:18.317109+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "1f67b1a2-a486-4905-9afb-17aa66e556d6",
+    "details": {
+      "goal": "hips dont lie",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T13:37:38.594639+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "c31a20ff-9695-4912-b800-f216a415b11e",
+    "details": {
+      "goal": "hi",
+      "tools_used": [
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T13:54:52.707634+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "796245a5-22de-4f0d-9424-059287bdcb77",
+    "details": {
+      "goal": "[Attached Document: \"PS_Associate Software Engineer.pdf\" (application/pdf)]:\n```\n%PDF-1.7\r\n%\ufffd\ufffd\ufffd\ufffd\r\n1 0 obj\r\n<</Type/Catalog/Pages 2 0 R/Lang(en) /StructTreeRoot 28 0 R/MarkInfo<</Marked true>>/Metadata",
+      "tools_used": [
+        "data_extractor",
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T13:57:27.794579+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "ee74059a-2a31-4571-b09b-b1a247b985c8",
+    "details": {
+      "goal": "hi",
+      "tools_used": [
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T13:57:41.033305+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "4a7f013f-22c4-4752-8017-f6505e2351f5",
+    "details": {
+      "goal": "hi",
+      "tools_used": [
+        "google_docs"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:16:55.236811+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "57b3987b-d9bc-435b-8f1e-a3ec79fc8ddb",
+    "details": {
+      "goal": "what is the name of india prime minsiter",
+      "tools_used": [
+        "browser_controller",
+        "data_extractor"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:18:02.758258+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "8da90234-c375-44a5-9147-e0091a04ce87",
+    "details": {
+      "goal": "play hips dont lie song",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:18:35.586921+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "6b9e1c3b-1c88-4de2-817e-3da455bd7848",
+    "details": {
+      "goal": "play hips dont lie",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:21:34.002913+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "31e1e881-4698-4943-ac04-4437096e652e",
+    "details": {
+      "goal": "palyy hips dont lie",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:22:21.749823+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "8d3ffd16-02fa-433f-8f62-140d457cda73",
+    "details": {
+      "goal": "play hips dont lie for 10 secons",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:23:31.485696+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "56e4a2b4-c8d0-4f2a-aaf4-46e78419a74c",
+    "details": {
+      "goal": "play hips dont lie for 10 seconds",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:31:34.018043+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "8bf3c29c-22b1-4d66-b2c9-84b6fac9e3cf",
+    "details": {
+      "goal": "play hips dont lie video for 10 secons",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:32:01.734142+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "5ec3b211-f80b-451e-9767-77d35efb480a",
+    "details": {
+      "goal": "play hips dont lie video",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:35:54.706675+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "f0f050b3-6439-490a-b43d-523fa00aeb3a",
+    "details": {
+      "goal": "play hips dont lie",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:36:58.315969+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "a1c244f4-aa4d-450f-8075-db9978bb60e9",
+    "details": {
+      "goal": "play hips dont lie",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:38:00.086366+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "3dbe9f62-01cc-45e3-9eea-040e70d01a41",
+    "details": {
+      "goal": "play hips dont lie",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:39:21.829016+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "1f4456dc-6782-4a13-8ccb-4e2ced696b5c",
+    "details": {
+      "goal": "play hips dont lie",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:39:55.234489+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "7568d107-aa97-4b9e-bd51-dcd211fe39a3",
+    "details": {
+      "goal": "play hips dont lie",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:53:08.018900+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "a47b3712-aa4b-48f6-878d-8ca2511f785e",
+    "details": {
+      "goal": "play hips dont lie song",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:54:27.463768+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "fe4f8019-0a22-4257-ad0f-1e7e77802c20",
+    "details": {
+      "goal": "hi",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:56:37.981625+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "a0561ff2-6de9-4c0e-b5f7-4d6911131981",
+    "details": {
+      "goal": "play hips dont lie video",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:58:40.361385+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "e7d4a143-b3dd-4331-99e2-f689a4703969",
+    "details": {
+      "goal": "play dia dia song",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T14:59:08.349265+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "1322fe2f-6f37-45bc-a0fb-f7f4bc22d880",
+    "details": {
+      "goal": "hlo",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T15:01:20.177191+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "42969a59-1a6c-4c4d-9301-2e02eba0d006",
+    "details": {
+      "goal": "play hips dont lie",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T15:01:33.693575+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "b9032f55-268b-460f-bf40-5c8e550d830d",
+    "details": {
+      "goal": "hi",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T15:09:43.957363+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "e7a3e6e3-40ca-4fe0-82c2-ed155b39e2ab",
+    "details": {
+      "goal": "play hips dont lie",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T15:09:50.532887+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "fd3601e6-a9f8-464a-ab15-964a9dcd4683",
+    "details": {
+      "goal": "hi",
+      "tools_used": [
+        "gmail"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T15:15:50.471753+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "77728c34-322e-4926-afb2-53a0a7f411d3",
+    "details": {
+      "goal": "play hips dont lie",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T15:16:24.547630+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "9137c5dd-21a8-468e-9026-2e79abbf5b74",
+    "details": {
+      "goal": "play dia dia",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T15:18:27.329275+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "2c82b1f8-ce63-479c-9339-1762c8ba5c0d",
+    "details": {
+      "goal": "play hips dont lie",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T15:23:15.060138+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "32ab61ff-c0cd-4d8a-aa4d-192218311ef1",
+    "details": {
+      "goal": "play hips dont lie song",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T15:25:31.393748+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "092b34cc-4d8a-4be9-8983-52e2057f7472",
+    "details": {
+      "goal": "play dia dia song",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T15:27:35.134125+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "1249b118-9863-4287-b65b-44119792cb63",
+    "details": {
+      "goal": "play kabira song",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-08-31T15:27:47.134143+00:00",
+    "event_type": "WORKFLOW_COMPLETED",
+    "workflow_id": "322cc6d1-5576-4e1f-b1c8-a33ca9b3d58d",
+    "details": {
+      "goal": "play kesariya song",
+      "tools_used": [
+        "media_controller",
+        "media_controller"
+      ]
+    }
+  }
+]

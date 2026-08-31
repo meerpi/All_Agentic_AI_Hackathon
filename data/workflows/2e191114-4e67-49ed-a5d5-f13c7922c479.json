@@ -1,0 +1,242 @@
+{
+  "workflow_id": "2e191114-4e67-49ed-a5d5-f13c7922c479",
+  "goal": "play me the youtube video of dia dia for 1 minute",
+  "steps": [
+    {
+      "step_number": 1,
+      "step_id": "74299aa0-6eb2-4120-8b4d-fe4827ce2156",
+      "description": "Search for the video 'dia dia' on YouTube to retrieve the video ID.",
+      "tool_name": "media_controller",
+      "tool_args": {
+        "action": "youtube_api_search",
+        "query": "dia dia"
+      },
+      "reasoning": "Need to identify the specific video URL or ID for 'dia dia' before it can be played.",
+      "status": "COMPLETED",
+      "result": {
+        "status": "SUCCESS",
+        "query": "dia dia",
+        "results": [
+          {
+            "title": "Shakira, Burna Boy - Dai Dai (Official Video)",
+            "channel": "Shakira and 2 more",
+            "video_id": "fcnDmrtj6Sk",
+            "url": "https://www.youtube.com/watch?v=fcnDmrtj6Sk",
+            "description": "Video by Shakira and 2 more"
+          },
+          {
+            "title": "Shakira & Burna Boy - Dai Dai (Lyrics) World Cup Song 2026",
+            "channel": "7clouds",
+            "video_id": "salwJjShv2M",
+            "url": "https://www.youtube.com/watch?v=salwJjShv2M",
+            "description": "Video by 7clouds"
+          },
+          {
+            "title": "FIFA World Cup 2026 - DAI DAI | Cinematic Football Montage 4K",
+            "channel": "AEDITS Films",
+            "video_id": "ZMdZURZs85Y",
+            "url": "https://www.youtube.com/watch?v=ZMdZURZs85Y",
+            "description": "Video by AEDITS Films"
+          },
+          {
+            "title": "Shakira & Burna Boy - Dai Dai (Lyrics) World Cup Song 2026",
+            "channel": "7clouds Rock",
+            "video_id": "Y3jq_WIHP9k",
+            "url": "https://www.youtube.com/watch?v=Y3jq_WIHP9k",
+            "description": "Video by 7clouds Rock"
+          },
+          {
+            "title": "Dai Dai - Shakira ft. Burna Boy | Ultimate 4K World Cup Edit",
+            "channel": "RandomEditz",
+            "video_id": "8DCW3cBtscI",
+            "url": "https://www.youtube.com/watch?v=8DCW3cBtscI",
+            "description": "Video by RandomEditz"
+          }
+        ]
+      },
+      "error": null,
+      "execution_time_ms": 1299.607276916504,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 1,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "is_approved": false,
+      "token_usage": null
+    },
+    {
+      "step_number": 2,
+      "step_id": "4efa8426-0163-4b8b-adb7-58f3566f0877",
+      "description": "Play the identified video for 60 seconds.",
+      "tool_name": "media_controller",
+      "tool_args": {
+        "action": "youtube_play",
+        "video_id": "$step_1.video_id",
+        "duration_seconds": 60
+      },
+      "reasoning": "The media_controller tool is required to initiate playback of the specific video found in the previous step for the requested duration.",
+      "status": "FAILED",
+      "result": null,
+      "error": "Page.evaluate: Execution context was destroyed, most likely because of a navigation.",
+      "execution_time_ms": 57059.01217460632,
+      "depends_on": [
+        1
+      ],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 2,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "is_approved": false,
+      "token_usage": null
+    }
+  ],
+  "status": "FAILED",
+  "current_step_index": 0,
+  "final_artifact": {
+    "results": [
+      {
+        "status": "SUCCESS",
+        "query": "dia dia",
+        "results": [
+          {
+            "title": "Shakira, Burna Boy - Dai Dai (Official Video)",
+            "channel": "Shakira and 2 more",
+            "video_id": "fcnDmrtj6Sk",
+            "url": "https://www.youtube.com/watch?v=fcnDmrtj6Sk",
+            "description": "Video by Shakira and 2 more"
+          },
+          {
+            "title": "Shakira & Burna Boy - Dai Dai (Lyrics) World Cup Song 2026",
+            "channel": "7clouds",
+            "video_id": "salwJjShv2M",
+            "url": "https://www.youtube.com/watch?v=salwJjShv2M",
+            "description": "Video by 7clouds"
+          },
+          {
+            "title": "FIFA World Cup 2026 - DAI DAI | Cinematic Football Montage 4K",
+            "channel": "AEDITS Films",
+            "video_id": "ZMdZURZs85Y",
+            "url": "https://www.youtube.com/watch?v=ZMdZURZs85Y",
+            "description": "Video by AEDITS Films"
+          },
+          {
+            "title": "Shakira & Burna Boy - Dai Dai (Lyrics) World Cup Song 2026",
+            "channel": "7clouds Rock",
+            "video_id": "Y3jq_WIHP9k",
+            "url": "https://www.youtube.com/watch?v=Y3jq_WIHP9k",
+            "description": "Video by 7clouds Rock"
+          },
+          {
+            "title": "Dai Dai - Shakira ft. Burna Boy | Ultimate 4K World Cup Edit",
+            "channel": "RandomEditz",
+            "video_id": "8DCW3cBtscI",
+            "url": "https://www.youtube.com/watch?v=8DCW3cBtscI",
+            "description": "Video by RandomEditz"
+          }
+        ]
+      }
+    ],
+    "step_count": 2
+  },
+  "summary": "## \ud83c\udfb5 YouTube Search Results for 'Dai Dai'\n\nI was unable to play the video directly, but I have located the top results for your request:\n\n1. **Shakira, Burna Boy - Dai Dai (Official Video)** - [Watch here](https://www.youtube.com/watch?v=fcnDmrtj6Sk)\n2. **Shakira & Burna Boy - Dai Dai (Lyrics) World Cup Song 2026** - [Watch here](https://www.youtube.com/watch?v=salwJjShv2M)\n3. **FIFA World Cup 2026 - DAI DAI | Cinematic Football Montage 4K** - [Watch here](https://www.youtube.com/watch?v=ZMdZURZs85Y)\n4. **Shakira & Burna Boy - Dai Dai (Lyrics) World Cup Song 2026** - [Watch here](https://www.youtube.com/watch?v=Y3jq_WIHP9k)\n5. **Dai Dai - Shakira ft. Burna Boy | Ultimate 4K World Cup Edit** - [Watch here](https://www.youtube.com/watch?v=8DCW3cBtscI)",
+  "created_at": "2026-08-31T10:27:46.912080",
+  "updated_at": "2026-08-31T10:30:41.668256Z",
+  "require_approval": false,
+  "tags": [],
+  "context_id": null,
+  "token_usage": {
+    "total_prompt_tokens": 7288,
+    "total_completion_tokens": 846,
+    "total_tokens": 8134,
+    "total_estimated_cost_usd": 0.001601,
+    "calls": [
+      {
+        "prompt_tokens": 2895,
+        "completion_tokens": 283,
+        "total_tokens": 3178,
+        "model_used": "gemini-3.1-flash-lite",
+        "estimated_cost_usd": 0.000604
+      },
+      {
+        "prompt_tokens": 2200,
+        "completion_tokens": 138,
+        "total_tokens": 2338,
+        "model_used": "gemini-3.6-flash",
+        "estimated_cost_usd": 0.000413
+      },
+      {
+        "prompt_tokens": 2193,
+        "completion_tokens": 425,
+        "total_tokens": 2618,
+        "model_used": "gemini-3.1-flash-lite",
+        "estimated_cost_usd": 0.000584
+      }
+    ]
+  },
+  "checkpoint_data": null,
+  "paused_at_step": null,
+  "eval_scores": {
+    "workflow_id": "2e191114-4e67-49ed-a5d5-f13c7922c479",
+    "overall_score": 85.0,
+    "passed": true,
+    "plan_quality": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The plan was logically sound, breaking the high-level goal into a clear search-then-play sequence.",
+      "findings": [
+        "Step 1 correctly identified the need to resolve the search query to a specific video ID.",
+        "Step 2 correctly identified the need to play the specific ID for the requested duration."
+      ]
+    },
+    "plan_adherence": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The agent followed the plan exactly as defined, attempting to execute step 2 after the successful completion of step 1.",
+      "findings": [
+        "No steps were skipped.",
+        "No unauthorized actions were taken."
+      ]
+    },
+    "tool_selection": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The media_controller tool was the appropriate choice for both search and playback operations.",
+      "findings": [
+        "Tool selection was optimal for the requested task."
+      ]
+    },
+    "argument_correctness": {
+      "score": 80.0,
+      "passed": true,
+      "reasoning": "The arguments were well-formed, but the dynamic reference in step 2 failed to resolve correctly due to the truncated result in step 1.",
+      "findings": [
+        "The use of $step_1.video_id was syntactically correct but logically dependent on the output of step 1, which was truncated in the provided log."
+      ]
+    },
+    "error_recovery": {
+      "score": 30.0,
+      "passed": false,
+      "reasoning": "The agent failed to recover from the execution context error. It stopped execution immediately upon the failure of step 2.",
+      "findings": [
+        "No retry logic was implemented.",
+        "The agent did not attempt to re-initialize the browser or re-trigger the playback command."
+      ]
+    },
+    "result_utilization": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The final artifact successfully captured the search results returned by the tool, providing a comprehensive summary of the findings.",
+      "findings": [
+        "The final artifact includes all relevant video metadata retrieved from the search."
+      ]
+    },
+    "execution_time_ms": 0.0,
+    "total_steps": 2,
+    "tools_used": [
+      "media_controller",
+      "media_controller"
+    ]
+  }
+}

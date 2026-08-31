@@ -1,0 +1,273 @@
+{
+  "workflow_id": "b8c7514a-222a-417a-8839-eec0b07d3eff",
+  "goal": "search and play Believer on youtube for 5 seconds",
+  "steps": [
+    {
+      "step_number": 1,
+      "step_id": "ed7e9b08-ff30-48bb-afa9-5ae192f4e11c",
+      "description": "Search for the song 'Believer' on YouTube to retrieve the video URL.",
+      "tool_name": "media_controller",
+      "tool_args": {
+        "action": "youtube_api_search",
+        "query": "Believer Imagine Dragons"
+      },
+      "reasoning": "Need to obtain the specific video URL for 'Believer' before it can be played.",
+      "status": "COMPLETED",
+      "result": {
+        "status": "SUCCESS",
+        "query": "Believer Imagine Dragons",
+        "results": [
+          {
+            "title": "Imagine Dragons - Believer (Official Music Video)",
+            "channel": "ImagineDragons",
+            "video_id": "7wtfhZwyrcc",
+            "url": "https://www.youtube.com/watch?v=7wtfhZwyrcc",
+            "description": "Video by ImagineDragons"
+          },
+          {
+            "title": "Imagine Dragons - Believer (Lyrics)",
+            "channel": "7clouds",
+            "video_id": "W0DM5lcj6mw",
+            "url": "https://www.youtube.com/watch?v=W0DM5lcj6mw",
+            "description": "Video by 7clouds"
+          },
+          {
+            "title": "Imagine Dragons - Believer (Lyrics)",
+            "channel": "7clouds Rock",
+            "video_id": "o0LydWpBQts",
+            "url": "https://www.youtube.com/watch?v=o0LydWpBQts",
+            "description": "Video by 7clouds Rock"
+          },
+          {
+            "title": "Imagine Dragons - Believer - Pinkpop 2017 (HD Live Show)",
+            "channel": "Summervibzz",
+            "video_id": "R4AbzwYOmNE",
+            "url": "https://www.youtube.com/watch?v=R4AbzwYOmNE",
+            "description": "Video by Summervibzz"
+          },
+          {
+            "title": "Imagine Dragons - Believer (Live in Vegas)",
+            "channel": "ImagineDragons",
+            "video_id": "4xqo7D2k8HM",
+            "url": "https://www.youtube.com/watch?v=4xqo7D2k8HM",
+            "description": "Video by ImagineDragons"
+          }
+        ]
+      },
+      "error": null,
+      "execution_time_ms": 3416.548728942871,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 1,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "is_approved": false,
+      "token_usage": null
+    },
+    {
+      "step_number": 2,
+      "step_id": "e0145d31-656e-42cf-bea2-6f2da05490dd",
+      "description": "Play the identified YouTube video for exactly 5 seconds.",
+      "tool_name": "media_controller",
+      "tool_args": {
+        "action": "youtube_play",
+        "url": "$step_1.results[0].url",
+        "duration_seconds": 5,
+        "auto_skip_ads": true
+      },
+      "reasoning": "The goal is to play the specific video found in step 1 for a constrained duration of 5 seconds.",
+      "status": "COMPLETED",
+      "result": {
+        "status": "SUCCESS",
+        "action": "youtube_play_video",
+        "url": "https://www.youtube.com/watch?v=7wtfhZwyrcc",
+        "seek_seconds": null,
+        "duration_played_seconds": 5,
+        "ads_skipped_count": 7,
+        "playback_state": {
+          "playing": true,
+          "paused": false,
+          "currentTime": 44,
+          "duration": 273,
+          "muted": true,
+          "volume": 23,
+          "title": "Imagine Dragons - Believer (Official Music Video)",
+          "channel": "ImagineDragons"
+        }
+      },
+      "error": null,
+      "execution_time_ms": 24326.73692703247,
+      "depends_on": [
+        1
+      ],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 2,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "is_approved": false,
+      "token_usage": null
+    }
+  ],
+  "status": "COMPLETED",
+  "current_step_index": 0,
+  "final_artifact": {
+    "results": [
+      {
+        "status": "SUCCESS",
+        "query": "Believer Imagine Dragons",
+        "results": [
+          {
+            "title": "Imagine Dragons - Believer (Official Music Video)",
+            "channel": "ImagineDragons",
+            "video_id": "7wtfhZwyrcc",
+            "url": "https://www.youtube.com/watch?v=7wtfhZwyrcc",
+            "description": "Video by ImagineDragons"
+          },
+          {
+            "title": "Imagine Dragons - Believer (Lyrics)",
+            "channel": "7clouds",
+            "video_id": "W0DM5lcj6mw",
+            "url": "https://www.youtube.com/watch?v=W0DM5lcj6mw",
+            "description": "Video by 7clouds"
+          },
+          {
+            "title": "Imagine Dragons - Believer (Lyrics)",
+            "channel": "7clouds Rock",
+            "video_id": "o0LydWpBQts",
+            "url": "https://www.youtube.com/watch?v=o0LydWpBQts",
+            "description": "Video by 7clouds Rock"
+          },
+          {
+            "title": "Imagine Dragons - Believer - Pinkpop 2017 (HD Live Show)",
+            "channel": "Summervibzz",
+            "video_id": "R4AbzwYOmNE",
+            "url": "https://www.youtube.com/watch?v=R4AbzwYOmNE",
+            "description": "Video by Summervibzz"
+          },
+          {
+            "title": "Imagine Dragons - Believer (Live in Vegas)",
+            "channel": "ImagineDragons",
+            "video_id": "4xqo7D2k8HM",
+            "url": "https://www.youtube.com/watch?v=4xqo7D2k8HM",
+            "description": "Video by ImagineDragons"
+          }
+        ]
+      },
+      {
+        "status": "SUCCESS",
+        "action": "youtube_play_video",
+        "url": "https://www.youtube.com/watch?v=7wtfhZwyrcc",
+        "seek_seconds": null,
+        "duration_played_seconds": 5,
+        "ads_skipped_count": 7,
+        "playback_state": {
+          "playing": true,
+          "paused": false,
+          "currentTime": 44,
+          "duration": 273,
+          "muted": true,
+          "volume": 23,
+          "title": "Imagine Dragons - Believer (Official Music Video)",
+          "channel": "ImagineDragons"
+        }
+      }
+    ],
+    "step_count": 2
+  },
+  "summary": "## \ud83c\udfb5 Song Playback: Believer\n\n* **Song Title:** Imagine Dragons - Believer (Official Music Video)\n* **Status:** Successfully played for 5 seconds.\n* **Video URL:** [https://www.youtube.com/watch?v=7wtfhZwyrcc](https://www.youtube.com/watch?v=7wtfhZwyrcc)",
+  "created_at": "2026-08-31T10:48:08.684894",
+  "updated_at": "2026-08-31T10:48:40.517915Z",
+  "require_approval": false,
+  "tags": [],
+  "context_id": null,
+  "token_usage": {
+    "total_prompt_tokens": 5321,
+    "total_completion_tokens": 476,
+    "total_tokens": 5797,
+    "total_estimated_cost_usd": 0.001083,
+    "calls": [
+      {
+        "prompt_tokens": 3003,
+        "completion_tokens": 288,
+        "total_tokens": 3291,
+        "model_used": "gemini-3.1-flash-lite",
+        "estimated_cost_usd": 0.000623
+      },
+      {
+        "prompt_tokens": 2318,
+        "completion_tokens": 188,
+        "total_tokens": 2506,
+        "model_used": "gemini-3.1-flash-lite",
+        "estimated_cost_usd": 0.00046
+      }
+    ]
+  },
+  "checkpoint_data": null,
+  "paused_at_step": null,
+  "eval_scores": {
+    "workflow_id": "b8c7514a-222a-417a-8839-eec0b07d3eff",
+    "overall_score": 93.3,
+    "passed": true,
+    "plan_quality": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The plan was perfectly decomposed into a logical two-step sequence: search followed by playback. It directly addressed the user's requirement to search and play for a specific duration.",
+      "findings": [
+        "Logical sequence",
+        "Direct mapping to goal"
+      ]
+    },
+    "plan_adherence": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The agent followed the plan exactly as defined, executing step 1 then step 2 using the output of step 1.",
+      "findings": [
+        "No deviations from plan",
+        "Correct dependency usage"
+      ]
+    },
+    "tool_selection": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The media_controller tool was the appropriate choice for both search and playback operations.",
+      "findings": [
+        "Appropriate tool usage",
+        "No redundant calls"
+      ]
+    },
+    "argument_correctness": {
+      "score": 80.0,
+      "passed": true,
+      "reasoning": "Arguments were well-formed, but the result of step 1 was truncated in the log, which could have caused issues if the agent didn't have internal access to the full object. However, the reference $step_1.results[0].url was correctly formatted.",
+      "findings": [
+        "Correct dynamic referencing",
+        "Minor truncation in log visibility"
+      ]
+    },
+    "error_recovery": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "No errors occurred during the execution of the workflow.",
+      "findings": [
+        "Execution successful"
+      ]
+    },
+    "result_utilization": {
+      "score": 80.0,
+      "passed": true,
+      "reasoning": "The final artifact successfully aggregated the results, though the truncation of the initial search result in the step 1 log makes the audit trail slightly incomplete.",
+      "findings": [
+        "Accurate summary",
+        "Data integrity maintained"
+      ]
+    },
+    "execution_time_ms": 0.0,
+    "total_steps": 2,
+    "tools_used": [
+      "media_controller",
+      "media_controller"
+    ]
+  }
+}

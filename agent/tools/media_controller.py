@@ -95,17 +95,24 @@ class MediaControllerTool(BaseTool):
         act = action.lower().strip()
 
         # ── YouTube Playback Operations ────────────────────────────────
-        if act in ("youtube_play", "youtube_search", "play_youtube", "search_youtube"):
+        if act in ("youtube_play", "youtube_search", "play_youtube", "search_youtube", "youtube_search_and_play", "search_and_play", "play", "search"):
             url = kwargs.get("url") or kwargs.get("video_url")
-            # Support video_id directly — construct YouTube URL from it
-            if not url and kwargs.get("video_id"):
-                url = f"https://www.youtube.com/watch?v={kwargs['video_id']}"
+            raw_vid = kwargs.get("video_id")
+            if not url and raw_vid:
+                raw_vid_str = str(raw_vid).strip()
+                if raw_vid_str and not raw_vid_str.startswith("$"):
+                    url = f"https://www.youtube.com/watch?v={raw_vid_str}"
             seek_seconds = kwargs.get("seek_seconds") or kwargs.get("seek") or kwargs.get("t")
             duration = kwargs.get("duration_seconds") or kwargs.get("duration") or kwargs.get("play_duration_seconds")
             auto_close = bool(kwargs.get("auto_close", False) or kwargs.get("close_after", False))
-            if url:
-                return await self.youtube.play_video(url=url, seek_seconds=seek_seconds)
-            query = kwargs.get("query") or kwargs.get("search_query") or kwargs.get("title")
+            if url and not url.startswith("https://www.youtube.com/watch?v=$"):
+                return await self.youtube.play_video(
+                    url=url,
+                    seek_seconds=seek_seconds,
+                    duration_seconds=int(duration) if duration else None,
+                    auto_close=auto_close
+                )
+            query = kwargs.get("query") or kwargs.get("search_query") or kwargs.get("title") or (str(raw_vid) if raw_vid and not str(raw_vid).startswith("$") else None)
             if not query:
                 raise ValueError("YouTube action requires parameter 'query', 'url', or 'video_id'.")
             return await self.youtube.search_and_play(
@@ -116,12 +123,26 @@ class MediaControllerTool(BaseTool):
 
         elif act in ("youtube_control", "youtube_transport"):
             cmd = kwargs.get("command") or kwargs.get("playback_command") or "play_pause"
+            if str(cmd).lower() == "stop":
+                cmd = "pause"
+            return await self.youtube.control(command=cmd)
+
+        elif act in ("stop", "stop_media", "stop_all_media", "stop_video", "stop_playback", "kill_media"):
+            return await self.youtube.stop_all_media()
+
+        elif act in ("pause", "resume", "play_pause", "mute", "unmute", "fullscreen", "seek_forward", "seek_backward"):
+            cmd = act
             return await self.youtube.control(command=cmd)
 
         elif act in ("youtube_status", "get_youtube_status"):
             page = await self.manager.get_page()
             state = await self.youtube.get_playback_state(page)
             return {"status": "SUCCESS", "playback_state": state, "url": page.url}
+
+        elif act in ("close", "close_browser", "stop_browser", "quit", "exit", "close_session"):
+            await self.youtube.stop_all_media()
+            await self.manager.close_session()
+            return {"status": "SUCCESS", "action": "close_browser", "message": "Browser session and media closed successfully."}
 
         # ── Spotify Operations ─────────────────────────────────────────
         elif act in ("spotify_play", "spotify_search", "play_spotify", "search_spotify"):
@@ -142,5 +163,6 @@ class MediaControllerTool(BaseTool):
         else:
             raise ValueError(
                 f"Unknown media action: '{action}'. Supported actions: "
-                "['create_youtube_playlist', 'get_liked_music', 'youtube_api_search', 'youtube_play', 'youtube_control', 'youtube_status', 'spotify_play', 'spotify_create_playlist', 'spotify_control']"
+                "['create_youtube_playlist', 'get_liked_music', 'youtube_api_search', 'youtube_transcript', 'youtube_play', 'youtube_control', 'youtube_status', 'close_browser', 'spotify_play', 'spotify_create_playlist', 'spotify_control']"
             )
+

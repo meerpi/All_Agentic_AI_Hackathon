@@ -1,0 +1,81 @@
+{
+  "workflow_id": "a8df4db6-d6c1-4dbf-8870-5e88d9747f83",
+  "goal": "play dia dia",
+  "steps": [
+    {
+      "step_number": 1,
+      "step_id": "53fa79f2-12b1-42e7-b5e3-7cbe0e4bf4a5",
+      "description": "Search for the song 'Dia Dia' on YouTube to retrieve the correct video URL.",
+      "tool_name": "media_controller",
+      "tool_args": {
+        "action": "youtube_api_search",
+        "query": "Dia Dia"
+      },
+      "reasoning": "Need to identify the correct video URL before playback can be initiated.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 1,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "is_approved": false,
+      "token_usage": null
+    },
+    {
+      "step_number": 2,
+      "step_id": "a7e5d2a1-a883-4e9d-bc3b-9056cc32e1eb",
+      "description": "Play the identified video from the search results.",
+      "tool_name": "media_controller",
+      "tool_args": {
+        "action": "youtube_play",
+        "url": "$step_1.results[0].url"
+      },
+      "reasoning": "Initiating playback of the first search result for the requested song.",
+      "status": "PENDING",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [
+        1
+      ],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 1,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "is_approved": false,
+      "token_usage": null
+    }
+  ],
+  "status": "CREATED",
+  "current_step_index": 0,
+  "final_artifact": null,
+  "summary": null,
+  "created_at": "2026-08-31T15:18:28.603063",
+  "updated_at": "2026-08-31T15:18:28.603063",
+  "require_approval": false,
+  "tags": [],
+  "context_id": null,
+  "token_usage": {
+    "total_prompt_tokens": 3004,
+    "total_completion_tokens": 252,
+    "total_tokens": 3256,
+    "total_estimated_cost_usd": 0.000602,
+    "calls": [
+      {
+        "prompt_tokens": 3004,
+        "completion_tokens": 252,
+        "total_tokens": 3256,
+        "model_used": "gemini-3.1-flash-lite",
+        "estimated_cost_usd": 0.000602
+      }
+    ]
+  },
+  "checkpoint_data": null,
+  "paused_at_step": null,
+  "eval_scores": null
+}

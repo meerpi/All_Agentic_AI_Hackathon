@@ -1,0 +1,116 @@
+{
+  "workflow_id": "b4bafa9e-055f-427d-9f8c-f96eea489265",
+  "step_number": 1,
+  "timestamp": "2026-08-31T07:28:50.393457+00:00",
+  "state": {
+    "workflow_id": "b4bafa9e-055f-427d-9f8c-f96eea489265",
+    "goal": "Go to https://youtu.be/PGUdWfB8nLg and tell me who is this video about and at what timestamp is his mentor first mentioned",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "19c84e04-9265-44a5-b636-f6a2b7ab8221",
+        "description": "Retrieve the transcript for the YouTube video PGUdWfB8nLg",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_transcript",
+          "video_id": "PGUdWfB8nLg"
+        },
+        "reasoning": "Using the media_controller's youtube_transcript action is the most direct and efficient way to get the full text and timestamps of the video without needing to watch it in real-time.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "2842ac90-f3c7-4850-a364-21bc0316bc8c",
+        "description": "Extract the subject of the video and the timestamp of their mentor's first mention from the transcript",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "raw_content": "$step_1.transcript",
+          "extraction_query": "Identify who the video is about and find the exact timestamp (or time range) where their mentor is first mentioned in the transcript."
+        },
+        "reasoning": "The data_extractor tool is designed to parse unstructured text (like a transcript) and extract specific structured information based on a natural language query.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "e57f4910-e628-4807-a538-61060f71ab8e",
+        "description": "Generate a final report summarizing the findings",
+        "tool_name": "report_generator",
+        "tool_args": {
+          "title": "YouTube Video Analysis: PGUdWfB8nLg",
+          "sections": [
+            {
+              "heading": "Video Subject and Mentor Mention Timestamp",
+              "content": "$step_2.extracted_data"
+            }
+          ]
+        },
+        "reasoning": "Compiling the extracted information into a structured report ensures a clean, professional, and easily readable final answer for the user.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T07:28:50.385860",
+    "updated_at": "2026-08-31T07:28:50.390342Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 2935,
+      "total_completion_tokens": 497,
+      "total_tokens": 3432,
+      "total_estimated_cost_usd": 0.000738,
+      "calls": [
+        {
+          "prompt_tokens": 2935,
+          "completion_tokens": 497,
+          "total_tokens": 3432,
+          "model_used": "gemini-3.5-flash",
+          "estimated_cost_usd": 0.000738
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

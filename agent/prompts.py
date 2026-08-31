@@ -158,6 +158,17 @@ Correct decomposition:
   Step 2: data_extractor — Parse and categorize resources by type, region, cost
   Step 3: google_sheets_tool — Create audit spreadsheet with findings, severity, recommendations
   Step 4: google_docs_tool — Create executive summary report referencing $step_3.spreadsheet_id
+
+EXAMPLE 4 — Media Playback & Duration Timing:
+Goal: "search and play Believer on youtube for 1 minute"
+Correct decomposition:
+  Step 1: media_controller — action: "youtube_search", query: "Believer"
+  Step 2: media_controller — action: "youtube_play", url: "$step_1.results[0].url", duration_seconds: 60, auto_skip_ads: true
+
+EXAMPLE 5 — Stop / Pause Media:
+Goal: "stop the video" or "pause music" or "stop playing" or "stop"
+Correct decomposition:
+  Step 1: media_controller — action: "stop"
 </worked_examples>
 
 <output_schema>
@@ -355,7 +366,7 @@ Set confidence below 0.5 if you are uncertain about the fix — the system will 
 
 FINAL_SUMMARY_PROMPT = """\
 <task>
-Synthesize the completed workflow into a comprehensive executive summary.
+Synthesize the completed workflow into a clean, concise, direct response for the user.
 </task>
 
 <goal>{goal}</goal>
@@ -369,24 +380,40 @@ Synthesize the completed workflow into a comprehensive executive summary.
 </execution_results>
 
 <summary_requirements>
-Your summary must include:
-1. A clear statement of what was accomplished
-2. For each step: what was done, whether it succeeded or failed, and what it produced
-3. Links or references to any created artifacts (documents, spreadsheets, etc.)
-4. If any steps failed: what went wrong and what the user should do next
-5. Key metrics: number of steps completed, total artifacts created
+Your response must be focused, clean, and directly useful to the user:
+
+1. **🎯 Direct Findings & Answers** (CRITICAL - Place at the very top):
+   - **For List/Extraction/Scraping Requests** (e.g. "extract top 5 headlines", "list of articles", "extracted items"):
+     - List ALL extracted items explicitly as a numbered list (1., 2., 3., ...) or a clean markdown table!
+     - Include full titles, ranks, and available links.
+   - **For Q&A / Video / Research Requests** (e.g. "who is this video about?", "summarize X"):
+     - State the answers directly, prominently, and concisely in bullet points with **bold** highlights.
+
+2. **📋 Overview & Insights** (if helpful):
+   - Brief, high-value summary of key findings, data, or generated deliverables.
+
+3. **⏱️ Key Insights / Moments Table** (if video/audio/time-based content was analyzed):
+   - Include a neat markdown table or bulleted timeline (e.g. `Timestamp | Topic / Quote | Context`).
+
+CRITICAL RULES:
+- DO NOT output "⚡ Execution Details", "Search & Extraction:", "Tool steps", or internal system/network logs.
+- DO NOT output "📊 Key Metrics & Deliverables", "Steps Completed: X/X", or "Status: Completed successfully".
+- Present ONLY the actual intelligence, direct answers, and content requested by the user.
 </summary_requirements>
 
 <output_schema>
 Return a JSON object:
 {{
-  "summary_markdown": "## Workflow Complete\\n\\nFull markdown summary with headers, bullet points, and artifact links",
+  "summary_markdown": "## 📰 Top 5 Hacker News Headlines\\n\\n1. **First Headline Title** - Details/Score\\n2. **Second Headline Title** - Details/Score\\n3. **Third Headline Title** - Details/Score\\n4. **Fourth Headline Title** - Details/Score\\n5. **Fifth Headline Title** - Details/Score",
   "key_takeaways": ["Takeaway 1", "Takeaway 2", "Takeaway 3"],
   "artifacts_created": [
-    {{"type": "spreadsheet|document|email|ticket", "title": "Name", "reference": "URL or ID"}}
+    {{"type": "spreadsheet|document|email|ticket|report", "title": "Name", "reference": "URL or ID"}}
   ],
-  "success_rate": 0.95,
-  "next_steps": ["Recommended follow-up action 1", "Recommended follow-up action 2"]
+  "success_rate": 1.0,
+  "next_steps": []
 }}
 </output_schema>
 """
+
+
+

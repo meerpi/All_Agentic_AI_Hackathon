@@ -92,7 +92,7 @@ Cloud containers and remote servers cannot open a desktop browser window for OAu
 
 1. Clone the repository and navigate into it:
    ```bash
-   git clone https://github.com/Kabirroy12345/All_Agentic_AI_Hackathon.git
+   git clone https://github.com/Tejas-Ranjeet/All_Agentic_AI_Hackathon.git
    cd All_Agentic_AI_Hackathon
    ```
 2. Put `credentials.json` in the root folder.
@@ -221,7 +221,7 @@ SPOTIFY_CLIENT_SECRET=
 2. SSH into the VM:
    ```bash
    sudo apt update && sudo apt install -y python3-pip python3-venv git
-   git clone https://github.com/Kabirroy12345/All_Agentic_AI_Hackathon.git
+   git clone https://github.com/Tejas-Ranjeet/All_Agentic_AI_Hackathon.git
    cd All_Agentic_AI_Hackathon
    
    python3 -m venv venv
@@ -255,14 +255,14 @@ Once running, verify that all services and tools are operational:
    }
    ```
 
-2. **Open the Agent Testing Hub**:
-   - Navigate to `http://localhost:8000/hub.html` (or `https://<your-cloud-run-url>/hub.html`).
-   - Click the quick test buttons:
+2. **Open the Agent Chat Workspace**:
+   - Navigate to `http://localhost:8000/chat` (or `https://<your-cloud-run-url>/chat`).
+   - Interact directly with the autonomous agent to execute real-world tasks:
      - 📄 **Google Docs**: Creates a live Google Doc on your Google Drive.
      - 📊 **Google Sheets**: Creates a spreadsheet with sample rows on Google Drive.
      - 📅 **Calendar**: Fetches upcoming events from your calendar.
      - 📧 **Gmail**: Reads recent emails from your inbox.
-     - 🌐 **Web Scraping**: Scrapes live headlines via Playwright.
+     - 🌐 **Web Scraping & Browser**: Drives live browser sessions and synthesizes content.
 
 ---
 

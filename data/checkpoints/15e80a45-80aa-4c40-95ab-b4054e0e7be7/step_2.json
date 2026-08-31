@@ -1,0 +1,128 @@
+{
+  "workflow_id": "15e80a45-80aa-4c40-95ab-b4054e0e7be7",
+  "step_number": 2,
+  "timestamp": "2026-08-31T11:09:06.404981+00:00",
+  "state": {
+    "workflow_id": "15e80a45-80aa-4c40-95ab-b4054e0e7be7",
+    "goal": "play shakira video for 1 minute",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "cab18481-f425-4b2e-858e-719eadadaa6b",
+        "description": "Search for a Shakira video on YouTube",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_api_search",
+          "query": "Shakira music video"
+        },
+        "reasoning": "Need to identify a valid URL for a Shakira video before playback can be initiated.",
+        "status": "COMPLETED",
+        "result": {
+          "status": "SUCCESS",
+          "query": "Shakira music video",
+          "results": [
+            {
+              "title": "Shakira, Burna Boy - Dai Dai (Official Video)",
+              "channel": "Shakira and 2 more",
+              "video_id": "fcnDmrtj6Sk",
+              "url": "https://www.youtube.com/watch?v=fcnDmrtj6Sk",
+              "description": "Video by Shakira and 2 more"
+            },
+            {
+              "title": "Shakira - Can't Remember to Forget You (Official Video) ft. Rihanna",
+              "channel": "Shakira",
+              "video_id": "o3mP3mJDL2k",
+              "url": "https://www.youtube.com/watch?v=o3mP3mJDL2k",
+              "description": "Video by Shakira"
+            },
+            {
+              "title": "Shakira - Waka Waka (This Time for Africa) (The Official 2010 FIFA World Cup\u2122 Song)",
+              "channel": "Shakira",
+              "video_id": "pRpeEdMmmQ0",
+              "url": "https://www.youtube.com/watch?v=pRpeEdMmmQ0",
+              "description": "Video by Shakira"
+            },
+            {
+              "title": "Shakira - Hips Don't Lie (featuring Wyclef Jean) (Official 4K Video) ft. Wyclef Jean",
+              "channel": "Shakira",
+              "video_id": "DUT5rEU6pqM",
+              "url": "https://www.youtube.com/watch?v=DUT5rEU6pqM",
+              "description": "Video by Shakira"
+            },
+            {
+              "title": "Shakira - Chantaje (Official Video) ft. Maluma",
+              "channel": "Shakira",
+              "video_id": "6Mgqbai3fKo",
+              "url": "https://www.youtube.com/watch?v=6Mgqbai3fKo",
+              "description": "Video by Shakira"
+            }
+          ]
+        },
+        "error": null,
+        "execution_time_ms": 2895.81036567688,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "72f6f386-e5b9-4cbd-9d68-862e2fe5982e",
+        "description": "Play the identified Shakira video for 60 seconds",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "url": "$step_1.results[0].url",
+          "duration_seconds": 60,
+          "auto_skip_ads": true
+        },
+        "reasoning": "Uses the URL from the search results to trigger playback for the requested duration.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T11:09:03.417057",
+    "updated_at": "2026-08-31T11:09:03.478279Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3052,
+      "total_completion_tokens": 276,
+      "total_tokens": 3328,
+      "total_estimated_cost_usd": 0.000623,
+      "calls": [
+        {
+          "prompt_tokens": 3052,
+          "completion_tokens": 276,
+          "total_tokens": 3328,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000623
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

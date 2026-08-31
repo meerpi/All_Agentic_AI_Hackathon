@@ -1,0 +1,86 @@
+{
+  "workflow_id": "57b3987b-d9bc-435b-8f1e-a3ec79fc8ddb",
+  "step_number": 1,
+  "timestamp": "2026-08-31T14:16:36.797952+00:00",
+  "state": {
+    "workflow_id": "57b3987b-d9bc-435b-8f1e-a3ec79fc8ddb",
+    "goal": "what is the name of india prime minsiter",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "8a9ea9ff-5826-46a4-bacf-bccfe75e34e7",
+        "description": "Search for the current Prime Minister of India using the browser controller.",
+        "tool_name": "browser_controller",
+        "tool_args": {
+          "action": "navigate",
+          "url": "https://www.google.com/search?q=current+prime+minister+of+india"
+        },
+        "reasoning": "The browser controller is the most reliable way to fetch real-time, accurate information from the web.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "d179b590-1e17-449f-8cbe-d95240e7e2fa",
+        "description": "Extract the name of the Prime Minister from the search results.",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "extraction_query": "Identify the name of the current Prime Minister of India from the provided search results.",
+          "content_source": "$step_1.page_content"
+        },
+        "reasoning": "The data extractor can parse the raw HTML or text content from the search results to isolate the specific entity requested.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T14:16:36.728057",
+    "updated_at": "2026-08-31T14:16:36.797952Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3011,
+      "total_completion_tokens": 295,
+      "total_tokens": 3306,
+      "total_estimated_cost_usd": 0.000629,
+      "calls": [
+        {
+          "prompt_tokens": 3011,
+          "completion_tokens": 295,
+          "total_tokens": 3306,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000629
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

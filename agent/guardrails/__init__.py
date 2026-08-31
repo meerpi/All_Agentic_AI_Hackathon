@@ -99,11 +99,11 @@ def check_output_rails(output: str, mask_pii: bool = True) -> Tuple[str, List[st
             warnings.append(f"PII detected in output: {len(pii_findings)} items masked")
             sanitized = do_mask(sanitized)
 
-    # Check for leaked system prompt fragments
-    system_markers = ["<identity>", "<behavioral_rules>", "Taskmaster Autonomous Agent Engine", "TASKMASTER_SYSTEM_PROMPT"]
+    # Check for leaked internal system prompt tags
+    system_markers = ["<identity>", "</identity>", "<behavioral_rules>", "</behavioral_rules>", "<operational_rules>", "TASKMASTER_SYSTEM_PROMPT"]
     for marker in system_markers:
         if marker in sanitized:
-            warnings.append("System prompt leak detected — redacting")
+            warnings.append("System prompt tag leak detected — redacting")
             sanitized = sanitized.replace(marker, "[REDACTED]")
 
     return sanitized, warnings

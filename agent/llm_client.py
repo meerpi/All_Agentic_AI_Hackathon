@@ -125,13 +125,10 @@ class GeminiClient:
         candidate_models_gemini = [
             target_model,
             settings.GEMINI_MODEL,
-            settings.GEMINI_RESEARCH_MODEL,
-            settings.GEMINI_FALLBACK_MODEL,
-            "gemini-3.5-flash",
             "gemini-3.1-flash-lite",
-            "gemini-3.6-flash",
-            "gemini-2.5-flash",
-            "gemini-flash-lite-latest",
+            "gemini-2.0-flash",
+            "gemini-1.5-flash",
+            "gemini-flash-latest"
         ]
         
         candidate_models_openai = [

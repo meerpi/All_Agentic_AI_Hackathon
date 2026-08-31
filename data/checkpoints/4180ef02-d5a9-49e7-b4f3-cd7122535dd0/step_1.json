@@ -1,0 +1,110 @@
+{
+  "workflow_id": "4180ef02-d5a9-49e7-b4f3-cd7122535dd0",
+  "step_number": 1,
+  "timestamp": "2026-08-31T10:14:59.805133+00:00",
+  "state": {
+    "workflow_id": "4180ef02-d5a9-49e7-b4f3-cd7122535dd0",
+    "goal": "Open despacito on ytb and stop it after 1 minute",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "fe0ba587-b6d2-4401-b264-4aab61a41e42",
+        "description": "Search and play 'Despacito' by Luis Fonsi on YouTube",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "query": "Luis Fonsi - Despacito ft. Daddy Yankee"
+        },
+        "reasoning": "Initiates playback of the requested YouTube track 'Despacito' using the dedicated media_controller tool.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "7c91fe36-3f43-4db2-b3f6-cc8aaddda6d0",
+        "description": "Wait for 60 seconds (1 minute) while the video plays",
+        "tool_name": "python_sandbox",
+        "tool_args": {
+          "code": "import time\ntime.sleep(60)\nprint('Elapsed 1 minute of video playback.')"
+        },
+        "reasoning": "Executes a 60-second sleep timer to ensure the video plays for exactly 1 minute before proceeding to pause.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "67eb7b0a-6566-4d33-aff3-1de2697d8ad9",
+        "description": "Pause YouTube video playback after 1 minute",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_control",
+          "command": "pause"
+        },
+        "reasoning": "Sends a pause control command to stop the YouTube video playback after the 1-minute playback window.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T10:14:59.799311",
+    "updated_at": "2026-08-31T10:14:59.802245Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 2883,
+      "total_completion_tokens": 413,
+      "total_tokens": 3296,
+      "total_estimated_cost_usd": 0.00068,
+      "calls": [
+        {
+          "prompt_tokens": 2883,
+          "completion_tokens": 413,
+          "total_tokens": 3296,
+          "model_used": "gemini-3.6-flash",
+          "estimated_cost_usd": 0.00068
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

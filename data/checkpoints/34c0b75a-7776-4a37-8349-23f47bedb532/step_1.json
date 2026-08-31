@@ -1,0 +1,87 @@
+{
+  "workflow_id": "34c0b75a-7776-4a37-8349-23f47bedb532",
+  "step_number": 1,
+  "timestamp": "2026-08-31T11:45:42.400244+00:00",
+  "state": {
+    "workflow_id": "34c0b75a-7776-4a37-8349-23f47bedb532",
+    "goal": "save the screenshot to a google doc",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "7382901d-776b-439c-b220-c2dbaa6c5e89",
+        "description": "Capture a screenshot of the current screen state",
+        "tool_name": "os_desktop_tool",
+        "tool_args": {
+          "action": "capture_screen",
+          "file_path": "screenshot_capture.png"
+        },
+        "reasoning": "The goal requires a screenshot; the OS desktop tool is the only capability that can capture the local display.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "e76a8a3f-145d-4ac3-a28e-d6ab97e2a135",
+        "description": "Create a new Google Doc and insert the captured screenshot",
+        "tool_name": "google_docs",
+        "tool_args": {
+          "action": "create_document",
+          "title": "Captured Screen Report",
+          "content": "This document contains the screenshot captured on 2026-08-31. Image file: screenshot_capture.png"
+        },
+        "reasoning": "A Google Doc is required to store the image; creating the document is the first step to establishing the container for the artifact.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T11:45:42.340165",
+    "updated_at": "2026-08-31T11:45:42.395748Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3030,
+      "total_completion_tokens": 302,
+      "total_tokens": 3332,
+      "total_estimated_cost_usd": 0.000636,
+      "calls": [
+        {
+          "prompt_tokens": 3030,
+          "completion_tokens": 302,
+          "total_tokens": 3332,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000636
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "workflow_id": "9efa858b-f255-486a-8422-ec1521af2f85",
+  "step_number": 1,
+  "timestamp": "2026-08-31T07:26:58.054711+00:00",
+  "state": {
+    "workflow_id": "9efa858b-f255-486a-8422-ec1521af2f85",
+    "goal": "Go to https://youtu.be/8X4waecpf1k and tell me who is this video about and at what timestamp is his mentor first mentioned",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "0fb7b41e-73bc-4a42-bb32-3e79723c7a76",
+        "description": "Retrieve the transcript of the YouTube video 8X4waecpf1k using the media controller.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_transcript",
+          "video_id": "8X4waecpf1k"
+        },
+        "reasoning": "The media_controller tool has a dedicated action 'youtube_transcript' to fetch transcripts from YouTube videos, which is the most direct and efficient way to get the video content for analysis.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "7a2b5b1b-7415-4d0f-9fae-942ee0196de0",
+        "description": "Extract the subject of the video and the timestamp of the first mentor mention from the transcript.",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "raw_content": "$step_1.transcript",
+          "extraction_query": "Identify who this video is about (the main subject) and find the exact timestamp (or text context with timestamp) where their mentor is first mentioned. Return the subject's name, the mentor's name, and the timestamp."
+        },
+        "reasoning": "The data_extractor tool is designed to parse unstructured text (like a transcript) and extract specific structured information based on a natural language query.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "ea6e9ec9-cc6d-4628-98c9-8322cb51f6c3",
+        "description": "Validate that the extracted information contains both the subject of the video and the mentor's first mention timestamp.",
+        "tool_name": "validator",
+        "tool_args": {
+          "data": "$step_2.extracted_data",
+          "criteria": "The output must contain the name of the main subject of the video and the timestamp when their mentor is first mentioned."
+        },
+        "reasoning": "The validator tool ensures that the extracted data meets the user's requirements before finalizing the workflow.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T07:26:58.047832",
+    "updated_at": "2026-08-31T07:26:58.051040Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 2921,
+      "total_completion_tokens": 505,
+      "total_tokens": 3426,
+      "total_estimated_cost_usd": 0.000741,
+      "calls": [
+        {
+          "prompt_tokens": 2921,
+          "completion_tokens": 505,
+          "total_tokens": 3426,
+          "model_used": "gemini-3.5-flash",
+          "estimated_cost_usd": 0.000741
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

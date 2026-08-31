@@ -1,0 +1,85 @@
+{
+  "workflow_id": "85b7066a-937a-4fc4-97ab-0338eb68a692",
+  "step_number": 1,
+  "timestamp": "2026-08-31T08:09:34.777047+00:00",
+  "state": {
+    "workflow_id": "85b7066a-937a-4fc4-97ab-0338eb68a692",
+    "goal": "Navigate to news.ycombinator.com, extract the top 5 headlines, and return them as a list",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "e962ff9c-19ad-4a37-9aab-7fa898cf7fcc",
+        "description": "Navigate to Hacker News and capture the page content for extraction.",
+        "tool_name": "browser_controller",
+        "tool_args": {
+          "action": "navigate",
+          "url": "https://news.ycombinator.com"
+        },
+        "reasoning": "The browser controller is required to access the live content of the website before extraction can occur.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "a7d6823f-648f-4f92-a627-6058746c1573",
+        "description": "Extract the top 5 headlines from the current page content.",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "extraction_query": "Extract the text of the first 5 headlines from the Hacker News front page as a JSON list of strings."
+        },
+        "reasoning": "The data extractor is the specialized tool for parsing unstructured HTML/text into a structured format like a list.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T08:09:34.770575",
+    "updated_at": "2026-08-31T08:09:34.774154Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 2890,
+      "total_completion_tokens": 273,
+      "total_tokens": 3163,
+      "total_estimated_cost_usd": 0.000597,
+      "calls": [
+        {
+          "prompt_tokens": 2890,
+          "completion_tokens": 273,
+          "total_tokens": 3163,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000597
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

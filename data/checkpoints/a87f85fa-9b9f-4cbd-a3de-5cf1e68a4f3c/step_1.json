@@ -1,0 +1,118 @@
+{
+  "workflow_id": "a87f85fa-9b9f-4cbd-a3de-5cf1e68a4f3c",
+  "step_number": 1,
+  "timestamp": "2026-08-31T11:26:40.575425+00:00",
+  "state": {
+    "workflow_id": "a87f85fa-9b9f-4cbd-a3de-5cf1e68a4f3c",
+    "goal": "create a detailed workout plan in google sheets for the week accounting for 2 rest days.",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "1f63e813-1e1b-45db-9d00-0dc3e388e2b9",
+        "description": "Create a Google Sheet titled 'Weekly Workout Plan' with a structured 7-day schedule including 2 rest days and detailed exercises.",
+        "tool_name": "google_sheets",
+        "tool_args": {
+          "title": "Weekly Workout Plan",
+          "rows": [
+            [
+              "Day",
+              "Focus",
+              "Exercises",
+              "Sets/Reps",
+              "Duration"
+            ],
+            [
+              "Monday",
+              "Push (Chest/Shoulders/Triceps)",
+              "Bench Press, Overhead Press, Lateral Raises, Tricep Extensions",
+              "3 sets of 10-12 reps",
+              "60 mins"
+            ],
+            [
+              "Tuesday",
+              "Pull (Back/Biceps)",
+              "Pull-ups, Barbell Rows, Face Pulls, Bicep Curls",
+              "3 sets of 10-12 reps",
+              "60 mins"
+            ],
+            [
+              "Wednesday",
+              "Rest",
+              "Active Recovery",
+              "N/A",
+              "30 mins walking"
+            ],
+            [
+              "Thursday",
+              "Legs",
+              "Squats, Romanian Deadlifts, Leg Press, Calf Raises",
+              "3 sets of 8-10 reps",
+              "60 mins"
+            ],
+            [
+              "Friday",
+              "Full Body / Cardio",
+              "Kettlebell Swings, Burpees, Mountain Climbers, Plank",
+              "4 rounds, 45s on/15s off",
+              "45 mins"
+            ],
+            [
+              "Saturday",
+              "Rest",
+              "Rest",
+              "N/A",
+              "N/A"
+            ],
+            [
+              "Sunday",
+              "Mobility & Flexibility",
+              "Yoga Flow, Foam Rolling, Static Stretching",
+              "Hold each pose 60s",
+              "45 mins"
+            ]
+          ]
+        },
+        "reasoning": "Creating a structured spreadsheet allows for clear tracking of fitness goals, exercises, and rest periods as requested.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T11:26:40.511512",
+    "updated_at": "2026-08-31T11:26:40.572529Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3049,
+      "total_completion_tokens": 429,
+      "total_tokens": 3478,
+      "total_estimated_cost_usd": 0.000715,
+      "calls": [
+        {
+          "prompt_tokens": 3049,
+          "completion_tokens": 429,
+          "total_tokens": 3478,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000715
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

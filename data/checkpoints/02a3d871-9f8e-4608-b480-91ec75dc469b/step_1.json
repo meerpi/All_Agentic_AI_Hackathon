@@ -1,0 +1,110 @@
+{
+  "workflow_id": "02a3d871-9f8e-4608-b480-91ec75dc469b",
+  "step_number": 1,
+  "timestamp": "2026-08-31T07:38:19.046709+00:00",
+  "state": {
+    "workflow_id": "02a3d871-9f8e-4608-b480-91ec75dc469b",
+    "goal": "Go to https://youtu.be/PGUdWfB8nLg and tell me who is this video about and at what timestamp is his mentor first mentioned",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "8fb64d4c-ba6e-42c7-b0fa-19b514c98a2e",
+        "description": "Fetch the transcript for the YouTube video to identify the subject and mentor mention.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_transcript",
+          "video_id": "PGUdWfB8nLg"
+        },
+        "reasoning": "The transcript contains the full text of the video, which is necessary to identify the subject and the specific timestamp where the mentor is mentioned.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "813a9f1d-daaa-4f42-b8b4-639e5286944c",
+        "description": "Extract the video subject and the mentor's first mention timestamp from the transcript.",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "extraction_query": "Identify who the video is about and find the first timestamp where the speaker mentions their mentor. Return the subject name and the timestamp.",
+          "content": "$step_1.transcript"
+        },
+        "reasoning": "The data_extractor can parse the raw transcript text to find specific entities and temporal markers requested by the user.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "61d2e14b-a2a7-41bd-b6d0-7d126f176da7",
+        "description": "Compile the final answer for the user.",
+        "tool_name": "report_generator",
+        "tool_args": {
+          "report_content": "The video is about $step_2.subject. The mentor is first mentioned at timestamp $step_2.timestamp."
+        },
+        "reasoning": "This step formats the extracted data into a clear, final response for the user.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T07:38:19.031981",
+    "updated_at": "2026-08-31T07:38:19.043537Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 2955,
+      "total_completion_tokens": 434,
+      "total_tokens": 3389,
+      "total_estimated_cost_usd": 0.000704,
+      "calls": [
+        {
+          "prompt_tokens": 2955,
+          "completion_tokens": 434,
+          "total_tokens": 3389,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000704
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

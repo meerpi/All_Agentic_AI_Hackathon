@@ -1,0 +1,88 @@
+{
+  "workflow_id": "aef0e7ff-bb54-4395-9bf1-c6f4c500dba3",
+  "step_number": 1,
+  "timestamp": "2026-08-31T11:30:25.875492+00:00",
+  "state": {
+    "workflow_id": "aef0e7ff-bb54-4395-9bf1-c6f4c500dba3",
+    "goal": "play iphone 18 review for 20 sec by linus",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "342d0845-eb37-4460-9b77-b66c54699a2d",
+        "description": "Search for the iPhone 18 review video by Linus Tech Tips on YouTube",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_api_search",
+          "query": "Linus Tech Tips iPhone 18 review"
+        },
+        "reasoning": "Need to identify the correct video URL from the search results before playing.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "5df44b10-d583-454a-bdc6-a04afec7fb4e",
+        "description": "Play the identified video for 20 seconds",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "url": "$step_1.results[0].url",
+          "duration_seconds": 20,
+          "auto_skip_ads": true
+        },
+        "reasoning": "Uses the URL from the search result to initiate playback for the requested duration.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T11:30:25.806117",
+    "updated_at": "2026-08-31T11:30:25.870954Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3045,
+      "total_completion_tokens": 287,
+      "total_tokens": 3332,
+      "total_estimated_cost_usd": 0.000629,
+      "calls": [
+        {
+          "prompt_tokens": 3045,
+          "completion_tokens": 287,
+          "total_tokens": 3332,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000629
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

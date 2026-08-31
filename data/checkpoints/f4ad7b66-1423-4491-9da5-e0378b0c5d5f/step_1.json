@@ -1,0 +1,86 @@
+{
+  "workflow_id": "f4ad7b66-1423-4491-9da5-e0378b0c5d5f",
+  "step_number": 1,
+  "timestamp": "2026-08-31T07:39:13.489002+00:00",
+  "state": {
+    "workflow_id": "f4ad7b66-1423-4491-9da5-e0378b0c5d5f",
+    "goal": "Go to https://www.youtube.com/watch?v=PGUdWfB8nLg and tell me who is this video about and at what timestamp is his mentor first mentioned",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "bbdc1257-d4a9-42c0-b5dc-2497714067c5",
+        "description": "Fetch the transcript of the YouTube video to identify the subject and the mentor mention.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_transcript",
+          "video_id": "PGUdWfB8nLg"
+        },
+        "reasoning": "The transcript contains the full text of the video, which is necessary to identify the subject and locate the specific mention of a mentor.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "d698d3a6-09ba-4be5-9678-1bc270fb0e59",
+        "description": "Extract the subject of the video and the timestamp of the mentor's first mention from the transcript.",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "extraction_query": "Identify who the video is about and find the timestamp where the mentor is first mentioned.",
+          "data": "$step_1.transcript"
+        },
+        "reasoning": "The data_extractor tool is required to parse the unstructured transcript text into the specific answers requested by the user.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T07:39:13.468890",
+    "updated_at": "2026-08-31T07:39:13.479057Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 2963,
+      "total_completion_tokens": 305,
+      "total_tokens": 3268,
+      "total_estimated_cost_usd": 0.000627,
+      "calls": [
+        {
+          "prompt_tokens": 2963,
+          "completion_tokens": 305,
+          "total_tokens": 3268,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000627
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

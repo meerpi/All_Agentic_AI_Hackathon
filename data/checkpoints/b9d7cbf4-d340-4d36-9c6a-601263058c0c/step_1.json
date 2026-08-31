@@ -1,0 +1,87 @@
+{
+  "workflow_id": "b9d7cbf4-d340-4d36-9c6a-601263058c0c",
+  "step_number": 1,
+  "timestamp": "2026-08-31T11:23:00.386779+00:00",
+  "state": {
+    "workflow_id": "b9d7cbf4-d340-4d36-9c6a-601263058c0c",
+    "goal": "play the latest linus techtips youtube vid",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "53e6f6ba-7091-4df6-9e82-02e0b3993a66",
+        "description": "Search for the latest video on the Linus Tech Tips YouTube channel",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_api_search",
+          "query": "Linus Tech Tips latest video"
+        },
+        "reasoning": "Need to identify the URL of the most recent video uploaded by the Linus Tech Tips channel to play it.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "d36cbb99-98b9-4102-bc92-22c41decdc62",
+        "description": "Play the latest video found in the previous step",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "url": "$step_1.results[0].url",
+          "auto_skip_ads": true
+        },
+        "reasoning": "Using the URL extracted from the search results to initiate playback.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T11:23:00.316276",
+    "updated_at": "2026-08-31T11:23:00.376542Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3053,
+      "total_completion_tokens": 275,
+      "total_tokens": 3328,
+      "total_estimated_cost_usd": 0.000623,
+      "calls": [
+        {
+          "prompt_tokens": 3053,
+          "completion_tokens": 275,
+          "total_tokens": 3328,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000623
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

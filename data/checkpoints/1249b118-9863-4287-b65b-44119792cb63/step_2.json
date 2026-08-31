@@ -1,0 +1,126 @@
+{
+  "workflow_id": "1249b118-9863-4287-b65b-44119792cb63",
+  "step_number": 2,
+  "timestamp": "2026-08-31T15:27:12.139076+00:00",
+  "state": {
+    "workflow_id": "1249b118-9863-4287-b65b-44119792cb63",
+    "goal": "play kabira song",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "525f699e-e22a-4010-9167-e3bb912b7248",
+        "description": "Search for the song 'Kabira' on YouTube to retrieve the most relevant video URL.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_api_search",
+          "query": "Kabira Yeh Jawaani Hai Deewani"
+        },
+        "reasoning": "Need to identify the correct video ID for the song 'Kabira' before playback can be initiated.",
+        "status": "COMPLETED",
+        "result": {
+          "status": "SUCCESS",
+          "query": "Kabira Yeh Jawaani Hai Deewani",
+          "results": [
+            {
+              "title": "\"\u0915\u092c\u0940\u0930 \u092a\u0942\u0930\u093e \u0917\u093e\u0928\u093e\" \u092f\u0947 \u091c\u0935\u093e\u0928\u0940 \u0939\u0948 \u0926\u093f\u0935\u093e\u0928\u0940 | \u0930\u0923\u092c\u0940\u0930 \u0915\u092a\u0942\u0930, \u0926\u0940\u092a\u093f\u0915\u093e \u092a\u093e\u0926\u0941\u0915\u094b\u0923",
+              "channel": "T-Series",
+              "video_id": "jHNNMj5bNQw",
+              "url": "https://www.youtube.com/watch?v=jHNNMj5bNQw",
+              "description": "Video by T-Series"
+            },
+            {
+              "title": "\"Kabira Full Lyrics Song\" Yeh Jawaani Hai Deewani| Ranbir Kapoor, Deepika Padukone",
+              "channel": "TENNIS BALL CRICKET VIDEO ",
+              "video_id": "7jZwAl0ArQw",
+              "url": "https://www.youtube.com/watch?v=7jZwAl0ArQw",
+              "description": "Video by TENNIS BALL CRICKET VIDEO "
+            },
+            {
+              "title": "\u0915\u092c\u0940\u0930\u093e (\u090f\u0928\u0915\u0949\u0930) \u092f\u0947 \u091c\u0935\u093e\u0928\u0940 \u0939\u0948 \u0926\u0940\u0935\u093e\u0928\u0940 \u0917\u093e\u0928\u093e (\u0911\u0921\u093f\u092f\u094b) | \u0930\u0923\u092c\u0940\u0930 \u0915\u092a\u0942\u0930, \u0926\u0940\u092a\u093f\u0915\u093e \u092a\u093e\u0926\u0941\u0915\u094b\u0923",
+              "channel": "T-Series",
+              "video_id": "lwLVJ0E8gN4",
+              "url": "https://www.youtube.com/watch?v=lwLVJ0E8gN4",
+              "description": "Video by T-Series"
+            },
+            {
+              "title": "\u0907\u0932\u093e\u0939\u0940 \u092f\u0947 \u091c\u0935\u093e\u0928\u0940 \u0939\u0948 \u0926\u0940\u0935\u093e\u0928\u0940 \u092a\u0942\u0930\u093e \u0935\u0940\u0921\u093f\u092f\u094b \u0917\u093e\u0928\u093e | \u0930\u0923\u092c\u0940\u0930 \u0915\u092a\u0942\u0930, \u0926\u0940\u092a\u093f\u0915\u093e \u092a\u093e\u0926\u0941\u0915\u094b\u0923",
+              "channel": "T-Series",
+              "video_id": "fdubeMFwuGs",
+              "url": "https://www.youtube.com/watch?v=fdubeMFwuGs",
+              "description": "Video by T-Series"
+            },
+            {
+              "title": "\u0907\u0928\u0915\u094b\u0930 \u0915\u092c\u0940\u0930\u093e \u0917\u093e\u0928\u093e \u092f\u0947 \u091c\u0935\u093e\u0928\u0940 \u0939\u0948 \u0926\u093f\u0935\u093e\u0928\u0940 | \u0930\u0923\u092c\u0940\u0930 \u0915\u092a\u0942\u0930, \u0926\u0940\u092a\u093f\u0915\u093e \u092a\u093e\u0926\u0941\u0915\u094b\u0923",
+              "channel": "T-Series",
+              "video_id": "MuCfsZk9lbU",
+              "url": "https://www.youtube.com/watch?v=MuCfsZk9lbU",
+              "description": "Video by T-Series"
+            }
+          ]
+        },
+        "error": null,
+        "execution_time_ms": 2679.629325866699,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "25c2bd65-baec-45b3-9aca-876022440420",
+        "description": "Play the identified 'Kabira' song video.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "url": "$step_1.results[0].url"
+        },
+        "reasoning": "Executing the playback of the song using the URL retrieved from the search results.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T15:27:09.360430",
+    "updated_at": "2026-08-31T15:27:09.433097Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3026,
+      "total_completion_tokens": 273,
+      "total_tokens": 3299,
+      "total_estimated_cost_usd": 0.000618,
+      "calls": [
+        {
+          "prompt_tokens": 3026,
+          "completion_tokens": 273,
+          "total_tokens": 3299,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000618
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

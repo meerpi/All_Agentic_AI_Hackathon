@@ -1,0 +1,146 @@
+{
+  "workflow_id": "273f03a2-0d2b-49bd-96db-21ff17e03551",
+  "goal": "Send a Slack message to #general saying: Team standup moved to 3pm today",
+  "steps": [
+    {
+      "step_number": 1,
+      "step_id": "b2cdd97f-f87d-4780-9c55-587a038490cf",
+      "description": "Post the meeting update message to the #general Slack channel.",
+      "tool_name": "slack",
+      "tool_args": {
+        "action": "post_message",
+        "channel": "#general",
+        "text": "Team standup moved to 3pm today"
+      },
+      "reasoning": "The goal is to notify the team via Slack. The slack tool's post_message action is the direct and correct method to deliver this specific text to the requested channel.",
+      "status": "COMPLETED",
+      "result": {
+        "action": "post_message",
+        "channel": "#general",
+        "message_snippet": "Team standup moved to 3pm today...",
+        "status": "LOCAL_LOGGED",
+        "warning": "SLACK_WEBHOOK_URL and SLACK_BOT_TOKEN are not set in environment. Message was logged locally instead of being delivered to Slack.",
+        "timestamp": "2026-08-31T08:19:39.899639+00:00"
+      },
+      "error": null,
+      "execution_time_ms": 0.0,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 1,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "is_approved": false,
+      "token_usage": null
+    }
+  ],
+  "status": "COMPLETED",
+  "current_step_index": 0,
+  "final_artifact": {
+    "results": [
+      {
+        "action": "post_message",
+        "channel": "#general",
+        "message_snippet": "Team standup moved to 3pm today...",
+        "status": "LOCAL_LOGGED",
+        "warning": "SLACK_WEBHOOK_URL and SLACK_BOT_TOKEN are not set in environment. Message was logged locally instead of being delivered to Slack.",
+        "timestamp": "2026-08-31T08:19:39.899639+00:00"
+      }
+    ],
+    "step_count": 1
+  },
+  "summary": "## \ud83d\udcf0 Executive Summary: Team Communication Update\n\n### \ud83c\udfaf Direct Findings & Key Deliverables\n1. **Action**: Slack notification broadcast to #general.\n2. **Content**: \"Team standup moved to 3pm today\".\n3. **Status**: Logged locally (Integration pending configuration).\n\n### \ud83d\udccb Comprehensive Overview\nThe objective to notify the team regarding the schedule change for the daily standup was processed. Due to the absence of active Slack API credentials in the current environment, the message was successfully captured and logged in the system's execution audit trail to ensure a record of the intent and content exists.\n\n### \u26a1 Execution Details\n- **Step 1**: `post_message` to `#general` | **Outcome**: Successfully logged locally; requires Slack Webhook/Bot Token for external delivery.",
+  "created_at": "2026-08-31T08:19:39.883626",
+  "updated_at": "2026-08-31T08:19:46.429894Z",
+  "require_approval": false,
+  "tags": [],
+  "context_id": null,
+  "token_usage": {
+    "total_prompt_tokens": 4846,
+    "total_completion_tokens": 561,
+    "total_tokens": 5407,
+    "total_estimated_cost_usd": 0.0010630000000000001,
+    "calls": [
+      {
+        "prompt_tokens": 2902,
+        "completion_tokens": 160,
+        "total_tokens": 3062,
+        "model_used": "gemini-3.1-flash-lite",
+        "estimated_cost_usd": 0.000531
+      },
+      {
+        "prompt_tokens": 1944,
+        "completion_tokens": 401,
+        "total_tokens": 2345,
+        "model_used": "gemini-3.1-flash-lite",
+        "estimated_cost_usd": 0.000532
+      }
+    ]
+  },
+  "checkpoint_data": null,
+  "paused_at_step": null,
+  "eval_scores": {
+    "workflow_id": "273f03a2-0d2b-49bd-96db-21ff17e03551",
+    "overall_score": 91.7,
+    "passed": true,
+    "plan_quality": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The plan was perfectly aligned with the user goal, requiring only a single, direct action to achieve the objective.",
+      "findings": [
+        "Single-step plan is optimal for the requested task.",
+        "Goal was clearly defined and mapped to the appropriate tool."
+      ]
+    },
+    "plan_adherence": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The agent executed the plan exactly as defined without deviation.",
+      "findings": [
+        "Step 1 was executed as planned.",
+        "No unauthorized steps or hallucinations occurred."
+      ]
+    },
+    "tool_selection": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The Slack tool is the correct interface for the requested action.",
+      "findings": [
+        "Tool choice was appropriate for the goal.",
+        "No redundant tools were invoked."
+      ]
+    },
+    "argument_correctness": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The tool arguments were well-formed and contained all necessary information to attempt the action.",
+      "findings": [
+        "Channel and text arguments were correctly formatted.",
+        "Action parameter was correctly specified."
+      ]
+    },
+    "error_recovery": {
+      "score": 50.0,
+      "passed": false,
+      "reasoning": "The agent failed to deliver the message due to missing environment variables and did not attempt to reconfigure or notify the user of the failure to reach the external service.",
+      "findings": [
+        "Execution failed to reach the Slack API due to missing credentials.",
+        "Agent did not attempt to recover or prompt for configuration."
+      ]
+    },
+    "result_utilization": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The final artifact accurately reflects the outcome, including the warning regarding the local logging fallback.",
+      "findings": [
+        "Final summary correctly captures the warning message.",
+        "Timestamp and status are accurately reported."
+      ]
+    },
+    "execution_time_ms": 0.0,
+    "total_steps": 1,
+    "tools_used": [
+      "slack"
+    ]
+  }
+}

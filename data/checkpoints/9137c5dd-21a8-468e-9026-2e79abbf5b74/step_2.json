@@ -1,0 +1,126 @@
+{
+  "workflow_id": "9137c5dd-21a8-468e-9026-2e79abbf5b74",
+  "step_number": 2,
+  "timestamp": "2026-08-31T15:16:08.224698+00:00",
+  "state": {
+    "workflow_id": "9137c5dd-21a8-468e-9026-2e79abbf5b74",
+    "goal": "play dia dia",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "cc106c89-43f5-4a8e-97cd-7aea1ad8354c",
+        "description": "Search for the song 'Dia Dia' on YouTube to retrieve the correct video URL.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_api_search",
+          "query": "Dia Dia"
+        },
+        "reasoning": "Need to identify the specific video URL for the requested song before playback can be initiated.",
+        "status": "COMPLETED",
+        "result": {
+          "status": "SUCCESS",
+          "query": "Dia Dia",
+          "results": [
+            {
+              "title": "Shakira, Burna Boy - Dai Dai (Official Video)",
+              "channel": "Shakira and 2 more",
+              "video_id": "fcnDmrtj6Sk",
+              "url": "https://www.youtube.com/watch?v=fcnDmrtj6Sk",
+              "description": "Video by Shakira and 2 more"
+            },
+            {
+              "title": "Shakira & Burna Boy - Dai Dai (Lyrics) World Cup Song 2026",
+              "channel": "7clouds",
+              "video_id": "salwJjShv2M",
+              "url": "https://www.youtube.com/watch?v=salwJjShv2M",
+              "description": "Video by 7clouds"
+            },
+            {
+              "title": "Shakira, Burna Boy & Triplets Ghetto Kids | Final Halftime Show | Full Performance",
+              "channel": "FIFA and 2 more",
+              "video_id": "T3thHUtPdhc",
+              "url": "https://www.youtube.com/watch?v=T3thHUtPdhc",
+              "description": "Video by FIFA and 2 more"
+            },
+            {
+              "title": "Shakira & Burna Boy - Dai Dai (Lyrics) World Cup Song 2026",
+              "channel": "7clouds Rock",
+              "video_id": "Y3jq_WIHP9k",
+              "url": "https://www.youtube.com/watch?v=Y3jq_WIHP9k",
+              "description": "Video by 7clouds Rock"
+            },
+            {
+              "title": "Dai Dai - Shakira ft. Burna Boy | Ultimate 4K World Cup Edit",
+              "channel": "RandomEditz",
+              "video_id": "8DCW3cBtscI",
+              "url": "https://www.youtube.com/watch?v=8DCW3cBtscI",
+              "description": "Video by RandomEditz"
+            }
+          ]
+        },
+        "error": null,
+        "execution_time_ms": 1463.7353420257568,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "91771ed8-43b4-4859-88f1-5c5ba24cafd8",
+        "description": "Play the top search result for 'Dia Dia' on YouTube.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "url": "$step_1.results[0].url"
+        },
+        "reasoning": "Initiates the playback of the identified media content.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T15:16:06.678295",
+    "updated_at": "2026-08-31T15:16:06.735176Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3005,
+      "total_completion_tokens": 260,
+      "total_tokens": 3265,
+      "total_estimated_cost_usd": 0.000607,
+      "calls": [
+        {
+          "prompt_tokens": 3005,
+          "completion_tokens": 260,
+          "total_tokens": 3265,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000607
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

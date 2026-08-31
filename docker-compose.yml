@@ -5,12 +5,12 @@ services:
     build: .
     ports:
       - "8000:8000"
+    env_file:
+      - .env
     environment:
-      - GEMINI_API_KEY=${GEMINI_API_KEY:-mock_key}
-      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.5-flash}
-      - MOCK_GEMINI=${MOCK_GEMINI:-true}
-      - LOG_LEVEL=INFO
       - PORT=8000
+      - HOST=0.0.0.0
+      - BROWSER_HEADLESS=true
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]

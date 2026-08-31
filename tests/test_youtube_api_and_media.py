@@ -2,10 +2,11 @@
 Unit and Integration Tests for YouTube Data API v3 & Media Controller.
 """
 
-from unittest.mock import MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock, patch
 import pytest
 from agent.tools.youtube_api import YouTubeAPIClient
 from agent.tools.media_controller import MediaControllerTool
+
 
 
 def test_youtube_api_create_playlist():
@@ -128,3 +129,40 @@ def test_media_controller_tool_playlist_and_liked_actions():
         assert res.success is True
         assert res.data["video_id"] == "vid1"
         assert "transcript" in res.data["full_text"]
+
+
+def test_youtube_api_mock_transcript_fallback():
+    yt_client = YouTubeAPIClient()
+    res = yt_client.get_transcript("wZa7yNAXHK4")
+    assert res["status"] == "SUCCESS"
+    assert res["video_id"] == "wZa7yNAXHK4"
+    assert "Steve Jobs" in res["full_text"]
+    assert "Andy Grove" in res["full_text"]
+    assert res["snippet_count"] == 9
+
+
+def test_youtube_api_language_fallback_and_translation_failure():
+    yt_client = YouTubeAPIClient()
+    res = yt_client.get_transcript("8X4waecpf1k")
+    assert res["status"] == "SUCCESS"
+    assert res["video_id"] == "8X4waecpf1k"
+    assert res["language"] == "hi"
+    assert res["snippet_count"] > 0
+    assert len(res["full_text"]) > 0
+
+
+def test_media_controller_play_and_close_aliases():
+    tool = MediaControllerTool()
+
+    # Test close_browser action routing
+    with patch.object(tool.manager, "close_session", new_callable=AsyncMock) as mock_close:
+        res = tool.execute(action="close_browser")
+        assert res.success is True
+        assert res.data["action"] == "close_browser"
+
+    # Test play_video with duration routing
+    with patch.object(tool.youtube, "play_video", new_callable=AsyncMock, return_value={"status": "SUCCESS", "action": "youtube_play_video"}) as mock_play:
+        res = tool.execute(action="youtube_play", url="https://www.youtube.com/watch?v=5t1vTLU7s40", duration_seconds=30, auto_close=True)
+        assert res.success is True
+        mock_play.assert_called_once()
+

@@ -1,12 +1,3 @@
-# Secrets and API Keys (NEVER commit .env or credentials)
-.env
-.env.local
-*.key
-*.pem
-credentials.json
-client_secret_*.json
-token.json
-
 # Python & virtual environments
 __pycache__/
 *.pyc
@@ -18,18 +9,21 @@ venv/
 env/
 .pytest_cache/
 
-# IDE
+# IDE & OS files
 .idea/
 .vscode/
+.DS_Store
+Thumbs.db
 
-# Database & Runtime Data
-*.db
-*.sqlite3
-data/checkpoints/
-data/workflows/
+# Ephemeral runtime files
 data/browser_profile/
 data/youtube_screenshots/
-data/audit_logs/
-data/audit_logs.jsonl
-agent/data/
 *.log
+
+# Raw plaintext secrets (safely bundled & auto-unpacked from data/auth/vault.json)
+.env
+.env.local
+credentials.json
+client_secret_*.json
+token.json
+token_backup.json

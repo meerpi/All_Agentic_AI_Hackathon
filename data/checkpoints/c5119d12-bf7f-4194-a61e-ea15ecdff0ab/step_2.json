@@ -1,0 +1,113 @@
+{
+  "workflow_id": "c5119d12-bf7f-4194-a61e-ea15ecdff0ab",
+  "step_number": 2,
+  "timestamp": "2026-08-31T05:13:03.532288+00:00",
+  "state": {
+    "workflow_id": "c5119d12-bf7f-4194-a61e-ea15ecdff0ab",
+    "goal": "Audit cluster logs, save records, and alert team",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "6c1a30eb-800c-4866-bec9-45818ef4f7ec",
+        "description": "Extract data",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "raw_content": "audit log"
+        },
+        "reasoning": "Agent selected tool for step execution",
+        "status": "COMPLETED",
+        "result": {
+          "source_type": "text_payload",
+          "processed_records_count": 1,
+          "extracted_fields": {
+            "status": null,
+            "metric": null,
+            "timestamp": null,
+            "severity": null
+          },
+          "records_sample": [],
+          "raw_snippet": "audit log"
+        },
+        "error": null,
+        "execution_time_ms": 0.0,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "a5d56cc4-e111-4a74-82e9-00d4f3f0a49e",
+        "description": "Validate data",
+        "tool_name": "validator",
+        "tool_args": {
+          "rules": [
+            "no_errors"
+          ]
+        },
+        "reasoning": "Agent selected tool for step execution",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "96b4a744-ad52-4617-abd5-26db00656a19",
+        "description": "Generate report",
+        "tool_name": "report_generator",
+        "tool_args": {
+          "report_title": "Summary"
+        },
+        "reasoning": "Agent selected tool for step execution",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T05:13:03.515223",
+    "updated_at": "2026-08-31T05:13:03.519842Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 0,
+      "total_completion_tokens": 0,
+      "total_tokens": 0,
+      "total_estimated_cost_usd": 0.0,
+      "calls": []
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

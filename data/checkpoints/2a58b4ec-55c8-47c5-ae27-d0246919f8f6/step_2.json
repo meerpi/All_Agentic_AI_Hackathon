@@ -1,0 +1,128 @@
+{
+  "workflow_id": "2a58b4ec-55c8-47c5-ae27-d0246919f8f6",
+  "step_number": 2,
+  "timestamp": "2026-08-31T11:18:22.033034+00:00",
+  "state": {
+    "workflow_id": "2a58b4ec-55c8-47c5-ae27-d0246919f8f6",
+    "goal": "play shape of you for 10 seconds",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "1e16b52c-4fca-44bf-87c5-23b1633af399",
+        "description": "Search for the song 'Shape of You' by Ed Sheeran on YouTube to retrieve the video URL.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_api_search",
+          "query": "Shape of You Ed Sheeran"
+        },
+        "reasoning": "Need to obtain the specific video URL for the requested song before playback can be initiated.",
+        "status": "COMPLETED",
+        "result": {
+          "status": "SUCCESS",
+          "query": "Shape of You Ed Sheeran",
+          "results": [
+            {
+              "title": "Ed Sheeran - Shape of You (Official Music Video)",
+              "channel": "Ed Sheeran",
+              "video_id": "JGwWNGJdvx8",
+              "url": "https://www.youtube.com/watch?v=JGwWNGJdvx8",
+              "description": "Video by Ed Sheeran"
+            },
+            {
+              "title": "Ed Sheeran - Shape of You (Lyrics)",
+              "channel": "7clouds",
+              "video_id": "liTfD88dbCo",
+              "url": "https://www.youtube.com/watch?v=liTfD88dbCo",
+              "description": "Video by 7clouds"
+            },
+            {
+              "title": "Ed Sheeran \u2013 Shape of You (Lyrics)",
+              "channel": "Latin City",
+              "video_id": "erd3fTm-2t8",
+              "url": "https://www.youtube.com/watch?v=erd3fTm-2t8",
+              "description": "Video by Latin City"
+            },
+            {
+              "title": "Ed Sheeran - Shape of You (The Biggest Weekend)",
+              "channel": "BBC Radio 1",
+              "video_id": "Svtr-p4mrQ8",
+              "url": "https://www.youtube.com/watch?v=Svtr-p4mrQ8",
+              "description": "Video by BBC Radio 1"
+            },
+            {
+              "title": "Ed Sheeran & Diljit Dosanjh - Shape of You x Naina (Live in Birmingham 2024)",
+              "channel": "Ed Sheeran",
+              "video_id": "k0Ka-deab1s",
+              "url": "https://www.youtube.com/watch?v=k0Ka-deab1s",
+              "description": "Video by Ed Sheeran"
+            }
+          ]
+        },
+        "error": null,
+        "execution_time_ms": 1740.6151294708252,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "5a197b6a-d359-4bea-b7c7-505891d4e3cf",
+        "description": "Play the identified video for exactly 10 seconds.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "url": "$step_1.results[0].url",
+          "duration_seconds": 10,
+          "auto_skip_ads": true
+        },
+        "reasoning": "The media_controller is the designated tool for playback control, and the duration_seconds parameter allows for precise timing as requested.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T11:18:20.202676",
+    "updated_at": "2026-08-31T11:18:20.259507Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3051,
+      "total_completion_tokens": 300,
+      "total_tokens": 3351,
+      "total_estimated_cost_usd": 0.000638,
+      "calls": [
+        {
+          "prompt_tokens": 3051,
+          "completion_tokens": 300,
+          "total_tokens": 3351,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000638
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

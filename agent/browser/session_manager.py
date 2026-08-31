@@ -114,6 +114,7 @@ class BrowserSessionManager:
                     "--no-first-run",
                     "--no-default-browser-check",
                     "--autoplay-policy=no-user-gesture-required",
+                    "--mute-audio",
                 ]
 
                 logger.info(f"Launching persistent browser context at: {self.profile_dir} (headless={is_headless})")
@@ -143,6 +144,15 @@ class BrowserSessionManager:
                 self._active_page = await self._context.new_page()
             else:
                 self._active_page = self._context.pages[0]
+
+            # Guarantee ONLY 1 TAB: close any zombie extra pages playing audio in background
+            if self._context and len(self._context.pages) > 1:
+                for extra_p in self._context.pages[1:]:
+                    try:
+                        if not extra_p.is_closed():
+                            await extra_p.close()
+                    except Exception:
+                        pass
 
         return self._active_page
 

@@ -1,0 +1,126 @@
+{
+  "workflow_id": "a47b3712-aa4b-48f6-878d-8ca2511f785e",
+  "step_number": 2,
+  "timestamp": "2026-08-31T14:52:50.187236+00:00",
+  "state": {
+    "workflow_id": "a47b3712-aa4b-48f6-878d-8ca2511f785e",
+    "goal": "play hips dont lie song",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "27ed7e6d-7a58-4d4b-a6ab-6fdcbb8d59c7",
+        "description": "Search for the song 'Hips Don't Lie' by Shakira on YouTube to retrieve the correct video URL.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_api_search",
+          "query": "Shakira Hips Don't Lie official music video"
+        },
+        "reasoning": "Need to obtain the valid URL for the requested song before playback can be initiated.",
+        "status": "COMPLETED",
+        "result": {
+          "status": "SUCCESS",
+          "query": "Shakira Hips Don't Lie official music video",
+          "results": [
+            {
+              "title": "Shakira - Hips Don't Lie (featuring Wyclef Jean) (Official 4K Video) ft. Wyclef Jean",
+              "channel": "Shakira",
+              "video_id": "DUT5rEU6pqM",
+              "url": "https://www.youtube.com/watch?v=DUT5rEU6pqM",
+              "description": "Video by Shakira"
+            },
+            {
+              "title": "Shakira & Wyclef Jean - Hips Don't Lie (Live from LMYNL World Tour)",
+              "channel": "Shakira",
+              "video_id": "2Ndra-1Pwug",
+              "url": "https://www.youtube.com/watch?v=2Ndra-1Pwug",
+              "description": "Video by Shakira"
+            },
+            {
+              "title": "Shakira, Ed Sheeran, Be\u00e9le - Hips Don't Lie (Anniversary Version)",
+              "channel": "Shakira and 2 more",
+              "video_id": "41ZY18JqI2A",
+              "url": "https://www.youtube.com/watch?v=41ZY18JqI2A",
+              "description": "Video by Shakira and 2 more"
+            },
+            {
+              "title": "Shakira - Hips Don't Lie Official Music Video ft. Wyclef Jean",
+              "channel": "FUN RADIO 95.3 - V\u00e4rldens st\u00f6rsta hits",
+              "video_id": "cfRIiwyUA0U",
+              "url": "https://www.youtube.com/watch?v=cfRIiwyUA0U",
+              "description": "Video by FUN RADIO 95.3 - V\u00e4rldens st\u00f6rsta hits"
+            },
+            {
+              "title": "Shakira Live Hips Dont Lie Bamboo FIFA World 2006 Closing Ceremony",
+              "channel": "Betosanz ",
+              "video_id": "o-_Sf1LUrbs",
+              "url": "https://www.youtube.com/watch?v=o-_Sf1LUrbs",
+              "description": "Video by Betosanz "
+            }
+          ]
+        },
+        "error": null,
+        "execution_time_ms": 4487.384080886841,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "372dae87-fc6e-47f8-a543-8164b1c9eac1",
+        "description": "Play the identified video from the search results.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "url": "$step_1.results[0].url"
+        },
+        "reasoning": "Using the URL retrieved from the search step to trigger media playback.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T14:52:45.590777",
+    "updated_at": "2026-08-31T14:52:45.659017Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3027,
+      "total_completion_tokens": 275,
+      "total_tokens": 3302,
+      "total_estimated_cost_usd": 0.000619,
+      "calls": [
+        {
+          "prompt_tokens": 3027,
+          "completion_tokens": 275,
+          "total_tokens": 3302,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000619
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

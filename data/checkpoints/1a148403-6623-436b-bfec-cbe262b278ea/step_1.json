@@ -1,0 +1,61 @@
+{
+  "workflow_id": "1a148403-6623-436b-bfec-cbe262b278ea",
+  "step_number": 1,
+  "timestamp": "2026-08-31T11:51:16.772202+00:00",
+  "state": {
+    "workflow_id": "1a148403-6623-436b-bfec-cbe262b278ea",
+    "goal": "Create a Google docs about trees.",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "f5991fc0-cb47-479b-baca-dd85fe06c900",
+        "description": "Create a Google Doc titled 'The Importance of Trees' with comprehensive content about tree biology, ecological benefits, and conservation.",
+        "tool_name": "google_docs",
+        "tool_args": {
+          "title": "The Importance of Trees",
+          "content": "The Importance of Trees\n\n1. Introduction\nTrees are the lungs of our planet, playing a critical role in maintaining the Earth's ecosystem. They provide oxygen, sequester carbon dioxide, and support biodiversity.\n\n2. Biological Structure\nTrees consist of several key parts: the roots (anchoring and nutrient absorption), the trunk (structural support and transport), and the canopy (photosynthesis and shade).\n\n3. Ecological Benefits\n- Carbon Sequestration: Trees absorb CO2, mitigating the effects of climate change.\n- Habitat Provision: Forests provide homes for 80% of terrestrial biodiversity.\n- Soil Health: Root systems prevent erosion and improve soil structure.\n- Temperature Regulation: Through transpiration and shade, trees cool urban environments.\n\n4. Conservation Efforts\nSustainable forestry and reforestation projects are essential to combat deforestation. Protecting old-growth forests is a priority for global climate stability.\n\n5. Conclusion\nTrees are indispensable to human survival and environmental health. Protecting them is not just an ecological choice, but a necessity for future generations."
+        },
+        "reasoning": "The google_docs tool is the direct and appropriate tool for creating a document with specific content as requested by the user.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T11:51:16.705615",
+    "updated_at": "2026-08-31T11:51:16.770184Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3053,
+      "total_completion_tokens": 373,
+      "total_tokens": 3426,
+      "total_estimated_cost_usd": 0.000682,
+      "calls": [
+        {
+          "prompt_tokens": 3053,
+          "completion_tokens": 373,
+          "total_tokens": 3426,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000682
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

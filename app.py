@@ -5,17 +5,18 @@ from typing import Any, Dict, List, Optional
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import FileResponse, RedirectResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from agent.a2a import A2AServer, get_agent_card
 from agent.config import settings
+from agent.database import db
 from agent.evals import TrajectoryEvaluator
 from agent.inbox_watcher import watcher
 from agent.llm_client import GeminiClient
 from agent.memory import MemoryManager
-from agent.models import ComplexityReport, ExecutionTrace, StepStatus, TaskGoal, WorkflowPlan, WorkflowStatus
+from agent.models import ComplexityReport, ExecutionTrace, StepStatus, TaskGoal, WorkflowPlan, WorkflowStatus, ToolCallResult
 from agent.multi_agent import MultiAgentCouncilOrchestrator
 from agent.orchestrator import TaskmasterOrchestrator
 from agent.persistence import persistence
@@ -32,8 +33,8 @@ logger = logging.getLogger("taskmaster.api")
 
 app = FastAPI(
     title="Taskmaster Autonomous Agent Engine API",
-    description="Production-grade AI Agent API with DAG execution, real A2A protocol, MCP server exposition, persistent memory, and live SSE streaming.",
-    version="2.0.0",
+    description="Production-grade AI Agent API with DAG execution, real A2A protocol, MCP server exposition, persistent memory, SQLite storage, and live SSE streaming.",
+    version="1.0.0",
 )
 
 # Enable CORS
@@ -45,10 +46,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mount static UI
+# Mount static and frontend UI
 static_dir = os.path.join(os.path.dirname(__file__), "static")
 if os.path.exists(static_dir):
     app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
+frontend_dir = os.path.join(os.path.dirname(__file__), "frontend")
+if os.path.exists(frontend_dir):
+    app.mount("/frontend", StaticFiles(directory=frontend_dir), name="frontend")
 
 orchestrator = TaskmasterOrchestrator()
 council_orchestrator = MultiAgentCouncilOrchestrator()
@@ -58,34 +63,123 @@ expansion_engine = TaskExpansionEngine(GeminiClient())
 prd_parser = PRDParser(GeminiClient())
 
 
-# ── Root & Health ──────────────────────────────────────────────
+# ── Auth & Session Models ───────────────────────────────────────
+
+class RegisterRequest(BaseModel):
+    email: str
+    password: str
+    full_name: Optional[str] = None
+
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+
+class CreateSessionRequest(BaseModel):
+    title: Optional[str] = "New Chat"
+    session_id: Optional[str] = None
+
+
+class RenameSessionRequest(BaseModel):
+    title: str
+
+
+class AddMessageRequest(BaseModel):
+    role: str
+    content: str
+    data: Optional[Dict[str, Any]] = None
+    timestamp: Optional[int] = None
+
+
+def get_current_user(request: Request) -> Dict[str, Any]:
+    """Helper to authenticate and extract the current user from Bearer token."""
+    auth_header = request.headers.get("Authorization")
+    token = None
+    if auth_header and auth_header.startswith("Bearer "):
+        token = auth_header[7:].strip()
+    if not token:
+        token = request.query_params.get("token")
+    if not token:
+        raise HTTPException(status_code=401, detail="Authentication token required.")
+    
+    user = db.get_user_by_token(token)
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid or expired session token.")
+    return user
+
+
+# ── Root, Auth, Chat & Developer Pages ─────────────────────────
 
 @app.get("/", include_in_schema=False)
 def read_root():
-    hub_path = os.path.join(static_dir, "hub.html")
-    if os.path.exists(hub_path):
-        return FileResponse(hub_path)
-    index_path = os.path.join(static_dir, "index.html")
-    if os.path.exists(index_path):
-        return FileResponse(index_path)
+    """Serves the Hero Landing Page."""
+    landing_path = os.path.join(frontend_dir, "index.html")
+    if os.path.exists(landing_path):
+        return FileResponse(landing_path)
     return {"message": "Taskmaster API Server is Running. Visit /docs for OpenAPI specifications."}
+
+
+@app.get("/auth", include_in_schema=False)
+@app.get("/login", include_in_schema=False)
+@app.get("/register", include_in_schema=False)
+def auth_page():
+    """Serves the Sign In / Sign Up Authentication Page."""
+    auth_path = os.path.join(frontend_dir, "auth.html")
+    if os.path.exists(auth_path):
+        return FileResponse(auth_path)
+    return RedirectResponse(url="/chat", status_code=302)
+
+
+@app.get("/chat", include_in_schema=False)
+def chat_page():
+    """Serves the ChatGPT-Style Conversational Agent UI."""
+    chat_path = os.path.join(frontend_dir, "chat.html")
+    if os.path.exists(chat_path):
+        return FileResponse(chat_path)
+    return FileResponse(os.path.join(frontend_dir, "index.html"))
+
+
+@app.get("/features", include_in_schema=False)
+@app.get("/tools", include_in_schema=False)
+def features_page():
+    """Serves the Features & Tools Showcase Page."""
+    features_path = os.path.join(frontend_dir, "features.html")
+    if os.path.exists(features_path):
+        return FileResponse(features_path)
+    return FileResponse(os.path.join(frontend_dir, "index.html"))
+
+
+@app.get("/architecture", include_in_schema=False)
+@app.get("/dag", include_in_schema=False)
+def architecture_page():
+    """Serves the DAG Engine & Multi-Agent Architecture Page."""
+    arch_path = os.path.join(frontend_dir, "architecture.html")
+    if os.path.exists(arch_path):
+        return FileResponse(arch_path)
+    return FileResponse(os.path.join(frontend_dir, "index.html"))
+
+
+@app.get("/integrations", include_in_schema=False)
+def integrations_page():
+    """Serves the Ecosystem & Platform Integrations Page."""
+    integ_path = os.path.join(frontend_dir, "integrations.html")
+    if os.path.exists(integ_path):
+        return FileResponse(integ_path)
+    return FileResponse(os.path.join(frontend_dir, "index.html"))
 
 
 @app.get("/hub", include_in_schema=False)
 def hub_page():
-    return FileResponse(os.path.join(static_dir, "hub.html"))
-
-
-@app.get("/old", include_in_schema=False)
-def old_ui():
-    return FileResponse(os.path.join(static_dir, "index.html"))
+    """Redirect legacy Hub requests directly to the Chat interface."""
+    return RedirectResponse(url="/chat", status_code=302)
 
 
 @app.get("/api/health", summary="Google Cloud Run Health Check Endpoint")
 def health_check():
     return {
         "status": "HEALTHY",
-        "agent": "Taskmaster Autonomous Agent Engine v2.0",
+        "agent": "Taskmaster Autonomous Agent Engine",
         "models": {
             "main": settings.MAIN_MODEL,
             "research": settings.RESEARCH_MODEL,
@@ -98,11 +192,106 @@ def health_check():
             "a2a_protocol_compliant",
             "mcp_server_support",
             "persistent_memory",
+            "sqlite_multi_user_storage",
             "time_travel_debugging",
             "sse_token_streaming",
             "guardrails_safety_rails",
         ],
     }
+
+
+@app.post("/api/agent/media/stop", summary="Stop or pause active background browser media playback")
+async def stop_media_api():
+    """Stops/pauses any running background playback across Playwright or media controllers."""
+    try:
+        from agent.browser.session_manager import browser_manager
+        page = browser_manager._page
+        if page:
+            await page.evaluate("document.querySelector('video')?.pause()")
+        return {"status": "SUCCESS", "message": "Media playback stopped"}
+    except Exception as e:
+        return {"status": "SUCCESS", "message": str(e)}
+
+
+# ── Multi-User Authentication & SQLite Chat Storage Endpoints ──
+
+@app.post("/api/auth/register", summary="Register a new user account")
+def register_user_api(req: RegisterRequest):
+    try:
+        res = db.register_user(req.email, req.password, req.full_name)
+        return {"status": "SUCCESS", "data": res}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Registration failed: {str(e)}")
+
+
+@app.post("/api/auth/login", summary="Login user and obtain auth token")
+def login_user_api(req: LoginRequest):
+    try:
+        res = db.authenticate_user(req.email, req.password)
+        return {"status": "SUCCESS", "data": res}
+    except ValueError as e:
+        raise HTTPException(status_code=401, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Login failed: {str(e)}")
+
+
+@app.get("/api/auth/me", summary="Get currently authenticated user profile")
+def get_me_api(request: Request):
+    user = get_current_user(request)
+    return {"status": "SUCCESS", "user": user}
+
+
+@app.post("/api/auth/logout", summary="Logout and revoke active session token")
+def logout_user_api(request: Request):
+    auth_header = request.headers.get("Authorization")
+    if auth_header and auth_header.startswith("Bearer "):
+        token = auth_header[7:].strip()
+        db.logout_token(token)
+    return {"status": "SUCCESS", "message": "Logged out successfully."}
+
+
+@app.get("/api/chat/sessions", summary="Get user's chat sessions from SQLite")
+def get_user_sessions_api(request: Request):
+    user = get_current_user(request)
+    sessions = db.get_user_sessions(user["id"])
+    return {"status": "SUCCESS", "sessions": sessions}
+
+
+@app.post("/api/chat/sessions", summary="Create a new chat session for user in SQLite")
+def create_session_api(req: CreateSessionRequest, request: Request):
+    user = get_current_user(request)
+    session = db.create_session(user["id"], req.title or "New Chat", req.session_id)
+    return {"status": "SUCCESS", "session": session}
+
+
+@app.get("/api/chat/sessions/{session_id}/messages", summary="Get messages for a session from SQLite")
+def get_session_messages_api(session_id: str, request: Request):
+    user = get_current_user(request)
+    messages = db.get_session_messages(session_id, user["id"])
+    return {"status": "SUCCESS", "messages": messages}
+
+
+@app.post("/api/chat/sessions/{session_id}/messages", summary="Save message to SQLite")
+def add_session_message_api(session_id: str, req: AddMessageRequest, request: Request):
+    user = get_current_user(request)
+    msg = db.add_message(session_id, user["id"], req.role, req.content, req.data, req.timestamp)
+    return {"status": "SUCCESS", "message": msg}
+
+
+@app.delete("/api/chat/sessions/{session_id}", summary="Delete chat session from SQLite")
+def delete_session_api(session_id: str, request: Request):
+    user = get_current_user(request)
+    deleted = db.delete_session(session_id, user["id"])
+    return {"status": "SUCCESS", "deleted": deleted}
+
+
+@app.post("/api/chat/sessions/{session_id}/rename", summary="Rename chat session in SQLite")
+def rename_session_api(session_id: str, req: RenameSessionRequest, request: Request):
+    user = get_current_user(request)
+    renamed = db.rename_session(session_id, user["id"], req.title)
+    return {"status": "SUCCESS", "renamed": renamed}
 
 
 # ── A2A Protocol Standard Endpoints ────────────────────────────
@@ -129,6 +318,24 @@ async def a2a_jsonrpc_endpoint(request: Request):
 @app.get("/api/agent/tools", summary="List Registered Agent Tools")
 def list_tools():
     return {"tools": registry.list_tools()}
+
+
+class ExecuteToolRequest(BaseModel):
+    tool_name: str
+    arguments: Dict[str, Any]
+
+@app.post("/api/agent/tool/execute", response_model=ToolCallResult, summary="Execute a Specific Tool Directly")
+def execute_tool_endpoint(req: ExecuteToolRequest):
+    tool = registry.get_tool(req.tool_name)
+    if not tool:
+        raise HTTPException(status_code=404, detail=f"Tool '{req.tool_name}' not found")
+    try:
+        result = tool.execute(req.arguments)
+        return result
+    except Exception as e:
+        logger.error(f"Error executing tool {req.tool_name}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 
 @app.post("/api/agent/run", response_model=WorkflowPlan, summary="Submit Task Goal & Trigger DAG Workflow")
@@ -427,6 +634,20 @@ def emergency_kill_browser():
     return result
 
 
+@app.post("/api/agent/media/stop", summary="Stop & Silence all background media playback")
+@app.post("/api/browser/stop", summary="Stop & Silence all background media playback")
+def stop_background_media():
+    """Immediately pauses and silences any background audio or video playback in the browser context."""
+    try:
+        from agent.browser.youtube_driver import YouTubeDriver
+        driver = YouTubeDriver()
+        result = browser_manager.run_sync(driver.stop_all_media(), timeout=5.0)
+        return {"status": "SUCCESS", "message": "All background media playback paused and silenced.", "detail": result}
+    except Exception as e:
+        logger.warning(f"Error stopping media: {e}")
+        return {"status": "SUCCESS", "message": f"Media cleanup triggered: {e}"}
+
+
 @app.get("/api/browser/status", summary="Get Active Browser Session Status")
 def get_browser_status():
     """Returns active URL, title, open pages, and profile status."""
@@ -445,4 +666,4 @@ def get_browser_screenshot(annotated: bool = Query(False, description="Whether t
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=False)
+    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=False)

@@ -1,0 +1,102 @@
+{
+  "workflow_id": "d5dc3856-fbf0-486b-bc46-8fa15649cb1d",
+  "step_number": 1,
+  "timestamp": "2026-08-31T07:25:35.469318+00:00",
+  "state": {
+    "workflow_id": "d5dc3856-fbf0-486b-bc46-8fa15649cb1d",
+    "goal": "Audit cluster logs, save records, and alert team",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "caadbfd3-bb0c-4e86-a357-02a93ca1252c",
+        "description": "Extract data",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "raw_content": "audit log"
+        },
+        "reasoning": "Agent selected tool for step execution",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "d873dffa-125f-416e-a487-76476feefe4b",
+        "description": "Validate data",
+        "tool_name": "validator",
+        "tool_args": {
+          "rules": [
+            "no_errors"
+          ]
+        },
+        "reasoning": "Agent selected tool for step execution",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "0d7e957b-fc9c-415b-ac14-7a26e48319ab",
+        "description": "Generate report",
+        "tool_name": "report_generator",
+        "tool_args": {
+          "report_title": "Summary"
+        },
+        "reasoning": "Agent selected tool for step execution",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T07:25:35.463703",
+    "updated_at": "2026-08-31T07:25:35.466213Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 0,
+      "total_completion_tokens": 0,
+      "total_tokens": 0,
+      "total_estimated_cost_usd": 0.0,
+      "calls": []
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

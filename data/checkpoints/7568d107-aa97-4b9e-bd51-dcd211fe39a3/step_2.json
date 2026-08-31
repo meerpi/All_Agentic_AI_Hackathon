@@ -1,0 +1,126 @@
+{
+  "workflow_id": "7568d107-aa97-4b9e-bd51-dcd211fe39a3",
+  "step_number": 2,
+  "timestamp": "2026-08-31T14:39:36.721734+00:00",
+  "state": {
+    "workflow_id": "7568d107-aa97-4b9e-bd51-dcd211fe39a3",
+    "goal": "play hips dont lie",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "243132af-1b72-4e30-98c2-765753cbe693",
+        "description": "Search for 'Hips Don't Lie' by Shakira on YouTube to retrieve the official video URL.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_api_search",
+          "query": "Hips Don't Lie Shakira official video"
+        },
+        "reasoning": "Need to obtain the correct video URL before playback can be initiated.",
+        "status": "COMPLETED",
+        "result": {
+          "status": "SUCCESS",
+          "query": "Hips Don't Lie Shakira official video",
+          "results": [
+            {
+              "title": "Shakira - Hips Don't Lie (featuring Wyclef Jean) (Official 4K Video) ft. Wyclef Jean",
+              "channel": "Shakira",
+              "video_id": "DUT5rEU6pqM",
+              "url": "https://www.youtube.com/watch?v=DUT5rEU6pqM",
+              "description": "Video by Shakira"
+            },
+            {
+              "title": "Shakira & Wyclef Jean - Hips Don't Lie (Live from LMYNL World Tour)",
+              "channel": "Shakira",
+              "video_id": "2Ndra-1Pwug",
+              "url": "https://www.youtube.com/watch?v=2Ndra-1Pwug",
+              "description": "Video by Shakira"
+            },
+            {
+              "title": "Shakira, Ed Sheeran, Be\u00e9le - Hips Don't Lie (Anniversary Version)",
+              "channel": "Shakira and 2 more",
+              "video_id": "41ZY18JqI2A",
+              "url": "https://www.youtube.com/watch?v=41ZY18JqI2A",
+              "description": "Video by Shakira and 2 more"
+            },
+            {
+              "title": "Shakira - Hips Don't Lie (Live) ft. Wyclef Jean",
+              "channel": "Shakira",
+              "video_id": "OZUzX4kbtDU",
+              "url": "https://www.youtube.com/watch?v=OZUzX4kbtDU",
+              "description": "Video by Shakira"
+            },
+            {
+              "title": "Shakira Feat. Wyclef Jean | Hips Dont Lie",
+              "channel": "Wyclef Jean",
+              "video_id": "R5LNnbLeOXU",
+              "url": "https://www.youtube.com/watch?v=R5LNnbLeOXU",
+              "description": "Video by Wyclef Jean"
+            }
+          ]
+        },
+        "error": null,
+        "execution_time_ms": 1905.1933288574219,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "4c7a9c35-c433-4158-9f99-c3dd5b91eb86",
+        "description": "Play the identified video from the search results.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "url": "$step_1.results[0].url"
+        },
+        "reasoning": "Using the URL from the search step to trigger the media playback.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T14:39:34.731314",
+    "updated_at": "2026-08-31T14:39:34.790613Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3027,
+      "total_completion_tokens": 268,
+      "total_tokens": 3295,
+      "total_estimated_cost_usd": 0.000615,
+      "calls": [
+        {
+          "prompt_tokens": 3027,
+          "completion_tokens": 268,
+          "total_tokens": 3295,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000615
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

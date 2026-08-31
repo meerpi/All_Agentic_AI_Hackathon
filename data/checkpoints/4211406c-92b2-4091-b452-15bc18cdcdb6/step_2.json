@@ -1,0 +1,119 @@
+{
+  "workflow_id": "4211406c-92b2-4091-b452-15bc18cdcdb6",
+  "step_number": 2,
+  "timestamp": "2026-08-31T11:47:24.272024+00:00",
+  "state": {
+    "workflow_id": "4211406c-92b2-4091-b452-15bc18cdcdb6",
+    "goal": "send a email to tejasranjeet03@gmail.com  about out meeting tomorrow.",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "c8adf89c-24c6-475a-ac67-c1d6c6d40950",
+        "description": "Check Google Calendar for meeting details scheduled for tomorrow.",
+        "tool_name": "google_calendar",
+        "tool_args": {
+          "action": "list_events",
+          "time_min": "2026-09-01T00:00:00Z",
+          "time_max": "2026-09-01T23:59:59Z"
+        },
+        "reasoning": "Need to extract specific meeting time and topic to provide context in the email.",
+        "status": "COMPLETED",
+        "result": {
+          "action": "list_events",
+          "time_range": "next_30_days",
+          "count": 3,
+          "events": [
+            {
+              "id": "krfp9qobrrncj2gdj1aajeag6k",
+              "summary": "Discovery Call: Lumina Health",
+              "start": "2026-09-02T15:30:00+05:30",
+              "end": "2026-09-02T16:15:00+05:30",
+              "location": "",
+              "description": ""
+            },
+            {
+              "id": "sranogk4mcmm811v7d1ahf6sjo",
+              "summary": "Discovery Call: Lumina Health Patient Portal",
+              "start": "2026-09-02T15:30:00+05:30",
+              "end": "2026-09-02T16:15:00+05:30",
+              "location": "",
+              "description": ""
+            },
+            {
+              "id": "19v73812sbdm51cs3g3v7a1788",
+              "summary": "Discovery Call: Lumina Health Patient Analytics Dashboard",
+              "start": "2026-09-02T19:30:00+05:30",
+              "end": "2026-09-02T20:15:00+05:30",
+              "location": "",
+              "description": "Discussing technical feasibility, React/FastAPI/Firestore stack, and Gemini multimodal report generation scope."
+            }
+          ]
+        },
+        "error": null,
+        "execution_time_ms": 1479.4502258300781,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "6f5fde9b-302e-4247-8b78-c7f01688d096",
+        "description": "Send an email to tejasranjeet03@gmail.com confirming the meeting details.",
+        "tool_name": "gmail",
+        "tool_args": {
+          "action": "send_email",
+          "recipient": "tejasranjeet03@gmail.com",
+          "subject": "Confirmation: Our Meeting Tomorrow",
+          "body": "Hi Tejas,\n\nI am writing to confirm our meeting scheduled for tomorrow. Based on our calendar, the details are as follows:\n\nEvent: $step_1.events[0].summary\nTime: $step_1.events[0].start.dateTime\n\nLooking forward to our discussion.\n\nBest regards,\nTaskmaster Agent"
+        },
+        "reasoning": "Using the extracted calendar data to populate a professional email body.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T11:47:22.701928",
+    "updated_at": "2026-08-31T11:47:22.768117Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3051,
+      "total_completion_tokens": 400,
+      "total_tokens": 3451,
+      "total_estimated_cost_usd": 0.000698,
+      "calls": [
+        {
+          "prompt_tokens": 3051,
+          "completion_tokens": 400,
+          "total_tokens": 3451,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000698
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

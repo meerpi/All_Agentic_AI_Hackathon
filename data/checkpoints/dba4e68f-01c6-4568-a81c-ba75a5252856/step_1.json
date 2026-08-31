@@ -1,0 +1,111 @@
+{
+  "workflow_id": "dba4e68f-01c6-4568-a81c-ba75a5252856",
+  "step_number": 1,
+  "timestamp": "2026-08-31T08:02:21.038508+00:00",
+  "state": {
+    "workflow_id": "dba4e68f-01c6-4568-a81c-ba75a5252856",
+    "goal": "Search YouTube for Lex Fridman Yann LeCun podcast, play the first result for 30 seconds, then close the browser",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "8d55c07c-5668-49df-96a9-70133014f4b7",
+        "description": "Search YouTube for 'Lex Fridman Yann LeCun podcast' to retrieve the video ID of the first result.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_api_search",
+          "query": "Lex Fridman Yann LeCun podcast"
+        },
+        "reasoning": "Need to identify the specific video ID for the first search result to perform playback.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "8febd3d3-649e-4652-9d84-204b091d5ed5",
+        "description": "Play the identified YouTube video for 30 seconds.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "video_id": "$step_1.results[0].video_id",
+          "duration_seconds": 30
+        },
+        "reasoning": "The media_controller tool is designed to handle playback duration and target specific video IDs.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "17874ce2-5f0b-4ae7-b1f7-b95aabb8844c",
+        "description": "Close the browser instance.",
+        "tool_name": "browser_controller",
+        "tool_args": {
+          "action": "close_browser"
+        },
+        "reasoning": "The goal explicitly requires closing the browser after the playback duration is complete.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T08:02:21.024581",
+    "updated_at": "2026-08-31T08:02:21.030681Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 2874,
+      "total_completion_tokens": 386,
+      "total_tokens": 3260,
+      "total_estimated_cost_usd": 0.000663,
+      "calls": [
+        {
+          "prompt_tokens": 2874,
+          "completion_tokens": 386,
+          "total_tokens": 3260,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000663
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

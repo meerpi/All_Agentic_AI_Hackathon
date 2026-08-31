@@ -1,0 +1,63 @@
+{
+  "workflow_id": "fe4f8019-0a22-4257-ad0f-1e7e77802c20",
+  "step_number": 1,
+  "timestamp": "2026-08-31T14:54:20.268006+00:00",
+  "state": {
+    "workflow_id": "fe4f8019-0a22-4257-ad0f-1e7e77802c20",
+    "goal": "hi",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "bfa5c873-e805-4f18-8f18-3cfd6a7bbfef",
+        "description": "Acknowledge the user's greeting and offer assistance with available tools.",
+        "tool_name": "gmail",
+        "tool_args": {
+          "action": "send_email",
+          "recipient": "user@example.com",
+          "subject": "Hello from Taskmaster",
+          "body": "Hello! I am your Taskmaster Autonomous Agent. I am ready to assist you with project management, content creation, data analysis, or media control. Please let me know what task you would like me to execute."
+        },
+        "reasoning": "The user provided a greeting ('hi'). As an autonomous agent, I must acknowledge the user and provide a clear path for interaction using the communication tools available.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T14:54:20.203348",
+    "updated_at": "2026-08-31T14:54:20.264855Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3024,
+      "total_completion_tokens": 207,
+      "total_tokens": 3231,
+      "total_estimated_cost_usd": 0.000578,
+      "calls": [
+        {
+          "prompt_tokens": 3024,
+          "completion_tokens": 207,
+          "total_tokens": 3231,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000578
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

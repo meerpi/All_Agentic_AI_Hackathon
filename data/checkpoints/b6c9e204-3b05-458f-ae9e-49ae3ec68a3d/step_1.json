@@ -1,0 +1,86 @@
+{
+  "workflow_id": "b6c9e204-3b05-458f-ae9e-49ae3ec68a3d",
+  "step_number": 1,
+  "timestamp": "2026-08-31T11:44:44.723806+00:00",
+  "state": {
+    "workflow_id": "b6c9e204-3b05-458f-ae9e-49ae3ec68a3d",
+    "goal": "capture a screen shot of youtube homepage",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "f42bce21-998b-429b-aecc-c8429e1d9d13",
+        "description": "Navigate to the YouTube homepage to prepare for screenshot capture.",
+        "tool_name": "browser_controller",
+        "tool_args": {
+          "action": "navigate",
+          "url": "https://www.youtube.com"
+        },
+        "reasoning": "The browser must be at the target URL before a screenshot can be taken.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "b030c66c-ac5d-466f-bcdb-2cdae7a7d3ba",
+        "description": "Capture a screenshot of the current browser viewport.",
+        "tool_name": "browser_controller",
+        "tool_args": {
+          "action": "capture_screenshot",
+          "filename": "youtube_homepage.png"
+        },
+        "reasoning": "This tool directly fulfills the user's request to capture a screenshot of the page.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T11:44:44.660313",
+    "updated_at": "2026-08-31T11:44:44.719768Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3034,
+      "total_completion_tokens": 252,
+      "total_tokens": 3286,
+      "total_estimated_cost_usd": 0.000606,
+      "calls": [
+        {
+          "prompt_tokens": 3034,
+          "completion_tokens": 252,
+          "total_tokens": 3286,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000606
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "workflow_id": "ef3359b9-98a9-4e68-9ac0-cf5068242098",
+  "step_number": 3,
+  "timestamp": "2026-08-31T08:12:39.862135+00:00",
+  "state": {
+    "workflow_id": "ef3359b9-98a9-4e68-9ac0-cf5068242098",
+    "goal": "Read my latest 3 Gmail emails and summarize who they are from and what they are about",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "c81130f3-f986-4515-85cc-56349663ad59",
+        "description": "Fetch the 3 most recent emails from the Gmail inbox",
+        "tool_name": "gmail",
+        "tool_args": {
+          "action": "read_inbox",
+          "max_results": 3
+        },
+        "reasoning": "This is the primary tool to access the user's email data. Fetching the 3 most recent messages is the necessary first step to fulfill the user's request.",
+        "status": "COMPLETED",
+        "result": {
+          "action": "read_inbox",
+          "count": 3,
+          "emails": [
+            {
+              "id": "1a05614e0ee9b358",
+              "from": "LinkedIn Job Alerts <jobalerts-noreply@linkedin.com>",
+              "subject": "Computer Vision Intern \u2013 Neural Rendering / Gaussian Splatting at Nexus Beings",
+              "date": "Mon, 31 Aug 2026 04:30:03 +0000 (UTC)",
+              "snippet": "Nexus Beings Computer Vision Intern \u2013 Neural Rendering / Gaussian Splatting: About the JobCompany DescriptionNexus Beings\u2026 \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f \u034f"
+            },
+            {
+              "id": "1a055f095512ccba",
+              "from": "Daily Digest <noreply@unstop.news>",
+              "subject": "Top opportunities near you!",
+              "date": "Mon, 31 Aug 2026 09:20:25 +0530",
+              "snippet": "Apply Now! \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff \u034f \ufeff"
+            },
+            {
+              "id": "1a055c7cb8f9ddd9",
+              "from": "Brilliant <notifications@account.brilliant.org>",
+              "subject": "\u2728 Save 30% for Back to School",
+              "date": "Mon, 31 Aug 2026 03:05:50 +0000",
+              "snippet": "Brilliant 30% off Premium Back to School Sale Save 30% on Premium Our best deal of the year Get the deal Get the deal Deal ends 11:59 pm on 9/7/26 Download the Brilliant app Level up on the go Get it"
+            }
+          ]
+        },
+        "error": null,
+        "execution_time_ms": 2750.3786087036133,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "bae1470f-281a-497c-aa07-16a717ac588c",
+        "description": "Extract sender and subject/content summary from the fetched email data",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "extraction_query": "For each of the 3 emails provided, extract the sender's name/email address and a concise 1-sentence summary of the email's content.",
+          "data": "$step_1.emails"
+        },
+        "reasoning": "The raw email data needs to be processed into a structured format to identify the sender and summarize the content as requested.",
+        "status": "COMPLETED",
+        "result": {
+          "status": "SUCCESS",
+          "source_type": "text_payload",
+          "extraction_query": "For each of the 3 emails provided, extract the sender's name/email address and a concise 1-sentence summary of the email's content.",
+          "processed_records_count": 3,
+          "extracted_data": [
+            {
+              "sender": "LinkedIn Job Alerts <jobalerts-noreply@linkedin.com>",
+              "summary": "This email notifies the recipient of a Computer Vision Intern position focusing on neural rendering and Gaussian splatting at Nexus Beings."
+            },
+            {
+              "sender": "Daily Digest <noreply@unstop.news>",
+              "summary": "This email provides a list of top job and internship opportunities available in the recipient's area."
+            },
+            {
+              "sender": "Brilliant <notifications@account.brilliant.org>",
+              "summary": "This email promotes a 30% discount on Brilliant Premium subscriptions as part of a back-to-school sale ending on September 7th."
+            }
+          ],
+          "records": [
+            {
+              "sender": "LinkedIn Job Alerts <jobalerts-noreply@linkedin.com>",
+              "summary": "This email notifies the recipient of a Computer Vision Intern position focusing on neural rendering and Gaussian splatting at Nexus Beings."
+            },
+            {
+              "sender": "Daily Digest <noreply@unstop.news>",
+              "summary": "This email provides a list of top job and internship opportunities available in the recipient's area."
+            },
+            {
+              "sender": "Brilliant <notifications@account.brilliant.org>",
+              "summary": "This email promotes a 30% discount on Brilliant Premium subscriptions as part of a back-to-school sale ending on September 7th."
+            }
+          ],
+          "summary": "Extracted sender information and content summaries for three promotional and notification emails.",
+          "raw_snippet": "[{\"id\": \"1a05614e0ee9b358\", \"from\": \"LinkedIn Job Alerts <jobalerts-noreply@linkedin.com>\", \"subject\": \"Computer Vision Intern \\u2013 Neural Rendering / Gaussian Splatting at Nexus Beings\", \"date\": \"M..."
+        },
+        "error": null,
+        "execution_time_ms": 8001.270055770874,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "e2f50b27-50a0-4bbd-aa3d-afc3360467b7",
+        "description": "Compile the extracted information into a final summary report",
+        "tool_name": "report_generator",
+        "tool_args": {
+          "report_type": "summary",
+          "content": "$step_2.extracted_data"
+        },
+        "reasoning": "The report generator will format the extracted data into a clean, readable summary for the user.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T08:12:29.059714",
+    "updated_at": "2026-08-31T08:12:29.063228Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 2907,
+      "total_completion_tokens": 437,
+      "total_tokens": 3344,
+      "total_estimated_cost_usd": 0.000698,
+      "calls": [
+        {
+          "prompt_tokens": 2907,
+          "completion_tokens": 437,
+          "total_tokens": 3344,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000698
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

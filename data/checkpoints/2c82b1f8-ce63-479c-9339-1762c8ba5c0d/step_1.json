@@ -1,0 +1,86 @@
+{
+  "workflow_id": "2c82b1f8-ce63-479c-9339-1762c8ba5c0d",
+  "step_number": 1,
+  "timestamp": "2026-08-31T15:18:08.968889+00:00",
+  "state": {
+    "workflow_id": "2c82b1f8-ce63-479c-9339-1762c8ba5c0d",
+    "goal": "play hips dont lie",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "f876c969-dcac-4fae-b8cd-7bf167a24467",
+        "description": "Search for the song 'Hips Don't Lie' by Shakira on YouTube to retrieve the correct video URL.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_api_search",
+          "query": "Hips Don't Lie Shakira"
+        },
+        "reasoning": "Need to obtain the valid URL for the requested song before playback can be initiated.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "5b73c8f0-daaf-4426-b834-6facce438429",
+        "description": "Play the identified video from the search results.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_play",
+          "url": "$step_1.results[0].url"
+        },
+        "reasoning": "Executing the playback command using the URL retrieved from the search step.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T15:18:08.898457",
+    "updated_at": "2026-08-31T15:18:08.964473Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3005,
+      "total_completion_tokens": 271,
+      "total_tokens": 3276,
+      "total_estimated_cost_usd": 0.000613,
+      "calls": [
+        {
+          "prompt_tokens": 3005,
+          "completion_tokens": 271,
+          "total_tokens": 3276,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000613
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "workflow_id": "ef3359b9-98a9-4e68-9ac0-cf5068242098",
+  "step_number": 1,
+  "timestamp": "2026-08-31T08:12:29.067825+00:00",
+  "state": {
+    "workflow_id": "ef3359b9-98a9-4e68-9ac0-cf5068242098",
+    "goal": "Read my latest 3 Gmail emails and summarize who they are from and what they are about",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "c81130f3-f986-4515-85cc-56349663ad59",
+        "description": "Fetch the 3 most recent emails from the Gmail inbox",
+        "tool_name": "gmail",
+        "tool_args": {
+          "action": "read_inbox",
+          "max_results": 3
+        },
+        "reasoning": "This is the primary tool to access the user's email data. Fetching the 3 most recent messages is the necessary first step to fulfill the user's request.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "bae1470f-281a-497c-aa07-16a717ac588c",
+        "description": "Extract sender and subject/content summary from the fetched email data",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "extraction_query": "For each of the 3 emails provided, extract the sender's name/email address and a concise 1-sentence summary of the email's content.",
+          "data": "$step_1.emails"
+        },
+        "reasoning": "The raw email data needs to be processed into a structured format to identify the sender and summarize the content as requested.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "e2f50b27-50a0-4bbd-aa3d-afc3360467b7",
+        "description": "Compile the extracted information into a final summary report",
+        "tool_name": "report_generator",
+        "tool_args": {
+          "report_type": "summary",
+          "content": "$step_2.extracted_data"
+        },
+        "reasoning": "The report generator will format the extracted data into a clean, readable summary for the user.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T08:12:29.059714",
+    "updated_at": "2026-08-31T08:12:29.063228Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 2907,
+      "total_completion_tokens": 437,
+      "total_tokens": 3344,
+      "total_estimated_cost_usd": 0.000698,
+      "calls": [
+        {
+          "prompt_tokens": 2907,
+          "completion_tokens": 437,
+          "total_tokens": 3344,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000698
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

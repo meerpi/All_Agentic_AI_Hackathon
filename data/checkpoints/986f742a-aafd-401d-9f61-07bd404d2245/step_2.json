@@ -1,0 +1,103 @@
+{
+  "workflow_id": "986f742a-aafd-401d-9f61-07bd404d2245",
+  "step_number": 2,
+  "timestamp": "2026-08-31T07:01:48.264337+00:00",
+  "state": {
+    "workflow_id": "986f742a-aafd-401d-9f61-07bd404d2245",
+    "goal": "Go to https://youtu.be/KlfuFFGWw64 and tell me who is this video about and at what timestamp is his mentor first mentioned",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "8daa6889-9e9e-4c09-a6f4-f843e019606e",
+        "description": "Retrieve the transcript of the YouTube video KlfuFFGWw64.",
+        "tool_name": "media_controller",
+        "tool_args": {
+          "action": "youtube_transcript",
+          "video_id": "KlfuFFGWw64"
+        },
+        "reasoning": "Using the dedicated media_controller tool with the youtube_transcript action is the most direct and reliable way to get the full transcript of the video for analysis.",
+        "status": "COMPLETED",
+        "result": {
+          "status": "SUCCESS",
+          "action": "navigate",
+          "url": "https://www.youtube.com/watch?v=KlfuFFGWw64",
+          "title": "How to apply for Best OFF-Campus Internships ? For College Students - YouTube",
+          "original_url": "https://www.youtube.com/watch?v=KlfuFFGWw64",
+          "http_status": 200,
+          "used_fallback": false,
+          "observation": "<untrusted_page_observation>\n### Page URL: https://www.youtube.com/watch?v=KlfuFFGWw64\n### Title: How to apply for Best OFF-Campus Internships ? For College Students - YouTube\n\n### Interactive Elements (Reference by [ref=eN] or ref ID):\n[e1] button: \"Guide\"\n[e2] a: \"YouTube Home\"\n[e3] button: \"Skip navigation\"\n[e4] combobox: \"Search\"\n[e5] button: \"Search\"\n[e6] button: \"Search with your voice\"\n[e7] button: (unnamed)\n[e8] button: \"Pause (k)\"\n[e9] button: \"Mute (m)\"\n[e10] button: \"0:01 / 23:53\"\n[e11] button: \"Autoplay is on\"\n[e12] button: \"Subtitles/closed captions unavailable\"\n[e13] button: \"Settings\"\n[e14] button: \"Theater mode (t)\"\n[e15] button: \"Full screen (f)\"\n[e16] a: (unnamed)\n[e17] a: \"Apna College\"\n[e18] button: \"Subscribe\"\n[e19] button: \"11K\"\n[e20] button: \"Dislike this video\"\n[e21] button: \"Share\"\n[e22] button: \"Save\"\n[e23] button: \"Download\"\n[e24] button: \"More actions\"\n[e25] a: \"https://dsa.apnacollege.in/studymater...\"\n[e26] button: \"...more\"\n[e27] a: \"18:12\"\n[e28] a: \"TIER 3 to MAANG | How to get selected in Product based companies from Tier 3 colleges ?\"\n[e29] button: \"More actions\"\n[e30] a: \"1:16:30\"\n[e31] a: \"The Hindu Editorial Analysis | 31 August 2026 | Nimisha Bansal | Vocab, Grammar, Reading + Skimming\"\n[e32] button: \"More actions\"\n[e33] a: \"26:38\"\n[e34] a: \"How to start Coding in 1st Year? for College Students | Tech Internship/Placement 2026\"\n[e35] button: \"More actions\"\n[e36] a: \"13:31\"\n[e37] a: \"DSA Salary-Wise | How Much DSA Is Asked for 5\u201360 LPA Jobs?\"\n[e38] button: \"More actions\"\n[e39] a: \"19:01\"\n[e40] a: \"How Amazon, Oracle & LinkedIn Actually Hire People | Raj Shamani Clips\"\n[e41] button: \"More actions\"\n[e42] a: \"20:10\"\n[e43] a: \"Data Analyst vs Data Scientist vs AI Engineer | Difference Explained\"\n[e44] button: \"More actions\"\n[e45] a: \"28:28\"\n[e46] a: \"How Japan Became a SUPERPOWER? | World's Greatest Comeback | Dhruv Rathee\"\n[e47] button: \"More actions\"\n[e48] a: \"21:16\"\n[e49] a: \"Microsoft OFF-Campus Interview Experience | Complete Hiring Process of Microsoft, Wells Fargo Intern\"\n[e50] button: \"More actions\"\n[e51] a: \"18:28\"\n[e52] a: \"I Spent 2 Weeks Talking to People Across 5 Salary Brackets - Here's What I Found\"\n[e53] button: \"More actions\"\n[e54] a: \"9:44\"\n[e55] a: \"EP 3: If India Had a Citizenship Test, Would You Pass It? | Bharat Bioscope with Palki Sharma\"\n[e56] button: \"More actions\"\n[e57] a: \"40:52\"\n[e58] a: \"How to Get Internship in 3rd Year and Convert it to PPO!\"\n[e59] button: \"More actions\"\n\n### ARIA Accessibility Hierarchy Summary:\n- document:\n  - banner:\n    - button \"Guide\"\n    - link \"YouTube Home\":\n      - /url: /\n      - img \"Creators share their morning routines\"\n    - button \"Skip navigation\"\n    - search:\n      - combobox \"Search\" [expanded]\n      - button \"Search\"\n    - button \"Search with your voice\"\n    - tooltip \"tooltip\"\n  - main:\n    - complementary:\n      - button \"Channel watermark\":\n        - img \"Channel watermark\"\n      - slider \"Seek slider\"\n      - slider \"Click or scroll the panel for the precise seeking.\"\n      - button \"Pause (k)\":\n        - img\n      - button \"Mute (m)\":\n        - img\n      - slider \"Volume\"\n      - button \"0 Minutes 1 Seconds of 23 Minutes 53 Seconds\": 0:01 / 23:53\n      - button \"Autoplay is on\"\n      - button \"Subtitles/closed captions unavailable\" [pressed]:\n        - img\n      - button \"Settings\":\n        - img\n      - button \"Theater mode (t)\":\n        - img\n      - button \"Full screen (f)\":\n        - img\n    - heading \"How to apply for Best OFF-Campus Internships ? For College Students\" [level=1]\n    - link \"Apna College\":\n      - /url: /@ApnaCollegeOfficial\n      - img \"Apna College\"\n    - link \"Apna College\":\n      - /url: /@ApnaCollegeOfficial\n    - img \"Verified\"\n    - text: 7.87M subscribers\n    - button \"Subscribe to Apna College.\": Subscribe\n    - button \"like this video along with 11,354 other people\": 11K\n    - button \"Dislike this video\"\n    - button \"Share\"\n    - button \"Save to playlist\": Save\n    - button \"Download\"\n    - tooltip \"tooltip\"\n  \n</untrusted_page_observation>",
+          "page_content": "<untrusted_page_observation>\n### Page URL: https://www.youtube.com/watch?v=KlfuFFGWw64\n### Title: How to apply for Best OFF-Campus Internships ? For College Students - YouTube\n\n### Interactive Elements (Reference by [ref=eN] or ref ID):\n[e1] button: \"Guide\"\n[e2] a: \"YouTube Home\"\n[e3] button: \"Skip navigation\"\n[e4] combobox: \"Search\"\n[e5] button: \"Search\"\n[e6] button: \"Search with your voice\"\n[e7] button: (unnamed)\n[e8] button: \"Pause (k)\"\n[e9] button: \"Mute (m)\"\n[e10] button: \"0:01 / 23:53\"\n[e11] button: \"Autoplay is on\"\n[e12] button: \"Subtitles/closed captions unavailable\"\n[e13] button: \"Settings\"\n[e14] button: \"Theater mode (t)\"\n[e15] button: \"Full screen (f)\"\n[e16] a: (unnamed)\n[e17] a: \"Apna College\"\n[e18] button: \"Subscribe\"\n[e19] button: \"11K\"\n[e20] button: \"Dislike this video\"\n[e21] button: \"Share\"\n[e22] button: \"Save\"\n[e23] button: \"Download\"\n[e24] button: \"More actions\"\n[e25] a: \"https://dsa.apnacollege.in/studymater...\"\n[e26] button: \"...more\"\n[e27] a: \"18:12\"\n[e28] a: \"TIER 3 to MAANG | How to get selected in Product based companies from Tier 3 colleges ?\"\n[e29] button: \"More actions\"\n[e30] a: \"1:16:30\"\n[e31] a: \"The Hindu Editorial Analysis | 31 August 2026 | Nimisha Bansal | Vocab, Grammar, Reading + Skimming\"\n[e32] button: \"More actions\"\n[e33] a: \"26:38\"\n[e34] a: \"How to start Coding in 1st Year? for College Students | Tech Internship/Placement 2026\"\n[e35] button: \"More actions\"\n[e36] a: \"13:31\"\n[e37] a: \"DSA Salary-Wise | How Much DSA Is Asked for 5\u201360 LPA Jobs?\"\n[e38] button: \"More actions\"\n[e39] a: \"19:01\"\n[e40] a: \"How Amazon, Oracle & LinkedIn Actually Hire People | Raj Shamani Clips\"\n[e41] button: \"More actions\"\n[e42] a: \"20:10\"\n[e43] a: \"Data Analyst vs Data Scientist vs AI Engineer | Difference Explained\"\n[e44] button: \"More actions\"\n[e45] a: \"28:28\"\n[e46] a: \"How Japan Became a SUPERPOWER? | World's Greatest Comeback | Dhruv Rathee\"\n[e47] button: \"More actions\"\n[e48] a: \"21:16\"\n[e49] a: \"Microsoft OFF-Campus Interview Experience | Complete Hiring Process of Microsoft, Wells Fargo Intern\"\n[e50] button: \"More actions\"\n[e51] a: \"18:28\"\n[e52] a: \"I Spent 2 Weeks Talking to People Across 5 Salary Brackets - Here's What I Found\"\n[e53] button: \"More actions\"\n[e54] a: \"9:44\"\n[e55] a: \"EP 3: If India Had a Citizenship Test, Would You Pass It? | Bharat Bioscope with Palki Sharma\"\n[e56] button: \"More actions\"\n[e57] a: \"40:52\"\n[e58] a: \"How to Get Internship in 3rd Year and Convert it to PPO!\"\n[e59] button: \"More actions\"\n\n### ARIA Accessibility Hierarchy Summary:\n- document:\n  - banner:\n    - button \"Guide\"\n    - link \"YouTube Home\":\n      - /url: /\n      - img \"Creators share their morning routines\"\n    - button \"Skip navigation\"\n    - search:\n      - combobox \"Search\" [expanded]\n      - button \"Search\"\n    - button \"Search with your voice\"\n    - tooltip \"tooltip\"\n  - main:\n    - complementary:\n      - button \"Channel watermark\":\n        - img \"Channel watermark\"\n      - slider \"Seek slider\"\n      - slider \"Click or scroll the panel"
+        },
+        "error": null,
+        "execution_time_ms": 3.3462047576904297,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "35fbcf17-4f2e-4c2a-9243-833d9e9ba9cc",
+        "description": "Extract the subject of the video and the timestamp where his mentor is first mentioned from the transcript.",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "text": "$step_1.transcript",
+          "extraction_query": "Identify who this video is about and find the exact timestamp (or approximate time) when his mentor is first mentioned."
+        },
+        "reasoning": "The data_extractor tool is designed to parse unstructured text (the transcript) and extract specific structured information based on a natural language query.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T07:01:30.651878",
+    "updated_at": "2026-08-31T07:01:30.658820Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 5073,
+      "total_completion_tokens": 451,
+      "total_tokens": 5524,
+      "total_estimated_cost_usd": 0.001031,
+      "calls": [
+        {
+          "prompt_tokens": 2875,
+          "completion_tokens": 313,
+          "total_tokens": 3188,
+          "model_used": "gemini-3.5-flash",
+          "estimated_cost_usd": 0.000619
+        },
+        {
+          "prompt_tokens": 2198,
+          "completion_tokens": 138,
+          "total_tokens": 2336,
+          "model_used": "gemini-3.6-flash",
+          "estimated_cost_usd": 0.000412
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

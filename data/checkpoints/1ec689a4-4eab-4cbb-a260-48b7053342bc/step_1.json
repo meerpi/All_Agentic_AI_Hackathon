@@ -1,0 +1,111 @@
+{
+  "workflow_id": "1ec689a4-4eab-4cbb-a260-48b7053342bc",
+  "step_number": 1,
+  "timestamp": "2026-08-31T11:36:26.915067+00:00",
+  "state": {
+    "workflow_id": "1ec689a4-4eab-4cbb-a260-48b7053342bc",
+    "goal": "give me a google doc about narendra modi",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "01ae38eb-6d14-418f-b300-debe2d5f779b",
+        "description": "Search for comprehensive biographical information about Narendra Modi to ensure accurate content generation.",
+        "tool_name": "browser_controller",
+        "tool_args": {
+          "action": "navigate",
+          "url": "https://www.pmindia.gov.in/en/prime-ministers-profile/"
+        },
+        "reasoning": "Need to gather authoritative, up-to-date biographical data to populate the Google Doc with high-quality, factual content.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "9383e848-103a-4d19-a32a-0e9c8cb41129",
+        "description": "Extract key biographical details including early life, political career, and major policy initiatives.",
+        "tool_name": "data_extractor",
+        "tool_args": {
+          "extraction_query": "Extract the following sections: Early Life, Political Career (Chief Minister of Gujarat), Prime Ministership (major policies like Make in India, Digital India, Swachh Bharat), and current status."
+        },
+        "reasoning": "Synthesizing the raw web data into structured information for the document.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "6c2303ed-d6a2-41a7-ad2d-be098141ce9e",
+        "description": "Create a Google Doc titled 'Narendra Modi: Biography and Policy Overview' with the extracted content.",
+        "tool_name": "google_docs",
+        "tool_args": {
+          "action": "create_document",
+          "title": "Narendra Modi: Biography and Policy Overview",
+          "content": "Narendra Modi: Biography and Policy Overview\n\n1. Early Life: Born in Vadnagar, Gujarat, he rose through the ranks of the Rashtriya Swayamsevak Sangh (RSS) before joining the Bharatiya Janata Party (BJP).\n\n2. Political Career: Served as the Chief Minister of Gujarat from 2001 to 2014, focusing on infrastructure development and industrial growth.\n\n3. Prime Ministership: Elected as the 14th Prime Minister of India in 2014. Key initiatives include:\n- Make in India: Aimed at transforming India into a global design and manufacturing hub.\n- Digital India: Focused on improving online infrastructure and increasing internet connectivity.\n- Swachh Bharat Abhiyan: A nationwide campaign for cleanliness and sanitation.\n- Pradhan Mantri Jan Dhan Yojana: A financial inclusion program to provide banking services to all households.\n\n4. Current Status: Continues to lead the nation with a focus on economic reform, infrastructure modernization, and global diplomacy."
+        },
+        "reasoning": "Compiling the final artifact using the structured data extracted in the previous step.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 3,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T11:36:26.847360",
+    "updated_at": "2026-08-31T11:36:26.915067Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3058,
+      "total_completion_tokens": 658,
+      "total_tokens": 3716,
+      "total_estimated_cost_usd": 0.000853,
+      "calls": [
+        {
+          "prompt_tokens": 3058,
+          "completion_tokens": 658,
+          "total_tokens": 3716,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000853
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

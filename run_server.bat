@@ -3,8 +3,9 @@ echo =========================================================
 echo  Starting Taskmaster Autonomous Agent Control Center...
 echo =========================================================
 echo.
-echo Dashboard URL: http://127.0.0.1:8000
-echo Swagger API Docs: http://127.0.0.1:8000/docs
+echo Local URL:   http://localhost:8000/chat
+echo Network URL: http://172.25.248.209:8000/chat
+echo Swagger Docs: http://localhost:8000/docs
 echo.
-c:\users\hp\onedrive\annaconda\python.exe app.py
+.\venv\Scripts\python.exe app.py
 pause

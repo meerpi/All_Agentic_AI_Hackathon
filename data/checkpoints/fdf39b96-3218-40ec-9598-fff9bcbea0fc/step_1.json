@@ -1,0 +1,62 @@
+{
+  "workflow_id": "fdf39b96-3218-40ec-9598-fff9bcbea0fc",
+  "step_number": 1,
+  "timestamp": "2026-08-31T11:48:11.382718+00:00",
+  "state": {
+    "workflow_id": "fdf39b96-3218-40ec-9598-fff9bcbea0fc",
+    "goal": "Send a mail to rakeshkabir@gmail.com about eating too much gewar",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "b66442b0-f8a3-410c-8866-a78042a10a20",
+        "description": "Send an email to Rakesh Kabir regarding excessive consumption of gewar.",
+        "tool_name": "gmail",
+        "tool_args": {
+          "recipient": "rakeshkabir@gmail.com",
+          "subject": "Health Concern: Excessive Gewar Consumption",
+          "body": "Hi Rakesh,\n\nI am writing to express some concern regarding your recent diet. It has come to my attention that you have been consuming a significant amount of gewar (cluster beans). While it is a nutritious vegetable, consuming it in such large quantities can lead to digestive discomfort and other health issues.\n\nPlease consider diversifying your vegetable intake to ensure a more balanced diet. Let me know if you would like me to help you plan some alternative meal options.\n\nBest regards,\nTaskmaster Agent"
+        },
+        "reasoning": "The goal is to send a specific email to a specific recipient. The gmail tool is the direct and only tool required for this action.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T11:48:11.324954",
+    "updated_at": "2026-08-31T11:48:11.380706Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3054,
+      "total_completion_tokens": 261,
+      "total_tokens": 3315,
+      "total_estimated_cost_usd": 0.000615,
+      "calls": [
+        {
+          "prompt_tokens": 3054,
+          "completion_tokens": 261,
+          "total_tokens": 3315,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000615
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

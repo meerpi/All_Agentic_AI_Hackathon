@@ -1,0 +1,112 @@
+{
+  "workflow_id": "2c94ef7f-83bf-4565-ac28-5d61aadce392",
+  "step_number": 1,
+  "timestamp": "2026-08-31T11:28:03.232979+00:00",
+  "state": {
+    "workflow_id": "2c94ef7f-83bf-4565-ac28-5d61aadce392",
+    "goal": "not valid create a valid working link.",
+    "steps": [
+      {
+        "step_number": 1,
+        "step_id": "ce792800-cc17-4136-92a3-78091ffc8357",
+        "description": "Search for the previously created workout plan spreadsheet in the user's Google Drive to retrieve its URL.",
+        "tool_name": "db_manager",
+        "tool_args": {
+          "query": "SELECT spreadsheet_id, title FROM documents WHERE title LIKE '%workout plan%' ORDER BY created_at DESC LIMIT 1"
+        },
+        "reasoning": "The user is asking for a link to a previously created document. I need to query the database to find the metadata for the most recent workout plan spreadsheet.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 2,
+        "step_id": "5d5b3553-6120-4f26-a02a-5cfd9a3324c8",
+        "description": "Construct a valid, shareable link for the identified spreadsheet.",
+        "tool_name": "google_sheets",
+        "tool_args": {
+          "action": "read_sheet",
+          "spreadsheet_id": "$step_1.spreadsheet_id",
+          "range": "A1:A1"
+        },
+        "reasoning": "By accessing the sheet, I confirm its existence and can generate the direct URL for the user based on the confirmed spreadsheet_id.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 2,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      },
+      {
+        "step_number": 3,
+        "step_id": "0e8c67d2-83ac-4754-8954-85697846c670",
+        "description": "Report the valid working link to the user.",
+        "tool_name": "report_generator",
+        "tool_args": {
+          "report_type": "summary",
+          "content": "The requested workout plan spreadsheet has been located. You can access it here: https://docs.google.com/spreadsheets/d/$step_1.spreadsheet_id/edit"
+        },
+        "reasoning": "The goal is to provide a working link. This step formats the final output for the user.",
+        "status": "PENDING",
+        "result": null,
+        "error": null,
+        "execution_time_ms": null,
+        "depends_on": [
+          1,
+          2
+        ],
+        "subtasks": [],
+        "is_expanded": false,
+        "complexity_score": 1,
+        "complexity_reasoning": null,
+        "risk_level": "LOW",
+        "is_approved": false,
+        "token_usage": null
+      }
+    ],
+    "status": "EXECUTING",
+    "current_step_index": 0,
+    "final_artifact": null,
+    "summary": null,
+    "created_at": "2026-08-31T11:28:03.164498",
+    "updated_at": "2026-08-31T11:28:03.230965Z",
+    "require_approval": false,
+    "tags": [],
+    "context_id": null,
+    "token_usage": {
+      "total_prompt_tokens": 3029,
+      "total_completion_tokens": 471,
+      "total_tokens": 3500,
+      "total_estimated_cost_usd": 0.000737,
+      "calls": [
+        {
+          "prompt_tokens": 3029,
+          "completion_tokens": 471,
+          "total_tokens": 3500,
+          "model_used": "gemini-3.1-flash-lite",
+          "estimated_cost_usd": 0.000737
+        }
+      ]
+    },
+    "checkpoint_data": null,
+    "paused_at_step": null,
+    "eval_scores": null
+  }
+}

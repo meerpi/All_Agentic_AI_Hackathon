@@ -25,12 +25,25 @@ class YouTubeDriver:
     def __init__(self):
         self.manager = browser_manager
 
-    async def play_video(self, url: str, seek_seconds: Optional[int] = None) -> Dict[str, Any]:
+    async def play_video(
+        self,
+        url: str,
+        seek_seconds: Optional[int] = None,
+        duration_seconds: Optional[int] = None,
+        auto_skip_ads: bool = True,
+        auto_close: bool = False
+    ) -> Dict[str, Any]:
         """
         Directly navigates to a YouTube video URL, dismisses dialogs, seeks to specified timestamp,
-        and starts playback.
+        starts playback, actively auto-skips ads for the specified duration, and optionally closes the session.
         """
         page: Page = await self.manager.get_page(headed=True)
+        # Pause any current playback before navigating
+        try:
+            await page.evaluate("document.querySelector('video')?.pause()")
+        except Exception:
+            pass
+
         target_url = url
         if seek_seconds is not None:
             seek_seconds = max(0, int(seek_seconds))
@@ -50,7 +63,7 @@ class YouTubeDriver:
                     video.currentTime = seek;
                 }
                 video.muted = false;
-                video.play();
+                video.play().catch(() => {});
                 return {
                     title: document.title.replace(' - YouTube', ''),
                     currentTime: Math.round(video.currentTime),
@@ -61,14 +74,40 @@ class YouTubeDriver:
             seek_seconds
         )
 
-        await self.skip_ad(page)
-        state = await self.get_playback_state(page)
+        ads_skipped_count = 0
+        if auto_skip_ads:
+            # Active pre-roll ad clearance loop (checks for up to 6 seconds)
+            for _ in range(6):
+                if await self.skip_ad(page):
+                    ads_skipped_count += 1
+                is_ad_active = await page.evaluate("""() => {
+                    const p = document.querySelector('#movie_player');
+                    return !!(p && (p.classList.contains('ad-showing') || p.classList.contains('ad-interrupting')));
+                }""")
+                if not is_ad_active:
+                    break
+                await asyncio.sleep(1.0)
 
+            # Ensure player is ready and ads are skipped
+            for _ in range(3):
+                if await self.skip_ad(page):
+                    ads_skipped_count += 1
+                await asyncio.sleep(0.5)
+
+            # Pause background automation browser so only the frontend UI plays for the user
+            try:
+                await page.evaluate("document.querySelector('video')?.pause()")
+            except Exception:
+                pass
+
+        state = await self.get_playback_state(page)
         return {
             "status": "SUCCESS",
             "action": "youtube_play_video",
             "url": page.url,
             "seek_seconds": seek_seconds,
+            "duration_played_seconds": duration_seconds,
+            "ads_skipped_count": ads_skipped_count,
             "playback_state": state,
         }
 
@@ -95,32 +134,32 @@ class YouTubeDriver:
 
         # 2. Wait for video results to appear
         try:
-            await page.wait_for_selector("ytd-video-renderer a#video-title", timeout=8000)
+            await page.wait_for_selector("ytd-video-renderer a#video-title, a#video-title", timeout=8000)
         except Exception:
             logger.warning("Standard video title selector timed out, attempting fallback click...")
 
-        # 3. Click the top video result
+        # 3. Locate top video result
         video_info = await page.evaluate(
             """() => {
-                const firstResult = document.querySelector('ytd-video-renderer a#video-title');
+                const firstResult = document.querySelector('ytd-video-renderer a#video-title, ytd-compact-video-renderer a#video-title, a#video-title');
                 if (firstResult) {
                     const title = firstResult.innerText || firstResult.title;
                     const href = firstResult.href;
-                    firstResult.click();
                     return { title, href, clicked: true };
                 }
-                const fallback = document.querySelector('a#thumbnail');
+                const fallback = document.querySelector('ytd-video-renderer a#thumbnail, a#thumbnail');
                 if (fallback) {
-                    fallback.click();
                     return { title: 'YouTube Video', href: fallback.href, clicked: true };
                 }
                 return { clicked: false };
             }"""
         )
 
-        if not video_info.get("clicked"):
-            # Click by locator
-            locator = page.locator("ytd-video-renderer a#video-title").first
+        if video_info.get("href"):
+            logger.info(f"Navigating directly to top search result: {video_info['href']}")
+            await page.goto(video_info["href"], wait_until="domcontentloaded", timeout=30000)
+        else:
+            locator = page.locator("ytd-video-renderer a#video-title, a#video-title").first
             await locator.click(timeout=5000)
 
         # 4. Wait for player to load and verify playback
@@ -138,51 +177,27 @@ class YouTubeDriver:
             }"""
         )
 
+
         ads_skipped_count = 0
         if auto_skip_ads:
-            if await self.skip_ad(page):
-                ads_skipped_count += 1
-
-        # 5. If duration_seconds is provided, actively monitor playback and skip ads
-        if duration_seconds and duration_seconds > 0:
-            import time
-            start_t = time.time()
-            last_log = 0
-            logger.info(f"Monitoring YouTube playback for {duration_seconds} seconds with active ad-skipping...")
-
-            while (time.time() - start_t) < duration_seconds:
-                elapsed = int(time.time() - start_t)
-                if auto_skip_ads and await self.skip_ad(page):
+            for _ in range(2):
+                if await self.skip_ad(page):
                     ads_skipped_count += 1
+                await asyncio.sleep(0.5)
 
-                # Keep video playing
-                await page.evaluate("document.querySelector('video')?.play()?.catch(() => {})")
+        # Pause background automation browser so only the frontend UI plays for the user
+        try:
+            await page.evaluate("document.querySelector('video')?.pause()")
+        except Exception:
+            pass
 
-                if elapsed - last_log >= 15:
-                    last_log = elapsed
-                    cur_state = await self.get_playback_state(page)
-                    logger.info(
-                        f"⏱️ [T+{elapsed:3d}s/{duration_seconds}s] Video Time: {cur_state.get('currentTime', 0)}s "
-                        f"| Status: {'PLAYING' if cur_state.get('playing') else 'PAUSED/AD'} | Ads Skipped: {ads_skipped_count}"
-                    )
-
-                await asyncio.sleep(1.5)
-
-            logger.info(f"✓ Reached requested playback duration of {duration_seconds} seconds.")
-
-            if auto_close:
-                logger.info("Pausing video and closing browser session...")
-                await page.evaluate("document.querySelector('video')?.pause()")
-                await asyncio.sleep(1.0)
-                await self.manager.close_session()
-
-        state = await self.get_playback_state(page) if not auto_close else {"status": "SESSION_CLOSED"}
+        state = await self.get_playback_state(page)
         return {
             "status": "SUCCESS",
             "action": "youtube_search_and_play",
             "query": query,
             "video_title": state.get("title", video_info.get("title", "YouTube Video")),
-            "video_url": page.url if not auto_close else video_info.get("href"),
+            "video_url": page.url if page.url and page.url != "about:blank" else video_info.get("href"),
             "ads_skipped_count": ads_skipped_count,
             "duration_played_seconds": duration_seconds,
             "playback_state": state,
@@ -205,7 +220,7 @@ class YouTubeDriver:
             logger.debug(f"Consent dismissal notice: {e}")
 
     async def skip_ad(self, page: Optional[Page] = None) -> bool:
-        """Check for and click YouTube skip ad buttons if present."""
+        """Check for and click YouTube skip ad buttons and bypass video advertisements."""
         if page is None:
             page = await self.manager.get_page()
 
@@ -218,17 +233,41 @@ class YouTubeDriver:
                         '.ytp-ad-skip-button-modern',
                         'button.ytp-ad-overlay-close-button',
                         '.ytp-ad-text.ytp-ad-preview-text',
+                        '.ytp-ad-skip-button-container button',
+                        '.videoAdUiSkipButton',
+                        '[id^="skip-button"] button',
                         '[aria-label*="Skip Ad"]',
-                        '[aria-label*="skip ad"]'
+                        '[aria-label*="skip ad"]',
+                        '[aria-label*="Skip ads"]',
+                        '[aria-label*="skip ads"]'
                     ];
+                    let didSkip = false;
                     for (const sel of skipSelectors) {
-                        const btn = document.querySelector(sel);
-                        if (btn && btn.offsetParent !== null) {
-                            btn.click();
-                            return true;
+                        const btns = document.querySelectorAll(sel);
+                        for (const btn of btns) {
+                            if (btn && (btn.offsetWidth > 0 || btn.offsetHeight > 0 || btn.offsetParent !== null)) {
+                                btn.click();
+                                didSkip = true;
+                            }
                         }
                     }
-                    return false;
+
+                    // Also check for ad overlays and accelerate playback if unskippable bumper ad
+                    const player = document.querySelector('#movie_player');
+                    if (player && (player.classList.contains('ad-showing') || player.classList.contains('ad-interrupting'))) {
+                        const video = document.querySelector('video');
+                        if (video && video.duration && video.currentTime < video.duration) {
+                            video.playbackRate = 16.0;
+                            video.muted = true;
+                        }
+                    } else {
+                        const video = document.querySelector('video');
+                        if (video) {
+                            video.playbackRate = 1.0;
+                            video.muted = false;
+                        }
+                    }
+                    return didSkip;
                 }"""
             )
             return bool(skipped)
@@ -291,7 +330,10 @@ class YouTubeDriver:
         if cmd in key_map:
             key = key_map[cmd]
             # Focus on video player before sending shortcut
-            await page.keyboard.press(key)
+            try:
+                await page.keyboard.press(key)
+            except Exception:
+                pass
             await asyncio.sleep(0.3)
             state = await self.get_playback_state(page)
             return {
@@ -300,5 +342,29 @@ class YouTubeDriver:
                 "key_pressed": key,
                 "playback_state": state,
             }
+        elif cmd in ("stop", "halt", "kill"):
+            return await self.stop_all_media()
         else:
-            raise ValueError(f"Unsupported YouTube control command: '{command}'. Supported: {list(key_map.keys())}")
+            raise ValueError(f"Unsupported YouTube control command: '{command}'. Supported: {list(key_map.keys())} + ['stop']")
+
+    async def pause_video(self, page: Optional[Page] = None) -> Dict[str, Any]:
+        """Pauses the active video element."""
+        if page is None:
+            page = await self.manager.get_page()
+        try:
+            await page.evaluate("document.querySelector('video')?.pause()")
+        except Exception:
+            pass
+        return {"status": "SUCCESS", "action": "pause_video"}
+
+    async def stop_all_media(self) -> Dict[str, Any]:
+        """Pauses all HTML5 media across all open pages and navigates to about:blank."""
+        if self.manager._context:
+            for p in list(self.manager._context.pages):
+                try:
+                    if not p.is_closed():
+                        await p.evaluate("document.querySelectorAll('video, audio').forEach(el => el.pause())")
+                        await p.goto("about:blank")
+                except Exception:
+                    pass
+        return {"status": "SUCCESS", "action": "stop_all_media", "message": "All media paused and cleared."}

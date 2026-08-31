@@ -1,0 +1,221 @@
+{
+  "workflow_id": "6fd694af-27a6-4b5c-9c13-37816123d976",
+  "goal": "I have to first create a s3 then srtore db in document db then host it in cloud create 3 detailed jira tickets based on this.",
+  "steps": [
+    {
+      "step_number": 1,
+      "step_id": "a25d03c2-8813-4907-b6a4-070b5b28939a",
+      "description": "Create an AWS S3 bucket for static asset storage",
+      "tool_name": "action_dispatcher",
+      "tool_args": {
+        "action": "aws_s3_create_bucket",
+        "bucket_name": "app-assets-storage-2026-08-31",
+        "region": "us-east-1",
+        "acl": "private"
+      },
+      "reasoning": "Provisioning the S3 bucket is the foundational infrastructure step for the requested architecture.",
+      "status": "FAILED",
+      "result": null,
+      "error": "[Errno 11001] getaddrinfo failed",
+      "execution_time_ms": 0.0,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 2,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "is_approved": false,
+      "token_usage": null
+    },
+    {
+      "step_number": 2,
+      "step_id": "b5518c4c-9b1a-47fa-a133-e3b5df68945a",
+      "description": "Initialize DocumentDB cluster and database schema",
+      "tool_name": "action_dispatcher",
+      "tool_args": {
+        "action": "aws_docdb_create_cluster",
+        "cluster_identifier": "app-data-cluster",
+        "instance_class": "db.t3.medium",
+        "master_username": "admin_user",
+        "master_password": "SecurePassword123!",
+        "database_name": "application_db"
+      },
+      "reasoning": "Setting up the DocumentDB instance is required to store the application data as requested.",
+      "status": "FAILED",
+      "result": null,
+      "error": "[Errno 11001] getaddrinfo failed",
+      "execution_time_ms": 0.0,
+      "depends_on": [],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "is_approved": false,
+      "token_usage": null
+    },
+    {
+      "step_number": 3,
+      "step_id": "84229d9f-76e5-45f1-b06a-2e4fc524235d",
+      "description": "Create Jira tickets for infrastructure and deployment tasks",
+      "tool_name": "jira",
+      "tool_args": {
+        "action": "create_tasks_bulk",
+        "project_key": "OPS",
+        "issues": [
+          {
+            "summary": "Configure S3 Bucket for Static Assets",
+            "description": "Provision and secure S3 bucket $step_1.bucket_name. Acceptance Criteria: Bucket created, public access blocked, IAM role attached for application access.",
+            "priority": "High",
+            "story_points": 2
+          },
+          {
+            "summary": "Setup DocumentDB Cluster and Schema",
+            "description": "Deploy DocumentDB cluster $step_2.cluster_identifier. Acceptance Criteria: Cluster reachable from VPC, database 'application_db' initialized, connection string stored in Secrets Manager.",
+            "priority": "High",
+            "story_points": 5
+          },
+          {
+            "summary": "Implement Cloud Hosting Deployment Pipeline",
+            "description": "Configure CI/CD pipeline to host application on AWS ECS/Fargate. Acceptance Criteria: Automated build, container image pushed to ECR, service deployed with auto-scaling enabled.",
+            "priority": "Medium",
+            "story_points": 8
+          }
+        ]
+      },
+      "reasoning": "Creating detailed Jira tickets ensures the infrastructure work is tracked and follows standard engineering practices.",
+      "status": "BLOCKED",
+      "result": null,
+      "error": null,
+      "execution_time_ms": null,
+      "depends_on": [
+        1,
+        2
+      ],
+      "subtasks": [],
+      "is_expanded": false,
+      "complexity_score": 3,
+      "complexity_reasoning": null,
+      "risk_level": "LOW",
+      "is_approved": false,
+      "token_usage": null
+    }
+  ],
+  "status": "FAILED",
+  "current_step_index": 0,
+  "final_artifact": {
+    "results": [],
+    "step_count": 3
+  },
+  "summary": "## \u26a0\ufe0f Workflow Execution Status\n\nThe requested infrastructure deployment and Jira ticket creation workflow could not be completed due to technical failures in the initial provisioning steps. \n\n### \u274c Failed Operations\n1. **AWS S3 Provisioning**: Failed to initialize the storage bucket.\n2. **DocumentDB Initialization**: Failed to create the cluster and schema.\n3. **Jira Ticket Generation**: Blocked due to the failure of prerequisite infrastructure tasks.",
+  "created_at": "2026-08-31T11:24:47.036232",
+  "updated_at": "2026-08-31T11:24:58.747576Z",
+  "require_approval": false,
+  "tags": [],
+  "context_id": null,
+  "token_usage": {
+    "total_prompt_tokens": 9228,
+    "total_completion_tokens": 1388,
+    "total_tokens": 10616,
+    "total_estimated_cost_usd": 0.002218,
+    "calls": [
+      {
+        "prompt_tokens": 3067,
+        "completion_tokens": 701,
+        "total_tokens": 3768,
+        "model_used": "gemini-3.1-flash-lite",
+        "estimated_cost_usd": 0.000881
+      },
+      {
+        "prompt_tokens": 2243,
+        "completion_tokens": 234,
+        "total_tokens": 2477,
+        "model_used": "gemini-3.1-flash-lite",
+        "estimated_cost_usd": 0.000477
+      },
+      {
+        "prompt_tokens": 2224,
+        "completion_tokens": 197,
+        "total_tokens": 2421,
+        "model_used": "gemini-3.1-flash-lite",
+        "estimated_cost_usd": 0.000452
+      },
+      {
+        "prompt_tokens": 1694,
+        "completion_tokens": 256,
+        "total_tokens": 1950,
+        "model_used": "gemini-3.1-flash-lite",
+        "estimated_cost_usd": 0.000408
+      }
+    ]
+  },
+  "checkpoint_data": null,
+  "paused_at_step": null,
+  "eval_scores": {
+    "workflow_id": "6fd694af-27a6-4b5c-9c13-37816123d976",
+    "overall_score": 58.3,
+    "passed": false,
+    "plan_quality": {
+      "score": 90.0,
+      "passed": true,
+      "reasoning": "The plan logically decomposed the user's request into infrastructure provisioning and project management tasks, though it lacked a specific step for the 'hosting' component beyond the Jira ticket.",
+      "findings": [
+        "Logical sequence: S3 -> DocumentDB -> Jira",
+        "Missing explicit hosting implementation step"
+      ]
+    },
+    "plan_adherence": {
+      "score": 100.0,
+      "passed": true,
+      "reasoning": "The agent followed the defined plan exactly, attempting each step in the specified order.",
+      "findings": [
+        "Executed steps 1, 2, and 3 in order",
+        "Correctly identified dependencies for step 3"
+      ]
+    },
+    "tool_selection": {
+      "score": 90.0,
+      "passed": true,
+      "reasoning": "The tools selected were appropriate for the requested actions, though the use of a generic 'action_dispatcher' for AWS tasks is less granular than specific AWS-native tools.",
+      "findings": [
+        "Appropriate use of Jira for task management",
+        "AWS tools were correctly mapped to the dispatcher"
+      ]
+    },
+    "argument_correctness": {
+      "score": 80.0,
+      "passed": true,
+      "reasoning": "Arguments were well-formed, but the agent failed to handle the potential for credential exposure (S2) by including a plaintext password in the tool arguments.",
+      "findings": [
+        "Arguments were syntactically correct",
+        "Violation of S2: Plaintext password 'SecurePassword123!' included in tool_args"
+      ]
+    },
+    "error_recovery": {
+      "score": 0.0,
+      "passed": false,
+      "reasoning": "The agent failed to recover from the network errors (Errno 11001) in steps 1 and 2. It did not attempt to diagnose the connectivity issue or retry the operations, leading to a blocked final step.",
+      "findings": [
+        "No retry logic implemented",
+        "No diagnostic steps taken after network failure",
+        "Cascading failure caused step 3 to be blocked"
+      ]
+    },
+    "result_utilization": {
+      "score": 90.0,
+      "passed": true,
+      "reasoning": "The agent correctly used dynamic referencing for the Jira tickets, though the failure of the preceding steps meant the references could not be resolved at execution time.",
+      "findings": [
+        "Correct implementation of $step_n references",
+        "Summary accurately reflects the failure state of the workflow"
+      ]
+    },
+    "execution_time_ms": 0.0,
+    "total_steps": 3,
+    "tools_used": [
+      "action_dispatcher",
+      "action_dispatcher",
+      "jira"
+    ]
+  }
+}

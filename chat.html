@@ -8,7 +8,10 @@
     <link rel="icon" type="image/png" href="/frontend/assets/favicon.png">
     <link rel="stylesheet" href="/frontend/css/style.css?v=5.4">
     <link rel="stylesheet" href="/frontend/css/chat.css?v=5.4">
+    <link rel="stylesheet" href="/frontend/css/artifacts_canvas.css?v=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <style>
         .user-profile-badge {
             display: flex;
@@ -140,7 +143,11 @@
                     </span>
                 </div>
 
-                <div class="navbar-right" style="display:flex; align-items:center; gap:0.75rem;">
+                <div class="navbar-right" style="display:flex; align-items:center; gap:0.65rem;">
+                    <button class="heartbeat-badge-btn" id="heartbeatStatusBtn" onclick="openHeartbeatModal()" title="24/7 Autonomous Operations Heartbeat">
+                        <span class="heartbeat-pulse-dot"></span>
+                        <span id="heartbeatStatusText">Heartbeat: Active</span>
+                    </button>
                     <div class="status-pill healthy" id="statusPill">● Healthy</div>
                     <a href="/" class="btn btn-secondary" style="padding:0.35rem 0.75rem; font-size:0.78rem; display:inline-flex; align-items:center; gap:0.35rem;">
                         <i class="fa-solid fa-house"></i> <span>Home</span>
@@ -239,6 +246,87 @@
                 </div>
             </div>
         </main>
+
+        <!-- ── Right Split-Pane: Interactive Artifacts Canvas ── -->
+        <aside class="chat-artifacts-pane" id="chatArtifactsPane">
+            <div class="artifacts-header">
+                <div class="artifacts-title-group">
+                    <span class="artifacts-type-badge table" id="artifactCanvasBadge"><i class="fa-solid fa-table"></i> Table</span>
+                    <span class="artifacts-title" id="artifactCanvasTitle">Deliverable Artifact</span>
+                </div>
+
+                <div class="artifacts-tabs">
+                    <button type="button" class="artifacts-tab-btn active" id="tabVisualBtn" onclick="ArtifactsCanvas.switchTab('visual')">
+                        <i class="fa-solid fa-eye"></i> <span>Preview</span>
+                    </button>
+                    <button type="button" class="artifacts-tab-btn" id="tabCodeBtn" onclick="ArtifactsCanvas.switchTab('code')">
+                        <i class="fa-solid fa-code"></i> <span>Code / Raw</span>
+                    </button>
+                </div>
+
+                <div class="artifacts-actions">
+                    <button type="button" class="artifacts-action-btn" id="artifactExportBtn" onclick="ArtifactsCanvas.exportCSV()" title="Export CSV">
+                        <i class="fa-solid fa-download"></i>
+                    </button>
+                    <button type="button" class="artifacts-action-btn" id="artifactCopyBtn" onclick="ArtifactsCanvas.copyContent()" title="Copy content">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                    <button type="button" class="artifacts-action-btn" id="artifactMaximizeBtn" onclick="ArtifactsCanvas.toggleMaximize()" title="Expand / Minimize canvas">
+                        <i class="fa-solid fa-expand"></i>
+                    </button>
+                    <button type="button" class="artifacts-action-btn btn-close" onclick="ArtifactsCanvas.close()" title="Close canvas">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="artifacts-content" id="artifactCanvasContent">
+                <div class="canvas-visual-view" id="artifactVisualView"></div>
+                <div class="canvas-raw-view" id="artifactRawView">
+                    <pre class="canvas-code-block"><code id="artifactCodeContent"></code></pre>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Autonomous Heartbeat Operations Modal -->
+    <div class="confirm-modal-backdrop" id="heartbeatModal" onclick="closeHeartbeatModal()" style="display:none;">
+        <div class="confirm-modal-card" style="max-width: 650px; width: 90%; text-align: left;" onclick="event.stopPropagation()">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; border-bottom:1px solid #e2e8f0; padding-bottom:0.75rem;">
+                <div style="display:flex; align-items:center; gap:0.6rem;">
+                    <span class="heartbeat-pulse-dot" style="width:10px; height:10px;"></span>
+                    <h3 style="margin:0; font-family:'Outfit',sans-serif; font-size:1.1rem; color:#0f172a;">24/7 Autonomous Operations Heartbeat</h3>
+                </div>
+                <button type="button" onclick="closeHeartbeatModal()" style="background:none; border:none; color:#64748b; font-size:1.2rem; cursor:pointer;">&times;</button>
+            </div>
+            
+            <div id="heartbeatModalContent">
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:0.75rem; margin-bottom:1rem;">
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:0.75rem; border-radius:8px;">
+                        <div style="font-size:0.72rem; color:#64748b; font-weight:600;">DAEMON STATUS</div>
+                        <div style="font-size:1.1rem; font-weight:800; color:#10b981;" id="hbStatusVal">ONLINE</div>
+                    </div>
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:0.75rem; border-radius:8px;">
+                        <div style="font-size:0.72rem; color:#64748b; font-weight:600;">ACTIVE JOBS</div>
+                        <div style="font-size:1.1rem; font-weight:800; color:#2563eb;" id="hbJobsCount">0</div>
+                    </div>
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:0.75rem; border-radius:8px;">
+                        <div style="font-size:0.72rem; color:#64748b; font-weight:600;">TOTAL RUNS</div>
+                        <div style="font-size:1.1rem; font-weight:800; color:#7c3aed;" id="hbRunsCount">0</div>
+                    </div>
+                </div>
+
+                <h4 style="font-size:0.85rem; font-weight:700; margin-bottom:0.5rem; color:#334155;">Recurring Operational Schedules</h4>
+                <div id="hbSchedulesList" style="max-height: 200px; overflow-y:auto; border:1px solid #e2e8f0; border-radius:8px; margin-bottom:1rem; padding:0.5rem;">
+                    <div style="padding:1rem; text-align:center; color:#94a3b8; font-size:0.82rem;">Loading schedules...</div>
+                </div>
+
+                <h4 style="font-size:0.85rem; font-weight:700; margin-bottom:0.5rem; color:#334155;">Recent Execution &amp; Anomaly Logs</h4>
+                <div id="hbRunsList" style="max-height: 180px; overflow-y:auto; border:1px solid #e2e8f0; border-radius:8px; padding:0.5rem;">
+                    <div style="padding:1rem; text-align:center; color:#94a3b8; font-size:0.82rem;">Loading recent runs...</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Delete Confirmation Modal -->
@@ -257,7 +345,8 @@
     </div>
 
     <!-- Scripts -->
-    <script src="/frontend/js/api.js?v=5.6"></script>
-    <script src="/frontend/js/chat.js?v=5.6"></script>
+    <script src="/frontend/js/api.js?v=6.0"></script>
+    <script src="/frontend/js/artifacts_canvas.js?v=1.0"></script>
+    <script src="/frontend/js/chat.js?v=6.0"></script>
 </body>
 </html>

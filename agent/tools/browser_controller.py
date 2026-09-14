@@ -13,6 +13,7 @@ import logging
 from typing import Any, Dict, List, Optional
 from agent.browser.aria_parser import ARIAParser
 from agent.browser.session_manager import browser_manager
+from agent.browser.stagehand_engine import stagehand
 from agent.browser.vision_grounding import VisionGrounding
 from agent.tools.base import BaseTool
 
@@ -22,27 +23,75 @@ logger = logging.getLogger("taskmaster.tools.browser")
 class BrowserControllerTool(BaseTool):
     name = "browser_controller"
     description = (
-        "Autonomous Web Browser Controller. Supports web navigation, interacting with elements by "
-        "ARIA reference (e.g. 'e1', '[ref=e1]'), CSS selector, or coordinates, typing text, scrolling, "
-        "extracting content, and capturing visual screenshots."
+        "Autonomous Web Browser Controller with Stagehand Vision-Action Engine. Supports natural "
+        "language actions (action='act', instruction='click submit'), observation (action='observe'), "
+        "structured web extraction (action='extract'), navigation (action='navigate', url='...'), "
+        "and self-healing multi-tier locators."
     )
 
     def __init__(self):
         self.manager = browser_manager
         self.aria_parser = ARIAParser()
         self.vision = VisionGrounding()
+        self.stagehand = stagehand
 
-    def run(self, action: str = "aria_snapshot", **kwargs: Any) -> Dict[str, Any]:
-        """Synchronous entrypoint called by Taskmaster DAG orchestrator."""
-        # Auto-detect navigate intent: if url is provided but action wasn't explicitly set to navigate
-        url = kwargs.get("url") or kwargs.get("target_url")
-        if url and action in ("aria_snapshot", "observe"):
+    def run(
+        self,
+        action: str = "aria_snapshot",
+        url: Optional[str] = None,
+        instruction: Optional[str] = None,
+        selector: Optional[str] = None,
+        text: Optional[str] = None,
+        coordinate: Optional[List[int]] = None,
+        target_url: Optional[str] = None,
+        wait_ms: int = 1000,
+        **kwargs: Any,
+    ) -> Dict[str, Any]:
+        """Synchronous entrypoint called by Taskmaster and Strands Agents SDK."""
+        # Merge explicit arguments into kwargs
+        merged = dict(kwargs)
+        if url:
+            merged["url"] = url
+        if instruction:
+            merged["instruction"] = instruction
+        if selector:
+            merged["selector"] = selector
+        if text:
+            merged["text"] = text
+        if coordinate:
+            merged["coordinate"] = coordinate
+        if target_url:
+            merged["target_url"] = target_url
+        merged["wait_ms"] = wait_ms
+
+        target = merged.get("url") or merged.get("target_url")
+        if not target:
+            import re
+            for candidate in [instruction, text, merged.get("query"), merged.get("prompt")]:
+                if candidate and ("http://" in str(candidate) or "https://" in str(candidate)):
+                    m = re.search(r'https?://[^\s\'"<>]+', str(candidate))
+                    if m:
+                        target = m.group(0)
+                        merged["url"] = target
+                        action = "navigate"
+                        break
+
+        if target and action in ("aria_snapshot", "observe"):
+            # Auto navigate if a URL was provided alongside observe
             action = "navigate"
-        return self.manager.run_sync(self._run_async(action, **kwargs))
+        return self.manager.run_sync(self._run_async(action, **merged))
 
     async def _run_async(self, action: str, **kwargs: Any) -> Dict[str, Any]:
         act = action.lower().strip()
         page = await self.manager.get_page()
+
+        if act == "act":
+            inst = kwargs.get("instruction") or kwargs.get("text") or kwargs.get("query") or ""
+            return await self.stagehand.act(inst)
+
+        if act == "extract":
+            inst = kwargs.get("instruction") or kwargs.get("query") or ""
+            return await self.stagehand.extract(inst)
 
         if act == "navigate":
             url = kwargs.get("url") or kwargs.get("target_url")

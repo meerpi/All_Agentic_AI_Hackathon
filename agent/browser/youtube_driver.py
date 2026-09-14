@@ -37,7 +37,7 @@ class YouTubeDriver:
         Directly navigates to a YouTube video URL, dismisses dialogs, seeks to specified timestamp,
         starts playback, actively auto-skips ads for the specified duration, and optionally closes the session.
         """
-        page: Page = await self.manager.get_page(headed=True)
+        page: Page = await self.manager.get_page()
         # Pause any current playback before navigating
         try:
             await page.evaluate("document.querySelector('video')?.pause()")
@@ -122,7 +122,7 @@ class YouTubeDriver:
         Navigates to YouTube search results, clicks top video result, handles consent dialogs,
         un-mutes and plays, actively auto-skips ads for the specified duration, and optionally closes the session.
         """
-        page: Page = await self.manager.get_page(headed=True)
+        page: Page = await self.manager.get_page()
         encoded_query = urllib.parse.quote_plus(query)
         search_url = f"https://www.youtube.com/results?search_query={encoded_query}"
 
@@ -310,7 +310,6 @@ class YouTubeDriver:
         Dispatches media playback transport controls using YouTube native shortcuts.
         Supported commands: 'play', 'pause', 'play_pause', 'mute', 'unmute', 'fullscreen', 'seek_forward', 'seek_backward'
         """
-        page: Page = await self.manager.get_page()
         cmd = command.lower().strip()
 
         # YouTube native keyboard map
@@ -327,25 +326,27 @@ class YouTubeDriver:
             "volume_down": "ArrowDown",
         }
 
-        if cmd in key_map:
-            key = key_map[cmd]
-            # Focus on video player before sending shortcut
-            try:
-                await page.keyboard.press(key)
-            except Exception:
-                pass
-            await asyncio.sleep(0.3)
-            state = await self.get_playback_state(page)
-            return {
-                "status": "SUCCESS",
-                "command": cmd,
-                "key_pressed": key,
-                "playback_state": state,
-            }
-        elif cmd in ("stop", "halt", "kill"):
-            return await self.stop_all_media()
-        else:
+        if cmd not in key_map and cmd not in ("stop", "halt", "kill"):
             raise ValueError(f"Unsupported YouTube control command: '{command}'. Supported: {list(key_map.keys())} + ['stop']")
+
+        if cmd in ("stop", "halt", "kill"):
+            return await self.stop_all_media()
+
+        page: Page = await self.manager.get_page()
+        key = key_map[cmd]
+        # Focus on video player before sending shortcut
+        try:
+            await page.keyboard.press(key)
+        except Exception:
+            pass
+        await asyncio.sleep(0.3)
+        state = await self.get_playback_state(page)
+        return {
+            "status": "SUCCESS",
+            "command": cmd,
+            "key_pressed": key,
+            "playback_state": state,
+        }
 
     async def pause_video(self, page: Optional[Page] = None) -> Dict[str, Any]:
         """Pauses the active video element."""

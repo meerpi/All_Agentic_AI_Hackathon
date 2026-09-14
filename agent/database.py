@@ -99,14 +99,66 @@ class DatabaseManager:
                 );
             """)
 
+            # 5. Operational Tasks Table
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS tasks (
+                    id TEXT PRIMARY KEY,
+                    user_id TEXT,
+                    title TEXT NOT NULL,
+                    description TEXT,
+                    priority TEXT DEFAULT 'MEDIUM',
+                    status TEXT DEFAULT 'PENDING',
+                    assigned_to TEXT,
+                    due_date TEXT,
+                    dependencies_json TEXT,
+                    action_payload TEXT,
+                    created_at INTEGER NOT NULL,
+                    updated_at INTEGER NOT NULL
+                );
+            """)
+
+            # 6. Operational Schedules Table
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS schedules (
+                    id TEXT PRIMARY KEY,
+                    user_id TEXT,
+                    name TEXT NOT NULL,
+                    goal TEXT NOT NULL,
+                    interval_minutes INTEGER DEFAULT 60,
+                    cron_expression TEXT,
+                    status TEXT DEFAULT 'ACTIVE',
+                    last_run_at INTEGER,
+                    next_run_at INTEGER,
+                    created_at INTEGER NOT NULL
+                );
+            """)
+
+            # 7. Automated Schedule Runs & Anomaly Logs Table
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS schedule_runs (
+                    id TEXT PRIMARY KEY,
+                    schedule_id TEXT NOT NULL,
+                    schedule_name TEXT NOT NULL,
+                    status TEXT NOT NULL,
+                    summary TEXT,
+                    output TEXT,
+                    duration_ms INTEGER,
+                    is_alert INTEGER DEFAULT 0,
+                    created_at INTEGER NOT NULL
+                );
+            """)
+
             # Indices for lightning-fast lookups
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_tokens_user ON auth_tokens(user_id);")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_sessions_user ON chat_sessions(user_id, updated_at DESC);")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_messages_session ON chat_messages(session_id, timestamp ASC);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_tasks_status ON tasks(status);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_schedules_status ON schedules(status, next_run_at ASC);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_sched_runs ON schedule_runs(schedule_id, created_at DESC);")
 
             conn.commit()
-            logger.info("SQLite database schema initialized successfully.")
+            logger.info("SQLite database schema initialized successfully with tasks and schedules.")
 
     # ── Password Hashing Helpers ─────────────────────────────────
 
@@ -377,6 +429,255 @@ class DatabaseManager:
             "data": data,
             "timestamp": ts
         }
+
+    # ── Task Management Methods ──────────────────────────────────
+
+    def create_task(
+        self,
+        title: str,
+        description: str = "",
+        priority: str = "MEDIUM",
+        assigned_to: Optional[str] = None,
+        due_date: Optional[str] = None,
+        dependencies: Optional[List[str]] = None,
+        action_payload: Optional[Dict[str, Any]] = None,
+        user_id: Optional[str] = None,
+        task_id: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        tid = task_id or f"TSK-{secrets.token_hex(3).upper()}"
+        ts = int(time.time() * 1000)
+        deps_str = json.dumps(dependencies or [])
+        payload_str = json.dumps(action_payload or {})
+
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO tasks (id, user_id, title, description, priority, status, assigned_to, due_date, dependencies_json, action_payload, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, 'PENDING', ?, ?, ?, ?, ?, ?)
+            """, (tid, user_id, title, description, priority.upper(), assigned_to, due_date, deps_str, payload_str, ts, ts))
+            conn.commit()
+
+        return {
+            "id": tid,
+            "title": title,
+            "description": description,
+            "priority": priority.upper(),
+            "status": "PENDING",
+            "assigned_to": assigned_to,
+            "due_date": due_date,
+            "dependencies": dependencies or [],
+            "created_at": ts,
+        }
+
+    def list_tasks(self, status: Optional[str] = None, user_id: Optional[str] = None) -> List[Dict[str, Any]]:
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            query = "SELECT * FROM tasks WHERE 1=1"
+            params = []
+            if status:
+                query += " AND status = ?"
+                params.append(status.upper())
+            if user_id:
+                query += " AND user_id = ?"
+                params.append(user_id)
+            query += " ORDER BY created_at DESC"
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
+
+        results = []
+        for r in rows:
+            results.append({
+                "id": r["id"],
+                "title": r["title"],
+                "description": r["description"],
+                "priority": r["priority"],
+                "status": r["status"],
+                "assigned_to": r["assigned_to"],
+                "due_date": r["due_date"],
+                "dependencies": json.loads(r["dependencies_json"]) if r["dependencies_json"] else [],
+                "created_at": r["created_at"],
+                "updated_at": r["updated_at"],
+            })
+        return results
+
+    def update_task_status(self, task_id: str, status: str) -> Optional[Dict[str, Any]]:
+        ts = int(time.time() * 1000)
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("UPDATE tasks SET status = ?, updated_at = ? WHERE id = ?", (status.upper(), ts, task_id))
+            if cursor.rowcount == 0:
+                return None
+            cursor.execute("SELECT * FROM tasks WHERE id = ?", (task_id,))
+            r = cursor.fetchone()
+            conn.commit()
+            if not r:
+                return None
+            return {
+                "id": r["id"],
+                "title": r["title"],
+                "status": r["status"],
+                "priority": r["priority"],
+                "updated_at": ts,
+            }
+
+    # ── Scheduling Methods ───────────────────────────────────────
+
+    def create_schedule(
+        self,
+        name: str,
+        goal: str,
+        interval_minutes: int = 60,
+        cron_expression: Optional[str] = None,
+        user_id: Optional[str] = None,
+        schedule_id: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        sid = schedule_id or f"SCHED-{secrets.token_hex(3).upper()}"
+        ts = int(time.time() * 1000)
+        next_run = ts + (interval_minutes * 60 * 1000)
+
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO schedules (id, user_id, name, goal, interval_minutes, cron_expression, status, last_run_at, next_run_at, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, 'ACTIVE', NULL, ?, ?)
+            """, (sid, user_id, name, goal, interval_minutes, cron_expression, next_run, ts))
+            conn.commit()
+
+        return {
+            "id": sid,
+            "name": name,
+            "goal": goal,
+            "interval_minutes": interval_minutes,
+            "cron_expression": cron_expression,
+            "status": "ACTIVE",
+            "next_run_at": next_run,
+            "created_at": ts,
+        }
+
+    def list_schedules(self, status: Optional[str] = None) -> List[Dict[str, Any]]:
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            query = "SELECT * FROM schedules"
+            params = []
+            if status:
+                query += " WHERE status = ?"
+                params.append(status.upper())
+            query += " ORDER BY next_run_at ASC"
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
+
+        return [{
+            "id": r["id"],
+            "name": r["name"],
+            "goal": r["goal"],
+            "interval_minutes": r["interval_minutes"],
+            "cron_expression": r["cron_expression"],
+            "status": r["status"],
+            "last_run_at": r["last_run_at"],
+            "next_run_at": r["next_run_at"],
+            "created_at": r["created_at"],
+        } for r in rows]
+
+    def get_due_schedules(self, current_time_ms: Optional[int] = None) -> List[Dict[str, Any]]:
+        """Retrieve active schedules whose next_run_at timestamp is due."""
+        ts = current_time_ms or int(time.time() * 1000)
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT * FROM schedules 
+                WHERE status = 'ACTIVE' AND (next_run_at IS NULL OR next_run_at <= ?)
+                ORDER BY next_run_at ASC
+            """, (ts,))
+            rows = cursor.fetchall()
+
+        return [{
+            "id": r["id"],
+            "name": r["name"],
+            "goal": r["goal"],
+            "interval_minutes": r["interval_minutes"],
+            "cron_expression": r["cron_expression"],
+            "status": r["status"],
+            "last_run_at": r["last_run_at"],
+            "next_run_at": r["next_run_at"],
+            "created_at": r["created_at"],
+        } for r in rows]
+
+    def update_schedule_next_run(
+        self,
+        schedule_id: str,
+        last_run_at: int,
+        next_run_at: int,
+        status: str = "ACTIVE",
+    ) -> None:
+        """Update last_run and next_run timestamps for a schedule."""
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                UPDATE schedules 
+                SET last_run_at = ?, next_run_at = ?, status = ?
+                WHERE id = ?
+            """, (last_run_at, next_run_at, status.upper(), schedule_id))
+            conn.commit()
+
+    def record_schedule_run(
+        self,
+        schedule_id: str,
+        schedule_name: str,
+        status: str,
+        summary: str,
+        output: str = "",
+        duration_ms: int = 0,
+        is_alert: bool = False,
+        run_id: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Record an execution log entry for an autonomous heartbeat schedule run."""
+        rid = run_id or f"RUN-{secrets.token_hex(4).upper()}"
+        ts = int(time.time() * 1000)
+
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO schedule_runs (id, schedule_id, schedule_name, status, summary, output, duration_ms, is_alert, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (rid, schedule_id, schedule_name, status.upper(), summary, output, duration_ms, 1 if is_alert else 0, ts))
+            conn.commit()
+
+        return {
+            "id": rid,
+            "schedule_id": schedule_id,
+            "schedule_name": schedule_name,
+            "status": status.upper(),
+            "summary": summary,
+            "duration_ms": duration_ms,
+            "is_alert": bool(is_alert),
+            "created_at": ts,
+        }
+
+    def list_schedule_runs(self, schedule_id: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
+        """Retrieve historical schedule run records."""
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            query = "SELECT * FROM schedule_runs"
+            params = []
+            if schedule_id:
+                query += " WHERE schedule_id = ?"
+                params.append(schedule_id)
+            query += " ORDER BY created_at DESC LIMIT ?"
+            params.append(limit)
+            cursor.execute(query, params)
+            rows = cursor.fetchall()
+
+        return [{
+            "id": r["id"],
+            "schedule_id": r["schedule_id"],
+            "schedule_name": r["schedule_name"],
+            "status": r["status"],
+            "summary": r["summary"],
+            "output": r["output"],
+            "duration_ms": r["duration_ms"],
+            "is_alert": bool(r["is_alert"]),
+            "created_at": r["created_at"],
+        } for r in rows]
 
 
 # Global singleton instance

@@ -23,6 +23,15 @@ class DockerSandboxTool(BaseTool):
             # Note: For true hardening on Linux, we would wrap this in `prlimit` or `firejail`. 
             # In Windows/cross-platform, we rely on timeout and stripping the environment.
             safe_env = {"PATH": os.environ.get("PATH", "")}
+            if os.name == "nt":
+                for env_var in ["SYSTEMROOT", "WINDIR", "PATHEXT", "TEMP", "TMP", "USERPROFILE", "APPDATA", "LOCALAPPDATA"]:
+                    if env_var in os.environ:
+                        safe_env[env_var] = os.environ[env_var]
+            else:
+                for env_var in ["LANG", "LC_ALL", "HOME"]:
+                    if env_var in os.environ:
+                        safe_env[env_var] = os.environ[env_var]
+
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_seconds, env=safe_env)
             
             if result.returncode == 0:

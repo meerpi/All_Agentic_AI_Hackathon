@@ -131,13 +131,17 @@ class BrowserSessionManager:
                         user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
                     )
                 except Exception as e:
-                    logger.warning(f"Failed to launch with persistent context: {e}. Retrying without profile locks...")
-                    # Fallback launch
-                    self._context = await self._playwright.chromium.launch_persistent_context(
-                        user_data_dir=str(self.profile_dir / "fallback"),
-                        headless=is_headless,
-                        args=args,
-                    )
+                    logger.warning(f"Failed to launch with persistent context: {e}. Retrying without profile locks in headless mode...")
+                    # Fallback launch in headless mode
+                    try:
+                        self._context = await self._playwright.chromium.launch_persistent_context(
+                            user_data_dir=str(self.profile_dir / "fallback"),
+                            headless=True,
+                            args=args,
+                        )
+                    except Exception as e2:
+                        logger.error(f"Fallback headless browser launch failed: {e2}")
+                        raise e2
 
             # Retrieve or create active page
             if not self._context.pages or (self._active_page and self._active_page.is_closed()):

@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-09-13 06:07:29 UTC",
+  "total_benchmarks": 4,
+  "passed": 4,
+  "pass_rate_percent": 100.0,
+  "average_score": 98.8,
+  "average_duration_sec": 6.8,
+  "benchmarks": [
+    {
+      "name": "GAIA-01: Stagehand Web Intelligence Extraction",
+      "category": "GAIA (Web & Fact Synthesis)",
+      "passed": true,
+      "score": 95.0,
+      "duration_sec": 5.83,
+      "tools_called": [
+        "browser_controller"
+      ],
+      "tool_precision": 1.0,
+      "state_verified": true,
+      "notes": "Successfully extracted and synthesized web domain facts."
+    },
+    {
+      "name": "Tau-01: Multi-Step Task Dependency & Automated Scheduling",
+      "category": "Tau-bench (Operations & State Machine)",
+      "passed": true,
+      "score": 100.0,
+      "duration_sec": 3.56,
+      "tools_called": [
+        "task_scheduler"
+      ],
+      "tool_precision": 1.0,
+      "state_verified": true,
+      "notes": "Confirmed in SQLite: 8 tasks created, 6 schedule(s) active."
+    },
+    {
+      "name": "OSWorld-01: SLA Monte Carlo Simulation & Knowledge Graph Memory",
+      "category": "OSWorld (Sandboxed Code & Graph Memory)",
+      "passed": true,
+      "score": 100.0,
+      "duration_sec": 11.7,
+      "tools_called": [
+        "python_sandbox",
+        "memory_tool"
+      ],
+      "tool_precision": 1.0,
+      "state_verified": true,
+      "notes": "Confirmed in SQLite memory graph: Entity 'PaymentGatewayService' stored, relation=True, working_block updated=True."
+    },
+    {
+      "name": "MAAS-01: Multi-Agent Pre-Flight Critic & Adversarial Debate",
+      "category": "MAAS (Multi-Agent Adversarial Debate & Policy Guard)",
+      "passed": true,
+      "score": 100.0,
+      "duration_sec": 6.16,
+      "tools_called": [
+        "gmail"
+      ],
+      "tool_precision": 1.0,
+      "state_verified": true,
+      "notes": "Adversarial debate confirmed: 1 policy critique(s) intercepted, 1 clean call(s) passed. Agent successfully self-corrected via Guide feedback."
+    }
+  ]
+}

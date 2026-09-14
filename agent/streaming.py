@@ -153,3 +153,45 @@ async def workflow_sse_generator(goal_text: str, require_approval: bool = False,
         yield StreamEvent("workflow_error", {"error": str(e)}).to_sse()
 
     yield StreamEvent("done", {"message": "Stream complete"}).to_sse()
+
+
+async def strands_workflow_sse_generator(
+    goal_text: str,
+    enable_hitl: bool = True,
+    mode: str = "agent",
+) -> AsyncGenerator[str, None]:
+    """
+    Yields real-time SSE stream events from the Strands Agents SDK runtime.
+    Streams model token deltas, tool calls, and HITL approval interrupts.
+    """
+    from agent.strands_bridge import TaskmasterProAgent, hitl_manager
+
+    agent = TaskmasterProAgent(enable_hitl=enable_hitl)
+    yield StreamEvent("workflow_started", {
+        "workflow_id": agent.workflow_id,
+        "goal": goal_text,
+        "engine": "strands-agents-v1.55",
+        "mode": mode,
+        "track": "Track 2: Professional Agents",
+    }).to_sse()
+    await asyncio.sleep(0.05)
+
+    try:
+        async for event in agent.stream_events(goal_text):
+            event_type = event.get("type", "agent_event")
+            yield StreamEvent(event_type, event).to_sse()
+            await asyncio.sleep(0.01)
+
+        # Check for any pending interrupts
+        pending = hitl_manager.get_pending(agent.workflow_id)
+        if pending:
+            yield StreamEvent("hitl_paused", {
+                "workflow_id": agent.workflow_id,
+                "pending_approvals": [p.__dict__ for p in pending],
+            }).to_sse()
+
+    except Exception as e:
+        logger.error(f"Strands streaming error: {e}", exc_info=True)
+        yield StreamEvent("workflow_error", {"error": str(e)}).to_sse()
+
+    yield StreamEvent("done", {"message": "Strands stream complete"}).to_sse()

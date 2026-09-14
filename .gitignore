@@ -18,11 +18,24 @@ Thumbs.db
 # Ephemeral runtime files
 data/browser_profile/
 data/youtube_screenshots/
+data/checkpoints/
+data/workflows/
+data/audit_logs/
+data/live_*.json
+data/*.jsonl
+data/incident_*.md
+data/laptop_notes.txt
 *.log
+*.db
+*.db-shm
+*.db-wal
+taskmaster.db
+taskmaster_chat.db
 
-# Raw plaintext secrets (safely bundled & auto-unpacked from data/auth/vault.json)
+# Raw plaintext secrets
 .env
-.env.local
+.env.*
+!.env.example
 credentials.json
 client_secret_*.json
 token.json

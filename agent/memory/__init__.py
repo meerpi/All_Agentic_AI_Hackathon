@@ -239,3 +239,16 @@ class MemoryManager:
             "semantic": self.semantic.search(query),
             "procedural_recent": self.procedural.procedures[-5:],
         }
+
+
+# Hybrid Graph & Temporal Memory (Mem0/Letta architecture)
+from agent.memory.hybrid_graph_memory import HybridGraphMemory, hybrid_memory
+
+__all__ = [
+    "EpisodicMemory",
+    "SemanticMemory",
+    "ProceduralMemory",
+    "MemoryManager",
+    "HybridGraphMemory",
+    "hybrid_memory",
+]

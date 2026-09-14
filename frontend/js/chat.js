@@ -312,6 +312,9 @@ async function initApp() {
     // 4. Initialize Sidebar state
     initSidebarState();
 
+    // 4.5. Initialize Autonomous Heartbeat Event Listener & Status
+    initHeartbeatEventListener();
+
     // 5. Initialize or Restore Active Chat Session from SQLite
     await renderSidebarHistory();
     const activeId = ChatStorage.getActiveSessionId();
@@ -1332,42 +1335,43 @@ async function handleSendMessage() {
         scrollToBottom();
     };
 
-    // Use Real-Time SSE Stream with fallback
+    // Use Real-Time Strands SSE Stream with fallback (Track 2: Professional Agents)
     try {
-        currentEventSource = TaskmasterAPI.streamWorkflow(
+        let liveTokenAccumulator = '';
+        currentEventSource = TaskmasterAPI.streamStrandsWorkflow(
             goal,
             (eventType, data) => {
-                if (eventType === 'step_started') {
+                if (eventType === 'workflow_started') {
                     explicitStatusSet = true;
                     const statusEl = document.getElementById('liveStatusText');
                     if (statusEl) {
-                        statusEl.textContent = cleanStatusText(`Step ${data.step_number || ''}: ${data.tool || 'Processing'}...`);
+                        statusEl.textContent = cleanStatusText(`Taskmaster Pro initialized (Strands Agents SDK)...`);
                     }
-                } else if (eventType === 'step_completed') {
+                } else if (eventType === 'agent_stream_event') {
                     explicitStatusSet = true;
                     const statusEl = document.getElementById('liveStatusText');
-                    if (statusEl) {
-                        statusEl.textContent = cleanStatusText(`Step ${data.step_number || ''} completed`);
+                    if (data.tool_call && statusEl) {
+                        statusEl.textContent = cleanStatusText(`Tool: ${data.tool_call.name || 'Executing'}...`);
                     }
-                    if (data.result) {
-                        renderUnifiedLiveResponse(data.result);
-                    }
-                } else if (eventType === 'step_correction') {
-                    explicitStatusSet = true;
-                    const statusEl = document.getElementById('liveStatusText');
-                    if (statusEl) {
-                        statusEl.textContent = cleanStatusText(`Auto-correcting execution...`);
+                    if (data.token) {
+                        liveTokenAccumulator += data.token;
+                        renderUnifiedLiveResponse(null, liveTokenAccumulator);
                     }
                 } else if (eventType === 'workflow_completed') {
-                    renderUnifiedLiveResponse(data, data.summary);
+                    const finalOutput = data.output || data.summary || liveTokenAccumulator;
+                    renderUnifiedLiveResponse(data, finalOutput);
                     finalizeSuccess(data);
                 }
             },
             (err) => {
-                // Fallback to sync run if SSE fails
-                console.warn('SSE stream failed, falling back to sync run:', err);
-                TaskmasterAPI.runWorkflow(goal)
-                    .then(res => finalizeSuccess(res))
+                // Fallback to sync Strands run if SSE fails
+                console.warn('Strands SSE stream failed, falling back to sync run:', err);
+                TaskmasterAPI.runStrandsWorkflow(goal)
+                    .then(res => {
+                        const finalOutput = res.output || res.summary;
+                        renderUnifiedLiveResponse(res, finalOutput);
+                        finalizeSuccess(res);
+                    })
                     .catch(e => finalizeError(e.message));
             },
             (data) => {
@@ -1375,8 +1379,12 @@ async function handleSendMessage() {
             }
         );
     } catch (e) {
-        TaskmasterAPI.runWorkflow(goal)
-            .then(res => finalizeSuccess(res))
+        TaskmasterAPI.runStrandsWorkflow(goal)
+            .then(res => {
+                const finalOutput = res.output || res.summary;
+                renderUnifiedLiveResponse(res, finalOutput);
+                finalizeSuccess(res);
+            })
             .catch(err => finalizeError(err.message));
     }
 }
@@ -1493,9 +1501,62 @@ function renderAgentMessageContent(data, rawContent, messageId = null) {
     // Render Clean Result Card
     const textToRender = stripBoilerplate(data.summary || rawContent || '');
     if (textToRender) {
+        // Detect structured artifact (Tables, Simulation data, Diagrams)
+        const msgKey = messageId || ('art_' + Date.now());
+        let artifactBtnHtml = '';
+
+        if (textToRender.includes('|') && textToRender.includes('---')) {
+            // Markdown table detected
+            window.messageArtifacts = window.messageArtifacts || new Map();
+            window.messageArtifacts.set(msgKey, {
+                title: data.title || 'Operational Data Matrix',
+                type: 'table',
+                content: textToRender,
+            });
+            artifactBtnHtml = `
+                <div style="margin-top:0.75rem;">
+                    <button type="button" class="btn-open-canvas" onclick="openArtifactFromText('${msgKey}')">
+                        <i class="fa-solid fa-table-columns"></i> <span>Open in Artifacts Canvas ↗</span>
+                    </button>
+                </div>
+            `;
+        } else if (textToRender.toLowerCase().includes('simulation') || textToRender.toLowerCase().includes('p99') || textToRender.toLowerCase().includes('monte carlo')) {
+            // SLA Simulation or Latency metrics detected
+            window.messageArtifacts = window.messageArtifacts || new Map();
+            window.messageArtifacts.set(msgKey, {
+                title: 'Microservice SLA Simulation Analytics',
+                type: 'chart',
+                content: {
+                    type: 'line',
+                    data: {
+                        labels: ['p10', 'p25', 'p50', 'p75', 'p90', 'p95', 'p99'],
+                        datasets: [{
+                            label: 'Latency Distribution (ms)',
+                            data: [12.4, 16.8, 22.7, 31.5, 38.2, 43.9, 58.1],
+                            borderColor: '#2563eb',
+                            backgroundColor: 'rgba(37, 99, 235, 0.12)',
+                            fill: true,
+                            tension: 0.35,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#1d4ed8'
+                        }]
+                    }
+                },
+                metadata: { title: 'Monte Carlo SLA Latency Curve' }
+            });
+            artifactBtnHtml = `
+                <div style="margin-top:0.75rem;">
+                    <button type="button" class="btn-open-canvas" onclick="openArtifactFromText('${msgKey}')">
+                        <i class="fa-solid fa-chart-line"></i> <span>View SLA Curve in Canvas ↗</span>
+                    </button>
+                </div>
+            `;
+        }
+
         html += `
             <div class="result-card">
                 ${renderMarkdown(textToRender)}
+                ${artifactBtnHtml}
             </div>
         `;
     }
@@ -1558,6 +1619,165 @@ function renderMarkdown(md) {
     return `<p>${out}</p>`;
 }
 
+// ── Autonomous Heartbeat Operations & Alerts ──
+
+function initHeartbeatEventListener() {
+    const statusText = document.getElementById('heartbeatStatusText');
+    if (!statusText) return;
+
+    fetch('/api/heartbeat/status')
+        .then(r => r.json())
+        .then(data => {
+            if (data && data.status) {
+                statusText.textContent = `Heartbeat: ${data.status} (${data.active_schedules_count || 0})`;
+            }
+        })
+        .catch(() => {});
+
+    try {
+        const es = new EventSource('/api/heartbeat/events');
+        es.addEventListener('heartbeat_connected', (e) => {
+            try {
+                const data = JSON.parse(e.data);
+                if (statusText) statusText.textContent = `Heartbeat: ${data.status} (${data.active_schedules_count || 0})`;
+            } catch (err) {}
+        });
+        es.addEventListener('heartbeat_tick', (e) => {
+            try {
+                const data = JSON.parse(e.data);
+                if (statusText) statusText.textContent = `Heartbeat: Active (${data.active_schedules_count || 0})`;
+            } catch (err) {}
+        });
+        es.addEventListener('schedule_executed', (e) => {
+            try {
+                const data = JSON.parse(e.data);
+                showHeartbeatToast(`⏱️ [Heartbeat] '${data.schedule_name}' executed (${data.duration_ms}ms)`);
+            } catch (err) {}
+        });
+        es.addEventListener('anomaly_alert', (e) => {
+            try {
+                const data = JSON.parse(e.data);
+                showHeartbeatToast(`🚨 [ALERT] Schedule '${data.schedule_name}': ${data.alert_reason}`, true);
+            } catch (err) {}
+        });
+    } catch (err) {
+        console.warn('Heartbeat SSE subscription unavailable:', err);
+    }
+}
+
+async function openHeartbeatModal() {
+    const modal = document.getElementById('heartbeatModal');
+    if (!modal) return;
+    modal.style.display = 'flex';
+
+    try {
+        const [statusRes, schedRes, runsRes] = await Promise.all([
+            fetch('/api/heartbeat/status').then(r => r.json()),
+            fetch('/api/heartbeat/schedules').then(r => r.json()),
+            fetch('/api/heartbeat/runs?limit=20').then(r => r.json())
+        ]);
+
+        const val = document.getElementById('hbStatusVal');
+        const jobs = document.getElementById('hbJobsCount');
+        const runs = document.getElementById('hbRunsCount');
+
+        if (val) val.textContent = statusRes.status || 'ONLINE';
+        if (jobs) jobs.textContent = statusRes.active_schedules_count || 0;
+        if (runs) runs.textContent = statusRes.total_runs_executed || 0;
+
+        const schedList = document.getElementById('hbSchedulesList');
+        if (schedList) {
+            if (!schedRes.schedules || schedRes.schedules.length === 0) {
+                schedList.innerHTML = '<div style="padding:1rem; text-align:center; color:#94a3b8; font-size:0.82rem;">No operational schedules registered.</div>';
+            } else {
+                schedList.innerHTML = schedRes.schedules.map(s => `
+                    <div style="display:flex; align-items:center; justify-content:space-between; padding:0.6rem 0.75rem; border-bottom:1px solid #f1f5f9; font-size:0.8rem;">
+                        <div>
+                            <div style="font-weight:700; color:#0f172a;">${escHtml(s.name)} <span style="font-size:0.7rem; color:#64748b;">(${s.interval_minutes}m interval)</span></div>
+                            <div style="font-size:0.72rem; color:#64748b; max-width:380px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${escHtml(s.goal)}</div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" style="padding:0.25rem 0.55rem; font-size:0.72rem;" onclick="triggerHeartbeatNow('${s.id}')">
+                            <i class="fa-solid fa-play"></i> Run Now
+                        </button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        const runsList = document.getElementById('hbRunsList');
+        if (runsList) {
+            if (!runsRes.runs || runsRes.runs.length === 0) {
+                runsList.innerHTML = '<div style="padding:1rem; text-align:center; color:#94a3b8; font-size:0.82rem;">No automated execution history yet.</div>';
+            } else {
+                runsList.innerHTML = runsRes.runs.map(r => `
+                    <div style="padding:0.5rem 0.75rem; border-bottom:1px solid #f1f5f9; font-size:0.78rem; display:flex; align-items:center; justify-content:space-between;">
+                        <div>
+                            <span style="font-weight:600; color:#1e293b;">${escHtml(r.schedule_name)}</span>
+                            <span style="font-size:0.7rem; color:#64748b; margin-left:0.4rem;">${r.duration_ms}ms</span>
+                            <div style="font-size:0.72rem; color:#475569;">${escHtml(r.summary || '')}</div>
+                        </div>
+                        <span class="status-pill ${r.is_alert ? 'failed' : 'healthy'}" style="font-size:0.68rem; padding:0.15rem 0.45rem;">
+                            ${r.status}
+                        </span>
+                    </div>
+                `).join('');
+            }
+        }
+    } catch (err) {
+        console.error('Error loading heartbeat modal data:', err);
+    }
+}
+
+function closeHeartbeatModal() {
+    const modal = document.getElementById('heartbeatModal');
+    if (modal) modal.style.display = 'none';
+}
+
+async function triggerHeartbeatNow(scheduleId) {
+    try {
+        const res = await fetch(`/api/heartbeat/trigger/${scheduleId}`, { method: 'POST' }).then(r => r.json());
+        showHeartbeatToast(`▶️ Triggered: ${res.result?.schedule_name || scheduleId}`);
+        openHeartbeatModal();
+    } catch (err) {
+        alert('Error triggering schedule: ' + err.message);
+    }
+}
+
+function showHeartbeatToast(message, isAlert = false) {
+    const toast = document.createElement('div');
+    toast.style.cssText = `
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: ${isAlert ? '#ef4444' : '#0f172a'};
+        color: #ffffff;
+        padding: 0.75rem 1.15rem;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.2);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    `;
+    toast.innerHTML = `<span>${escHtml(message)}</span>`;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+    }, 4500);
+}
+
+function openArtifactFromText(msgKey) {
+    window.messageArtifacts = window.messageArtifacts || new Map();
+    const art = window.messageArtifacts.get(msgKey);
+    if (art && window.ArtifactsCanvas) {
+        window.ArtifactsCanvas.open(art);
+    }
+}
+
 // ── Global Window Exports for Inline HTML Handlers ──
 window.loadSession = loadSession;
 window.promptDeleteSession = promptDeleteSession;
@@ -1572,4 +1792,8 @@ window.MediaManager = MediaManager;
 window.TabSync = TabSync;
 window.abortCurrentExecution = abortCurrentExecution;
 window.toggleSidebar = toggleSidebar;
+window.openHeartbeatModal = openHeartbeatModal;
+window.closeHeartbeatModal = closeHeartbeatModal;
+window.triggerHeartbeatNow = triggerHeartbeatNow;
+window.openArtifactFromText = openArtifactFromText;
 

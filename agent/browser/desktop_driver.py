@@ -237,23 +237,50 @@ class OSDesktopDriver:
         }
 
     def launch_application(self, binary_name: str, args: list = None) -> Dict[str, Any]:
-        """Launches an application as a detached process."""
+        """Launches an application as a detached process with cross-platform (Windows/Linux/macOS) compatibility."""
         import shutil
         import subprocess
         
-        if not shutil.which(binary_name):
+        args = args or []
+        resolved_bin = shutil.which(binary_name)
+        
+        # On Windows, try fallback extensions (.exe, .cmd, .bat) if direct name wasn't found
+        if not resolved_bin and os.name == "nt":
+            for ext in [".exe", ".cmd", ".bat"]:
+                candidate = binary_name + ext
+                if shutil.which(candidate):
+                    resolved_bin = shutil.which(candidate)
+                    break
+        
+        # Special Windows handling for startfile
+        if not resolved_bin and os.name == "nt" and hasattr(os, "startfile") and binary_name.lower() in ("start", "open", "default"):
+            if args:
+                try:
+                    os.startfile(args[0])
+                    return {"status": "SUCCESS", "action": "launch_application", "method": "os.startfile", "target": args[0]}
+                except Exception as e:
+                    return {"status": "FAILED", "error": f"os.startfile failed: {e}"}
+
+        if not resolved_bin:
             raise FileNotFoundError(f"Binary '{binary_name}' not found in PATH.")
         
-        cmd = [binary_name] + (args or [])
         env = os.environ.copy()
         if "DISPLAY" not in env and os.name != "nt":
             env["DISPLAY"] = ":0"
             
         try:
             if os.name == "nt":
-                process = subprocess.Popen(cmd, env=env, creationflags=subprocess.CREATE_NEW_PROCESS_GROUP)
+                # On Windows, batch and cmd scripts require execution via cmd.exe or shell=True
+                is_batch = resolved_bin.lower().endswith((".cmd", ".bat"))
+                if is_batch:
+                    cmd = ["cmd.exe", "/c", resolved_bin] + args
+                else:
+                    cmd = [resolved_bin] + args
+                creation_flags = getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
+                process = subprocess.Popen(cmd, env=env, creationflags=creation_flags)
             else:
+                cmd = [resolved_bin] + args
                 process = subprocess.Popen(cmd, env=env, start_new_session=True)
-            return {"status": "SUCCESS", "action": "launch_application", "pid": process.pid}
+            return {"status": "SUCCESS", "action": "launch_application", "pid": process.pid, "binary": resolved_bin}
         except Exception as e:
             return {"status": "FAILED", "error": str(e)}

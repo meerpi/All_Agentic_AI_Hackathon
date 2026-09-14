@@ -226,6 +226,101 @@ const TaskmasterAPI = {
         } catch (e) {
             return null;
         }
+    },
+
+    // ── Strands Agents SDK Methods (Track 2: Professional Agents) ──
+    streamStrandsWorkflow(goal, onEvent, onError, onComplete) {
+        const url = `/api/strands/stream?goal=${encodeURIComponent(goal)}&enable_hitl=false`;
+        const es = new EventSource(url);
+        let hasCompleted = false;
+
+        es.addEventListener('workflow_started', (e) => {
+            try { onEvent('workflow_started', JSON.parse(e.data)); } catch (err) {}
+        });
+
+        es.addEventListener('agent_stream_event', (e) => {
+            try { onEvent('agent_stream_event', JSON.parse(e.data)); } catch (err) {}
+        });
+
+        es.addEventListener('hitl_paused', (e) => {
+            try { onEvent('hitl_paused', JSON.parse(e.data)); } catch (err) {}
+        });
+
+        es.addEventListener('workflow_completed', (e) => {
+            try {
+                hasCompleted = true;
+                const data = JSON.parse(e.data);
+                onEvent('workflow_completed', data);
+                es.close();
+                if (onComplete) onComplete(data);
+            } catch (err) {
+                es.close();
+            }
+        });
+
+        es.addEventListener('workflow_error', (e) => {
+            try {
+                hasCompleted = true;
+                const data = JSON.parse(e.data);
+                if (onError) onError(new Error(data.error || 'Strands workflow error'));
+            } catch (err) {
+                if (onError) onError(new Error('Unknown streaming error'));
+            }
+            es.close();
+        });
+
+        es.addEventListener('done', () => {
+            hasCompleted = true;
+            es.close();
+        });
+
+        es.onerror = (err) => {
+            if (!hasCompleted) {
+                es.close();
+                if (onError) onError(err);
+            }
+        };
+
+        return es;
+    },
+
+    async runStrandsWorkflow(goal, mode = 'agent', enable_hitl = true) {
+        const res = await fetch('/api/strands/run', {
+            method: 'POST',
+            headers: AuthManager.getAuthHeaders(),
+            body: JSON.stringify({ goal, mode, enable_hitl })
+        });
+        if (!res.ok) {
+            const err = await res.json().catch(() => ({ detail: res.statusText }));
+            throw new Error(err.detail || 'Strands execution failed');
+        }
+        return await res.json();
+    },
+
+    async getStrandsTools() {
+        try {
+            const res = await fetch('/api/strands/tools');
+            return await res.json();
+        } catch (e) {
+            return { tools: [] };
+        }
+    },
+
+    async approveStrandsInterrupt(interruptId) {
+        const res = await fetch(`/api/strands/approve/${interruptId}`, {
+            method: 'POST',
+            headers: AuthManager.getAuthHeaders()
+        });
+        return await res.json();
+    },
+
+    async rejectStrandsInterrupt(interruptId, reason = 'User denied') {
+        const res = await fetch(`/api/strands/reject/${interruptId}`, {
+            method: 'POST',
+            headers: AuthManager.getAuthHeaders(),
+            body: JSON.stringify({ reason })
+        });
+        return await res.json();
     }
 };
 

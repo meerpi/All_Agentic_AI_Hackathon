@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 import json
 import logging
 import os
@@ -26,15 +27,36 @@ from agent.streaming import workflow_sse_generator
 from agent.task_expansion import TaskExpansionEngine
 from agent.time_travel import time_travel
 from agent.tools.registry import registry
+from agent.strands_bridge import (
+    TaskmasterProAgent,
+    build_professional_council_graph,
+    hitl_manager,
+    strands_tool_registry,
+)
+from agent.streaming import strands_workflow_sse_generator
+
+from agent.heartbeat_daemon import heartbeat_daemon
 
 # Configure logging
 logging.basicConfig(level=getattr(logging, settings.LOG_LEVEL, logging.INFO))
 logger = logging.getLogger("taskmaster.api")
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Manage background daemon lifecycles."""
+    logger.info("🚀 Starting Taskmaster Pro Autonomous Heartbeat Daemon...")
+    heartbeat_daemon.start()
+    yield
+    logger.info("🛑 Stopping Taskmaster Pro Autonomous Heartbeat Daemon...")
+    heartbeat_daemon.stop()
+
+
 app = FastAPI(
     title="Taskmaster Autonomous Agent Engine API",
     description="Production-grade AI Agent API with DAG execution, real A2A protocol, MCP server exposition, persistent memory, SQLite storage, and live SSE streaming.",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 # Enable CORS
@@ -189,6 +211,8 @@ def health_check():
         "registered_tools_count": len(registry.list_tools()),
         "capabilities": [
             "task_dependency_dag",
+            "strands_agents_sdk_v1_55",
+            "professional_agents_track",
             "a2a_protocol_compliant",
             "mcp_server_support",
             "persistent_memory",
@@ -414,6 +438,114 @@ def cancel_workflow(workflow_id: str):
             
     persistence.save_workflow(workflow_id, workflow.model_dump(mode="json"))
     return {"message": "Workflow cancelled.", "workflow": workflow.model_dump(mode="json")}
+
+
+# ── Strands Agents SDK Endpoints (Track 2: Professional Agents) ──
+
+class StrandsRunRequest(BaseModel):
+    goal: str
+    enable_hitl: bool = True
+    mode: str = "agent"  # "agent" or "council"
+    workflow_id: Optional[str] = None
+
+
+class StrandsDecisionRequest(BaseModel):
+    reason: Optional[str] = None
+
+
+@app.post("/api/strands/run", summary="Execute Professional Task via Strands Agents SDK")
+def run_strands_agent_endpoint(req: StrandsRunRequest):
+    """
+    Executes an autonomous workflow using the official Strands Agents SDK.
+    Supports single autonomous agent or 4-specialist directed Graph council.
+    """
+    try:
+        if req.mode == "council":
+            graph = build_professional_council_graph(workflow_id=req.workflow_id)
+            result = graph(req.goal)
+            return {
+                "workflow_id": graph.id,
+                "engine": "strands_multiagent_graph",
+                "status": "COMPLETED",
+                "result": str(result),
+            }
+        else:
+            agent = TaskmasterProAgent(
+                enable_hitl=req.enable_hitl,
+                workflow_id=req.workflow_id,
+            )
+            res = agent.run(req.goal)
+            return res
+    except Exception as e:
+        logger.error(f"Error executing Strands agent endpoint: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/strands/stream", summary="Real-Time Strands SSE Stream")
+async def stream_strands_workflow(goal: str, enable_hitl: bool = True, mode: str = "agent"):
+    """Streams live token generation, tool usage, and approval interrupts from Strands Agent."""
+    return StreamingResponse(
+        strands_workflow_sse_generator(goal, enable_hitl=enable_hitl, mode=mode),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
+
+
+@app.get("/api/strands/pending", summary="List Pending Strands HITL Approvals")
+def get_strands_pending_approvals(workflow_id: Optional[str] = None):
+    """Retrieve pending Human-in-the-Loop approval requests."""
+    pending = hitl_manager.get_pending(workflow_id)
+    return {
+        "total_pending": len(pending),
+        "approvals": [p.__dict__ for p in pending],
+    }
+
+
+@app.post("/api/strands/approve/{interrupt_id}", summary="Approve Paused Strands Action")
+def approve_strands_interrupt(interrupt_id: str):
+    """Approves a sensitive tool invocation intercepted by Strands HITL."""
+    req = hitl_manager.approve(interrupt_id)
+    if not req:
+        raise HTTPException(status_code=404, detail=f"Pending approval {interrupt_id} not found.")
+    return {
+        "status": "SUCCESS",
+        "message": f"Approved tool invocation {req.tool_name}",
+        "approval": req.__dict__,
+    }
+
+
+@app.post("/api/strands/reject/{interrupt_id}", summary="Reject Paused Strands Action")
+def reject_strands_interrupt(interrupt_id: str, body: Optional[StrandsDecisionRequest] = None):
+    """Rejects a sensitive tool invocation intercepted by Strands HITL."""
+    reason = body.reason if body else "User denied action"
+    req = hitl_manager.reject(interrupt_id, reason=reason)
+    if not req:
+        raise HTTPException(status_code=404, detail=f"Pending approval {interrupt_id} not found.")
+    return {
+        "status": "SUCCESS",
+        "message": f"Rejected tool invocation {req.tool_name}: {reason}",
+        "approval": req.__dict__,
+    }
+
+
+@app.get("/api/strands/tools", summary="List Strands-Adapted Tools & Schemas")
+def list_strands_tools():
+    """Returns all tools registered with Strands and their input schemas."""
+    tools = strands_tool_registry.get_professional_tools()
+    catalog = []
+    for t in tools:
+        spec = getattr(t, "tool_spec", {})
+        catalog.append({
+            "name": spec.get("name"),
+            "description": spec.get("description"),
+            "schema": spec.get("inputSchema"),
+            "is_sensitive": spec.get("name") in strands_tool_registry.get_sensitive_tool_names(),
+        })
+    return {
+        "engine": "strands-agents-v1.55",
+        "total_tools": len(catalog),
+        "tools": catalog,
+    }
 
 
 # ── PRD Parser & Task Expansion Endpoints ──────────────────────
@@ -664,6 +796,64 @@ def get_browser_screenshot(annotated: bool = Query(False, description="Whether t
     return result.data
 
 
+# ── Autonomous Heartbeat Daemon Endpoints ───────────────────────
+
+@app.get("/api/heartbeat/status", summary="Get status and health of 24/7 autonomous heartbeat daemon")
+def get_heartbeat_status():
+    """Returns operational status, uptime, active job counts, and recent anomaly alerts."""
+    return heartbeat_daemon.get_status()
+
+
+@app.get("/api/heartbeat/schedules", summary="List operational schedules and their execution status")
+def get_heartbeat_schedules(status: Optional[str] = Query(None)):
+    """Lists recurring schedules with countdowns and last execution details."""
+    schedules = db.list_schedules(status=status)
+    return {
+        "status": "SUCCESS",
+        "total": len(schedules),
+        "schedules": schedules,
+    }
+
+
+@app.post("/api/heartbeat/trigger/{schedule_id}", summary="Manually trigger an immediate execution of a schedule")
+def trigger_heartbeat_schedule(schedule_id: str):
+    """Manually triggers a scheduled job immediately and returns the execution report."""
+    try:
+        res = heartbeat_daemon.trigger_now(schedule_id)
+        return {"status": "SUCCESS", "result": res}
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        logger.error(f"Error manually triggering schedule {schedule_id}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/heartbeat/runs", summary="Get historical schedule execution logs and alerts")
+def get_heartbeat_runs(schedule_id: Optional[str] = Query(None), limit: int = Query(50)):
+    """Retrieves autonomous schedule run history from SQLite database."""
+    runs = db.list_schedule_runs(schedule_id=schedule_id, limit=limit)
+    return {
+        "status": "SUCCESS",
+        "total": len(runs),
+        "runs": runs,
+    }
+
+
+@app.get("/api/heartbeat/events", summary="SSE stream of live heartbeat ticks and proactive anomaly alerts")
+async def stream_heartbeat_events():
+    """Streams real-time Server-Sent Events for background task completions and SLA anomaly alerts."""
+    return StreamingResponse(
+        heartbeat_daemon.subscribe(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+        },
+    )
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=False)
+
